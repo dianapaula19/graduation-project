@@ -6,6 +6,7 @@ import "./Button.scss"
 const Button = ({
     label,
     disabled,
+    onClick,
     modifier
 }
 :ButtonProps
@@ -19,6 +20,7 @@ const Button = ({
         <button 
             className={mainClassNames}
             disabled={disabled}
+            onClick={onClick}
         >
             {label}
         </button>

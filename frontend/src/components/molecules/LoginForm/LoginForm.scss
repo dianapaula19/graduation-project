@@ -1,0 +1,44 @@
+.login {
+
+    display: flex;
+    flex-direction: row;
+
+    &__image {
+        background-color: rgba($color: #ffffff, $alpha: 0.4);
+        border-radius: .2rem 0 0 .2rem;
+        width: 50rem;
+        padding: 5rem 0;
+        &__img {
+            width: 40rem;
+        }
+    }
+
+    @media only screen and (max-width: 80rem) {
+        &__image {
+            display: none;
+        }
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;  
+        gap: .5rem;
+        padding: 3rem 3rem;
+        width: 50rem;  
+        background-color: #ffffff;
+        border-radius: 0 .2rem .2rem 0;
+        &__img {
+            max-width: 20rem;
+        }
+        &__a {
+            all: unset;
+            color: #0366d6;
+            text-transform: uppercase;
+            margin-bottom: .5rem;
+            cursor: pointer;
+        }
+        &__p {
+            color: #525252;
+        }
+    }
+}

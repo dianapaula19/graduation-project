@@ -5,6 +5,7 @@ enum ButtonModifier {
 interface ButtonProps {
     label: string;
     disabled: boolean;
+    onClick: () => void;
     modifier?: ButtonModifier
 }
 

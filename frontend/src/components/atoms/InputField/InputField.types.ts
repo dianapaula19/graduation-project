@@ -17,7 +17,7 @@ interface InputFieldProps {
     required: boolean;
     error: boolean;
     errorMessage: string;
-    onChange: () => void;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     label: string;
 }
 

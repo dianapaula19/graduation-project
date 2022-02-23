@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import classNames from "classnames";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock, faEnvelope, faUser, faEye, faEyeSlash, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { InputFieldProps, InputFieldType } from "./InputField.types";
+import { InputFieldModifier, InputFieldProps, InputFieldType } from "./InputField.types";
 import "./InputField.scss";
 
 const InputField = ({
@@ -26,12 +26,14 @@ const InputField = ({
 
     const mainClassNames = classNames(
         mainClassName,
-        modifier && `${mainClassName}--${modifier}`
+        modifier && `${mainClassName}--${modifier}`,
+        error && `${mainClassName}--${InputFieldModifier.Error}`
     );
 
     const inputGroupClassNames = classNames(
         inputGroupClassName,
-        modifier && `${inputGroupClassName}--${modifier}`    
+        modifier && `${inputGroupClassName}--${modifier}`,
+        error && `${inputGroupClassName}--${InputFieldModifier.Error}`    
     );
     
     const [showPassword, setShowPassword] = useState(false);
