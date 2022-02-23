@@ -1,15 +1,20 @@
 .button {
     all: unset;
     text-transform: uppercase;
-    max-width: 20rem;
     background-color: #0366d6;
     color: white;
-    padding: .75rem 3.75rem;
     border-radius: .5rem;
+    height: 2.5rem;
+    max-width: 20rem;
+    text-align: center;
+    vertical-align: middle;
     cursor: pointer;
+
+    
     &:disabled {
         background-color: #c4c4c4;
         color: #525252;   
         cursor: not-allowed; 
     }
+
 }
