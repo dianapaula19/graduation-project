@@ -1,11 +1,15 @@
 .languages {
+    
     display: flex;
     flex-direction: row;
+    align-self: flex-start;
+    padding: .5rem 0 0 .5rem;
+    height: 5vh;
     gap: 1rem;
-    height: 1.5rem;
+    
     &__img {
         cursor: pointer;
-        opacity: 50%;
+        opacity: 75%;
         &:hover {
             opacity: 100%;
         }

@@ -2,14 +2,22 @@
 
     display: flex;
     flex-direction: row;
+    align-self: center;
+    height: 70vh;
+    width: 60vw;  
 
     &__image {
+        display: flex;
+        flex-direction: row;
         background-color: rgba($color: #ffffff, $alpha: 0.4);
         border-radius: .2rem 0 0 .2rem;
-        width: 50rem;
         padding: 5rem 0;
+        width: 50%;
+        height: 100%;
+
         &__img {
-            width: 40rem;
+            width: 100%;
+            justify-content: center;
         }
     }
 
@@ -17,24 +25,34 @@
         &__image {
             display: none;
         }
+
+        &__form {
+            border-radius: .2rem .2rem;
+        }
     }
 
     &__form {
         display: flex;
         flex-direction: column;  
+        align-items: center;
+        align-self: center;
+        width: 50%;
+        height: 100%;
         gap: .5rem;
-        padding: 3rem 3rem;
-        width: 50rem;  
+        padding: 3rem 3rem;  
         background-color: #ffffff;
         border-radius: 0 .2rem .2rem 0;
+        
         &__img {
-            max-width: 20rem;
+            width: 50%;
         }
+        
         &__a {
             all: unset;
             color: #0366d6;
             text-transform: uppercase;
             margin-bottom: .5rem;
+            align-self: flex-start;
             cursor: pointer;
         }
         &__p {
