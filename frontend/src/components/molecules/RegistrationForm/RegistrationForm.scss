@@ -1,4 +1,4 @@
-.login {
+.registration {
 
     display: flex;
     flex-direction: row;
@@ -6,7 +6,7 @@
     &__image {
         background-color: rgba($color: #ffffff, $alpha: 0.4);
         border-radius: .2rem 0 0 .2rem;
-        width: 50rem;
+        width: 40rem;
         padding: 5rem 0;
         &__img {
             width: 40rem;
@@ -39,7 +39,6 @@
         }
         &__p {
             color: #525252;
-            text-transform: uppercase;
             justify-self: center;
         }
     }
