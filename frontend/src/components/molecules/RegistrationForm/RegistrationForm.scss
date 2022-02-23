@@ -2,14 +2,17 @@
 
     display: flex;
     flex-direction: row;
+    height: 70vh;
+    width: 60vw; 
 
     &__image {
+        display: flex;
         background-color: rgba($color: #ffffff, $alpha: 0.4);
         border-radius: .2rem 0 0 .2rem;
-        width: 40rem;
         padding: 5rem 0;
         &__img {
-            width: 40rem;
+            width: 100%;
+            align-self: center;
         }
     }
 
@@ -21,14 +24,14 @@
 
     &__form {
         display: flex;
-        flex-direction: column;  
+        flex-direction: column; 
+        align-items: center; 
         gap: .5rem;
-        padding: 3rem 3rem;
-        width: 50rem;  
+        padding: 3rem 3rem; 
         background-color: #ffffff;
         border-radius: 0 .2rem .2rem 0;
         &__img {
-            max-width: 20rem;
+            width: 50%;
         }
         &__a {
             all: unset;
