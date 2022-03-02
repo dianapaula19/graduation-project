@@ -3,19 +3,20 @@ import Button from "../../atoms/Button/Button";
 import InputField from "../../atoms/InputField/InputField";
 import { InputFieldType } from "../../atoms/InputField/InputField.types";
 import { translations } from "./translations";
-import LogoImg  from "../../../images/logo.jpg";
-import RegisterImg from "./register-image.jpg";
-import "./RegistrationForm.scss";
 import { regexRules } from "./utils";
-import { RegistrationFormData } from "./RegistrationForm.types";
+import { IRegistrationFormData } from "./RegistrationForm.types";
+import LogoSvg from "../../../assets/logo.svg";
+import "./RegistrationForm.scss";
 
 const RegistrationForm = () => {
 
-    const [data, setData] = useState<RegistrationFormData>({
+    const [data, setData] = useState<IRegistrationFormData>({
         email: "",
         password: "",
         confirmPassword: ""
     });
+
+    const componentClassName = "registration-form";
 
     const validation = {
         email: !regexRules.email.test(data.email),
@@ -37,57 +38,49 @@ const RegistrationForm = () => {
     }
 
     return(
-        <div className="registration">
-            <div className="registration__image">
-                <img 
-                    src={RegisterImg}
-                    className="registration__image__img"
-                />
-            </div>
-            <div className="registration__form">
-                <img 
-                    src={LogoImg}
-                    className="registration__form__img"
-                />
-                <InputField 
-                    type={InputFieldType.Email} 
-                    name={"email"} 
-                    id={"registration-form-email"}  
-                    required={true} 
-                    error={validation.email}  
-                    onChange={handleChange} 
-                    {...translations.ro.email}
-                />
-                <InputField 
-                    type={InputFieldType.Password} 
-                    name={"password"} 
-                    id={"registration-form-password"}  
-                    required={true} 
-                    error={validation.password}  
-                    onChange={handleChange} 
-                    {...translations.ro.password}
-                />
-                <InputField 
-                    type={InputFieldType.Password} 
-                    name={"confirmPassword"} 
-                    id={"registration-form-confirm-password"}  
-                    required={true} 
-                    error={validation.confirmPassword}  
-                    onChange={handleChange} 
-                    {...translations.ro.confirmPassword}
-                />
-                <Button 
-                    label={translations.ro.button.label} 
-                    disabled={validation.confirmPassword && validation.password && validation.email}
-                    onClick={onSubmit}
-                />
-                <p className="login__form__p">
-                    {translations.ro.alreadyAnUser}
-                    <a className="login__form__a">
-                        {translations.ro.alreadyAnUserLink}
-                    </a>
-                </p>
-            </div>
+        <div className={componentClassName}>
+            <img
+                className={`${componentClassName}__img`}
+                src={LogoSvg}
+            />
+            <InputField 
+                type={InputFieldType.email} 
+                name={"email"} 
+                id={"registration-form-email"}  
+                required={true} 
+                error={validation.email}  
+                onChange={handleChange} 
+                {...translations.ro.email}
+            />
+            <InputField 
+                type={InputFieldType.password} 
+                name={"password"} 
+                id={"registration-form-password"}  
+                required={true} 
+                error={validation.password}  
+                onChange={handleChange} 
+                {...translations.ro.password}
+            />
+            <InputField 
+                type={InputFieldType.password} 
+                name={"confirmPassword"} 
+                id={"registration-form-confirm-password"}  
+                required={true} 
+                error={validation.confirmPassword}  
+                onChange={handleChange} 
+                {...translations.ro.confirmPassword}
+            />
+            <Button 
+                label={translations.ro.button.label} 
+                disabled={validation.confirmPassword && validation.password && validation.email}
+                onClick={onSubmit}
+            />
+            <p className={`${componentClassName}__p`}>
+                {translations.ro.alreadyAnUser}
+                <a className={`${componentClassName}__a`}>
+                    {translations.ro.alreadyAnUserLink}
+                </a>
+            </p>
         </div>
     )
 }

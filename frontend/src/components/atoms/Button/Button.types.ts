@@ -1,8 +1,8 @@
 enum ButtonModifier {
-    Disabled = "disabled",
+    disabled = "disabled",
 }
 
-interface ButtonProps {
+interface IButtonProps {
     label: string;
     disabled: boolean;
     onClick: () => void;
@@ -10,7 +10,7 @@ interface ButtonProps {
 }
 
 export type {
-    ButtonProps
+    IButtonProps
 }
 
 export {

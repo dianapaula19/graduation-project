@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../../app/store";
-import { Language, LanguageState } from "./Languages.types";
+import { Language, LanguageState } from "./LanguagesSwitch.types";
 
 const initialState: LanguageState = {
     language: Language.ro 

@@ -1,29 +1,52 @@
 import React from "react";
-import Languages from "../../atoms/Languages/Languages";
+import Languages from "../../atoms/LanguagesSwitch/LanguageSwitch";
 import LoginForm from "../../molecules/LoginForm/LoginForm";
 import RegistrationForm from "../../molecules/RegistrationForm/RegistrationForm";
-import { AuthetificationPageProps, Action } from "./AuthentificationPage.types";
+import { IAuthetificationPageProps, AuthentificationAction } from "./AuthentificationPage.types";
+import LoginSvg from "./assets/login.svg";
+import RegistrationSvg from "./assets/registration.svg";
+import LogoSvg from "../../../assets/logo.svg";
 import "./AuthentificationPage.scss";
 
 const AuthetificationPage = ({
     action
 }
-:AuthetificationPageProps
-) => {
+: IAuthetificationPageProps) => {
 
-    const switchForm = (action: Action): JSX.Element =>{
-        switch (action) {
-            case Action.register:
-                return <RegistrationForm/>
-            case Action.login:
-                return <LoginForm/>;
-        }
+    const componentClassName = "authentification-template";
+    const mainClassName = `${componentClassName}__main`;
+    const imageClassName = `${mainClassName}__image-container`;
+    const formClassName = `${mainClassName}__form-container`;
+
+    let form = null;
+    let image = null;
+
+    switch (action) {
+        case AuthentificationAction.register:
+            form = <RegistrationForm />;
+            image = RegistrationSvg;
+            break;
+        case AuthentificationAction.login:
+            form = <LoginForm />;
+            image = LoginSvg;
+            break;
     }
 
     return(
-        <div className="authentification-template">
+        <div className={componentClassName}>
             <Languages/>
-            {switchForm(action)}
+
+            <div className={mainClassName}>
+                <div className={imageClassName}>
+                    <img
+                        src={image}
+                        className={`${imageClassName}__img`}
+                    />
+                </div>
+                <div className={formClassName}>
+                    {form}
+                </div>
+            </div>
         </div>
     )
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import AuthentificationPage from "./AuthentificationPage";
-import { Action } from "./AuthentificationPage.types";
+import { AuthentificationAction } from "./AuthentificationPage.types";
 
 export default {
     title: "Templates/AuthentificationPage",
@@ -13,11 +13,11 @@ const Template: ComponentStory<typeof AuthentificationPage> = (args) => <Authent
 export const RegistrationPage = Template.bind({});
 
 RegistrationPage.args = {
-    action: Action.register
+    action: AuthentificationAction.register
 }
 
 export const LoginPage = Template.bind({});
 
 LoginPage.args = {
-    action: Action.login
+    action: AuthentificationAction.login
 }

@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React from "react";
-import { ButtonProps } from "./Button.types";
+import { IButtonProps } from "./Button.types";
 import "./Button.scss"
 
 const Button = ({
@@ -9,16 +9,16 @@ const Button = ({
     onClick,
     modifier
 }
-:ButtonProps
+:IButtonProps
 ) => {
-    const mainClass = "button";
-    const mainClassNames = classNames(
-        mainClass,
-        modifier && `${mainClass}--${modifier}`
+    const componentClassName = "button";
+    const componentClassNames = classNames(
+        componentClassName,
+        modifier && `${componentClassName}--${modifier}`
     )
     return(
         <button 
-            className={mainClassNames}
+            className={componentClassNames}
             disabled={disabled}
             onClick={onClick}
         >

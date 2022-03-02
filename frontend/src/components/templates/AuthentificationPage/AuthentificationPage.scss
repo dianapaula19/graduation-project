@@ -1,7 +1,56 @@
+@import "../../../styles/global.scss";
+
 .authentification-template {
-    display: flex;
-    flex-direction: column;
-    width: 100vw;
-    height: 100vh;
+    display: grid;
+    gap: 5rem;
     background-color: rgba($color: #0366d6, $alpha: .75);
+    grid-template-columns: 1fr 4fr 1fr;
+    grid-template-areas: 
+        "languages . ."
+        ". main ."
+        ". . .";
+
+    &__main {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-area: main;
+        grid-template-areas: 
+            "image-container form-container";
+
+        @media screen and (max-width: 60rem) {
+            grid-template-areas: 
+            "form-container form-container";
+        }
+
+        &__image-container {
+            grid-area: image-container;
+            display: grid;
+            background-color: rgba($color: #ffffff, $alpha: 40%);
+            border-radius: 1rem 0 0 1rem;
+            grid-template-rows: 1fr 2fr 1fr;
+            grid-template-areas: 
+                "."
+                "img"
+                ".";
+            &__img {
+                grid-area: img;
+            }
+            @media screen and (max-width: 60rem) {
+                visibility: hidden;
+            }
+        }
+
+        &__form-container {
+            grid-area: form-container;
+            display: grid;
+            background-color: white;
+            border-radius: 0 1rem 1rem 0;
+            align-items: center;
+            justify-content: center;
+            padding: 5rem;
+            @media screen and (max-width: 60rem) {
+                border-radius: 1rem 1rem;
+            }
+        }
+    }
 }

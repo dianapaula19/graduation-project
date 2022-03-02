@@ -1,16 +1,16 @@
-enum Action {
+enum AuthentificationAction {
     login = "login",
     register = "register"
 }
 
-interface AuthetificationPageProps {
-    action: Action
+interface IAuthetificationPageProps {
+    action: AuthentificationAction
 }
 
 export type {
-    AuthetificationPageProps
+    IAuthetificationPageProps
 }
 
 export {
-    Action
+    AuthentificationAction
 }

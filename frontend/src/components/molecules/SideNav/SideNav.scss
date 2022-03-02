@@ -1,0 +1,41 @@
+.side-nav {
+    display: grid;
+    grid-template-rows: 1fr .5fr 2fr 3fr 1fr .5fr;
+    row-gap: 1rem;
+    grid-template-areas: 
+        "languages"
+        "." 
+        "logo" 
+        "links" 
+        "copyright" 
+        ".";
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-right: #525252 solid .05rem;
+    height: 100vh;
+    width: 30vw;
+
+    &__logo {
+        grid-area: logo;
+        width: 75%;
+        align-self: center;
+        justify-self: center;
+    }
+    
+    &__links {
+        grid-area: links;
+        display: flex;
+        flex-direction: column;
+        width: 75%;
+        align-self: center;
+        justify-self: center;
+    }
+
+    &__copyright {
+        grid-area: copyright;
+        text-align: center;
+    }
+
+
+}
