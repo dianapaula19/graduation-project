@@ -1,8 +1,8 @@
 import React, { useState } from "react";
+import { useTranslation } from 'react-i18next';
 import Button from "../../atoms/Button/Button";
 import InputField from "../../atoms/InputField/InputField";
 import { InputFieldType } from "../../atoms/InputField/InputField.types";
-import { translations } from "./translations";
 import { regexRules } from "./utils";
 import { IRegistrationFormData } from "./RegistrationForm.types";
 import LogoSvg from "../../../assets/logo.svg";
@@ -17,6 +17,8 @@ const RegistrationForm = () => {
     });
 
     const componentClassName = "registration-form";
+
+    const { t } = useTranslation();
 
     const validation = {
         email: !regexRules.email.test(data.email),
@@ -44,41 +46,50 @@ const RegistrationForm = () => {
                 src={LogoSvg}
             />
             <InputField 
-                type={InputFieldType.email} 
-                name={"email"} 
-                id={"registration-form-email"}  
-                required={true} 
-                error={validation.email}  
-                onChange={handleChange} 
-                {...translations.ro.email}
+                type={InputFieldType.email}
+                name={"email"}
+                id={"registration-form-email"}
+                placeholder={t("registration.form.email.placeholder")} 
+                errorMessage={t("registration.form.email.errorMessage")}
+                label={t("registration.form.email.label")}
+                required={true}
+                error={validation.email}
+                onChange={handleChange}            
             />
             <InputField 
-                type={InputFieldType.password} 
-                name={"password"} 
-                id={"registration-form-password"}  
-                required={true} 
-                error={validation.password}  
-                onChange={handleChange} 
-                {...translations.ro.password}
+                type={InputFieldType.password}
+                name={"password"}
+                id={"registration-form-password"}
+                placeholder={t("registration.form.password.placeholder")} 
+                errorMessage={t("registration.form.password.errorMessage")}
+                label={t("registration.form.password.label")}
+                required={true}
+                error={validation.password}
+                onChange={handleChange}               
             />
             <InputField 
-                type={InputFieldType.password} 
-                name={"confirmPassword"} 
-                id={"registration-form-confirm-password"}  
-                required={true} 
-                error={validation.confirmPassword}  
-                onChange={handleChange} 
-                {...translations.ro.confirmPassword}
+                type={InputFieldType.password}
+                name={"confirmPassword"}
+                id={"registration-form-confirm-password"}
+                placeholder={t("registration.form.confirmPassword.placeholder")} 
+                errorMessage={t("registration.form.confirmPassword.errorMessage")}
+                label={t("registration.form.confirmPassword.label")}
+                required={true}
+                error={validation.confirmPassword}
+                onChange={handleChange}               
             />
             <Button 
-                label={translations.ro.button.label} 
+                label={t("registration.form.button.label")} 
                 disabled={validation.confirmPassword && validation.password && validation.email}
                 onClick={onSubmit}
             />
             <p className={`${componentClassName}__p`}>
-                {translations.ro.alreadyAnUser}
-                <a className={`${componentClassName}__a`}>
-                    {translations.ro.alreadyAnUserLink}
+                {t("registration.form.alreadyAnUser")}
+                <a
+                    href="/login" 
+                    className={`${componentClassName}__a`}
+                >
+                    {t("registration.form.alreadyAnUserLink")}
                 </a>
             </p>
         </div>

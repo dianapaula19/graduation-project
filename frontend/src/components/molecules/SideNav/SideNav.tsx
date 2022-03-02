@@ -4,7 +4,7 @@ import LogoSvg from "../../../assets/logo.svg";
 import "./SideNav.scss";
 import LanguageSwitch from "../../atoms/LanguagesSwitch/LanguageSwitch";
 
-const SideMenu = () => {
+const SideNav = () => {
     const componentClassName = "side-nav";
     return(
         <div className={componentClassName}>
@@ -36,4 +36,4 @@ const SideMenu = () => {
     )
 }
 
-export default SideMenu;
+export default SideNav;

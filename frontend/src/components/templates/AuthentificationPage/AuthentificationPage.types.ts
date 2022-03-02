@@ -3,12 +3,12 @@ enum AuthentificationAction {
     register = "register"
 }
 
-interface IAuthetificationPageProps {
+interface IAuthentificationPageProps {
     action: AuthentificationAction
 }
 
 export type {
-    IAuthetificationPageProps
+    IAuthentificationPageProps
 }
 
 export {

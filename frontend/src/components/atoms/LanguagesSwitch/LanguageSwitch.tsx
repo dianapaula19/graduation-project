@@ -1,28 +1,49 @@
-import React from "react"
-import { useAppDispatch } from "../../../app/hooks";
+import React from "react";
+import classNames from "classnames";
+import { useTranslation } from 'react-i18next';
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
+    currentLanguage,
     switchToEnglish,
     switchToRomanian
 } from "./LanguageSwitchSlice";
-import "./LanguageSwitch.scss"
+import "./LanguageSwitch.scss";
+import { Language } from "./LanguagesSwitch.types";
 
 const LanguageSwitch = () => {
 
+    const { t, i18n } = useTranslation();
+    const dispatch = useAppDispatch();
+
+    const language = useAppSelector(currentLanguage);
+    
     const componentClassName = "language-switch";
 
     return(
         <div className={componentClassName}>
             <img
-                className={`${componentClassName}__img`}
-                alt="Romania"
+                className={classNames(
+                    `${componentClassName}__img`,
+                    language === Language.ro && `${componentClassName}__img--selected`
+                )}
+                alt={t("ro")}
                 src="http://purecatamphetamine.github.io/country-flag-icons/3x2/RO.svg"
-                onClick={() => {}}
+                onClick={() => {
+                    i18n.changeLanguage(Language.ro);
+                    dispatch(switchToRomanian());
+                }}
             />
             <img
-                className={`${componentClassName}__img`}
-                alt="United Kingdom"
+                className={classNames(
+                    `${componentClassName}__img`,
+                    language === Language.en && `${componentClassName}__img--selected`
+                )}
+                alt={t("en")}
                 src="http://purecatamphetamine.github.io/country-flag-icons/3x2/GB.svg"
-                onClick={() => {}}
+                onClick={() => {
+                    i18n.changeLanguage(Language.en);
+                    dispatch(switchToEnglish())
+                }}
             />
         </div>
     )

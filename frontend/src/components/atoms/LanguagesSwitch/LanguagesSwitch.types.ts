@@ -1,6 +1,6 @@
 enum Language {
-    ro = "Romanian",
-    en = "English"
+    ro = "ro",
+    en = "en"
 }
 
 interface LanguageState {

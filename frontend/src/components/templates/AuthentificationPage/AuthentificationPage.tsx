@@ -2,16 +2,16 @@ import React from "react";
 import Languages from "../../atoms/LanguagesSwitch/LanguageSwitch";
 import LoginForm from "../../molecules/LoginForm/LoginForm";
 import RegistrationForm from "../../molecules/RegistrationForm/RegistrationForm";
-import { IAuthetificationPageProps, AuthentificationAction } from "./AuthentificationPage.types";
+import { IAuthentificationPageProps, AuthentificationAction } from "./AuthentificationPage.types";
 import LoginSvg from "./assets/login.svg";
 import RegistrationSvg from "./assets/registration.svg";
 import LogoSvg from "../../../assets/logo.svg";
 import "./AuthentificationPage.scss";
 
-const AuthetificationPage = ({
+const AuthentificationPage = ({
     action
 }
-: IAuthetificationPageProps) => {
+: IAuthentificationPageProps) => {
 
     const componentClassName = "authentification-template";
     const mainClassName = `${componentClassName}__main`;
@@ -51,4 +51,4 @@ const AuthetificationPage = ({
     )
 }
 
-export default AuthetificationPage;
+export default AuthentificationPage;
