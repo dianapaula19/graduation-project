@@ -1,6 +1,6 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import Languages from "./Languages";
+import Languages from "./LanguageSwitch";
 
 export default {
     title: "Molecules/Languages",

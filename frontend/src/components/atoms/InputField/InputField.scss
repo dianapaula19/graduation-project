@@ -4,7 +4,7 @@
     flex-direction: column;
     gap: .75rem;
     width: 100%;
-    margin-top: .5rem;
+    margin: .5rem 0 1rem 0;
 
     &__label {
         color: #525252;
@@ -19,7 +19,8 @@
         padding: 0 1rem;
         border-radius: .5rem;
         border: .15rem solid #c4c4c4;
-        height: 2.5rem;
+        height: 3.5rem;
+        background-color: white;
 
         &:focus-within {
             border-color: #0366d6;
@@ -33,7 +34,7 @@
 
         &__icon--password {
             cursor: pointer;
-            align-self: flex-end;
+            margin-left: auto;
         }
 
         &__input {

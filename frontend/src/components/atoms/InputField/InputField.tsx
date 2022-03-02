@@ -7,33 +7,30 @@ import "./InputField.scss";
 
 const InputField = ({
     type,
-    name,
     id,
-    placeholder,
     label,
-    required,
     error,
     errorMessage,
     modifier,
-    onChange
+    ...rest
 }
 : InputFieldProps
 ) => {
     
-    const mainClassName = "input-field";
-    const inputGroupClassName = `${mainClassName}__input-group`;
-    const errorGroupClassName = `${mainClassName}--error__error-group`;
+    const componentClassName = "input-field";
+    const inputGroupClassName = `${componentClassName}__input-group`;
+    const errorGroupClassName = `${componentClassName}--error__error-group`;
 
-    const mainClassNames = classNames(
-        mainClassName,
-        modifier && `${mainClassName}--${modifier}`,
-        error && `${mainClassName}--${InputFieldModifier.Error}`
+    const componentClassNames = classNames(
+        componentClassName,
+        modifier && `${componentClassName}--${modifier}`,
+        error && `${componentClassName}--${InputFieldModifier.error}`
     );
 
     const inputGroupClassNames = classNames(
         inputGroupClassName,
         modifier && `${inputGroupClassName}--${modifier}`,
-        error && `${inputGroupClassName}--${InputFieldModifier.Error}`    
+        error && `${inputGroupClassName}--${InputFieldModifier.error}`    
     );
     
     const [showPassword, setShowPassword] = useState(false);
@@ -83,20 +80,20 @@ const InputField = ({
 
     const switchType = (type: InputFieldType): InputFieldType => {
         switch (type) {
-            case InputFieldType.Email:
-                return InputFieldType.Email
-            case InputFieldType.Password:
-                return showPassword ? InputFieldType.Text : InputFieldType.Password
+            case InputFieldType.email:
+                return InputFieldType.email
+            case InputFieldType.password:
+                return showPassword ? InputFieldType.text : InputFieldType.password
             default:
-                return InputFieldType.Text
+                return InputFieldType.text
         }
     }
 
     return(
-        <div className={mainClassNames}>
+        <div className={componentClassNames}>
             <label 
                 htmlFor={id}
-                className={`${mainClassName}__label`}
+                className={`${componentClassName}__label`}
             >
                 {label}
             </label>
@@ -105,19 +102,16 @@ const InputField = ({
                 <input 
                     type={switchType(type)}
                     id={id}
-                    name={name}
-                    required={required}
-                    placeholder={placeholder}
-                    onChange={onChange}
                     className={classNames(
                         `${inputGroupClassName}__input`
                     )}
+                    {...rest}
                 />
                 {
-                    type === InputFieldType.Password && (passwordIconSwitch(showPassword))
+                    type === InputFieldType.password && (passwordIconSwitch(showPassword))
                 }    
             </div>
-            {error && (
+            { error && (
                 <div className={errorGroupClassName}>
                     <FontAwesomeIcon 
                         icon={faXmark} 

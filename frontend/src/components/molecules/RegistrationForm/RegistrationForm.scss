@@ -1,48 +1,28 @@
-.registration {
-
+.registration-form {
+    
     display: flex;
-    flex-direction: row;
-    height: 70vh;
-    width: 60vw; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: .5rem; 
+    width: 100%;
+    background-color: #ffffff;
 
-    &__image {
-        display: flex;
-        background-color: rgba($color: #ffffff, $alpha: 0.4);
-        border-radius: .2rem 0 0 .2rem;
-        padding: 5rem 0;
-        &__img {
-            width: 100%;
-            align-self: center;
-        }
+    &__img {
+        margin-bottom: 7.5rem;
+        width: 100%;
     }
-
-    @media only screen and (max-width: 80rem) {
-        &__image {
-            display: none;
-        }
+    
+    &__a {
+        all: unset;
+        color: #0366d6;
+        text-transform: uppercase;
+        margin-bottom: .5rem;
+        cursor: pointer;
     }
-
-    &__form {
-        display: flex;
-        flex-direction: column; 
-        align-items: center; 
-        gap: .5rem;
-        padding: 3rem 3rem; 
-        background-color: #ffffff;
-        border-radius: 0 .2rem .2rem 0;
-        &__img {
-            width: 50%;
-        }
-        &__a {
-            all: unset;
-            color: #0366d6;
-            text-transform: uppercase;
-            margin-bottom: .5rem;
-            cursor: pointer;
-        }
-        &__p {
-            color: #525252;
-            justify-self: center;
-        }
+    &__p {
+        color: #525252;
+        justify-self: center;
+        text-transform: uppercase;
     }
+    
 }

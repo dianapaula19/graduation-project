@@ -1,14 +1,16 @@
+import { InputHTMLAttributes } from "react";
+
 enum InputFieldType {
-    Email = "email",
-    Password = "password",
-    Text = "text"
+    email = "email",
+    password = "password",
+    text = "text"
 }
 
 enum InputFieldModifier {
-    Error = "error"
+    error = "error"
 }
 
-interface InputFieldProps {
+interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement>{
     modifier?: InputFieldModifier;
     type: InputFieldType;
     name: string;
