@@ -40,5 +40,14 @@
         },
         "newUser": "Utilizator nou? Crează-ți cont ",
         "newUserLink": "Aici"
-    } 
+    },
+    "sidenav": {
+        "signOut": "Deconectează-te",
+        "facultyName": "Facultatea de Matematică și Informatică"
+    },
+    "studentsList.header": {
+        "name": "Nume și Prenume",
+        "email": "Email"
+    },
+    "excelButton": "Exportează ca .xlsx"
 }

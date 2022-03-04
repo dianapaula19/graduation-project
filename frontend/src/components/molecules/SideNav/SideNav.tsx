@@ -3,9 +3,14 @@ import LinkButton from "../../atoms/LinkButton/LinkButton";
 import LogoSvg from "../../../assets/logo.svg";
 import "./SideNav.scss";
 import LanguageSwitch from "../../atoms/LanguagesSwitch/LanguageSwitch";
+import { useTranslation } from "react-i18next";  
 
 const SideNav = () => {
+    
     const componentClassName = "side-nav";
+
+    const { t } = useTranslation(); 
+
     return(
         <div className={componentClassName}>
             <LanguageSwitch />
@@ -16,8 +21,11 @@ const SideNav = () => {
             />
             <div 
                 className={`${componentClassName}__links`}
-            >
-                <LinkButton text={"Deconecteaza-te"} href={""}/>
+            >   
+                <LinkButton 
+                    text={t("sidenav.signOut")} 
+                    href={"/login"}
+                />
 
             </div>
             <p
@@ -28,7 +36,7 @@ const SideNav = () => {
                 </span>
                 <br/>
                 <span>
-                    Facultatea de Matematică și Informatică
+                    {t("sidenav.facultyName")}
                 </span>
             </p>
 

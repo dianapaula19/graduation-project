@@ -6,20 +6,26 @@
     
     column-gap: .5rem;
     border: #c4c4c4 solid .05rem;
+    background-color: #ffffff;
     box-shadow: .1rem .1rem .05rem #c4c4c4;
-    padding: .75rem;
+    padding: .75rem 1.5rem;
+    height: 2.5rem;
+
     align-items: center;
 
     &__drag-icon {
         grid-area: drag-icon; 
         color: #525252;
         justify-self: start;
+        height: 1.5rem;
+        cursor: pointer;
     }
 
     &__info {
         grid-area: info;
         color: #525252;
         justify-self: center;
+        font-size: small;
     }
 
     &__a {
@@ -29,7 +35,7 @@
     &__file-icon {
         grid-area: file-icon;
         color: #525252;
-        justify-self: end;
+        height: 1.5rem;
         cursor: pointer;
     }
 

@@ -1,7 +1,7 @@
 import React from "react";
 import Languages from "../../atoms/LanguagesSwitch/LanguageSwitch";
-import LoginForm from "../../molecules/LoginForm/LoginForm";
-import RegistrationForm from "../../molecules/RegistrationForm/RegistrationForm";
+import LoginForm from "../../molecules/forms/LoginForm/LoginForm";
+import RegistrationForm from "../../molecules/forms/RegistrationForm/RegistrationForm";
 import { IAuthentificationPageProps, AuthentificationAction } from "./AuthentificationPage.types";
 import LoginSvg from "./assets/login.svg";
 import RegistrationSvg from "./assets/registration.svg";

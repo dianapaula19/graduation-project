@@ -40,5 +40,14 @@
         },
         "newUser": "New user? ",
         "newUserLink": "Sign Up"
-    } 
+    },
+    "sidenav": {
+        "signOut": "Sign Out",
+        "facultyName": "Faculty of Mathematics and Computer Science"
+    },
+    "studentsList.header": {
+        "name": "Last Name and First Name",
+        "email": "Email"
+    },
+    "excelButton": "Export as .xlsx"
 }

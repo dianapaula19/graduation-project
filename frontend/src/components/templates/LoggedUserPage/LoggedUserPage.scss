@@ -1,8 +1,13 @@
 .logged-user-template {
     display: flex;
-    flex-direction: column;
-    gap: 5rem;
+    flex-direction: row;
     background-color: #F7F7F7;
     height: 100vh;
     width: 100vw;
+
+    &__content {
+        margin: 10rem 10rem;
+        width: 80vw;
+    }
+
 }

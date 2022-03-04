@@ -1,6 +1,8 @@
 .button {
     all: unset;
     text-transform: uppercase;
+    font-size: small;
+    font-weight: bold;
     background-color: #0366d6;
     color: white;
     border-radius: .5rem;
@@ -18,4 +20,30 @@
         cursor: not-allowed; 
     }
 
+}
+
+.button--save {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    color: #4ea853;
+    background-color: transparent;
+    border: #4ea853 solid .2rem;
+    grid-area: save-button;
+    margin: 0;
+}
+
+.button--excel {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    color: #0366d6;
+    background-color: transparent;
+    border: #0366d6 solid .2rem;
+    grid-area: excel-button;
+    margin: 0;
 }

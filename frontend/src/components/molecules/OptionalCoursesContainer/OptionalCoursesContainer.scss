@@ -1,0 +1,25 @@
+.optional-courses-container {
+
+    display: grid;
+    grid-template-areas: 
+        "title . ."
+        "optionals optionals optionals"
+        ". . save-button";
+
+    padding: 2.5rem 0;
+
+    &__title {
+        grid-area: title;
+        text-transform: capitalize;
+        font-size: medium;
+    }
+
+    &__list {
+        grid-area: optionals;
+        display: flex;
+        flex-direction: column;
+        gap: .75rem;
+        margin: 1rem 0;
+        
+    }
+}

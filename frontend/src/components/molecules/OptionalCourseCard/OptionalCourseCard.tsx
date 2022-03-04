@@ -15,7 +15,6 @@ const OptionalCourseCard = ({
 
     return (
         <div 
-            draggable
             className={componentClassName}
         >
             <FontAwesomeIcon 

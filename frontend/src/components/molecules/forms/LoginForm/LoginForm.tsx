@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useTranslation } from 'react-i18next';
-import Button from "../../atoms/Button/Button";
-import InputField from "../../atoms/InputField/InputField";
-import { InputFieldType } from "../../atoms/InputField/InputField.types";
+import Button from "../../../atoms/Button/Button";
+import InputField from "../../../atoms/InputField/InputField";
+import { InputFieldType } from "../../../atoms/InputField/InputField.types";
 import { translations } from "./translations";
 import { ILoginFormData } from "./LoginForm.types";
-import LogoSvg from "../../../assets/logo.svg";
+import LogoSvg from "../../../../assets/logo.svg";
 import "./LoginForm.scss";
 
 const LoginForm = () => {
