@@ -2,14 +2,14 @@
     display: grid;
     grid-template-columns: 1fr 3fr 1fr;
     grid-template-areas: 
-        "drag-icon info file-icon";
+        "drag-icon info syllabus-button";
     
     column-gap: .5rem;
     border: #c4c4c4 solid .05rem;
     background-color: #ffffff;
     box-shadow: .1rem .1rem .05rem #c4c4c4;
     padding: .75rem 1.5rem;
-    height: 2.5rem;
+    height: 3rem;
 
     align-items: center;
 
@@ -31,13 +31,4 @@
     &__a {
         justify-self: end;
     }
-
-    &__file-icon {
-        grid-area: file-icon;
-        color: #525252;
-        height: 1.5rem;
-        cursor: pointer;
-    }
-
-
 }

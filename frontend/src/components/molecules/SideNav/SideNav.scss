@@ -1,11 +1,12 @@
 .side-nav {
     display: grid;
-    grid-template-rows: 1fr .5fr 2fr 3fr 1fr .5fr;
+    grid-template-rows: 1fr .5fr 2fr .5fr 3fr 1fr .5fr;
     row-gap: 1rem;
     grid-template-areas: 
         "languages"
         "." 
-        "logo" 
+        "logo"
+        "welcome-message" 
         "links" 
         "copyright" 
         ".";
@@ -19,6 +20,14 @@
     &__logo {
         grid-area: logo;
         width: 75%;
+        align-self: center;
+        justify-self: center;
+    }
+
+    &__welcome-message {
+        grid-area: welcome-message;
+        color: #525252;
+        font-size: medium;
         align-self: center;
         justify-self: center;
     }

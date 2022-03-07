@@ -5,8 +5,8 @@ import RegistrationForm from "../../molecules/forms/RegistrationForm/Registratio
 import { IAuthentificationPageProps, AuthentificationAction } from "./AuthentificationPage.types";
 import LoginSvg from "./assets/login.svg";
 import RegistrationSvg from "./assets/registration.svg";
-import LogoSvg from "../../../assets/logo.svg";
 import "./AuthentificationPage.scss";
+import Footer from "../../molecules/Footer";
 
 const AuthentificationPage = ({
     action
@@ -35,7 +35,6 @@ const AuthentificationPage = ({
     return(
         <div className={componentClassName}>
             <Languages/>
-
             <div className={mainClassName}>
                 <div className={imageClassName}>
                     <img
@@ -47,6 +46,7 @@ const AuthentificationPage = ({
                     {form}
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }

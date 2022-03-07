@@ -43,11 +43,17 @@
     },
     "sidenav": {
         "signOut": "Deconectează-te",
-        "facultyName": "Facultatea de Matematică și Informatică"
+        "facultyName": "Facultatea de Matematică și Informatică",
+        "displayMessage": {
+            "morning": "Neața",
+            "afternoon": "Zi faină",
+            "night": "Seară faină"
+        }
     },
     "studentsList.header": {
         "name": "Nume și Prenume",
         "email": "Email"
     },
-    "excelButton": "Exportează ca .xlsx"
+    "excelButton": "Exportează ca .xlsx",
+    "syllabusButton": "Vezi fișa disciplinei"
 }

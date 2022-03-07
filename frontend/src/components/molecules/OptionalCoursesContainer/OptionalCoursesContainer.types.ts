@@ -1,7 +1,8 @@
 import { IOptionalCourseCardProps } from "../OptionalCourseCard/OptionalCourseCard.types";
 
 interface IOptionalCoursesContainerProps {
-    title: string;
+    groupId: string;
+    groupTitle: string;
     optionalCourses: IOptionalCourseCardProps[];
 }
 

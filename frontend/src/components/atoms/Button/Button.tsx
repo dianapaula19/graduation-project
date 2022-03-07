@@ -3,7 +3,7 @@ import React from "react";
 import { ButtonModifier, IButtonProps } from "./Button.types";
 import "./Button.scss"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileExcel, faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
+import { faFileExcel, faFloppyDisk, faFilePdf } from "@fortawesome/free-solid-svg-icons";
 
 const Button = ({
     label,

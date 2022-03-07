@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
+import { DragDropContext, Draggable, Droppable, DropResult, ResponderProvided } from "react-beautiful-dnd";
 import Button from "../../atoms/Button";
 import { ButtonModifier } from "../../atoms/Button/Button.types";
 import OptionalCourseCard from "../OptionalCourseCard/OptionalCourseCard";
@@ -6,60 +7,42 @@ import { IOptionalCourseCardProps } from "../OptionalCourseCard/OptionalCourseCa
 import "./OptionalCoursesContainer.scss";
 import { IOptionalCoursesContainerProps } from "./OptionalCoursesContainer.types";
 
-
-
 const OptionalCoursesContainer = ({
-    title,
+    groupId,
+    groupTitle,
     optionalCourses
 }: IOptionalCoursesContainerProps) => {
 
     const componentClassName = "optional-courses-container";
     
     const [list, setList] = useState<IOptionalCourseCardProps[]>(optionalCourses);
-
-    const draggingCard = useRef<number | null>(null); 
-    const dragOverCard = useRef<number | null>(null);
     
     const saveChanges = () => {
 
     }
 
-    const handleDragStart = (
-        event: React.DragEvent<HTMLDivElement>,
-        cardIndex: number
-    ) => {
-        console.log("start");
-        draggingCard.current = cardIndex;
-    }
+    const onDragEnd = (result: DropResult): void => {
 
-    const handleDragEnter = (
-        event: React.DragEvent<HTMLDivElement>, 
-        cardIndex: number) => 
-    {
-        console.log("enter");
-        dragOverCard.current = cardIndex;
-    }
-
-    const handleDragEnd = (event: React.DragEvent<HTMLDivElement>) => {
-
-        console.log("end");
-
-        const draggingCardIndex = draggingCard.current as number;
-        const dragOverCardIndex = dragOverCard.current as number;
-
-        const listCopy = [...list];
+        if (!result.destination) return;
         
-        const draggingItemContent = listCopy[draggingCardIndex];
-        listCopy.splice(draggingCardIndex, 1);
-        listCopy.splice(dragOverCardIndex, 0, draggingItemContent);
+        const { source, destination } = result;
 
-        draggingCard.current = null;
-        dragOverCard.current = null;
-        
-        setList(listCopy);
+        if (!destination) {
+            return;
+        }
+      
+        if (source.index === destination.index) {
+            return;
+        } 
+
+        let items = [...list];
+        const [ removed ] = items.splice(source.index, 1);
+        items.splice(destination.index, 0, removed);
+
+        setList([...items]);
 
     };
-    
+
     return (
         <div 
             className={componentClassName}
@@ -67,27 +50,31 @@ const OptionalCoursesContainer = ({
             <span 
                 className={`${componentClassName}__title`}
             >
-                {title}
+                {groupTitle}
             </span>
-            <div
-                className={`${componentClassName}__list`}
-            >
-                {optionalCourses.map((optionalCourse, idx) => {
-                    return (
+            <DragDropContext
+                onDragEnd={onDragEnd}
+            >   
+                <Droppable droppableId={groupId}>
+                    {(provided, snapshot) => (
                         <div
-                            draggable
-                            key={idx}
-                            onDragStart={(e) => handleDragStart(e, idx)}
-                            onDragEnter={(e) => handleDragEnter(e, idx)}
-                            onDragEnd={(e) => handleDragEnd(e)}
-                        >
-                            <OptionalCourseCard
-                                {...optionalCourse} 
-                            />
+                            {...provided.droppableProps}
+                            ref={provided.innerRef}
+                            className={`${componentClassName}__list`}
+                        >   
+                            {optionalCourses.map((optionalCourse, index) => {
+                                return (
+                                    <OptionalCourseCard 
+                                        key={index}
+                                        {...optionalCourse}
+                                    />
+                                );
+                            })}
+                            {provided.placeholder}
                         </div>
-                    )
-                })}
-            </div>
+                    )}
+                </Droppable>
+            </DragDropContext>
             <Button 
                 label={"Save Changes"} 
                 disabled={false} 

@@ -43,11 +43,17 @@
     },
     "sidenav": {
         "signOut": "Sign Out",
-        "facultyName": "Faculty of Mathematics and Computer Science"
+        "facultyName": "Faculty of Mathematics and Computer Science",
+        "displayMessage": {
+            "morning": "Good morning",
+            "afternoon": "Good afternoon",
+            "night": "Good evening"
+        }
     },
     "studentsList.header": {
         "name": "Last Name and First Name",
         "email": "Email"
     },
-    "excelButton": "Export as .xlsx"
+    "excelButton": "Export as .xlsx",
+    "syllabusButton": "View the syllabus"
 }
