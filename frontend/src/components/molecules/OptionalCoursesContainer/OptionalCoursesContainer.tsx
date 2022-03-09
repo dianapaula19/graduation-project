@@ -1,5 +1,6 @@
 import React, { useCallback, useRef, useState } from "react";
 import { DragDropContext, Draggable, Droppable, DropResult, ResponderProvided } from "react-beautiful-dnd";
+import { useTranslation } from "react-i18next";
 import Button from "../../atoms/Button";
 import { ButtonModifier } from "../../atoms/Button/Button.types";
 import OptionalCourseCard from "../OptionalCourseCard/OptionalCourseCard";
@@ -14,6 +15,8 @@ const OptionalCoursesContainer = ({
 }: IOptionalCoursesContainerProps) => {
 
     const componentClassName = "optional-courses-container";
+
+    const { t } = useTranslation();
     
     const [list, setList] = useState<IOptionalCourseCardProps[]>(optionalCourses);
     
@@ -62,7 +65,7 @@ const OptionalCoursesContainer = ({
                             ref={provided.innerRef}
                             className={`${componentClassName}__list`}
                         >   
-                            {optionalCourses.map((optionalCourse, index) => {
+                            {list.map((optionalCourse, index) => {
                                 return (
                                     <OptionalCourseCard 
                                         key={index}
@@ -76,7 +79,7 @@ const OptionalCoursesContainer = ({
                 </Droppable>
             </DragDropContext>
             <Button 
-                label={"Save Changes"} 
+                label={t("saveButton")} 
                 disabled={false} 
                 modifier={ButtonModifier.save}
                 onClick={saveChanges} 

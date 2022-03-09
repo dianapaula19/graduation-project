@@ -54,6 +54,7 @@
         "name": "Nume și Prenume",
         "email": "Email"
     },
+    "saveButton": "Salvează modificările",
     "excelButton": "Exportează ca .xlsx",
     "syllabusButton": "Vezi fișa disciplinei"
 }

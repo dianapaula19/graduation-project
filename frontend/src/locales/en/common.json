@@ -54,6 +54,7 @@
         "name": "Last Name and First Name",
         "email": "Email"
     },
+    "saveButton": "Save changes",
     "excelButton": "Export as .xlsx",
     "syllabusButton": "View the syllabus"
 }
