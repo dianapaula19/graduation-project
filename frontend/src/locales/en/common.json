@@ -1,0 +1,60 @@
+{
+    "en": "English",
+    "ro": "Romanian",
+    "registration.form": {
+        "email": {
+            "placeholder": "Email",
+            "errorMessage": "Text",
+            "label": "Email"
+        },
+        "password": {
+            "placeholder": "Password",
+            "errorMessage": "Text",
+            "label": "Password"
+        },
+        "confirmPassword": {
+            "placeholder": "Confirm Password",
+            "errorMessage": "Text",
+            "label": "Confirm Password"
+        },
+        "button": {
+            "label": "Sign Up"
+        },
+        "alreadyAnUser": "Already an user? ",
+        "alreadyAnUserLink": "Sign In"
+    },
+    "login.form": {
+        "email": {
+            "placeholder": "Email",
+            "errorMessage": "Text",
+            "label": "Email"
+        },
+        "password": {
+            "placeholder": "Password",
+            "errorMessage": "Text",
+            "label": "Password"
+        },
+        "forgotPassword": "Forgot your password?",
+        "button": {
+            "label": "Sign In"
+        },
+        "newUser": "New user? ",
+        "newUserLink": "Sign Up"
+    },
+    "sidenav": {
+        "signOut": "Sign Out",
+        "facultyName": "Faculty of Mathematics and Computer Science",
+        "displayMessage": {
+            "morning": "Good morning",
+            "afternoon": "Good afternoon",
+            "night": "Good evening"
+        }
+    },
+    "studentsList.header": {
+        "name": "Last Name and First Name",
+        "email": "Email"
+    },
+    "saveButton": "Save changes",
+    "excelButton": "Export as .xlsx",
+    "syllabusButton": "View the syllabus"
+}

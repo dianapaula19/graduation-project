@@ -1,11 +1,14 @@
+import { ButtonHTMLAttributes } from "react";
+
 enum ButtonModifier {
     disabled = "disabled",
+    excel = "excel",
+    save = "save"
 }
 
-interface IButtonProps {
+interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     label: string;
     disabled: boolean;
-    onClick: () => void;
     modifier?: ButtonModifier
 }
 

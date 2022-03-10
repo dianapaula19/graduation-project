@@ -1,12 +1,13 @@
 import classNames from "classnames";
 import React from "react";
-import { IButtonProps } from "./Button.types";
+import { ButtonModifier, IButtonProps } from "./Button.types";
 import "./Button.scss"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileExcel, faFloppyDisk, faFilePdf } from "@fortawesome/free-solid-svg-icons";
 
 const Button = ({
     label,
     disabled,
-    onClick,
     modifier
 }
 :IButtonProps
@@ -16,13 +17,32 @@ const Button = ({
         componentClassName,
         modifier && `${componentClassName}--${modifier}`
     )
+    
+    let icon = null;
+    switch (modifier) {
+        case ButtonModifier.save:
+            icon = <FontAwesomeIcon icon={faFloppyDisk} /> 
+            break;
+        case ButtonModifier.excel:
+            icon = <FontAwesomeIcon icon={faFileExcel} />
+            break;
+        default:
+            break;
+    }
+
     return(
         <button 
             className={componentClassNames}
             disabled={disabled}
-            onClick={onClick}
-        >
-            {label}
+        >   
+            {modifier && (
+                icon           
+            )}
+            <span
+                className={`${componentClassName}__span`}
+            >
+                {label}    
+            </span>
         </button>
     );
 }

@@ -1,0 +1,52 @@
+.students-list {
+    width: 100%;   
+    font-size: medium;
+    color: #525252; 
+    grid-area: students-list;
+
+    &__header {
+        display: grid;
+        border-bottom: #525252 solid .1rem;
+        padding-bottom: 1rem;
+        margin-bottom: 2.5rem;
+        text-transform: uppercase;
+        grid-template-columns: .1fr 2fr 2fr;
+        grid-template-areas: 
+            "header-index header-name header-email";
+
+        &__index {
+            grid-area: header-index;
+        }
+
+        &__name {
+            grid-area: header-name;
+        }
+
+        &__email {
+            grid-area: header-email;
+        }
+    }
+
+    &__item {
+        display: grid;
+        grid-template-columns: .1fr 2fr 2fr;
+        grid-template-areas: 
+            "item-index item-name item-email";
+        &__index {
+            grid-area: item-index;
+        }
+
+        &__name {
+            grid-area: item-name;
+        }
+
+        &__email {
+            grid-area: item-email;
+        }
+
+    }
+
+    &__item :not(:last-child) {
+        padding-bottom: 1rem;
+    }
+}

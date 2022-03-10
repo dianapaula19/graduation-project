@@ -1,0 +1,60 @@
+{
+    "en": "Engleză",
+    "ro": "Română",
+    "registration.form": {
+        "email": {
+            "placeholder": "Email",
+            "errorMessage": "Text",
+            "label": "Email"
+        },
+        "password": {
+            "placeholder": "Parolă",
+            "errorMessage": "Text",
+            "label": "Parolă"
+        },
+        "confirmPassword": {
+            "placeholder": "Confirmă Parola",
+            "errorMessage": "Text",
+            "label": "Confirmă Parola"
+        },
+        "button": {
+            "label": "Crează-ți cont"
+        },
+        "alreadyAnUser": "Ai deja cont? Loghează-te ",
+        "alreadyAnUserLink": "Aici"
+    },
+    "login.form": {
+        "email": {
+            "placeholder": "Email",
+            "errorMessage": "Text",
+            "label": "Email"
+        },
+        "password": {
+            "placeholder": "Parolă",
+            "errorMessage": "Text",
+            "label": "Parolă"
+        },
+        "forgotPassword": "Ți-ai uitat parola?",
+        "button": {
+            "label": "Loghează-te"
+        },
+        "newUser": "Utilizator nou? Crează-ți cont ",
+        "newUserLink": "Aici"
+    },
+    "sidenav": {
+        "signOut": "Deconectează-te",
+        "facultyName": "Facultatea de Matematică și Informatică",
+        "displayMessage": {
+            "morning": "Neața",
+            "afternoon": "Zi faină",
+            "night": "Seară faină"
+        }
+    },
+    "studentsList.header": {
+        "name": "Nume și Prenume",
+        "email": "Email"
+    },
+    "saveButton": "Salvează modificările",
+    "excelButton": "Exportează ca .xlsx",
+    "syllabusButton": "Vezi fișa disciplinei"
+}
