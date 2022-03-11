@@ -41,8 +41,36 @@
         "newUser": "Utilizator nou? Crează-ți cont ",
         "newUserLink": "Aici"
     },
+    "resetPassword.form": {
+        "instructions": "Noua ta parolă trebuie să fie diferită de parolele folosite anterior.",
+        "password": {
+            "placeholder": "Parolă",
+            "errorMessage": "Text",
+            "label": "Parolă"
+        },
+        "confirmPassword": {
+            "placeholder": "Confirmă Parola",
+            "errorMessage": "Text",
+            "label": "Confirmă Parola"
+        },
+        "button": {
+            "label": "Resetează parola"
+        }
+    },
+    "recoverAccount.form": {
+        "instructions": "Introdu adresa de email asociată contului tău și îți vom trimite un email cu instrucțiuni pentru resetarea parolei.",
+        "email": {
+            "placeholder": "Email",
+            "errorMessage": "Text",
+            "label": "Email"
+        },
+        "button": {
+            "label": "Trimite Instrucțiuni"
+        }
+    },
     "sidenav": {
         "signOut": "Deconectează-te",
+        "personalData": "Date personale",
         "facultyName": "Facultatea de Matematică și Informatică",
         "displayMessage": {
             "morning": "Neața",
@@ -50,9 +78,12 @@
             "night": "Seară faină"
         }
     },
-    "studentsList.header": {
-        "name": "Nume și Prenume",
-        "email": "Email"
+    "studentsList": {
+        "header": {
+            "name": "Nume și Prenume",
+            "email": "Email"    
+        },
+        "sheetName": "Studenți Înscriși"
     },
     "saveButton": "Salvează modificările",
     "excelButton": "Exportează ca .xlsx",

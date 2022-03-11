@@ -1,6 +1,8 @@
 enum AuthentificationAction {
     login = "login",
-    register = "register"
+    register = "register",
+    recoverAccount = "recover account",
+    resetPassword = "reset password"
 }
 
 interface IAuthentificationPageProps {

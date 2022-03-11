@@ -62,6 +62,10 @@ const SideNav = () => {
                 className={`${componentClassName}__links`}
             >   
                 <LinkButton 
+                    text={t("sidenav.personalData")}
+                    href={"/"}
+                />
+                <LinkButton 
                     text={t("sidenav.signOut")} 
                     href={"/login"}
                 />

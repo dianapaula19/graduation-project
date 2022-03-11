@@ -2,6 +2,8 @@
     display: grid;
     row-gap: 5rem;
     grid-template-areas: 
-        "students-list students-list students-list students-list"
-        ". . . excel-button";
+        "dropdown-teacher-list . . . ."
+        ". . . . ."
+        "students-list students-list students-list students-list students-list"
+        ". . . . excel-button";
 }

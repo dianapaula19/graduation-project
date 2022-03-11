@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import Button from "../../../atoms/Button/Button";
 import InputField from "../../../atoms/InputField/InputField";
 import { InputFieldType } from "../../../atoms/InputField/InputField.types";
-import { regexRules } from "./utils";
+import { regexRules } from "../utils";
 import { IRegistrationFormData } from "./RegistrationForm.types";
 import LogoSvg from "../../../../assets/logo.svg";
 import "./RegistrationForm.scss";

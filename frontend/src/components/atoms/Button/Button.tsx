@@ -8,7 +8,8 @@ import { faFileExcel, faFloppyDisk, faFilePdf } from "@fortawesome/free-solid-sv
 const Button = ({
     label,
     disabled,
-    modifier
+    modifier,
+    ...rest
 }
 :IButtonProps
 ) => {
@@ -34,6 +35,7 @@ const Button = ({
         <button 
             className={componentClassNames}
             disabled={disabled}
+            {...rest}
         >   
             {modifier && (
                 icon           

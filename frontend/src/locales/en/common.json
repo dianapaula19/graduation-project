@@ -41,8 +41,36 @@
         "newUser": "New user? ",
         "newUserLink": "Sign Up"
     },
+    "resetPassword.form": {
+        "instructions": "Your new password must be different from previous used password.",
+        "password": {
+            "placeholder": "Password",
+            "errorMessage": "Text",
+            "label": "Password"
+        },
+        "confirmPassword": {
+            "placeholder": "Confirm Password",
+            "errorMessage": "Text",
+            "label": "Confirm Password"
+        },
+        "button": {
+            "label": "Reset Password"
+        }
+    },
+    "recoverAccount.form": {
+        "instructions": "Enter the email associated with your account and we'll send an email with instructions to reset your password.",
+        "email": {
+            "placeholder": "Email",
+            "errorMessage": "Text",
+            "label": "Email"
+        },
+        "button": {
+            "label": "Send Instructions"
+        }
+    },
     "sidenav": {
         "signOut": "Sign Out",
+        "personalData": "Personal Data",
         "facultyName": "Faculty of Mathematics and Computer Science",
         "displayMessage": {
             "morning": "Good morning",
@@ -50,9 +78,12 @@
             "night": "Good evening"
         }
     },
-    "studentsList.header": {
-        "name": "Last Name and First Name",
-        "email": "Email"
+    "studentsList": {
+        "header": {
+            "name": "Last Name and First Name",
+            "email": "Email"    
+        },
+        "sheetName": "Enrolled Students"
     },
     "saveButton": "Save changes",
     "excelButton": "Export as .xlsx",

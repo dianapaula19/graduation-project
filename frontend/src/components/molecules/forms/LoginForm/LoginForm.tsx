@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import Button from "../../../atoms/Button/Button";
 import InputField from "../../../atoms/InputField/InputField";
 import { InputFieldType } from "../../../atoms/InputField/InputField.types";
-import { translations } from "./translations";
 import { ILoginFormData } from "./LoginForm.types";
 import LogoSvg from "../../../../assets/logo.svg";
 import "./LoginForm.scss";
@@ -60,7 +59,10 @@ const LoginForm = () => {
                 error={false}  
                 onChange={handleChange} 
             />
-            <a className={`${componentClassName}__a`}>
+            <a 
+                className={`${componentClassName}__a`}
+                href="/recoverAccount"
+            >
                 {t("login.form.forgotPassword")}
             </a>
             <Button 

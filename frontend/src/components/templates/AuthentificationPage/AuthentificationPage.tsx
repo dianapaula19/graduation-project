@@ -2,11 +2,14 @@ import React from "react";
 import Languages from "../../atoms/LanguagesSwitch/LanguageSwitch";
 import LoginForm from "../../molecules/forms/LoginForm/LoginForm";
 import RegistrationForm from "../../molecules/forms/RegistrationForm/RegistrationForm";
+import RecoverAccountForm from "../../molecules/forms/RecoverAccountForm";
+import ResetPasswordForm from "../../molecules/forms/ResetPasswordForm";
 import { IAuthentificationPageProps, AuthentificationAction } from "./AuthentificationPage.types";
 import LoginSvg from "./assets/login.svg";
 import RegistrationSvg from "./assets/registration.svg";
+import RecoverAccountSvg from "./assets/recover-account.svg";
+import ResetPasswordSvg from "./assets/reset-password.svg";
 import "./AuthentificationPage.scss";
-import Footer from "../../molecules/Footer";
 
 const AuthentificationPage = ({
     action
@@ -30,6 +33,14 @@ const AuthentificationPage = ({
             form = <LoginForm />;
             image = LoginSvg;
             break;
+        case AuthentificationAction.recoverAccount:
+            form = <RecoverAccountForm />;
+            image = RecoverAccountSvg;
+            break;
+        case AuthentificationAction.resetPassword:
+            form = <ResetPasswordForm />;
+            image = ResetPasswordSvg;
+            break;
     }
 
     return(
@@ -46,7 +57,6 @@ const AuthentificationPage = ({
                     {form}
                 </div>
             </div>
-            <Footer />
         </div>
     )
 }

@@ -13,13 +13,8 @@ enum InputFieldModifier {
 interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement>{
     modifier?: InputFieldModifier;
     type: InputFieldType;
-    name: string;
-    id: string;
-    placeholder: string;
-    required: boolean;
     error: boolean;
     errorMessage: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     label: string;
 }
 

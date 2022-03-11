@@ -1,13 +1,14 @@
 .authentification-template {
     display: grid;
     gap: 3rem;
+    min-height: 100%;
     background-color: rgba($color: #0366d6, $alpha: .75);
     grid-template-columns: 1fr 3fr 1fr;
-    grid-template-rows: .25fr 3fr .5fr;
+    grid-template-rows: .25fr 3fr .25fr;
     grid-template-areas: 
         "languages . ."
         ". main ."
-        "footer footer footer";
+        ". . .";
 
     &__main {
         height: 100%;

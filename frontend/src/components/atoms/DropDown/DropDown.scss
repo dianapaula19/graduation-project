@@ -1,0 +1,34 @@
+.dropdown {
+
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+    width: 100%; 
+    margin: .5rem 0 1rem 0;
+
+    &__label {
+        color: #525252;
+        text-transform: uppercase;
+    }
+
+    &__select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        outline: none;
+        &:focus {
+            border-color: #0366d6;
+        }
+        padding: 0 1rem;
+        border-radius: .5rem;
+        border: .15rem solid #c4c4c4;
+        height: 3.5rem;
+        background-color: white;
+        color: #525252;
+    }
+
+}
+
+.dropdown--teacher-list {
+    grid-area: dropdown-teacher-list;
+}

@@ -21,3 +21,9 @@ export const LoginPage = Template.bind({});
 LoginPage.args = {
     action: AuthentificationAction.login
 }
+
+export const RecoverAccountPage = Template.bind({});
+
+LoginPage.args = {
+    action: AuthentificationAction.recoverAccount
+}

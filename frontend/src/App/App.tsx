@@ -25,6 +25,22 @@ function App() {
               />} 
           />
           <Route 
+            path="recoverAccount"
+            element={
+              <AuthentificationPage 
+                action={AuthentificationAction.recoverAccount}                
+              />
+            }
+          />
+          <Route 
+            path="resetPassword"
+            element={
+              <AuthentificationPage 
+                action={AuthentificationAction.resetPassword}
+              />
+            }
+          />
+          <Route 
             path="student/select"
             element={
               <OptionalCoursesSelectionPage />
