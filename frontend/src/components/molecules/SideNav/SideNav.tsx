@@ -16,10 +16,8 @@ const SideNav = () => {
 
     let hr = (new Date()).getHours();
 
-    if (hr >= 6 && hr <= 12) {
+    if (hr >= 4 && hr <= 18) {
         time = 'morning';
-    } else if (hr >= 12 && hr <= 6){
-        time = 'afternoon';
     } else {
         time = 'night';
     }
@@ -30,10 +28,6 @@ const SideNav = () => {
     switch (time) {
         case 'morning':
             displayMessage = t("sidenav.displayMessage.morning");
-            emoji = <span aria-label="coffee">☕</span>;
-            break;
-        case 'afternoon':
-            displayMessage = t("sidenav.displayMessage.afternoon");
             emoji = <span aria-label="sunflower">🌻</span>;
             break;
         case 'night':

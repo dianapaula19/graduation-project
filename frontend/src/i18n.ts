@@ -18,7 +18,7 @@ i18n
   .init({
     resources,
     debug: true,
-    fallbackLng: "ro",
+    lng: localStorage.getItem('language') as string,
 
     interpolation: {
       escapeValue: false, // not needed for react!!

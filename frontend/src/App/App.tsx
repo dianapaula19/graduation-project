@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import PersonalDataPage from '../components/pages/PersonalDataPage';
 import OptionalCoursesSelectionPage from '../components/pages/student/OptionalCoursesSelectionPage';
 import OptionalCoursesList from '../components/pages/teacher/OptionalCoursesList';
 import AuthentificationPage from '../components/templates/AuthentificationPage/AuthentificationPage';
@@ -39,6 +40,10 @@ function App() {
                 action={AuthentificationAction.resetPassword}
               />
             }
+          />
+          <Route 
+            path="/"
+            element={<PersonalDataPage />}
           />
           <Route 
             path="student/select"

@@ -17,6 +17,7 @@
     border-right: #c4c4c4 solid .05rem;
     height: 100%;
     width: 20vw;
+    z-index: 5;
 
     &__logo {
         grid-area: logo;
