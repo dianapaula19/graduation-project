@@ -56,26 +56,42 @@ class User(AbstractUser):
         return self.email
 
 class Domain(models.TextChoices):
-    COMPUTER_SCIENCE = 'Computer Science'
-    COMPUTER_ENGINEERING = 'Computer Engineering'
-    MATHEMATICS = 'Mathematics'
+    INFO = 'Informatică'
+    CTI = 'Calculatoare și Tehnologia Informației'
+    MATE = 'Matematică'
 
 class LearningMode(models.TextChoices):
-    IF = 'IF',
-    IFR = 'IFR',
-    ID = 'ID'
+    IF = 'Învățământ cu Frecvență',
+    IFR = 'Învățământ cu Frecvență Redusă',
+    ID = 'Învățământ la Distanță'
 
 class Degree(models.TextChoices):
-    BACHELORS = 'Bachelors',
-    MASTERS = 'Masters'
+    LICENTA = 'Licență',
+    MASTER = 'Master'
 
+class StudyProgram(models.TextChoices):
+    NLP = 'Natural Language Processing',
+    DS = 'Data Science',
+    SLA = 'Securitate și Logică Aplicată'
+    SD = 'Sisteme Distribuite',
+    IA = 'Inteligență Artificială',
+    IS = 'Inginerie Software',
+    BDTS = 'Baze de Date și Tehnologii Software',
+    PSFS = 'Probabilități și Statistică în Finanțe și Științe',
+    MD = 'Matematică Didactică',
+    ASM = 'Advanced Studies in Mathematics',
+    TI = 'Tehnlogia Informației',
+    INFO = 'Informatică',
+    MATEINFO = 'Matematică-Informatică',
+    MATE = 'Matematică',
+    MA = 'Matematici Aplicate'
 
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     domain = models.TextField(choices=Domain.choices)
     learning_mode = models.TextField(choices=LearningMode.choices)
     degree = models.TextField(choices=Degree.choices)
-    study_program = models.CharField(max_length=255)
+    study_program = models.TextField(choices=Degree.choices)
     current_group = models.CharField(max_length=3)
     current_year = models.IntegerField(
         validators=[
@@ -83,20 +99,13 @@ class Student(models.Model):
             MaxValueValidator(4)
         ]
     )
-    
-    def get_current_grade(self):
-        return self.grades.all().filter(year=self.current_year)
 
 class Teacher(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
-    def get_courses(self):
-        return self.course.all()
-
-
 
 class Grade(models.Model):
-    student = models.ForeignKey(Student, related_name='grades', on_delete=models.SET_NULL, null=True)
+    student = models.ForeignKey(Student, related_name='grades', on_delete=models.CASCADE, default=None)
     grade = models.FloatField(
         validators=[
             MinValueValidator(0.0),
