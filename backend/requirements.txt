@@ -1,2 +1,5 @@
 django
 djangorestframework
+django-rest-passwordreset
+pandas
+openpyxl

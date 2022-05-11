@@ -25,27 +25,12 @@ class UserManager(BaseUserManager):
             raise ValueError('Superuser must have is_superuser=True')
         return self.create_user(email, password, **extra_fields)
 
-class Role(models.Model):
-    STUDENT = 1
-    TEACHER = 2
-    ADMIN = 3
-    ROLE_CHOICES = (
-        (STUDENT, 'student'),
-        (TEACHER, 'teacher'),
-        (ADMIN, 'admin')
-    )
-
-    id = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, primary_key=True)
-
-    def __str__(self):
-        return self.get_id_display()
-
 class User(AbstractUser):
-
-    roles = models.ManyToManyField(Role)
 
     username = None
     email = models.EmailField('email address', unique=True)
+    first_name = models.TextField('first name')
+    last_name = models.TextField('last name')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -56,8 +41,8 @@ class User(AbstractUser):
         return self.email
 
 class Domain(models.TextChoices):
-    INFO = 'Informatică'
-    CTI = 'Calculatoare și Tehnologia Informației'
+    INFO = 'Informatică',
+    CTI = 'Calculatoare și Tehnologia Informației',
     MATE = 'Matematică'
 
 class LearningMode(models.TextChoices):
@@ -69,7 +54,7 @@ class Degree(models.TextChoices):
     LICENTA = 'Licență',
     MASTER = 'Master'
 
-class StudyProgram(models.TextChoices):
+class StudyProgram(models.Model):
     NLP = 'Natural Language Processing',
     DS = 'Data Science',
     SLA = 'Securitate și Logică Aplicată'
@@ -91,7 +76,7 @@ class Student(models.Model):
     domain = models.TextField(choices=Domain.choices)
     learning_mode = models.TextField(choices=LearningMode.choices)
     degree = models.TextField(choices=Degree.choices)
-    study_program = models.TextField(choices=Degree.choices)
+    study_program = models.TextField(choices=StudyProgram.choices)
     current_group = models.CharField(max_length=3)
     current_year = models.IntegerField(
         validators=[
