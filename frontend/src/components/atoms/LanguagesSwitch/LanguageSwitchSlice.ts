@@ -11,11 +11,11 @@ export const languagesSlice = createSlice({
     name: "language",
     initialState,
     reducers: {
-        switchToEnglish: (state) => {
+        switchToEnglish: (state: { language: Language; }) => {
             state.language = Language.en;
             localStorage.setItem('language', 'en');
         },
-        switchToRomanian: (state) => {
+        switchToRomanian: (state: { language: Language; }) => {
             state.language = Language.ro;
             localStorage.setItem('language', 'ro');
         }

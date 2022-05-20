@@ -31,6 +31,7 @@ class User(AbstractUser):
     email = models.EmailField('email address', unique=True)
     first_name = models.TextField('first name')
     last_name = models.TextField('last name')
+    verified = models.BooleanField('verified', default=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -54,7 +55,7 @@ class Degree(models.TextChoices):
     LICENTA = 'Licență',
     MASTER = 'Master'
 
-class StudyProgram(models.Model):
+class StudyProgram(models.TextChoices):
     NLP = 'Natural Language Processing',
     DS = 'Data Science',
     SLA = 'Securitate și Logică Aplicată'
@@ -70,6 +71,19 @@ class StudyProgram(models.Model):
     MATEINFO = 'Matematică-Informatică',
     MATE = 'Matematică',
     MA = 'Matematici Aplicate'
+
+
+class Group(models.Model):
+    domain = models.TextField(choices=Domain.choices)
+    learning_mode = models.TextField(choices=LearningMode.choices)
+    degree = models.TextField(choices=Degree.choices)
+    study_program = models.TextField(choices=StudyProgram.choices)
+    year = models.IntegerField(
+        validators=[
+            MinValueValidator(1),
+            MaxValueValidator(4)
+        ]
+    )
 
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)

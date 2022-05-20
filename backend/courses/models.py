@@ -7,4 +7,8 @@ class Course(models.Model):
     title = models.CharField(max_length=255)
     link = models.URLField(max_length=200)
     capacity = models.IntegerField(default=0, validators=[MinValueValidator(1), MaxValueValidator(100)])
-    
+
+class OptionsList(models.Model):
+    group_id = models.ForeignKey('users.Group', on_delete=models.CASCADE)
+    course_id = models.ForeignKey(Course, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)

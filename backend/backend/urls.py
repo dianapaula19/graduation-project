@@ -15,11 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from users.views import login, create_students_accounts
+from users.views import login, register, update_information
+from courses.views import get_courses_teacher
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/login/', login),
-    path('api/password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
-    path('api/create_students_accounts/', create_students_accounts)
+    path('admin', admin.site.urls),
+    path('api/login', login),
+    path('api/register', register),
+    path('api/update', update_information),
+    path('api/teacher_courses', get_courses_teacher),
+    path('api/password_reset', include('django_rest_passwordreset.urls', namespace='password_reset'))
 ]

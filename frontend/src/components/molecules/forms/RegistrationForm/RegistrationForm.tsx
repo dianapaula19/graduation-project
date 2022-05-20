@@ -80,7 +80,7 @@ const RegistrationForm = () => {
             />
             <Button 
                 label={t("registration.form.button.label")} 
-                disabled={validation.confirmPassword && validation.password && validation.email}
+                disabled={!(validation.confirmPassword && validation.password && validation.email)}
                 onClick={onSubmit}
             />
             <p className={`${componentClassName}__p`}>
