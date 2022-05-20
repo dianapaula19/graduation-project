@@ -1,12 +1,10 @@
 import React, { useCallback, useRef, useState } from "react";
-import { DragDropContext, Draggable, Droppable, DropResult, ResponderProvided } from "react-beautiful-dnd";
 import { useTranslation } from "react-i18next";
 import Button from "../../atoms/Button";
 import { ButtonModifier } from "../../atoms/Button/Button.types";
 import OptionalCourseCard from "../OptionalCourseCard/OptionalCourseCard";
-import { IOptionalCourseCardProps } from "../OptionalCourseCard/OptionalCourseCard.types";
 import "./OptionalCoursesContainer.scss";
-import { IOptionalCoursesContainerProps } from "./OptionalCoursesContainer.types";
+import { IDataRef, IOptionalCourseCard, IOptionalCoursesContainerProps } from "./OptionalCoursesContainer.types";
 
 const OptionalCoursesContainer = ({
     groupId,
@@ -18,32 +16,49 @@ const OptionalCoursesContainer = ({
 
     const { t } = useTranslation();
     
-    const [list, setList] = useState<IOptionalCourseCardProps[]>(optionalCourses);
+    const [list, setList] = useState<IOptionalCourseCard[]>(optionalCourses);
+
+    const draggingItem = useRef<HTMLDivElement | IDataRef | null>(null);
+    const dragOverItem = useRef<HTMLDivElement | IDataRef | null>(null);
     
     const saveChanges = () => {
 
     }
 
-    const onDragEnd = (result: DropResult): void => {
+    const handleDragStart = (
+        e: React.DragEvent<HTMLDivElement>, 
+        position: number,
+        groupId: string,
+    ) => {
+        draggingItem.current = {position, groupId};
+    };
+    
+    const handleDragEnter = (
+        e: React.DragEvent<HTMLDivElement>, 
+        position: number,
+        groupId: string,
+    ) => {
+        dragOverItem.current = {position, groupId};
+        const listCopy = [...list];
+        const draggingDataRef = draggingItem.current as IDataRef;
+        const dragOverDataRef = dragOverItem.current as IDataRef;
+        const draggingItemPosition = draggingDataRef.position;
+        const draggingItemGroupId = draggingDataRef.groupId;
+        const dragOverItemPosition = dragOverDataRef.position;
+        const dragOverItemGroupId = dragOverDataRef.groupId;
 
-        if (!result.destination) return;
-        
-        const { source, destination } = result;
-
-        if (!destination) {
+        if (draggingItemGroupId !== dragOverItemGroupId) {
             return;
         }
-      
-        if (source.index === destination.index) {
-            return;
-        } 
 
-        let items = [...list];
-        const [ removed ] = items.splice(source.index, 1);
-        items.splice(destination.index, 0, removed);
+        const draggingItemContent = listCopy[draggingItemPosition];
+        
+        listCopy.splice(draggingItemPosition, 1);
+        listCopy.splice(dragOverItemPosition, 0, draggingItemContent);
 
-        setList([...items]);
-
+        draggingItem.current = dragOverItem.current;
+        dragOverItem.current = null;
+        setList(listCopy);
     };
 
     return (
@@ -55,29 +70,24 @@ const OptionalCoursesContainer = ({
             >
                 {groupTitle}
             </span>
-            <DragDropContext
-                onDragEnd={onDragEnd}
+            <div
+                className={`${componentClassName}__list`}
             >   
-                <Droppable droppableId={groupId}>
-                    {(provided, snapshot) => (
-                        <div
-                            {...provided.droppableProps}
-                            ref={provided.innerRef}
-                            className={`${componentClassName}__list`}
-                        >   
-                            {list.map((optionalCourse, index) => {
-                                return (
-                                    <OptionalCourseCard 
-                                        key={index}
-                                        {...optionalCourse}
-                                    />
-                                );
-                            })}
-                            {provided.placeholder}
-                        </div>
-                    )}
-                </Droppable>
-            </DragDropContext>
+                {list.map((optionalCourse, index) => {
+                    const args = {
+                        index: index,
+                        groupId: groupId,
+                        handleDragStart: handleDragStart,
+                        handleDragEnter: handleDragEnter,
+                        ...optionalCourse
+                    }
+                    return (
+                        <OptionalCourseCard 
+                            {...args}
+                        />
+                    );
+                })}
+            </div>
             <Button 
                 label={t("saveButton")} 
                 disabled={false} 

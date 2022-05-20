@@ -2,18 +2,20 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { IOptionalCourseCardProps } from "./OptionalCourseCard.types";
-import "./OptionalCourseCard.scss";
-import { Draggable } from "react-beautiful-dnd";
 import { useTranslation } from "react-i18next";
 import LinkButton from "../../atoms/LinkButton";
 import { LinkButtonModifier } from "../../atoms/LinkButton";
+import "./OptionalCourseCard.scss";
 
 const OptionalCourseCard = ({
+    index,
+    groupId,
+    handleDragStart,
+    handleDragEnter,
     optionalName,
     teacherName,
     teacherEmail,
     linkDocument, 
-    draggableProps
 }: IOptionalCourseCardProps) => {
 
     const componentClassName = "optional-course-card";
@@ -21,36 +23,32 @@ const OptionalCourseCard = ({
     const { t } = useTranslation();
 
     return (
-        <Draggable
-            {...draggableProps}
+        <div 
+            className={componentClassName}
+            onDragStart={(e) => handleDragStart(e, index, groupId)}
+            onDragEnter={(e) => handleDragEnter(e, index, groupId)}
+            onDragEnd={(e) => e.preventDefault()}
+            key={index}
+            draggable
         >
-        {(provided, snapshot) => (
-            <div 
-                ref={provided.innerRef}
-                {...provided.draggableProps}
-                {...provided.dragHandleProps}
-                className={componentClassName}
+            <FontAwesomeIcon 
+                icon={faBars}
+                className={`${componentClassName}__drag-icon`} 
+            />
+            <span
+                className={`${componentClassName}__info`}
             >
-                <FontAwesomeIcon 
-                    icon={faBars}
-                    className={`${componentClassName}__drag-icon`} 
-                />
-                <span
-                    className={`${componentClassName}__info`}
-                >
-                    {optionalName} | {teacherName} ({teacherEmail})
-                </span>
-                {linkDocument && (
-                    <LinkButton 
-                        text={t("syllabusButton")}
-                        modifier={LinkButtonModifier.syllabus} 
-                        href={linkDocument}       
-                        target="_blank"         
-                    />      
-                )} 
-            </div>
-        )}   
-        </Draggable>
+                {optionalName} | {teacherName} ({teacherEmail})
+            </span>
+            {linkDocument && (
+                <LinkButton 
+                    text={t("syllabusButton")}
+                    modifier={LinkButtonModifier.syllabus} 
+                    href={linkDocument}       
+                    target="_blank"         
+                />      
+            )} 
+        </div>
     )
 }
 

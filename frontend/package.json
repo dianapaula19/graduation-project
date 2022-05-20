@@ -23,7 +23,6 @@
     "i18next": "^21.6.12",
     "npm": "^8.5.1",
     "react": "^17.0.2",
-    "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^17.0.2",
     "react-i18next": "^11.15.5",
     "react-redux": "^7.2.6",
@@ -78,7 +77,6 @@
     "@storybook/react": "^6.4.19",
     "@storybook/testing-library": "^0.0.9",
     "@types/file-saver": "^2.0.5",
-    "@types/react-beautiful-dnd": "^13.1.2",
     "webpack": "^5.69.1"
   }
 }

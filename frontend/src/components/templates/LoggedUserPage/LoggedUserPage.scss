@@ -1,13 +1,18 @@
 .logged-user-template {
+    overflow: hidden;
     display: flex;
     flex-direction: row;
     background-color: #F7F7F7;
     height: 100vh;
     width: 100vw;
 
-    &__content {
-        margin: 10rem 10rem;
-        width: 80vw;
+    &__layout {
+        width: 100%;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        &__content {
+            margin: 10rem 10rem;
+        }
     }
 
 }

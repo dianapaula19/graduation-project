@@ -2,8 +2,6 @@ import React from "react";
 import { IStudentsListProps } from "./StudentsList.types";
 import { useTranslation } from "react-i18next";
 import "./StudentsList.scss";
-import Button from "../../atoms/Button";
-import { ButtonModifier } from "../../atoms/Button/Button.types";
 
 const StudentsList = ({
     students

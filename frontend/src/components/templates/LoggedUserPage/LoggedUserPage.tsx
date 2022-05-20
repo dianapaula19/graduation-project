@@ -15,9 +15,11 @@ const LoggedUserPage = ({
         >
             <SideNav />
             <div
-                className={`${componentClassName}__content`}
+                className={`${componentClassName}__layout`}
             >
-                {children}
+                <div className={`${componentClassName}__layout__content`}>
+                    {children}
+                </div>
             </div>
         </div>
     )
