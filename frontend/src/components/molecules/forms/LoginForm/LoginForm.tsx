@@ -6,8 +6,12 @@ import { InputFieldType } from "../../../atoms/InputField/InputField.types";
 import { ILoginFormData } from "./LoginForm.types";
 import LogoSvg from "../../../../assets/logo.svg";
 import "./LoginForm.scss";
+import { useDispatch } from "react-redux";
+import { ILoginRequest, loginAsync } from "../../../../features/auth/authSlice";
 
 const LoginForm = () => {
+
+    const dispatch = useDispatch();
 
     const [data, setData] = useState<ILoginFormData>({
         email: "",
@@ -28,7 +32,7 @@ const LoginForm = () => {
     }
 
     const onSubmit = (): void => {
-        console.log(data);
+        dispatch(loginAsync(data as ILoginRequest));
     }
 
     return(
