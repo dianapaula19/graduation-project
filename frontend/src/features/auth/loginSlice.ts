@@ -4,16 +4,14 @@ import { RootState } from "../../app/store";
 import { ApiStatus, API_URL } from "../Utils";
 
 
-export interface AuthState {
+export interface LoginState {
     token: null | string;
-    statusCode: null | string;
     message: null | string;
     status: ApiStatus;
 };
 
-const initialState: AuthState = {
+const initialState: LoginState = {
     token: null,
-    statusCode: null,
     message: null,
     status: ApiStatus.idle,
 };
@@ -25,12 +23,10 @@ export interface ILoginRequest {
 
 export interface ILoginResponse {
     token: string;
-    statusCode: string;
 };
 
 export interface ILoginError {
     error: string;
-    statusCode: string;
 };
 
 export const loginAsync = createAsyncThunk(
@@ -48,11 +44,11 @@ export const loginAsync = createAsyncThunk(
         })
 );
 
-export const authSlice = createSlice({
-    name: 'auth',
+export const loginSlice = createSlice({
+    name: 'login',
     initialState,
     reducers: {
-        logout: (state: AuthState) => {
+        logout: (state: LoginState) => {
             window.sessionStorage.removeItem('token');
             state = initialState;
         }
@@ -70,15 +66,15 @@ export const authSlice = createSlice({
         })
         .addCase(loginAsync.rejected, (state, action) => {
             const res = action.payload as ILoginError;
-            state.statusCode = res.statusCode;
             state.message = res.error;
             state.status = ApiStatus.failed;
         })
     }
 });
 
-export const { logout } = authSlice.actions;
+export const { logout } = loginSlice.actions;
 
-export const authStatus = (state: RootState) => state.auth.status;
+export const loginStatus = (state: RootState) => state.login.status;
+export const loginMessage = (state: RootState) => state.register.message;
 
-export default authSlice.reducer;
+export default loginSlice.reducer;

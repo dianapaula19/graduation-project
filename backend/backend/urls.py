@@ -15,13 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from users.views import login, register, update_information
-from courses.views import get_courses_teacher
+from users.views import login, register, update_information, register_batch_students
+from courses.views import get_courses_teacher, create_course
 
 urlpatterns = [
-    path('admin', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('api/login', login),
     path('api/register', register),
+    path('api/register_batch_students', register_batch_students),
+    path('api/create_course', create_course),
     path('api/update', update_information),
     path('api/teacher_courses', get_courses_teacher),
     path('api/password_reset', include('django_rest_passwordreset.urls', namespace='password_reset'))

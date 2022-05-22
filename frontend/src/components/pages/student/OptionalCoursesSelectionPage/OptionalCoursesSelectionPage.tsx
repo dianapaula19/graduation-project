@@ -7,7 +7,7 @@ const OptionalCoursesSelectionPage = () => {
         <LoggedUserPage>
             <OptionalCoursesContainer 
                 groupId="group-1" 
-                groupTitle="Group #1"
+                groupTitle="Discipline de specialitate"
                 optionalCourses={[
                     {
                         optionalName: "English Literature",
@@ -30,7 +30,7 @@ const OptionalCoursesSelectionPage = () => {
             />
             <OptionalCoursesContainer 
                 groupId="group-2" 
-                groupTitle="Group #1"
+                groupTitle="Discipline de dezvoltare antreprenorială"
                 optionalCourses={[
                     {
                         optionalName: "English Literature",

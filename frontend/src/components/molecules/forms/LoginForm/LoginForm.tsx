@@ -7,7 +7,7 @@ import { ILoginFormData } from "./LoginForm.types";
 import LogoSvg from "../../../../assets/logo.svg";
 import "./LoginForm.scss";
 import { useDispatch } from "react-redux";
-import { ILoginRequest, loginAsync } from "../../../../features/auth/authSlice";
+import { ILoginRequest, loginAsync } from "../../../../features/auth/loginSlice";
 
 const LoginForm = () => {
 

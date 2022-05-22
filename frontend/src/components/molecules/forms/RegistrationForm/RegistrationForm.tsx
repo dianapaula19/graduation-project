@@ -7,8 +7,12 @@ import { regexRules } from "../utils";
 import { IRegistrationFormData } from "./RegistrationForm.types";
 import LogoSvg from "../../../../assets/logo.svg";
 import "./RegistrationForm.scss";
+import { useDispatch } from "react-redux";
+import { registerAsync } from "../../../../features/auth/registerSlice";
 
 const RegistrationForm = () => {
+
+    const dispatch = useDispatch();
 
     const [data, setData] = useState<IRegistrationFormData>({
         email: "",
@@ -36,7 +40,10 @@ const RegistrationForm = () => {
     }
 
     const onSubmit = (): void => {
-        console.log(data);
+        dispatch(registerAsync({
+            email: data.email,
+            password: data.password
+        }));
     }
 
     return(
@@ -80,7 +87,8 @@ const RegistrationForm = () => {
             />
             <Button 
                 label={t("registration.form.button.label")} 
-                disabled={!(validation.confirmPassword && validation.password && validation.email)}
+                // disabled={!(validation.confirmPassword && validation.password && validation.email)}
+                disabled={false}
                 onClick={onSubmit}
             />
             <p className={`${componentClassName}__p`}>
