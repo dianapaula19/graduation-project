@@ -47,3 +47,16 @@
     grid-area: excel-button;
     margin: 0;
 }
+
+.button--mail {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    color: #c4c4c4;
+    background-color: transparent;
+    border: #c4c4c4 solid .2rem;
+    grid-area: mail-button;
+    margin: 0;   
+}

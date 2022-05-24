@@ -60,7 +60,7 @@ class Degree(models.TextChoices):
 class StudyProgram(models.TextChoices):
     NLP = 'Natural Language Processing',
     DS = 'Data Science',
-    SLA = 'Securitate și Logică Aplicată'
+    SLA = 'Securitate și Logică Aplicată',
     SD = 'Sisteme Distribuite',
     IA = 'Inteligență Artificială',
     IS = 'Inginerie Software',

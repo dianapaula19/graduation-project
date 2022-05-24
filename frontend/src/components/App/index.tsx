@@ -1,2 +1,9 @@
 export { default } from "./App";
-export { Role } from "./App.types";
+export {
+  Domain,
+  Degree,
+  LearningMode,
+  StudyProgram,
+  Role 
+} 
+from "./App.types";

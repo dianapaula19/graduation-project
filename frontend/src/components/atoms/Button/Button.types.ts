@@ -3,7 +3,8 @@ import { ButtonHTMLAttributes } from "react";
 enum ButtonModifier {
     disabled = "disabled",
     excel = "excel",
-    save = "save"
+    save = "save",
+    mail = "mail"
 }
 
 interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {

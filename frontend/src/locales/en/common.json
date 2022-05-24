@@ -77,6 +77,11 @@
             "night": "Good evening"
         }
     },
+    "teacher": {
+        "courses": {
+            "mailButton": "Send an announcement"
+        }
+    },
     "studentsList": {
         "header": {
             "name": "Last Name and First Name",

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Button, { ButtonModifier } from "../../../atoms/Button";
 import StudentsList from "../../../molecules/lists/StudentsList";
@@ -10,11 +10,15 @@ import * as XLSX from "xlsx";
 import "./Courses.scss";
 import DropDown from "../../../atoms/DropDown";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
+import Modal from "../../../molecules/Modal";
+import InputField, { InputFieldType } from "../../../atoms/InputField";
+import TextAreaField from "../../../atoms/TextAreaField";
+import LinkButton from "../../../atoms/LinkButton";
 import { getCoursesTeacherAsync, teacherCourses } from "../../../../features/course/teacherCourseSlice";
 
 const OptionalCoursesList = () => {
 
-    const componentClassName = "optional-courses-list";
+    const componentClassName = "courses";
 
     const courses = useAppSelector(teacherCourses);
 
@@ -35,6 +39,22 @@ const OptionalCoursesList = () => {
     ];
 
     const { t } = useTranslation();
+
+    const [showSendAnnouncementModal, setShowSendAnnouncementModal] = useState<boolean>(false);
+
+    const [announcementData, setAnnouncementData] = useState({
+        subject: '',
+        body: ''
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>): void => {
+        const name = e.target.name;
+        const value = e.target.value;
+        setAnnouncementData({
+            ...announcementData,
+            [name]: value
+        });
+    }
 
     const exportToExcel = () => {
         const header = [t("studentsList.header.name"), t("studentsList.header.email")];
@@ -77,14 +97,48 @@ const OptionalCoursesList = () => {
                 </DropDown>
                 <StudentsList students={studentsList}/>
                 <Button 
+                    label={t("teacher.courses.mailButton")}
+                    modifier={ButtonModifier.mail} 
+                    onClick={() => {setShowSendAnnouncementModal(true)}}
+                    disabled={false} 
+                />
+                <Button 
                     label={t("excelButton")}
                     modifier={ButtonModifier.excel} 
                     onClick={exportToExcel}
                     disabled={false} 
-                />    
+                />
+                <Modal
+                    title={'Trimite anunt'}
+                    show={showSendAnnouncementModal}
+                    closeModal={() => {setShowSendAnnouncementModal(false)}}                
+                >
+                    <div className={`${componentClassName}__modal-content`}>
+                        <InputField 
+                            type={InputFieldType.text} 
+                            error={false} 
+                            errorMessage={""} 
+                            label={"Subiect"}
+                            id={"announcement-modal-subject"}
+                            name={"subject"}
+                            onChange={handleChange} 
+                        />
+                        <TextAreaField 
+                            label={"Mesaj"}
+                            id={"announcement-modal-body"}
+                            name={"body"}
+                            onChange={handleChange}
+                        />
+                        <LinkButton 
+                            text={"Trimite mesaj"} 
+                            href={`
+                                mailto:${(studentsList.map(s => s.email)).concat(',')}
+                                &subject=${announcementData.subject}
+                                &body=${announcementData.body}`} 
+                        />
+                    </div>
+                </Modal>
             </div>
-            
-            
         </LoggedUserPage>
     )
 

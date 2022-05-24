@@ -29,3 +29,10 @@ SaveButton.args = {
     label: "Save",
     modifier: ButtonModifier.save
 }
+
+export const MailButton = Template.bind({});
+
+MailButton.args = {
+    label: "Mail",
+    modifier: ButtonModifier.mail
+}

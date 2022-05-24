@@ -1,0 +1,29 @@
+.textarea-field {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  width: 100%;
+  margin: .5rem 0 1rem 0;
+
+  &__label {
+    color: #525252;
+    text-transform: uppercase;
+  }
+
+  &__textarea {
+    all: unset;
+    padding: 1rem;
+    border-radius: .5rem;
+    border: .15rem solid #c4c4c4;
+    color: #525252;
+    &:hover {
+      border-color: #0366d6;
+    }
+    &:focus {
+      border-color: #0366d6;
+    }
+    &:invalid {
+      border-color: crimson;
+    }
+  }
+}

@@ -77,6 +77,11 @@
             "night": "Seară faină"
         }
     },
+    "teacher": {
+        "courses": {
+            "mailButton": "Trimite un anunț"
+        }
+    },
     "studentsList": {
         "header": {
             "name": "Nume și Prenume",

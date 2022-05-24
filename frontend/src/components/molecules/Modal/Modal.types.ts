@@ -1,6 +1,7 @@
 interface IModalProps {
     title: string;
-    setIsOpen: (isOpen: boolean) => void;
+    show: boolean;
+    closeModal: () => void;
     children?: React.ReactNode;
 }
 
