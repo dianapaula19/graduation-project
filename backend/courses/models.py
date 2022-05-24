@@ -2,6 +2,8 @@ from statistics import mode
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
+from users.models import Degree, Domain, LearningMode, StudyProgram
+
 # Create your models here.
 class Course(models.Model):
     teacher = models.ForeignKey('users.Teacher', related_name='courses', on_delete=models.SET_NULL, null=True)
@@ -10,8 +12,11 @@ class Course(models.Model):
     capacity = models.IntegerField(default=0, validators=[MinValueValidator(1), MaxValueValidator(100)])
 
 class OptionsList(models.Model):
-    category = models.ForeignKey('users.Category', on_delete=models.CASCADE)
     courses = models.ManyToManyField('Course', related_name='courses')
+    domain = models.TextField(choices=Domain.choices, default=Domain.INFO)
+    learning_mode = models.TextField(choices=LearningMode.choices, default=LearningMode.IF)
+    degree = models.TextField(choices=Degree.choices, default=Degree.LICENTA)
+    study_program = models.TextField(choices=StudyProgram.choices, default=StudyProgram.INFO)
     title = models.CharField(max_length=255, unique=True)
     year = models.IntegerField(
         validators=[

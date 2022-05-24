@@ -28,11 +28,18 @@ class UserManager(BaseUserManager):
         
         return self.create_user(email, password, **extra_fields)
 
+
+class Role(models.TextChoices):
+    STUDENT = 'student',
+    TEACHER = 'teacher',
+    SECRETARY = 'secretary'
+
 class User(AbstractUser):
     username = None
     email = models.EmailField(unique=True)
     first_name = models.TextField(max_length=50)
     last_name = models.TextField(max_length=50)
+    role = models.TextField(choices=Role.choices, null=True)
     verified = models.BooleanField('verified', default=True)
 
     USERNAME_FIELD = 'email'
@@ -74,33 +81,17 @@ class StudyProgram(models.TextChoices):
     MATE = 'Matematică',
     MA = 'Matematici Aplicate'
 
-class Category(models.Model):
-    domain = models.TextField(choices=Domain.choices)
-    learning_mode = models.TextField(choices=LearningMode.choices)
-    degree = models.TextField(choices=Degree.choices)
-    study_program = models.TextField(choices=StudyProgram.choices)
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=['domain', 'learning_mode', 'degree', 'study_program'], name='unique_migration_domain_learning_mode_degree_study_program'
-            ),
-        ]
-
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    category = models.OneToOneField(Category, on_delete=models.SET_NULL, null=True)
+    domain = models.TextField(choices=Domain.choices, default=Domain.INFO)
+    learning_mode = models.TextField(choices=LearningMode.choices, default=LearningMode.IF)
+    degree = models.TextField(choices=Degree.choices, default=Degree.LICENTA)
+    study_program = models.TextField(choices=StudyProgram.choices, default=StudyProgram.INFO)
     current_group = models.CharField(max_length=3)
     current_year = models.IntegerField(
         validators=[
             MinValueValidator(1),
             MaxValueValidator(4)
-        ],
-        default=1
-    )
-    current_semester = models.IntegerField(
-        validators=[
-            MinValueValidator(1),
-            MaxValueValidator(2)
         ],
         default=1
     )

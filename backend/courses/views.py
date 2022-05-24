@@ -10,7 +10,8 @@ from rest_framework.status import (
 )
 
 from .models import Course, OptionsList, StudentOptionChoice
-from users.models import Student, Teacher, User, Category
+from users.models import Student, Teacher, User
+from backend.permissions import IsStudent, IsTokenAuthentificated
 
 # Create your views here.
 
@@ -69,23 +70,20 @@ def create_course(request):
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def create_options_list(request):
-    category_id = request.data.get('category_id')
     title = request.data.get('title')
+    domain = request.data.get('domain')
+    learning_mode = request.data.get('learning_mode')
+    study_program = request.data.get('study_program')
+    degree = request.data.get('degree')
     year = request.data.get('year')
     semester = request.data.get('semester')
 
-    category = Category.objects.get(id=category_id)
-
-    if category is None:
-        return Response({
-            'error': "The category doesn't not exist"
-        },
-        status=HTTP_404_NOT_FOUND
-        )
-
     try:
-        OptionsList.objects.create(
-            category=category,
+        OptionsList.objects.get_or_create(
+            domain=domain,
+            learning_mode=learning_mode,
+            study_program=study_program,
+            degree=degree,
             title=title,
             year=year,
             semester=semester            
@@ -144,10 +142,10 @@ def add_course_to_options_list(request):
 @permission_classes([AllowAny])
 def create_or_uptate_student_choices(request):
     options_list_id = request.data.get('options_list_id')
-    user_id = request.data.get('user_id')
+    email = request.data.get('email')
     choices = request.data.get('choices')
 
-    user = User.objects.get(id=user_id)
+    user = User.objects.get(email=email)
     if user is None:
         return Response({
             'error': "The user doesn't exist"

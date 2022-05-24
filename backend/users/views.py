@@ -5,7 +5,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.contrib.auth import authenticate
-from .models import Category, Grade, User, Student, Teacher
+from .models import Grade, Role, User, Student, Teacher
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -58,6 +58,18 @@ def login(request):
 
 @api_view(["POST"])
 @permission_classes([AllowAny])
+def logout(request):
+    key = request.META.get('HTTP_AUTHORIZATION')[7:]
+    Token.objects.filter(key=key).delete()
+
+    return Response({
+            'message': 'Successful logout'    
+        },
+        status=HTTP_200_OK
+    )
+    
+@api_view(["POST"])
+@permission_classes([AllowAny])
 def register(request):
     email = request.data.get("email")
     password = request.data.get("password")
@@ -106,16 +118,13 @@ def register_batch_students(request):
 
         user = User.objects.get(email=student['email'])
         
-        category = Category.objects.get(
-            domain=student['domain'],
-            learning_mode=student['learning_mode'],
-            degree=student['degree'],
-            study_program=student['study_program'],
-        )
         
         Student.objects.create(
             user=user,
-            category=category,
+            domain=student['domain'],
+            learning_mode=student['learning_mode'],
+            study_program=student['study_program'],
+            degree=student['degree'],
             current_group=student['current_group'],
             current_year=student['current_year']
         )
@@ -168,35 +177,6 @@ def register_batch_teachers(request):
         status=HTTP_200_OK
     )
 
-@api_view(["POST"])
-@permission_classes([AllowAny])
-def create_category(request):
-    domain = request.data.get("domain")
-    learning_mode = request.data.get("learning_mode")
-    degree = request.data.get("degree")
-    study_program = request.data.get("study_program")
-
-    try:
-        Category.objects.create(
-            domain=domain,
-            learning_mode=learning_mode,
-            degree=degree,
-            study_program=study_program
-        )
-    except IntegrityError:
-        return Response({
-            'error': 'Internal Server Error'
-        },
-        status=HTTP_500_INTERNAL_SERVER_ERROR
-        )
-    return Response({
-        'message': 'The category was create successfully'
-    },
-    status=HTTP_200_OK
-    )
-
-
-
 @api_view(["PUT"])
 @permission_classes((AllowAny))
 def update_information(request):
@@ -209,7 +189,7 @@ def update_information(request):
     user.last_name = last_name
     user.verified = True
     user.save()
-    if role == 'STUDENT':
+    if role == Role.STUDENT:
         domain = request.data.get("domain")
         learning_mode = request.data.get("learning_mode")
         degree = request.data.get("degree")
@@ -225,7 +205,7 @@ def update_information(request):
             current_group=current_group,
             current_year=current_year
         )
-    if role == "TEACHER":
+    if role == Role.TEACHER:
         Teacher.objects.create(
             user=user
         )
