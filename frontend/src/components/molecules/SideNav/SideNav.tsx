@@ -5,9 +5,15 @@ import "./SideNav.scss";
 import LanguageSwitch from "../../atoms/LanguagesSwitch/LanguageSwitch";
 import { useTranslation } from "react-i18next";  
 import { Time } from "./SideMenu.types";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../features/auth/loginSlice";
+import { useNavigate } from "react-router-dom";
 
 const SideNav = () => {
     
+    const dispatch = useDispatch();
+    let navigate = useNavigate();
+
     const componentClassName = "side-nav";
 
     const { t } = useTranslation(); 
@@ -61,7 +67,7 @@ const SideNav = () => {
                 />
                 <LinkButton 
                     text={t("sidenav.signOut")} 
-                    href={"/login"}
+                    href="/login"
                 />
 
             </div>

@@ -50,11 +50,12 @@ const StudentsList = ({
                         >
                             {student.name}
                         </span>
-                        <span
+                        <a
                             className={`${componentClassName}__email`}
+                            href={`mailto:${student.email}`}
                         >
                             {student.email}
-                        </span>
+                        </a>
                     </div>
                 )
             })}

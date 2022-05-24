@@ -1,0 +1,61 @@
+.accounts-list {
+  width: 100%;   
+  font-size: medium;
+  color: #525252; 
+  grid-area: accounts-list;
+
+  &__header {
+      display: grid;
+      border-bottom: #525252 solid .1rem;
+      padding-bottom: 1rem;
+      margin-bottom: 2.5rem;
+      text-transform: uppercase;
+      grid-template-columns: .1fr 2fr 2fr 2fr;
+      grid-template-areas: 
+          "header-index header-email header-role header-status";
+
+      &__index {
+          grid-area: header-index;
+      }
+
+      &__email {
+          grid-area: header-email;
+      }
+
+      &__role {
+        grid-area: header-role;
+      }
+
+      &__status {
+        grid-area: header-status;
+      }
+  }
+
+  &__item {
+      display: grid;
+      grid-template-columns: .1fr 2fr 2fr 2fr;
+      grid-template-areas: 
+          "item-index item-email item-role item-status";
+      
+      &__index {
+          grid-area: item-index;
+      }
+
+      &__email {
+          grid-area: item-email;
+      }
+
+      &__role {
+        grid-area: item-role;
+      }
+
+      &__status {
+        grid-area: item-status;
+      }
+
+  }
+
+  &__item :not(:last-child) {
+      padding-bottom: 1rem;
+  }
+}

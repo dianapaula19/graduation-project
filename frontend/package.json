@@ -29,6 +29,7 @@
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
+    "redux-persist": "^6.0.0",
     "sass": "^1.49.8",
     "typescript": "~4.1.5",
     "xlsx": "^0.18.3"
@@ -78,6 +79,7 @@
     "@storybook/react": "^6.4.19",
     "@storybook/testing-library": "^0.0.9",
     "@types/file-saver": "^2.0.5",
+    "@types/redux-persist": "^4.3.1",
     "webpack": "^5.69.1"
   }
 }

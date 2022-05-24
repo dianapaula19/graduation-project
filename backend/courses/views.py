@@ -8,12 +8,13 @@ from rest_framework.status import (
     HTTP_200_OK,
     HTTP_500_INTERNAL_SERVER_ERROR
 )
+
 from .models import Course, OptionsList, StudentOptionChoice
 from users.models import Student, Teacher, User, Category
 
 # Create your views here.
 
-@api_view(["GET"])
+@api_view(["POST"])
 @permission_classes([AllowAny])
 def get_courses_teacher(request):
     
@@ -21,10 +22,19 @@ def get_courses_teacher(request):
     user = User.objects.get(email=email)
     
     if user is None:
-        return Response({'error': 'Teacher not found'},
-                        status=HTTP_404_NOT_FOUND)
+        return Response({
+            'error': 'User not found'},
+            status=HTTP_404_NOT_FOUND
+        )
 
     teacher = Teacher.objects.get(user=user)
+
+    if teacher is None:
+        return Response({
+            'error': 'Teacher not found'
+        },
+        status=HTTP_404_NOT_FOUND
+        )
     
     data = serializers.serialize('json', teacher.courses.all())
     
@@ -137,7 +147,7 @@ def create_or_uptate_student_choices(request):
     user_id = request.data.get('user_id')
     choices = request.data.get('choices')
 
-    user = Course.objects.get(id=user_id)
+    user = User.objects.get(id=user_id)
     if user is None:
         return Response({
             'error': "The user doesn't exist"
@@ -173,10 +183,72 @@ def create_or_uptate_student_choices(request):
             },
             status=HTTP_404_NOT_FOUND
             )
-        StudentOptionChoice.objects.update_or_create(
-            student=student,
-            options_list=options_list,
-            course=course,
-            order=order
+        try:
+            StudentOptionChoice.objects.update_or_create(
+                student=student,
+                options_list=options_list,
+                course=course,
+                order=order
+            )
+        except:
+            return Response({
+                'error': "Internal Server Error"
+            },
+            status=HTTP_500_INTERNAL_SERVER_ERROR
+            )
+    
+    return Response({
+        'message': "Student's choices created/updated successfully"
+    },
+    status=HTTP_200_OK
+    )
+    
+
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def get_student_choices(request):
+    user_id = request.data.get('user_id')
+    options_list_id = request.data.get('options_list_id')
+
+    user = User.objects.get(id=user_id)
+    if user is None:
+        return Response({
+            'error': "The user doesn't exist"
+        },
+        status=HTTP_404_NOT_FOUND
         )
 
+    student = Student.objects.get(user=user)
+
+    if student is None:
+        return Response({
+            'error': "The student doesn't exist"
+        },
+        status=HTTP_404_NOT_FOUND
+        )
+
+    options_list = OptionsList.objects.get(id=options_list_id)
+    if options_list is None:
+        return Response({
+            'error': "The options list doesn't exist"
+        },
+        status=HTTP_404_NOT_FOUND
+        )
+
+    data = StudentOptionChoice.objects.filter(
+        options_list=options_list,
+        student=student
+    ).order_by('order').all()
+
+    if data is None:
+        return Response({
+            'error': "No choices were found"
+        },
+        status=HTTP_404_NOT_FOUND
+        )
+
+    res = serializers.serialize('json', data)
+
+    return Response( 
+        res,
+        status=HTTP_200_OK)

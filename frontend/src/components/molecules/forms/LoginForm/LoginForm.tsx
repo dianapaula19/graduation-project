@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from 'react-i18next';
 import Button from "../../../atoms/Button/Button";
 import InputField from "../../../atoms/InputField/InputField";
@@ -7,11 +7,16 @@ import { ILoginFormData } from "./LoginForm.types";
 import LogoSvg from "../../../../assets/logo.svg";
 import "./LoginForm.scss";
 import { useDispatch } from "react-redux";
-import { ILoginRequest, loginAsync } from "../../../../features/auth/loginSlice";
+import { ILoginRequest, loginAsync, loginStatus } from "../../../../features/auth/loginSlice";
+import { useAppSelector } from "../../../../app/hooks";
+import { ApiStatus } from "../../../../features/Utils";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
 
     const dispatch = useDispatch();
+    const status = useAppSelector(loginStatus);
+    let navigate = useNavigate();
 
     const [data, setData] = useState<ILoginFormData>({
         email: "",
@@ -30,6 +35,13 @@ const LoginForm = () => {
             [name]: value
         });
     }
+
+    // useEffect(() => {
+    //     if (status == ApiStatus.success) {
+    //         navigate('/')
+    //     }
+    // }, [status])
+    
 
     const onSubmit = (): void => {
         dispatch(loginAsync(data as ILoginRequest));

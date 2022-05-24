@@ -38,7 +38,7 @@ def login(request):
     if not user:
         return Response({'error': 'Invalid Credentials'},
                         status=HTTP_404_NOT_FOUND)
-    
+
     if user.verified == False:
         return Response({
             'error': "Your account wasn`t verified yet. You will receive an email as soon as your account is verified."
@@ -50,6 +50,7 @@ def login(request):
     
     return Response({
         'token': token.key,
+        'email': user.email,
         'message': 'Succesful login' 
         },
         status=HTTP_200_OK

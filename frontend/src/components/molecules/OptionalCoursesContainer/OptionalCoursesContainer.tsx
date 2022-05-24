@@ -22,7 +22,7 @@ const OptionalCoursesContainer = ({
     const dragOverItem = useRef<HTMLDivElement | IDataRef | null>(null);
     
     const saveChanges = () => {
-
+        console.log(list);
     }
 
     const handleDragStart = (

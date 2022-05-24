@@ -1,0 +1,8 @@
+.accounts-page {
+  &__excel-import-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    margin-bottom: 5rem;
+  }
+}

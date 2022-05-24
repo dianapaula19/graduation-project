@@ -1,18 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import Button, { ButtonModifier } from "../../../atoms/Button";
-import StudentsList from "../../../molecules/StudentsList";
+import StudentsList from "../../../molecules/lists/StudentsList";
 import LoggedUserPage from "../../../templates/LoggedUserPage";
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
 
 
-import "./OptionalCoursesList.scss";
+import "./Courses.scss";
 import DropDown from "../../../atoms/DropDown";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
+import { getCoursesTeacherAsync, teacherCourses } from "../../../../features/course/teacherCourseSlice";
 
 const OptionalCoursesList = () => {
 
     const componentClassName = "optional-courses-list";
+
+    const courses = useAppSelector(teacherCourses);
+
+    const dispatch = useAppDispatch();
 
     const fileType =
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
@@ -31,7 +37,6 @@ const OptionalCoursesList = () => {
     const { t } = useTranslation();
 
     const exportToExcel = () => {
-        console.log("works");
         const header = [t("studentsList.header.name"), t("studentsList.header.email")];
         const ws = XLSX.utils.book_new();
         XLSX.utils.sheet_add_aoa(ws, [header]);
@@ -47,6 +52,13 @@ const OptionalCoursesList = () => {
         const data = new Blob([excelBuffer], { type: fileType})
         FileSaver.saveAs(data, "List.xlsx");
     }
+
+    useEffect(() => {
+      if (courses === null) {
+        dispatch(getCoursesTeacherAsync('john.keating@unibuc.ro'));
+      }
+    }, [courses])
+    
 
     return (
         <LoggedUserPage>

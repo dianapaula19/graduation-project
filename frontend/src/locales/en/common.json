@@ -84,6 +84,13 @@
         },
         "sheetName": "Enrolled Students"
     },
+    "accountsList": {
+        "header": {
+            "email": "Email",
+            "role": "Role",
+            "status": "Status"
+        }
+    },
     "saveButton": "Save changes",
     "excelButton": "Export as .xlsx",
     "syllabusButton": "View the syllabus"

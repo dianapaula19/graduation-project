@@ -1,16 +1,46 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import { configureStore, ThunkAction, Action, combineReducers } from '@reduxjs/toolkit';
+import storage from 'redux-persist/lib/storage';
 import counterReducer from '../features/counter/counterSlice';
 import languagesReducer from "../components/atoms/LanguagesSwitch/LanguageSwitchSlice";
 import loginReducer from "../features/auth/loginSlice";
 import registerReducer from "../features/auth/registerSlice";
+import teacherCoursesReducer from "../features/course/teacherCourseSlice";
+import { 
+  FLUSH, 
+  PAUSE, 
+  PERSIST,  
+  PURGE, 
+  REGISTER, 
+  REHYDRATE,
+  persistReducer, 
+} from 'redux-persist';
+
+
+const reducers = combineReducers({
+  counter: counterReducer,
+  languages: languagesReducer,
+  login: loginReducer,
+  register: registerReducer,
+  teacherCourse: teacherCoursesReducer
+});
+
+const persistConfig = {
+  key: 'root',
+  version: 1, 
+  storage,
+}
+
+const persistedReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({
-  reducer: {
-    counter: counterReducer,
-    languages: languagesReducer,
-    login: loginReducer,
-    register: registerReducer,
-  },
+  reducer: persistedReducer,
+  devTools: process.env.NODE_ENV !== 'production',
+  middleware: (getDefaultMiddleware) =>
+  getDefaultMiddleware({
+    serializableCheck: {
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+    },
+  }),
 });
 
 export type AppDispatch = typeof store.dispatch;

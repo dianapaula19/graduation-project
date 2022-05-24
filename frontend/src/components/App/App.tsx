@@ -1,10 +1,11 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import PersonalDataPage from '../components/pages/PersonalDataPage';
-import OptionalCoursesSelectionPage from '../components/pages/student/OptionalCoursesSelectionPage';
-import OptionalCoursesList from '../components/pages/teacher/OptionalCoursesList';
-import AuthentificationPage from '../components/templates/AuthentificationPage/AuthentificationPage';
-import { AuthentificationAction } from '../components/templates/AuthentificationPage/AuthentificationPage.types';
+import PersonalDataPage from '../pages/PersonalDataPage';
+import AccountsPage from '../pages/secretary/AccountsPage';
+import OptionalCoursesSelectionPage from '../pages/student/OptionalCoursesSelectionPage';
+import OptionalCoursesList from '../pages/teacher/Courses';
+import AuthentificationPage from '../templates/AuthentificationPage/AuthentificationPage';
+import { AuthentificationAction } from '../templates/AuthentificationPage/AuthentificationPage.types';
 
 function App() {
   return (
@@ -55,6 +56,12 @@ function App() {
             path="teacher/list"
             element={
               <OptionalCoursesList />
+            }
+          />
+          <Route 
+            path="secretary/accounts"
+            element={
+              <AccountsPage />
             }
           />
         </Routes>

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../../app/store";
-import { ApiStatus, API_URL } from "../Utils";
+import { ApiStatus, API_URL_USER } from "../Utils";
 
 export interface RegisterState {
     message: null | string;
@@ -30,15 +30,11 @@ export const registerAsync = createAsyncThunk(
     'auth/register',
     async (request: IRegisterRequest) => await axios
         .post(
-            API_URL + "/register",
+            API_URL_USER + "/register",
             request
         )
         .then((response) => {
-            return response.data as IRegisterResponse;
-        })
-        .catch((error) => {
-            console.error(error.response.data); 
-            return error as IRegisterError;
+            return response.data as IRegisterResponse | IRegisterError;
         })
 
 );

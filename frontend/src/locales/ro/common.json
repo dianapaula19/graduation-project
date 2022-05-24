@@ -84,6 +84,13 @@
         },
         "sheetName": "Studenți Înscriși"
     },
+    "accountsList": {
+        "header": {
+            "email": "Email",
+            "role": "Rol",
+            "status": "Status"
+        }
+    },
     "saveButton": "Salvează modificările",
     "excelButton": "Exportă ca .xlsx",
     "syllabusButton": "Vezi fișa disciplinei"

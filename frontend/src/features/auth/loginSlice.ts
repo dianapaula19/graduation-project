@@ -1,17 +1,18 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../../app/store";
-import { ApiStatus, API_URL } from "../Utils";
-
+import { ApiStatus, API_URL_USER } from "../Utils";
 
 export interface LoginState {
     token: null | string;
+    email: null | string;
     message: null | string;
     status: ApiStatus;
 };
 
 const initialState: LoginState = {
     token: null,
+    email: null,
     message: null,
     status: ApiStatus.idle,
 };
@@ -23,6 +24,8 @@ export interface ILoginRequest {
 
 export interface ILoginResponse {
     token: string;
+    email: string;
+    message: string;
 };
 
 export interface ILoginError {
@@ -33,14 +36,14 @@ export const loginAsync = createAsyncThunk(
     'auth/login',
     async (request: ILoginRequest) => await axios
         .post(
-            API_URL + "/login", 
+            API_URL_USER + "/login", 
             request
         )
         .then((response) => {
             return response.data as ILoginResponse;
         })
-        .catch((error) => {
-            return error as ILoginError;
+        .catch((response) => {
+            return response.data as ILoginError;
         })
 );
 
@@ -49,7 +52,6 @@ export const loginSlice = createSlice({
     initialState,
     reducers: {
         logout: (state: LoginState) => {
-            window.sessionStorage.removeItem('token');
             state = initialState;
         }
     },
@@ -61,10 +63,12 @@ export const loginSlice = createSlice({
         .addCase(loginAsync.fulfilled, (state, action) => {
             const res = action.payload as ILoginResponse;
             state.token = res.token;
+            state.message = res.message;
+            state.email = res.email;
             state.status = ApiStatus.success;
-            window.sessionStorage.setItem('token', res.token);
         })
         .addCase(loginAsync.rejected, (state, action) => {
+            console.log(action.payload);
             const res = action.payload as ILoginError;
             state.message = res.error;
             state.status = ApiStatus.failed;
