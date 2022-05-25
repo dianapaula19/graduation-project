@@ -205,10 +205,11 @@ def create_or_uptate_student_choices(request):
 @api_view(["GET"])
 @permission_classes([AllowAny])
 def get_student_choices(request):
-    user_id = request.data.get('user_id')
+    user_email = request.data.get('email')
     options_list_id = request.data.get('options_list_id')
 
-    user = User.objects.get(id=user_id)
+    user = User.objects.get(email=user_email)
+
     if user is None:
         return Response({
             'error': "The user doesn't exist"
@@ -233,20 +234,18 @@ def get_student_choices(request):
         status=HTTP_404_NOT_FOUND
         )
 
-    data = StudentOptionChoice.objects.filter(
-        options_list=options_list,
-        student=student
-    ).order_by('order').all()
+    choices = StudentOptionChoice.objects.choices_sorted_by_order(student=student, options_list=options_list)
 
-    if data is None:
+    if choices is None:
         return Response({
             'error': "No choices were found"
         },
         status=HTTP_404_NOT_FOUND
         )
 
-    res = serializers.serialize('json', data)
+    res = serializers.serialize('json', choices)
 
     return Response( 
         res,
         status=HTTP_200_OK)
+

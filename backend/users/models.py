@@ -34,18 +34,34 @@ class Role(models.TextChoices):
     TEACHER = 'teacher',
     SECRETARY = 'secretary'
 
+class StudentManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(role=Role.STUDENT)
+
+class TeacherManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(role=Role.TEACHER)
+
+class SecretaryManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(role=Role.SECRETARY)
+
 class User(AbstractUser):
     username = None
     email = models.EmailField(unique=True)
     first_name = models.TextField(max_length=50)
     last_name = models.TextField(max_length=50)
     role = models.TextField(choices=Role.choices, null=True)
-    verified = models.BooleanField('verified', default=True)
+    verified = models.BooleanField(default=True)
+    changed_password = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
     objects = UserManager()
+    students = StudentManager()
+    teachers = TeacherManager()
+    secretaries = SecretaryManager()
 
     def __str__(self):
         return self.email
@@ -87,6 +103,7 @@ class Student(models.Model):
     learning_mode = models.TextField(choices=LearningMode.choices, default=LearningMode.IF)
     degree = models.TextField(choices=Degree.choices, default=Degree.LICENTA)
     study_program = models.TextField(choices=StudyProgram.choices, default=StudyProgram.INFO)
+    options_lists = models.ManyToManyField('courses.OptionsList', related_name='options_lists')
     current_group = models.CharField(max_length=3)
     current_year = models.IntegerField(
         validators=[
@@ -95,12 +112,27 @@ class Student(models.Model):
         ],
         default=1
     )
+    current_semester = models.IntegerField(
+        validators=[
+            MinValueValidator(1),
+            MaxValueValidator(2)
+        ],
+        default=1
+    )
 
 class Teacher(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
+class GradeManager(models.Manager):
+    def get_student_current_grade(self, student):
+        try: 
+            grade = super().get_queryset().filter(student=student, year=student.current_year)[0]
+            return grade.grade 
+        except:
+            return 0.0
+
 class Grade(models.Model):
-    student = models.ForeignKey(Student, related_name='grades', on_delete=models.CASCADE, default=None)
+    student = models.ForeignKey(Student, related_name='grades', on_delete=models.CASCADE)
     grade = models.FloatField(
         validators=[
             MinValueValidator(0.0),
@@ -113,3 +145,11 @@ class Grade(models.Model):
             MaxValueValidator(4)
         ]
     )
+
+    objects = GradeManager()
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['student', 'year'], name='unique_migration_grade_student_year'
+            ),
+        ]

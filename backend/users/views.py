@@ -5,6 +5,8 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.contrib.auth import authenticate
+
+from .serializers import StudentSerializer, UserSerializer
 from .models import Grade, Role, User, Student, Teacher
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, permission_classes
@@ -47,10 +49,24 @@ def login(request):
         )
 
     token, _ = Token.objects.get_or_create(user=user)
+    user_serializer = UserSerializer(user)
+
+    if user.role == Role.STUDENT:
+        student = Student.objects.get(user=user)
+        student_serializer = StudentSerializer(student)
+
+        return Response({
+            'token': token.key,
+            'user_data': user_serializer.data,
+            'student_data': student_serializer.data,
+            'message': 'Succesful login' 
+            },
+            status=HTTP_200_OK
+        )
     
     return Response({
         'token': token.key,
-        'email': user.email,
+        'user_data': user_serializer.data,
         'message': 'Succesful login' 
         },
         status=HTTP_200_OK

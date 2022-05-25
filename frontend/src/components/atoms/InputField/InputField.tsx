@@ -35,7 +35,7 @@ const InputField = ({
     
     const [showPassword, setShowPassword] = useState(false);
     
-    const iconSwitch = (type: InputFieldType): JSX.Element => {
+    const iconSwitch = (type: InputFieldType): JSX.Element | null => {
         switch (type) {
             case 'email':
                 return <FontAwesomeIcon 
@@ -48,10 +48,7 @@ const InputField = ({
                             className={`${inputGroupClassName}__icon`}
                         />
             default:
-                return <FontAwesomeIcon 
-                            icon={faUser} 
-                            className={`${inputGroupClassName}__icon`}
-                        />
+                return null;
         }
     }
 
