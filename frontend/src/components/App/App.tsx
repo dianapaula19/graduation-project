@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import LoadingPage from '../pages/LoadingPage';
 import PersonalDataPage from '../pages/PersonalDataPage';
 import AccountsPage from '../pages/secretary/AccountsPage';
 import OptionalCoursesSelectionPage from '../pages/student/OptionalCoursesSelectionPage';
@@ -18,7 +19,11 @@ function App() {
               <AuthentificationPage 
                 action={AuthentificationAction.login} 
               />} 
-            />
+          />
+          <Route 
+            path="loading" 
+            element={<LoadingPage />} 
+          />
           <Route 
             path="register" 
             element={

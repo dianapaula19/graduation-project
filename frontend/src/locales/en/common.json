@@ -96,6 +96,18 @@
             "status": "Status"
         }
     },
+    "loadingPage": {
+        "quotes": [
+            {
+                "text": "Education is the passport to the future, for tomorrow belongs to those who prepare for it today.",
+                "author": "Malcom X"
+            },
+            {
+                "text": "What would life be if we had no courage to attempt anything?",
+                "author": "Vincent Van Gogh"
+            }
+        ]
+    },
     "saveButton": "Save changes",
     "excelButton": "Export as .xlsx",
     "syllabusButton": "View the syllabus"

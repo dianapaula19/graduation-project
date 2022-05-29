@@ -1,0 +1,31 @@
+.loading-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  gap: 2rem;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    
+    &__emoji {
+      font-size: xx-large;
+    }
+    &__text {
+      font-size: large;
+      font-weight: bold;
+      color: #525252;
+    }
+  
+    &__author {
+      font-size: medium;
+      color: #c4c4c4;
+    }  
+  }
+}

@@ -96,6 +96,18 @@
             "status": "Status"
         }
     },
+    "loadingPage": {
+        "quotes": [
+            {
+                "text": "Educația este pașaportul către viitor, deoarece ziua de mâine aparține celor care se pregătesc pentru ea astăzi.",
+                "author": "Malcom X"
+            },
+            {
+                "text": "Ce ar fi viaţa dacă nu am avea curajul să riscăm ceva?",
+                "author": "Vincent Van Gogh"
+            }
+        ]
+    },
     "saveButton": "Salvează modificările",
     "excelButton": "Exportă ca .xlsx",
     "syllabusButton": "Vezi fișa disciplinei"
