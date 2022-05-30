@@ -1,35 +1,26 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import LoadingPage from '../pages/LoadingPage';
+import LoginPage from '../pages/auth/LoginPage';
+import RegisterPage from '../pages/auth/RegisterPage';
 import PersonalDataPage from '../pages/PersonalDataPage';
 import AccountsPage from '../pages/secretary/AccountsPage';
 import OptionalCoursesSelectionPage from '../pages/student/OptionalCoursesSelectionPage';
 import OptionalCoursesList from '../pages/teacher/Courses';
-import AuthentificationPage from '../templates/AuthentificationPage/AuthentificationPage';
-import { AuthentificationAction } from '../templates/AuthentificationPage/AuthentificationPage.types';
+import AuthentificationPage from '../templates/AuthentificationPage/';
+import { AuthentificationAction } from '../templates/AuthentificationPage/';
 
-function App() {
+const App = () => {
   return (
     <Suspense fallback="loading">
       <BrowserRouter>
         <Routes>
           <Route 
             path="login" 
-            element={
-              <AuthentificationPage 
-                action={AuthentificationAction.login} 
-              />} 
-          />
-          <Route 
-            path="loading" 
-            element={<LoadingPage />} 
+            element={<LoginPage />} 
           />
           <Route 
             path="register" 
-            element={
-              <AuthentificationPage 
-                action={AuthentificationAction.register} 
-              />} 
+            element={<RegisterPage />} 
           />
           <Route 
             path="recoverAccount"

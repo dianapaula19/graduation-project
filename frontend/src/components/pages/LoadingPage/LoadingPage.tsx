@@ -19,7 +19,6 @@ const LoadingPage = () => {
   useEffect(() => {
     if (quote.text === '' || quote.author === '') {
       const index = (Math.floor(Math.random() * 2)).toString();
-      console.log(t(`loadingPage.quotes.${index}.text`));
       setQuote({
         ['text']: t(`loadingPage.quotes.${index}.text`),
         ['author']: t(`loadingPage.quotes.${index}.author`)

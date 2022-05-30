@@ -35,14 +35,7 @@ const LoginForm = () => {
             [name]: value
         });
     }
-
-    // useEffect(() => {
-    //     if (status == ApiStatus.success) {
-    //         navigate('/')
-    //     }
-    // }, [status])
     
-
     const onSubmit = (): void => {
         dispatch(loginAsync(data as ILoginRequest));
     }

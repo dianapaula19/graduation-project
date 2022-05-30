@@ -123,6 +123,7 @@ class Student(models.Model):
 class Teacher(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
+
 class GradeManager(models.Manager):
     def get_student_current_grade(self, student):
         try: 

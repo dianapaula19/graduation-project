@@ -109,7 +109,6 @@ const OptionalCoursesList = () => {
                     disabled={false} 
                 />
                 <Modal
-                    title={'Trimite anunt'}
                     show={showSendAnnouncementModal}
                     closeModal={() => {setShowSendAnnouncementModal(false)}}                
                 >

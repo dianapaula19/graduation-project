@@ -1,5 +1,7 @@
 from email.headerregistry import Group
+from enum import Enum
 from nis import cat
+from sre_constants import SUCCESS
 from django.db import IntegrityError
 from django.shortcuts import render
 
@@ -24,6 +26,12 @@ from django.urls import reverse
 from django_rest_passwordreset.signals import reset_password_token_created
 from django.core.mail import send_mail
 
+class LoginResponseCode(Enum):
+    NO_PASSWORD_OR_EMAIL_PROVIDED = 'NO_PASSWORD_OR_EMAIL_PROVIDED'
+    INVALID_CREDENTIALS = 'INVALID_CREDENTIALS'
+    ACCOUNT_NOT_VERIFIED = 'ACCOUNT_NOT_VERIFIED'
+    PASSWORD_NOT_CHANGED = 'PASSWORD_NOT_CHANGED'
+    SUCCESS = 'SUCCESS'
 
 @api_view(["POST"])
 @permission_classes([AllowAny])
@@ -31,68 +39,64 @@ def login(request):
     email = request.data.get("email")
     password = request.data.get("password")
     
-    if email is None or password is None:
-        return Response({'error': 'Please provide both email and password'},
-                        status=HTTP_400_BAD_REQUEST)
+    if not email or not password:
+        return Response({
+            'code': LoginResponseCode.NO_PASSWORD_OR_EMAIL_PROVIDED.value
+            },
+            status=HTTP_400_BAD_REQUEST
+        )
 
     user = authenticate(email=email, password=password)
     
     if not user:
-        return Response({'error': 'Invalid Credentials'},
-                        status=HTTP_404_NOT_FOUND)
+        return Response({
+            'code': LoginResponseCode.INVALID_CREDENTIALS.value
+            },
+            status=HTTP_404_NOT_FOUND
+        )
 
     if user.verified == False:
         return Response({
-            'error': "Your account wasn`t verified yet. You will receive an email as soon as your account is verified."
+            'code': LoginResponseCode.ACCOUNT_NOT_VERIFIED.value
+        },
+        status=HTTP_403_FORBIDDEN
+        )
+
+    if not user.changed_password:
+        return Response({
+            'code': LoginResponseCode.PASSWORD_NOT_CHANGED.value
         },
         status=HTTP_403_FORBIDDEN
         )
 
     token, _ = Token.objects.get_or_create(user=user)
     user_serializer = UserSerializer(user)
-
-    if user.role == Role.STUDENT:
-        student = Student.objects.get(user=user)
-        student_serializer = StudentSerializer(student)
-
-        return Response({
-            'token': token.key,
-            'user_data': user_serializer.data,
-            'student_data': student_serializer.data,
-            'message': 'Succesful login' 
-            },
-            status=HTTP_200_OK
-        )
     
     return Response({
         'token': token.key,
         'user_data': user_serializer.data,
-        'message': 'Succesful login' 
+        'message': 'Successful login' 
         },
         status=HTTP_200_OK
     )
 
-@api_view(["POST"])
-@permission_classes([AllowAny])
-def logout(request):
-    key = request.META.get('HTTP_AUTHORIZATION')[7:]
-    Token.objects.filter(key=key).delete()
+class RegisterResponseCode(Enum):
+    NO_PASSWORD_OR_EMAIL_PROVIDED = 'NO_PASSWORD_OR_EMAIL_PROVIDED'
+    ALREADY_REGISTERED = 'ALREADY_REGISTERED',
+    SUCCESS = 'SUCCESS'
 
-    return Response({
-            'message': 'Successful logout'    
-        },
-        status=HTTP_200_OK
-    )
-    
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def register(request):
     email = request.data.get("email")
     password = request.data.get("password")
 
-    if email is None or password is None:
-        return Response({'error': 'Please provide both email and password'},
-                        status=HTTP_400_BAD_REQUEST)
+    if not email or not password:
+        return Response({
+            'code': RegisterResponseCode.NO_PASSWORD_OR_EMAIL_PROVIDED.value
+            },
+            status=HTTP_400_BAD_REQUEST
+        )
 
     try:
         User.objects.create_user(
@@ -101,13 +105,15 @@ def register(request):
             verified=False
         )
     except IntegrityError:
-        return Response(
-            {'error': "You are already registered"},
+        return Response({
+            'code': RegisterResponseCode.ALREADY_REGISTERED.value
+            },
             status=HTTP_500_INTERNAL_SERVER_ERROR
         )
 
     return Response({
-        'message': 'Your account was created succesfully. Once your account is verified, you will be notified by email'}, 
+        'code': RegisterResponseCode.SUCCESS.value
+        }, 
         status=HTTP_200_OK
     )
 

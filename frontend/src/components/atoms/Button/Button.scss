@@ -2,7 +2,6 @@
     all: unset;
     text-transform: uppercase;
     font-size: small;
-    font-weight: bold;
     background-color: #0366d6;
     color: white;
     border-radius: .5rem;
@@ -25,6 +24,7 @@
 .button--save {
     display: flex;
     flex-direction: row;
+    font-weight: bold;
     gap: 1rem;
     align-items: center;
     justify-content: center;
@@ -38,6 +38,7 @@
 .button--excel {
     display: flex;
     flex-direction: row;
+    font-weight: bold;
     gap: 1rem;
     align-items: center;
     justify-content: center;
@@ -51,6 +52,7 @@
 .button--mail {
     display: flex;
     flex-direction: row;
+    font-weight: bold;
     gap: 1rem;
     align-items: center;
     justify-content: center;

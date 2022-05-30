@@ -1,19 +1,29 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../../app/store";
+import { Role } from "../../components/App";
 import { ApiStatus, API_URL_USER } from "../Utils";
+
+export interface User {
+    email: string;
+    first_name: string;
+    last_name: string;
+    role: Role;
+}
 
 export interface LoginState {
     token: null | string;
-    email: null | string;
-    message: null | string;
+    userData: null | User;
+    code: null | string;
+    showModal: boolean;
     status: ApiStatus;
 };
 
 const initialState: LoginState = {
     token: null,
-    email: null,
-    message: null,
+    userData: null,
+    code: null,
+    showModal: false,
     status: ApiStatus.idle,
 };
 
@@ -24,26 +34,26 @@ export interface ILoginRequest {
 
 export interface ILoginResponse {
     token: string;
-    email: string;
-    message: string;
+    user_data: User;
+    code: string;
 };
 
 export interface ILoginError {
-    error: string;
+    code: string;
 };
 
 export const loginAsync = createAsyncThunk(
     'auth/login',
-    async (request: ILoginRequest) => await axios
+    async (request: ILoginRequest, {rejectWithValue}) => await axios
         .post(
             API_URL_USER + "/login", 
             request
         )
         .then((response) => {
-            return response.data as ILoginResponse;
+            return response.data;
         })
-        .catch((response) => {
-            return response.data as ILoginError;
+        .catch((error) => {
+            return rejectWithValue(error.response.data);
         })
 );
 
@@ -51,8 +61,8 @@ export const loginSlice = createSlice({
     name: 'login',
     initialState,
     reducers: {
-        logout: (state: LoginState) => {
-            state = initialState;
+        revert: () => {
+            return initialState;
         }
     },
     extraReducers: (builder) => {
@@ -63,22 +73,24 @@ export const loginSlice = createSlice({
         .addCase(loginAsync.fulfilled, (state, action) => {
             const res = action.payload as ILoginResponse;
             state.token = res.token;
-            state.message = res.message;
-            state.email = res.email;
+            state.code = res.code;
+            state.userData = res.user_data;
             state.status = ApiStatus.success;
         })
         .addCase(loginAsync.rejected, (state, action) => {
-            console.log(action.payload);
             const res = action.payload as ILoginError;
-            state.message = res.error;
+            state.code = res.code;
+            state.showModal = true;
             state.status = ApiStatus.failed;
         })
     }
 });
 
-export const { logout } = loginSlice.actions;
+export const { revert }  = loginSlice.actions;
 
 export const loginStatus = (state: RootState) => state.login.status;
-export const loginMessage = (state: RootState) => state.register.message;
+export const loginUserData = (state: RootState) => state.login.userData;
+export const loginCode = (state: RootState) => state.login.code;
+export const loginShowModal = (state: RootState) => state.login.showModal;
 
 export default loginSlice.reducer;

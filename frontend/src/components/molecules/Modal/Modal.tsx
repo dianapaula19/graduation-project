@@ -5,7 +5,6 @@ import { IModalProps } from "./Modal.types";
 import "./Modal.scss";
 
 const Modal = ({
-    title,
     show,
     closeModal,
     children
@@ -29,18 +28,14 @@ const Modal = ({
                 <div 
                     className={headerClassName}
                 >
-                <span
-                    className={`${headerClassName}__title`}
-                >
-                    {title}
-                </span>
                 <FontAwesomeIcon 
                     icon={faXmark}
                     className={`${headerClassName}__icon`}
                     onClick={closeModal}
                 />
                 </div>
-            {children}
+                
+                {children}
 
             </div>
         </div>

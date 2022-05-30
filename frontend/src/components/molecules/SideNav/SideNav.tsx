@@ -6,12 +6,15 @@ import LanguageSwitch from "../../atoms/LanguagesSwitch/LanguageSwitch";
 import { useTranslation } from "react-i18next";  
 import { Time } from "./SideMenu.types";
 import { useDispatch } from "react-redux";
-import { logout } from "../../../features/auth/loginSlice";
 import { useNavigate } from "react-router-dom";
+import Button from "../../atoms/Button";
+import { loginStatus, loginUserData, revert } from "../../../features/auth/loginSlice";
+import { useAppSelector } from "../../../app/hooks";
 
 const SideNav = () => {
     
     const dispatch = useDispatch();
+    const userData = useAppSelector(loginUserData);
     let navigate = useNavigate();
 
     const componentClassName = "side-nav";
@@ -54,20 +57,25 @@ const SideNav = () => {
                 className={`${componentClassName}__welcome-message`}
             >
                 <p>
-                    {displayMessage}, name 
+                    {displayMessage}, {userData !== null ? (userData.first_name) : ('FIRST_NAME')} 
                     {emoji}
                 </p>
             </div>
             <div 
                 className={`${componentClassName}__links`}
             >   
-                <LinkButton 
-                    text={t("sidenav.personalData")}
-                    href={"/"}
+                <Button 
+                    label={t("sidenav.personalData")} 
+                    disabled={false}                    
                 />
-                <LinkButton 
-                    text={t("sidenav.signOut")} 
-                    href="/login"
+                <Button 
+                    label={t("sidenav.signOut")} 
+                    onClick={() => {
+                        console.log("pressed");
+                        dispatch(revert());
+                        navigate('/login');
+                    }}
+                    disabled={false}                    
                 />
 
             </div>

@@ -1,45 +1,61 @@
 {
     "en": "Engleză",
     "ro": "Română",
-    "registration.form": {
-        "email": {
-            "placeholder": "Email",
-            "errorMessage": "Text",
-            "label": "Email"
+    "registration": {
+        "codes": {
+            "NO_PASSWORD_OR_EMAIL_PROVIDED": "Please provide both a password and an email",
+            "ALREADY_REGISTERED": "You are already registered",
+            "SUCCESS": "Your account was created succesfully. Once your account is verified, you will be notified by email"
         },
-        "password": {
-            "placeholder": "Parolă",
-            "errorMessage": "Text",
-            "label": "Parolă"
-        },
-        "confirmPassword": {
-            "placeholder": "Confirmă Parola",
-            "errorMessage": "Text",
-            "label": "Confirmă Parola"
-        },
-        "button": {
-            "label": "Crează-ți cont"
-        },
-        "alreadyAnUser": "Ai deja cont? Loghează-te ",
-        "alreadyAnUserLink": "Aici"
+        "form": {
+            "email": {
+                "placeholder": "Email",
+                "errorMessage": "Text",
+                "label": "Email"
+            },
+            "password": {
+                "placeholder": "Parolă",
+                "errorMessage": "Text",
+                "label": "Parolă"
+            },
+            "confirmPassword": {
+                "placeholder": "Confirmă Parola",
+                "errorMessage": "Text",
+                "label": "Confirmă Parola"
+            },
+            "button": {
+                "label": "Crează-ți cont"
+            },
+            "alreadyAnUser": "Ai deja cont? Loghează-te ",
+            "alreadyAnUserLink": "Aici"
+        }
     },
-    "login.form": {
-        "email": {
-            "placeholder": "Email",
-            "errorMessage": "Text",
-            "label": "Email"
+    "login": {
+        "codes": {
+            "NO_PASSWORD_OR_EMAIL_PROVIDED": "Please provide both a password and an email",
+            "INVALID_CREDENTIALS": "The password or the email or wrong",
+            "ACCOUNT_NOT_VERIFIED": "Your account wasn`t verified yet. You will receive an email as soon as your account is verified.",
+            "PASSWORD_NOT_CHANGED": "Please reset your password before logging in for the first time",
+            "SUCCESS": "SUCCESS"
         },
-        "password": {
-            "placeholder": "Parolă",
-            "errorMessage": "Text",
-            "label": "Parolă"
-        },
-        "forgotPassword": "Ți-ai uitat parola?",
-        "button": {
-            "label": "Loghează-te"
-        },
-        "newUser": "Utilizator nou? Crează-ți cont ",
-        "newUserLink": "Aici"
+        "form": {
+            "email": {
+                "placeholder": "Email",
+                "errorMessage": "Text",
+                "label": "Email"
+            },
+            "password": {
+                "placeholder": "Parolă",
+                "errorMessage": "Text",
+                "label": "Parolă"
+            },
+            "forgotPassword": "Ți-ai uitat parola?",
+            "button": {
+                "label": "Loghează-te"
+            },
+            "newUser": "Utilizator nou? Crează-ți cont ",
+            "newUserLink": "Aici"
+        }
     },
     "resetPassword.form": {
         "instructions": "Noua ta parolă trebuie să fie diferită de parolele folosite anterior.",
