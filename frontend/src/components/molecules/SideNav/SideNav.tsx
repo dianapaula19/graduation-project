@@ -8,7 +8,8 @@ import { Time } from "./SideMenu.types";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Button from "../../atoms/Button";
-import { loginStatus, loginUserData, revert } from "../../../features/auth/loginSlice";
+import { loginStatus, loginUserData, revertLogin } from "../../../features/auth/loginSlice";
+import { revertStudentData } from "../../../features/user/student/studentDataSlice";
 import { useAppSelector } from "../../../app/hooks";
 
 const SideNav = () => {
@@ -66,13 +67,16 @@ const SideNav = () => {
             >   
                 <Button 
                     label={t("sidenav.personalData")} 
+                    onClick={() => {
+                        navigate('/')
+                    }}
                     disabled={false}                    
                 />
                 <Button 
                     label={t("sidenav.signOut")} 
                     onClick={() => {
-                        console.log("pressed");
-                        dispatch(revert());
+                        dispatch(revertLogin());
+                        dispatch(revertStudentData());
                         navigate('/login');
                     }}
                     disabled={false}                    

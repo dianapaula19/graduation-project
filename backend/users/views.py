@@ -8,7 +8,9 @@ from django.shortcuts import render
 # Create your views here.
 from django.contrib.auth import authenticate
 
-from .serializers import StudentSerializer, UserSerializer
+from backend.permissions import IsStudent
+
+from .serializers import StudentDataSerializer, UserSerializer
 from .models import Grade, Role, User, Student, Teacher
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, permission_classes
@@ -170,7 +172,7 @@ def register_batch_students(request):
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def register_batch_teachers(request):
-    teachers = request.data.get("teacher")
+    teachers = request.data.get("teachers")
     error_messages = []
 
     for teacher in teachers:
@@ -198,6 +200,47 @@ def register_batch_teachers(request):
         },
         status=HTTP_200_OK
     )
+
+@api_view(["POST"])
+@permission_classes([IsStudent])
+def get_student_data(request):
+    email = request.data.get("email")
+    print(email)
+
+    try:
+        user = User.objects.get(email=email)
+    except:
+        user = None
+    if not user:
+        return Response({
+            'code': ''
+        },
+        status=HTTP_404_NOT_FOUND
+        )
+    
+    student = Student.objects.get(user=user)
+
+    if not student:
+        return Response({
+            'code': ''
+        },
+        status=HTTP_404_NOT_FOUND
+        )
+
+    student_serializer = StudentDataSerializer(student)
+
+    return Response({
+            'code': '',
+            'student_data': student_serializer.data
+        },
+        status=HTTP_200_OK
+    )
+
+@api_view(["POST"])
+@permission_classes([IsStudent])
+def get_teacher_data():
+    pass
+
 
 @api_view(["PUT"])
 @permission_classes((AllowAny))

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Navigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import { loginCode, loginShowModal, loginStatus, revert } from "../../../../features/auth/loginSlice";
+import { loginCode, loginShowModal, loginStatus, revertLogin } from "../../../../features/auth/loginSlice";
 import { ApiStatus } from "../../../../features/Utils";
 import Modal from "../../../molecules/Modal";
 import AuthentificationPage from "../../../templates/AuthentificationPage";
@@ -37,7 +37,7 @@ const LoginPage = () => {
           <Modal
             show={showModal}
             closeModal={() => {
-              dispatch(revert())
+              dispatch(revertLogin())
             }}                
           >
             <span>{code !== null ? t(`login.codes.${code}`) : ''}</span>

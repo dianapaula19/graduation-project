@@ -4,6 +4,7 @@ import counterReducer from '../features/counter/counterSlice';
 import languagesReducer from "../components/atoms/LanguagesSwitch/LanguageSwitchSlice";
 import loginReducer from "../features/auth/loginSlice";
 import registerReducer from "../features/auth/registerSlice";
+import studentDataReducer from "../features/user/student/studentDataSlice";
 import teacherCoursesReducer from "../features/course/teacherCourseSlice";
 import { 
   FLUSH, 
@@ -21,6 +22,7 @@ const reducers = combineReducers({
   languages: languagesReducer,
   login: loginReducer,
   register: registerReducer,
+  studentData: studentDataReducer,
   teacherCourse: teacherCoursesReducer
 });
 

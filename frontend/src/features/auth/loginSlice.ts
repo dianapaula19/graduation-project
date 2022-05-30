@@ -61,7 +61,7 @@ export const loginSlice = createSlice({
     name: 'login',
     initialState,
     reducers: {
-        revert: () => {
+        revertLogin: () => {
             return initialState;
         }
     },
@@ -86,9 +86,10 @@ export const loginSlice = createSlice({
     }
 });
 
-export const { revert }  = loginSlice.actions;
+export const { revertLogin }  = loginSlice.actions;
 
 export const loginStatus = (state: RootState) => state.login.status;
+export const loginToken = (state: RootState) => state.login.token;
 export const loginUserData = (state: RootState) => state.login.userData;
 export const loginCode = (state: RootState) => state.login.code;
 export const loginShowModal = (state: RootState) => state.login.showModal;
