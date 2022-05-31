@@ -1,5 +1,7 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { useAppSelector } from '../../app/hooks';
+import { loginUserData } from '../../features/auth/loginSlice';
 import LoginPage from '../pages/auth/LoginPage';
 import RegisterPage from '../pages/auth/RegisterPage';
 import PersonalDataPage from '../pages/PersonalDataPage';
@@ -8,8 +10,13 @@ import OptionalCoursesSelectionPage from '../pages/student/OptionalCoursesSelect
 import OptionalCoursesList from '../pages/teacher/Courses';
 import AuthentificationPage from '../templates/AuthentificationPage/';
 import { AuthentificationAction } from '../templates/AuthentificationPage/';
+import { Role } from './App.types';
 
 const App = () => {
+
+  const userData = useAppSelector(loginUserData);
+  const role = userData?.role;
+
   return (
     <Suspense fallback="loading">
       <BrowserRouter>
@@ -42,24 +49,30 @@ const App = () => {
             path="/"
             element={<PersonalDataPage />}
           />
-          <Route 
-            path="student/select"
-            element={
-              <OptionalCoursesSelectionPage />
-            }
-          />
-          <Route
-            path="teacher/list"
-            element={
-              <OptionalCoursesList />
-            }
-          />
-          <Route 
-            path="secretary/accounts"
-            element={
-              <AccountsPage />
-            }
-          />
+          {role === Role.student && (
+            <Route 
+              path="student/optionals"
+              element={
+                <OptionalCoursesSelectionPage />
+              }
+            />  
+          )}
+          {role === Role.teacher && (
+            <Route
+              path="teacher/courses"
+              element={
+                <OptionalCoursesList />
+              }
+            />  
+          )}
+          {role === Role.secretary && (
+            <Route 
+              path="secretary/accounts"
+              element={
+                <AccountsPage />
+              }
+            />  
+          )}
         </Routes>
       </BrowserRouter>  
     </Suspense>

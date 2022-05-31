@@ -112,35 +112,50 @@
         }
     },
     "resetPassword.form": {
-        "instructions": "Your new password must be different from previous used password.",
-        "password": {
-            "placeholder": "Password",
-            "errorMessage": "Text",
-            "label": "Password"
-        },
-        "confirmPassword": {
-            "placeholder": "Confirm Password",
-            "errorMessage": "Text",
-            "label": "Confirm Password"
-        },
-        "button": {
-            "label": "Reset Password"
+        "form": {
+            "instructions": "Your new password must be different from previous used password.",
+            "password": {
+                "placeholder": "Password",
+                "errorMessage": "Text",
+                "label": "Password"
+            },
+            "confirmPassword": {
+                "placeholder": "Confirm Password",
+                "errorMessage": "Text",
+                "label": "Confirm Password"
+            },
+            "button": {
+                "label": "Reset Password"
+            }
         }
     },
     "recoverAccount.form": {
-        "instructions": "Enter the email associated with your account and we'll send an email with instructions to reset your password.",
-        "email": {
-            "placeholder": "Email",
-            "errorMessage": "Text",
-            "label": "Email"
-        },
-        "button": {
-            "label": "Send Instructions"
+        "form": {
+            "instructions": "Enter the email associated with your account and we'll send an email with instructions to reset your password.",
+            "email": {
+                "placeholder": "Email",
+                "errorMessage": "Text",
+                "label": "Email"
+            },
+            "button": {
+                "label": "Send Instructions"
+            }
         }
     },
     "sidenav": {
-        "signOut": "Sign Out",
-        "personalData": "Personal Data",
+        "links": {
+            "signOut": "Sign Out",
+            "personalData": "Personal Data"
+        },
+        "studentLinks": {
+            "optionals": "Optional Courses"
+        },
+        "teacherLinks": {
+            "courses": "Courses"
+        },
+        "secretaryLinks": {
+            "accounts": "Accounts"
+        },
         "facultyName": "Faculty of Mathematics and Computer Science",
         "displayMessage": {
             "morning": "Good morning",

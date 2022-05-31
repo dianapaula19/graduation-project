@@ -33,6 +33,10 @@
     border: #4ea853 solid .2rem;
     grid-area: save-button;
     margin: 0;
+    &:hover {
+        color: white;
+        background-color: #4ea853;
+    }
 }
 
 .button--excel {
@@ -47,6 +51,10 @@
     border: #0366d6 solid .2rem;
     grid-area: excel-button;
     margin: 0;
+    &:hover {
+        color: white;
+        background-color: #0366d6;
+    }
 }
 
 .button--mail {
@@ -56,9 +64,13 @@
     gap: 1rem;
     align-items: center;
     justify-content: center;
-    color: #c4c4c4;
+    color: #525252;
     background-color: transparent;
-    border: #c4c4c4 solid .2rem;
+    border: #525252 solid .2rem;
     grid-area: mail-button;
-    margin: 0;   
+    margin: 0;
+    &:hover {
+        color: white;
+        background-color: #525252;
+    }   
 }

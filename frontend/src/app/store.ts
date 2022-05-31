@@ -5,6 +5,8 @@ import languagesReducer from "../components/atoms/LanguagesSwitch/LanguageSwitch
 import loginReducer from "../features/auth/loginSlice";
 import registerReducer from "../features/auth/registerSlice";
 import studentDataReducer from "../features/user/student/studentDataSlice";
+import studentOptionalsListsReducer from '../features/user/student/studentOptionalsListsSlice';
+import saveStudentChoicesReducer from "../features/user/student/saveStudentChoicesSlice";
 import teacherCoursesReducer from "../features/course/teacherCourseSlice";
 import { 
   FLUSH, 
@@ -23,6 +25,8 @@ const reducers = combineReducers({
   login: loginReducer,
   register: registerReducer,
   studentData: studentDataReducer,
+  studentOptionalsLists: studentOptionalsListsReducer,
+  saveStudentChoices: saveStudentChoicesReducer,
   teacherCourse: teacherCoursesReducer
 });
 

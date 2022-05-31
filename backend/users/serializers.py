@@ -1,4 +1,4 @@
-from courses.serializers import StudentOptionChoiceSerializer, StudentOptionsListSerializer
+from courses.serializers import OptionsListSerializer, StudentOptionChoiceSerializer, StudentOptionsListSerializer
 from courses.models import OptionsList, StudentOptionChoice
 from .models import Grade, User, Student
 from rest_framework import serializers
@@ -18,7 +18,7 @@ class StudentDataSerializer(serializers.ModelSerializer):
     grades = serializers.SerializerMethodField()
 
     def get_grades(self, obj):
-        grades_query = Grade.objects.filter(student=obj).order_by('year')
+        grades_query = Grade.objects.filter(student=obj).order_by('grade')
         serializer = GradeSerializer(grades_query, many=True)
         
         return serializer.data

@@ -1,12 +1,10 @@
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Navigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { loginToken, loginUserData } from "../../../features/auth/loginSlice";
-import { IStudentDataRequest, studentDataAsync, studentDataData, studentDataStatus } from "../../../features/user/student/studentDataSlice";
+import { studentDataAsync, studentDataData, studentDataStatus } from "../../../features/user/student/studentDataSlice";
 import { ApiStatus } from "../../../features/Utils";
 import { Role } from "../../App";
-import InputField, { InputFieldType } from "../../atoms/InputField";
 import LoggedUserPage from "../../templates/LoggedUserPage";
 import "./PersonalDataPage.scss";
 

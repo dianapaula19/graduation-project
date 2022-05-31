@@ -9,7 +9,8 @@ import "./OptionalCourseCard.scss";
 
 const OptionalCourseCard = ({
     index,
-    groupId,
+    optionalCourseId,
+    optionalsListId,
     handleDragStart,
     handleDragEnter,
     optionalName,
@@ -25,10 +26,10 @@ const OptionalCourseCard = ({
     return (
         <div 
             className={componentClassName}
-            onDragStart={(e) => handleDragStart(e, index, groupId)}
-            onDragEnter={(e) => handleDragEnter(e, index, groupId)}
+            onDragStart={() => handleDragStart(index, optionalsListId)}
+            onDragEnter={() => handleDragEnter(index, optionalsListId)}
             onDragEnd={(e) => e.preventDefault()}
-            key={index}
+            key={optionalCourseId}
             draggable
         >
             <FontAwesomeIcon 

@@ -1,5 +1,8 @@
 import React, { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { loginUserData } from "../../../features/auth/loginSlice";
+import { Choice, saveStudentChoicesAsync } from "../../../features/user/student/saveStudentChoicesSlice";
 import Button from "../../atoms/Button";
 import { ButtonModifier } from "../../atoms/Button/Button.types";
 import OptionalCourseCard from "../OptionalCourseCard/OptionalCourseCard";
@@ -7,57 +10,73 @@ import "./OptionalCoursesContainer.scss";
 import { IDataRef, IOptionalCourseCard, IOptionalCoursesContainerProps } from "./OptionalCoursesContainer.types";
 
 const OptionalCoursesContainer = ({
-    groupId,
-    groupTitle,
-    optionalCourses
+    optionalsListId,
+    title, 
+    courses
 }: IOptionalCoursesContainerProps) => {
 
     const componentClassName = "optional-courses-container";
 
     const { t } = useTranslation();
     
-    const [list, setList] = useState<IOptionalCourseCard[]>(optionalCourses);
+    const dispatch = useAppDispatch();
+    const userData = useAppSelector(loginUserData);
+
+    const [list, setList] = useState<IOptionalCourseCard[]>(courses);
 
     const draggingItem = useRef<HTMLDivElement | IDataRef | null>(null);
     const dragOverItem = useRef<HTMLDivElement | IDataRef | null>(null);
     
     const saveChanges = () => {
-        console.log(list);
+        if (userData !== null) {
+            let choices: Choice[] = []
+            list.forEach((item, index) => {
+                choices.push({
+                    course_id: item.courseId,
+                    order: index
+                })
+            });
+            dispatch(saveStudentChoicesAsync({
+                options_list_id: optionalsListId,
+                email: userData.email,
+                choices: choices 
+            }))
+        }
     }
 
     const handleDragStart = (
-        e: React.DragEvent<HTMLDivElement>, 
         position: number,
-        groupId: string,
+        id: number,
     ) => {
-        draggingItem.current = {position, groupId};
+        draggingItem.current = {position, id};
     };
     
     const handleDragEnter = (
-        e: React.DragEvent<HTMLDivElement>, 
         position: number,
-        groupId: string,
+        id: number,
     ) => {
-        dragOverItem.current = {position, groupId};
+        dragOverItem.current = {position, id};
+
         const listCopy = [...list];
         const draggingDataRef = draggingItem.current as IDataRef;
         const dragOverDataRef = dragOverItem.current as IDataRef;
         const draggingItemPosition = draggingDataRef.position;
-        const draggingItemGroupId = draggingDataRef.groupId;
+        const draggingItemId = draggingDataRef.id;
         const dragOverItemPosition = dragOverDataRef.position;
-        const dragOverItemGroupId = dragOverDataRef.groupId;
+        const dragOverItemId = dragOverDataRef.id;
 
-        if (draggingItemGroupId !== dragOverItemGroupId) {
+        if (draggingItemId !== dragOverItemId) {
             return;
         }
 
         const draggingItemContent = listCopy[draggingItemPosition];
-        
+
         listCopy.splice(draggingItemPosition, 1);
         listCopy.splice(dragOverItemPosition, 0, draggingItemContent);
 
         draggingItem.current = dragOverItem.current;
         dragOverItem.current = null;
+
         setList(listCopy);
     };
 
@@ -68,7 +87,7 @@ const OptionalCoursesContainer = ({
             <span 
                 className={`${componentClassName}__title`}
             >
-                {groupTitle}
+                {title}
             </span>
             <div
                 className={`${componentClassName}__list`}
@@ -76,7 +95,9 @@ const OptionalCoursesContainer = ({
                 {list.map((optionalCourse, index) => {
                     const args = {
                         index: index,
-                        groupId: groupId,
+                        optionalCourseId: optionalCourse.courseId,
+                        optionalsListId: optionalsListId,
+                        optionalName: optionalCourse.courseTitle,
                         handleDragStart: handleDragStart,
                         handleDragEnter: handleDragEnter,
                         ...optionalCourse

@@ -1,79 +1,88 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
+import { loginUserData } from "../../../../features/auth/loginSlice";
+import { revertSaveStudentChoices, saveStudentChoicesCode, saveStudentChoicesShowModal } from "../../../../features/user/student/saveStudentChoicesSlice";
+import { studentOptionalsListsAsync, studentOptionalsListsStatus, studentOptionalsLists, revertStudentOptionalsLists } from "../../../../features/user/student/studentOptionalsListsSlice";
+import { ApiStatus } from "../../../../features/Utils";
+import Loader from "../../../atoms/Loader";
+import Modal from "../../../molecules/Modal";
 import OptionalCoursesContainer from "../../../molecules/OptionalCoursesContainer";
+import { IOptionalCourseCard } from "../../../molecules/OptionalCoursesContainer/OptionalCoursesContainer.types";
 import LoggedUserPage from "../../../templates/LoggedUserPage";
 
 const OptionalCoursesSelectionPage = () => {
+
+    const status = useAppSelector(studentOptionalsListsStatus);
+    const userData = useAppSelector(loginUserData);
+    const optionsLists = useAppSelector(studentOptionalsLists);
+    const showModal = useAppSelector(saveStudentChoicesShowModal);
+    const saveCode = useAppSelector(saveStudentChoicesCode);
+    
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        if (status === ApiStatus.idle && userData !== null) {
+            dispatch(studentOptionalsListsAsync({
+                email: userData.email
+            }))
+        }
+    }, [])
+
+    let component = null;
+
+    switch (status) {
+        case ApiStatus.loading:
+            component = (
+                <div>
+                    <Loader/>
+                </div>
+            )
+            break;
+        case ApiStatus.failed:
+            component = (
+                <div>
+                    Oops, there was a mistake
+                </div>
+            )
+            break;
+        case ApiStatus.success:
+            component = (
+                <div>
+                    {optionsLists !== null && optionsLists.map((optionsList) => {
+                        let courses: IOptionalCourseCard[] = []
+                        optionsList.courses.forEach(course => {
+                            courses.push({
+                                courseId: course.id,
+                                courseTitle: course.title,
+                                teacherName: `${course.teacher_first_name} ${course.teacher_last_name}`,
+                                teacherEmail: course.teacher_email,
+                                linkDocument: course.link,
+                            })
+                        });
+                        return (
+                            <OptionalCoursesContainer 
+                                optionalsListId={optionsList.id} 
+                                title={optionsList.title} 
+                                courses={courses} 
+                            />
+                        )
+                    })}
+                </div>
+            )
+            break;
+        default:
+            break;
+    }
+    
+
     return (
         <LoggedUserPage>
-            <OptionalCoursesContainer 
-                groupId="group-1" 
-                groupTitle="Discipline de specialitate"
-                optionalCourses={[
-                    {
-                        optionalName: "English Literature",
-                        teacherName: "John Keating",
-                        teacherEmail: "john.keating@unibuc.ro",
-                    },
-                    {
-                        optionalName: "Math",
-                        teacherName: "John Keating",
-                        teacherEmail: "john.keating@unibuc.ro",
-                        linkDocument: "https://drive.google.com/file/d/1FEGOZGraTHXvHkG_3dUavk96l43v9rBH/view?usp=sharing",
-                    },
-                    {
-                        optionalName: "Science",
-                        teacherName: "John Keating",
-                        teacherEmail: "john.keating@unibuc.ro",
-                        linkDocument: "https://drive.google.com/file/d/1FEGOZGraTHXvHkG_3dUavk96l43v9rBH/view?usp=sharing",
-                    },
-                ]}
-            />
-            <OptionalCoursesContainer 
-                groupId="group-2" 
-                groupTitle="Discipline de dezvoltare antreprenorială"
-                optionalCourses={[
-                    {
-                        optionalName: "English Literature",
-                        teacherName: "John Keating",
-                        teacherEmail: "john.keating@unibuc.ro",
-                    },
-                    {
-                        optionalName: "Math",
-                        teacherName: "John Keating",
-                        teacherEmail: "john.keating@unibuc.ro",
-                        linkDocument: "https://drive.google.com/file/d/1FEGOZGraTHXvHkG_3dUavk96l43v9rBH/view?usp=sharing",
-                    },
-                    {
-                        optionalName: "Science",
-                        teacherName: "John Keating",
-                        teacherEmail: "john.keating@unibuc.ro",
-                        linkDocument: "https://drive.google.com/file/d/1FEGOZGraTHXvHkG_3dUavk96l43v9rBH/view?usp=sharing",
-                    },
-                ]}
-            />
-            <OptionalCoursesContainer 
-                groupId="group-3" 
-                groupTitle="Group #1"
-                optionalCourses={[
-                    {
-                        optionalName: "English Literature",
-                        teacherName: "John Keating",
-                        teacherEmail: "john.keating@unibuc.ro",
-                    },
-                    {
-                        optionalName: "Math",
-                        teacherName: "John Keating",
-                        teacherEmail: "john.keating@unibuc.ro",
-                        linkDocument: "https://drive.google.com/file/d/1FEGOZGraTHXvHkG_3dUavk96l43v9rBH/view?usp=sharing",
-                    },
-                    {
-                        optionalName: "Science",
-                        teacherName: "John Keating",
-                        teacherEmail: "john.keating@unibuc.ro",
-                        linkDocument: "https://drive.google.com/file/d/1FEGOZGraTHXvHkG_3dUavk96l43v9rBH/view?usp=sharing",
-                    },
-                ]}
-            />
+            {component}
+            <Modal show={showModal} closeModal={() => {
+                dispatch(revertSaveStudentChoices());
+            }} >
+                {saveCode}
+            </Modal>
         </LoggedUserPage>
     )
 }

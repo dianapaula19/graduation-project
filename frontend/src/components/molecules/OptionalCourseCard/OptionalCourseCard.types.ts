@@ -2,9 +2,10 @@ import { HtmlHTMLAttributes } from "react";
 
 interface IOptionalCourseCardProps extends HtmlHTMLAttributes<HTMLDivElement>{
     index: number;
-    groupId: string;
-    handleDragStart: (e: React.DragEvent<HTMLDivElement>, position: number, groupId: string) => void;
-    handleDragEnter: (e: React.DragEvent<HTMLDivElement>, position: number, groupId: string) => void;
+    optionalCourseId: number;
+    optionalsListId: number;
+    handleDragStart: (position: number, optionalsListId: number) => void;
+    handleDragEnter: (position: number, optionalsListId: number) => void;
     optionalName: string;
     teacherName: string;
     teacherEmail: string;

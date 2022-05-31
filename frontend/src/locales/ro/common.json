@@ -139,8 +139,19 @@
         }
     },
     "sidenav": {
-        "signOut": "Deconectează-te",
-        "personalData": "Date personale",
+        "links": {
+            "signOut": "Deconectează-te",
+            "personalData": "Date personale"
+        },
+        "studentLinks": {
+            "optionals": "Opționale"
+        },
+        "teacherLinks": {
+            "courses": "Cursuri"
+        },
+        "secretaryLinks": {
+            "accounts": "Conturi"
+        },
         "facultyName": "Facultatea de Matematică și Informatică",
         "displayMessage": {
             "morning": "Neața",

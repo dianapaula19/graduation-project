@@ -7,10 +7,12 @@ class OptionsListSerializer(serializers.ModelSerializer):
 		fields = ['id', 'domain', 'learning_mode', 'degree', 'study_program', 'year', 'semester', 'title']
 
 class StudentCourseSerializer(serializers.ModelSerializer):
-
+	teacher_first_name = serializers.CharField(source='teacher.user.first_name')
+	teacher_last_name = serializers.CharField(source='teacher.user.last_name')
+	teacher_email = serializers.CharField(source='teacher.user.email')
 	class Meta:
 		model = Course
-		fields = ['id', 'title', 'link']
+		fields = ['id', 'title', 'link', 'capacity', 'teacher_first_name', 'teacher_last_name', 'teacher_email']
 
 class StudentOptionsListSerializer(serializers.ModelSerializer):
 	courses = StudentCourseSerializer(many=True)
@@ -19,8 +21,7 @@ class StudentOptionsListSerializer(serializers.ModelSerializer):
 		fields = ['id', 'title', 'courses']
 
 class StudentOptionChoiceSerializer(serializers.ModelSerializer):
-
 	class Meta:
 		model = StudentOptionChoice
-		fields = ['id', 'options_list', 'course', 'order']
+		fields = ['options_list', 'course', 'order']
 		

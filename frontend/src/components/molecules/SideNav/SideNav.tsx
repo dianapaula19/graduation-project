@@ -11,11 +11,16 @@ import Button from "../../atoms/Button";
 import { loginStatus, loginUserData, revertLogin } from "../../../features/auth/loginSlice";
 import { revertStudentData } from "../../../features/user/student/studentDataSlice";
 import { useAppSelector } from "../../../app/hooks";
+import { links, secretaryLinks, studentLinks, teacherLinks } from "./Utils";
+import { Role } from "../../App";
 
 const SideNav = () => {
     
     const dispatch = useDispatch();
     const userData = useAppSelector(loginUserData);
+
+    const role = userData?.role;
+
     let navigate = useNavigate();
 
     const componentClassName = "side-nav";
@@ -46,6 +51,26 @@ const SideNav = () => {
             break;
     }
 
+    let links = null;
+    let pathName: string = '';
+
+    switch(role) {
+        case Role.student:
+            links = studentLinks;
+            pathName = 'studentLinks'
+            break;
+        case Role.teacher:
+            links = teacherLinks;
+            pathName = 'teacherLinks'
+            break;
+        case Role.secretary:
+            links = secretaryLinks;
+            pathName = 'secretaryLinks'
+            break;
+        default:
+            break;    
+    }
+
     return(
         <div className={componentClassName}>
             <LanguageSwitch />
@@ -65,15 +90,26 @@ const SideNav = () => {
             <div 
                 className={`${componentClassName}__links`}
             >   
+                {(links !== null && pathName !== '') && links.map((link) => {
+                    return (
+                        <Button 
+                            label={t(`sidenav.${pathName}.${link.label}`)} 
+                            onClick={() => {
+                                navigate(link.path)
+                            }}
+                            disabled={false}                    
+                        />
+                    )    
+                })}
                 <Button 
-                    label={t("sidenav.personalData")} 
+                    label={t("sidenav.links.personalData")} 
                     onClick={() => {
                         navigate('/')
                     }}
                     disabled={false}                    
                 />
                 <Button 
-                    label={t("sidenav.signOut")} 
+                    label={t("sidenav.links.signOut")} 
                     onClick={() => {
                         dispatch(revertLogin());
                         dispatch(revertStudentData());

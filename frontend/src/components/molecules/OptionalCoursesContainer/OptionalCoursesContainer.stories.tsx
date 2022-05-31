@@ -12,23 +12,26 @@ const Template: ComponentStory<typeof OptionalCoursesContainer> = (args) => <Opt
 export const DefaultOptionalCoursesContainer = Template.bind({});
 
 DefaultOptionalCoursesContainer.args = {
-    groupTitle: "Group 1",
-    groupId: "group-1",
-    optionalCourses: [
+    title: "Group 1",
+    optionalsListId: 1,
+    courses: [
         {
-            optionalName: "English Literature",
+            courseId: 1,
+            courseTitle: "English Literature",
             teacherName: "John Keating",
             teacherEmail: "john.keating@unibuc.ro",
             linkDocument: "https://drive.google.com/file/d/1FEGOZGraTHXvHkG_3dUavk96l43v9rBH/view?usp=sharing",
         },
         {
-            optionalName: "Math",
+            courseId: 2,
+            courseTitle: "Math",
             teacherName: "John Keating",
             teacherEmail: "john.keating@unibuc.ro",
             linkDocument: "https://drive.google.com/file/d/1FEGOZGraTHXvHkG_3dUavk96l43v9rBH/view?usp=sharing",
         },
         {
-            optionalName: "Science",
+            courseId: 3,
+            courseTitle: "Science",
             teacherName: "John Keating",
             teacherEmail: "john.keating@unibuc.ro",
             linkDocument: "https://drive.google.com/file/d/1FEGOZGraTHXvHkG_3dUavk96l43v9rBH/view?usp=sharing",

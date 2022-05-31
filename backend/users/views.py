@@ -205,7 +205,6 @@ def register_batch_teachers(request):
 @permission_classes([IsStudent])
 def get_student_data(request):
     email = request.data.get("email")
-    print(email)
 
     try:
         user = User.objects.get(email=email)
@@ -213,7 +212,7 @@ def get_student_data(request):
         user = None
     if not user:
         return Response({
-            'code': ''
+            'code': 'USER_NOT_FOUND'
         },
         status=HTTP_404_NOT_FOUND
         )
@@ -222,7 +221,7 @@ def get_student_data(request):
 
     if not student:
         return Response({
-            'code': ''
+            'code': 'STUDENT_NOT_FOUND'
         },
         status=HTTP_404_NOT_FOUND
         )
@@ -230,7 +229,7 @@ def get_student_data(request):
     student_serializer = StudentDataSerializer(student)
 
     return Response({
-            'code': '',
+            'code': 'SUCCESS',
             'student_data': student_serializer.data
         },
         status=HTTP_200_OK

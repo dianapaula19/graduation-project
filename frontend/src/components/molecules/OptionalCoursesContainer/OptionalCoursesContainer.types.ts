@@ -1,7 +1,8 @@
 import { IOptionalCourseCardProps } from "../OptionalCourseCard/OptionalCourseCard.types";
 
 interface IOptionalCourseCard {
-    optionalName: string;
+    courseId: number;
+    courseTitle: string;
     teacherName: string;
     teacherEmail: string;
     linkDocument?: string;
@@ -9,13 +10,13 @@ interface IOptionalCourseCard {
 
 interface IDataRef {
     position: number;
-    groupId: string;
+    id: number;
 }
 
 interface IOptionalCoursesContainerProps {
-    groupId: string;
-    groupTitle: string;
-    optionalCourses: IOptionalCourseCard[];
+    optionalsListId: number;
+    title: string;
+    courses: IOptionalCourseCard[];
 }
 
 export type {
