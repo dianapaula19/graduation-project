@@ -37,10 +37,10 @@ class OptionsListManager(models.Manager):
 class OptionsList(models.Model):
     courses = models.ManyToManyField('Course', related_name='courses')
     students = models.ManyToManyField('users.Student', related_name='students')
-    domain = models.TextField(choices=Domain.choices, default=Domain.INFO)
-    learning_mode = models.TextField(choices=LearningMode.choices, default=LearningMode.IF)
-    degree = models.TextField(choices=Degree.choices, default=Degree.LICENTA)
-    study_program = models.TextField(choices=StudyProgram.choices, default=StudyProgram.INFO)
+    domain = models.TextField(choices=Domain.choices, null=True)
+    learning_mode = models.TextField(choices=LearningMode.choices, null=True)
+    degree = models.TextField(choices=Degree.choices, null=True)
+    study_program = models.TextField(choices=StudyProgram.choices, null=True)
     title = models.CharField(max_length=255)
     year = models.IntegerField(
         validators=[

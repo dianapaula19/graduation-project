@@ -1,6 +1,37 @@
 {
     "en": "English",
     "ro": "Romanian",
+    "domains": {
+        "INFO": "Computer Science",
+        "CTI": "Computers and Information Technology",
+        "MATE": "Mathematics"
+    },
+    "learningModes": {
+        "IF": "IF",
+        "IFR": "IFR",
+        "ID": "ID"
+    },
+    "degrees": {
+        "BACHELOR": "Bachelor's Degree",
+        "MASTER": "Master's Degree"
+    },
+    "studyPrograms": {
+        "NLP": "NLP",
+        "DS": "DS",
+        "SLA": "SLA",
+        "SD": "SD",
+        "IA": "IA",
+        "IS": "IS",
+        "BDTS": "BDTS",
+        "PSFS": "PSFS",
+        "MD": "MD",
+        "ASM": "ASM",
+        "TI": "Information Technology",
+        "INFO": "INFO",
+        "MATEINFO": "MATEINFO",
+        "MATE": "MATE",
+        "MA": "MA"
+    },
     "registration": {
         "codes": {
             "NO_PASSWORD_OR_EMAIL_PROVIDED": "Please provide both a password and an email",
@@ -55,6 +86,29 @@
             },
             "newUser": "New user? ",
             "newUserLink": "Sign Up"
+        }
+    },
+    "profile": {
+        "personalData": "Personal Data",
+        "profile": "Profile",
+        "profileDataFields": {
+            "email": "E-mail",
+            "name": "Full Name"
+        },
+        "studentDataFields": {
+            "domain": "Domain",
+            "learningMode": "Learning Mode",
+            "degree": "Degree",
+            "studyProgram": "Study Program",
+            "currentGroup": "Current Group",
+            "currentYear": "Current Year",
+            "currentSemester": "Current Semester"
+        },
+        "studentData": "Student Data",
+        "grade": "Grades",
+        "studentGradeFields": {
+            "yearHeader": "Year",
+            "gradeHeader": "Grade"
         }
     },
     "resetPassword.form": {

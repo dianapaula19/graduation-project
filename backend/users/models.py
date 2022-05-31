@@ -67,42 +67,42 @@ class User(AbstractUser):
         return self.email
 
 class Domain(models.TextChoices):
-    INFO = 'Informatică',
-    CTI = 'Calculatoare și Tehnologia Informației',
-    MATE = 'Matematică'
+    INFO = 'INFO',
+    CTI = 'CTI',
+    MATE = 'MATE'
 
 class LearningMode(models.TextChoices):
-    IF = 'Învățământ cu Frecvență',
-    IFR = 'Învățământ cu Frecvență Redusă',
-    ID = 'Învățământ la Distanță'
+    IF = 'IF',
+    IFR = 'IFR',
+    ID = 'ID'
 
 class Degree(models.TextChoices):
-    LICENTA = 'Licență',
-    MASTER = 'Master'
+    BACHELOR = 'BACHELOR',
+    MASTER = 'MASTER'
 
 class StudyProgram(models.TextChoices):
-    NLP = 'Natural Language Processing',
-    DS = 'Data Science',
-    SLA = 'Securitate și Logică Aplicată',
-    SD = 'Sisteme Distribuite',
-    IA = 'Inteligență Artificială',
-    IS = 'Inginerie Software',
-    BDTS = 'Baze de Date și Tehnologii Software',
-    PSFS = 'Probabilități și Statistică în Finanțe și Științe',
-    MD = 'Matematică Didactică',
-    ASM = 'Advanced Studies in Mathematics',
-    TI = 'Tehnlogia Informației',
-    INFO = 'Informatică',
-    MATEINFO = 'Matematică-Informatică',
-    MATE = 'Matematică',
-    MA = 'Matematici Aplicate'
+    NLP = 'NLP',
+    DS = 'DS',
+    SLA = 'SLA',
+    SD = 'SD',
+    IA = 'IA',
+    IS = 'IS',
+    BDTS = 'BDTS',
+    PSFS = 'PSFS',
+    MD = 'MD',
+    ASM = 'ASM',
+    TI = 'TI',
+    INFO = 'INFO',
+    MATEINFO = 'MATEINFO',
+    MATE = 'MATE',
+    MA = 'MA'
 
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    domain = models.TextField(choices=Domain.choices, default=Domain.INFO)
-    learning_mode = models.TextField(choices=LearningMode.choices, default=LearningMode.IF)
-    degree = models.TextField(choices=Degree.choices, default=Degree.LICENTA)
-    study_program = models.TextField(choices=StudyProgram.choices, default=StudyProgram.INFO)
+    domain = models.TextField(choices=Domain.choices, null=True)
+    learning_mode = models.TextField(choices=LearningMode.choices, null=True)
+    degree = models.TextField(choices=Degree.choices, null=True)
+    study_program = models.TextField(choices=StudyProgram.choices, null=True)
     options_lists = models.ManyToManyField('courses.OptionsList', related_name='options_lists')
     current_group = models.CharField(max_length=3)
     current_year = models.IntegerField(

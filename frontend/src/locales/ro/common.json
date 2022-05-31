@@ -1,6 +1,37 @@
 {
     "en": "Engleză",
     "ro": "Română",
+    "domains": {
+        "INFO": "Informatică",
+        "CTI": "Calculatoare și tehnologia informatiei",
+        "MATE": "Matematică"
+    },
+    "learningModes": {
+        "IF": "Învățământ cu Frecvență",
+        "IFR": "Învățământ cu Frecvență Redusă",
+        "ID": "Învățământ la Distanță"
+    },
+    "degrees": {
+        "BACHELOR": "Studii universitare de licenţă",
+        "MASTER": "Studii universitare de master"
+    },
+    "studyPrograms": {
+        "NLP": "Natural Language Processing",
+        "DS": "Data Science",
+        "SLA": "Securitate și Logică Aplicată",
+        "SD": "Sisteme Distribuite",
+        "IA": "Inteligență Artificială",
+        "IS": "Inginerie Software",
+        "BDTS": "Baze de Date și Tehnologii Software",
+        "PSFS": "Probabilități și Statistică în Finanțe și Științe",
+        "MD": "Matematică Didactică",
+        "ASM": "Advanced Studies in Mathematics",
+        "TI": "Tehnologia Informației",
+        "INFO": "Informatică",
+        "MATEINFO": "Matematică-Informatică",
+        "MATE": "Matematică",
+        "MA": "Matematici Aplicate"
+    },
     "registration": {
         "codes": {
             "NO_PASSWORD_OR_EMAIL_PROVIDED": "Please provide both a password and an email",
@@ -33,7 +64,7 @@
     "login": {
         "codes": {
             "NO_PASSWORD_OR_EMAIL_PROVIDED": "Please provide both a password and an email",
-            "INVALID_CREDENTIALS": "The password or the email or wrong",
+            "INVALID_CREDENTIALS": "The password or the email is wrong",
             "ACCOUNT_NOT_VERIFIED": "Your account wasn`t verified yet. You will receive an email as soon as your account is verified.",
             "PASSWORD_NOT_CHANGED": "Please reset your password before logging in for the first time",
             "SUCCESS": "SUCCESS"
@@ -55,6 +86,29 @@
             },
             "newUser": "Utilizator nou? Crează-ți cont ",
             "newUserLink": "Aici"
+        }
+    },
+    "profile": {
+        "personalData": "Date personale",
+        "profile": "Profil",
+        "profileDataFields": {
+            "email": "E-mail",
+            "name": "Nume și Prenume"
+        },
+        "studentDataFields": {
+            "domain": "Domeniu",
+            "learningMode": "Forma de Învățământ",
+            "degree": "Ciclul de Studii",
+            "studyProgram": "Programul de Studiu",
+            "currentGroup": "Grupa Curentă",
+            "currentYear": "An Curent",
+            "currentSemester": "Semestrul Curent"
+        },
+        "studentData": "Date Student",
+        "grade": "Note",
+        "studentGradeFields": {
+            "yearHeader": "An",
+            "gradeHeader": "Media Aritmetică"
         }
     },
     "resetPassword.form": {
