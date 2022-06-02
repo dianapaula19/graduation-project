@@ -1,7 +1,6 @@
 from enum import Enum
 from django.db import IntegrityError
 from django.core import serializers
-import copy
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -11,7 +10,7 @@ from rest_framework.status import (
     HTTP_500_INTERNAL_SERVER_ERROR
 )
 
-from .serializers import StudentCourseSerializer, StudentOptionChoiceSerializer, StudentOptionsListSerializer
+from .serializers import CourseSerializer, StudentCourseSerializer, StudentOptionChoiceSerializer, StudentOptionsListSerializer
 
 from .models import Course, OptionsList, StudentOptionChoice
 from users.models import Student, Teacher, User
@@ -21,12 +20,197 @@ from backend.permissions import IsStudent, IsTokenAuthentificated
 class ResponseCode(Enum):
     USER_NOT_FOUND = 'USER_NOT_FOUND'
     STUDENT_NOT_FOUND = 'STUDENT_NOT_FOUND'
+    TEACHER_NOT_FOUND = 'TEACHER_NOT_FOUND'
     OPTIONS_LIST_NOT_FOUND = 'OPTIONS_LIST_NOT_FOUND'
     COURSE_NOT_FOUND = 'COURSE_NOT_FOUND'
     INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR'
     SUCCESS = 'SUCCESS'
 
 # Create your views here.
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def create_or_uptate_student_choices(request):
+    options_list_id = request.data.get('options_list_id')
+    email = request.data.get('email')
+    choices = request.data.get('choices')
+
+    user = User.objects.get(email=email)
+    if user is None:
+        return Response({
+            'code': ResponseCode.USER_NOT_FOUND.value
+        },
+        status=HTTP_404_NOT_FOUND
+        )
+
+    student = Student.objects.get(user=user)
+
+    if student is None:
+        return Response({
+            'code': ResponseCode.STUDENT_NOT_FOUND.value
+        },
+        status=HTTP_404_NOT_FOUND
+        )
+
+    options_list = OptionsList.objects.get(id=options_list_id)
+    
+    if options_list is None:
+        return Response({
+            'code': ResponseCode.OPTIONS_LIST_NOT_FOUND.value
+        },
+        status=HTTP_404_NOT_FOUND
+        )
+
+    for choice in choices:
+        course_id = choice['course_id']
+        order = choice['order']
+
+        course = Course.objects.get(id=course_id)
+        if course is None:
+            return Response({
+                'code': ResponseCode.COURSE_NOT_FOUND.value
+            },
+            status=HTTP_404_NOT_FOUND
+            )
+        
+        try:
+            obj, created = StudentOptionChoice.objects.update_or_create(
+                student=student, 
+                course=course,
+                options_list=options_list,
+                defaults={'order': order},
+            )
+        except:
+            return Response({
+                'code': ResponseCode.INTERNAL_SERVER_ERROR.value
+                },
+            status=HTTP_500_INTERNAL_SERVER_ERROR
+            )
+    
+    return Response({
+        'code': ResponseCode.SUCCESS.value
+        },
+        status=HTTP_200_OK
+    )
+    
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def get_student_options_lists(request):
+    user_email = request.data.get('email')
+
+    user = User.objects.get(email=user_email)
+
+    if user is None:
+        return Response({
+            'code': ResponseCode.USER_NOT_FOUND.value
+        },
+        status=HTTP_404_NOT_FOUND
+        )
+
+    student = Student.objects.get(user=user)
+
+    if student is None:
+        return Response({
+            'code': ResponseCode.STUDENT_NOT_FOUND.value
+        },
+        status=HTTP_404_NOT_FOUND
+        )
+
+    res = []
+    for options_list in student.options_lists.all():
+        choices = []
+        try:
+            choices = StudentOptionChoice.objects.choices_sorted_by_order(student=student, options_list=options_list)
+        except:
+            choices = []
+
+        reordered_courses = []
+
+        for choice in choices:
+            reordered_courses.append(StudentCourseSerializer(choice.course).data)
+
+        res.append({
+            'id': options_list.id,
+            'title': options_list.title,
+            'courses': reordered_courses if len(choices) != 0 else StudentCourseSerializer(options_list.courses, many=True).data
+        })
+    
+
+    return Response({
+        'student_options_lists': res
+        },
+        status=HTTP_200_OK
+    )
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def create_options_list(request):
+    domain = request.data.get("domain")
+    learning_mode = request.data.get("learning_mode")
+    degree = request.data.get("degree")
+    study_program = request.data.get("study_program")
+    title = request.data.get("title")
+    year = request.data.get("year")
+    semester = request.data.get("semester")
+
+    try:
+        OptionsList.objects.create(
+            domain=domain,
+            learning_mode=learning_mode,
+            degree=degree,
+            study_program=study_program,
+            title=title,
+            year=year,
+            semester=semester
+        )
+    except:
+        return Response({
+            'code': ResponseCode.INTERNAL_SERVER_ERROR
+        },
+            status=HTTP_500_INTERNAL_SERVER_ERROR
+        )
+
+    check_semester = 1 if semester == 2 else 2
+    check_year = year - 1 
+
+    options_list = OptionsList.objects.get(
+        domain=domain,
+        learning_mode=learning_mode,
+        degree=degree,
+        study_program=study_program,
+        title=title,
+        year=year,
+        semester=semester
+    )
+
+    for student in Student.objects.all().iterator():
+        if student.domain == domain \
+            and student.learning_mode == learning_mode \
+            and student.degree == degree \
+            and student.study_program == study_program \
+            and student.current_semester == check_semester \
+            and student.current_year == check_year:
+            if student not in options_list.students:
+                options_list.students.add(student)
+
+    return Response({
+        'code': ResponseCode.SUCCESS.value
+    },
+    status=HTTP_200_OK
+    )
+
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def get_courses(request):
+    courses = Course.objects.all()
+
+    return Response({
+        'courses': CourseSerializer(courses, many=True).data
+        },
+        status=HTTP_200_OK
+    )
+
 
 @api_view(["POST"])
 @permission_classes([AllowAny])
@@ -150,118 +334,3 @@ def add_course_to_options_list(request):
     },
     status=HTTP_200_OK
     )
-
-@api_view(["POST"])
-@permission_classes([AllowAny])
-def create_or_uptate_student_choices(request):
-    options_list_id = request.data.get('options_list_id')
-    email = request.data.get('email')
-    choices = request.data.get('choices')
-
-    user = User.objects.get(email=email)
-    if user is None:
-        return Response({
-            'code': ResponseCode.USER_NOT_FOUND.value
-        },
-        status=HTTP_404_NOT_FOUND
-        )
-
-    student = Student.objects.get(user=user)
-
-    if student is None:
-        return Response({
-            'code': ResponseCode.STUDENT_NOT_FOUND.value
-        },
-        status=HTTP_404_NOT_FOUND
-        )
-
-    options_list = OptionsList.objects.get(id=options_list_id)
-    
-    if options_list is None:
-        return Response({
-            'code': ResponseCode.OPTIONS_LIST_NOT_FOUND.value
-        },
-        status=HTTP_404_NOT_FOUND
-        )
-
-    for choice in choices:
-        course_id = choice['course_id']
-        order = choice['order']
-
-        course = Course.objects.get(id=course_id)
-        if course is None:
-            return Response({
-                'code': ResponseCode.COURSE_NOT_FOUND.value
-            },
-            status=HTTP_404_NOT_FOUND
-            )
-        
-        try:
-            obj, created = StudentOptionChoice.objects.update_or_create(
-                student=student, 
-                course=course,
-                options_list=options_list,
-                defaults={'order': order},
-            )
-        except:
-            return Response({
-                'code': ResponseCode.INTERNAL_SERVER_ERROR.value
-                },
-            status=HTTP_500_INTERNAL_SERVER_ERROR
-            )
-    
-    return Response({
-        'code': ResponseCode.SUCCESS.value
-        },
-        status=HTTP_200_OK
-    )
-    
-
-@api_view(["POST"])
-@permission_classes([AllowAny])
-def get_student_options_lists(request):
-    user_email = request.data.get('email')
-
-    user = User.objects.get(email=user_email)
-
-    if user is None:
-        return Response({
-            'code': "The user doesn't exist"
-        },
-        status=HTTP_404_NOT_FOUND
-        )
-
-    student = Student.objects.get(user=user)
-
-    if student is None:
-        return Response({
-            'code': "The student doesn't exist"
-        },
-        status=HTTP_404_NOT_FOUND
-        )
-    res = []
-    for options_list in student.options_lists.all():
-        choices = []
-        try:
-            choices = StudentOptionChoice.objects.choices_sorted_by_order(student=student, options_list=options_list)
-        except:
-            choices = []
-
-        reordered_courses = []
-
-        for choice in choices:
-            reordered_courses.append(StudentCourseSerializer(choice.course).data)
-
-        res.append({
-            'id': options_list.id,
-            'title': options_list.title,
-            'courses': reordered_courses if len(choices) != 0 else StudentCourseSerializer(options_list.courses, many=True).data
-        })
-    
-
-    return Response( {
-        'student_options_lists': res
-        },
-        status=HTTP_200_OK
-    )
-

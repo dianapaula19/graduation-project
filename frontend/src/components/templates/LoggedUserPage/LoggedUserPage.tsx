@@ -13,12 +13,6 @@ const LoggedUserPage = ({
 
     const componentClassName = "logged-user-template";
 
-    const status = useAppSelector(loginStatus);
-
-    if (status !== ApiStatus.success) {
-        return <Navigate to="/login"/>
-    }
-
     return (
         <div 
             className={componentClassName}

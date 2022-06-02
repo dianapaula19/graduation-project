@@ -1,6 +1,17 @@
-from users.models import Role, Student, User
+from users.models import Degree, Domain, Role, Student, User
 from courses.models import OptionsList, StudentOptionChoice, StudentCourse
 from collections import deque
+
+def get_max_years(domain, degree):
+    if domain == Domain.CTI and degree == Degree.BACHELOR:
+        return 4
+    if domain in [Domain.INFO, Domain.MATE]:
+        if degree == Degree.BACHELOR:
+            return 3
+        return 2
+    return 0
+    
+    
 
 def students_courses_assignment():
     options_lists = OptionsList.objects.all()

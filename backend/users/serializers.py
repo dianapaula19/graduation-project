@@ -18,7 +18,7 @@ class StudentDataSerializer(serializers.ModelSerializer):
     grades = serializers.SerializerMethodField()
 
     def get_grades(self, obj):
-        grades_query = Grade.objects.filter(student=obj).order_by('grade')
+        grades_query = Grade.objects.filter(student=obj).order_by('year')
         serializer = GradeSerializer(grades_query, many=True)
         
         return serializer.data

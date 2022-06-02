@@ -3,17 +3,25 @@
   flex-direction: column;
   &__personal-data {
     font-size: xx-large;
+    font-weight: bold;
+    color: #525252;
   }
   &__profile {
     font-size: x-large;
+    font-weight: bold;
+    color: #525252;
   }
 
   &__student {
     &__data {
       font-size: x-large;
+      font-weight: bold;
+      color: #525252;
     }
     &__grade {
       font-size: x-large;
+      font-weight: bold;
+      color: #525252;
     }
     &__grades {
       &__header {
@@ -70,13 +78,14 @@
 
   font-size: large;
 
-  &__grade {
+  &__year {
     grid-area: grade-row-year;
     color: #525252;
   }
 
-  &__year {
+  &__grade {
     grid-area: grade-row-grade;
     color: #525252;
   }
+
 }

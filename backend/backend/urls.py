@@ -16,7 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from users.views import login, register, update_information, register_batch_students, register_batch_teachers, get_student_data
-from courses.views import create_or_uptate_student_choices, get_courses_teacher, create_course, create_options_list, add_course_to_options_list, get_student_options_lists
+from courses.views import create_or_uptate_student_choices, \
+                            get_courses_teacher, \
+                            create_course, \
+                            create_options_list, \
+                            add_course_to_options_list, \
+                            get_student_options_lists, \
+                            get_courses
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,11 +31,7 @@ urlpatterns = [
     path('api/user/register_batch_students', register_batch_students),
     path('api/user/register_batch_teachers', register_batch_teachers),
     path('api/user/student/data', get_student_data),
-    path('api/course/create_course', create_course),
-    path('api/course/teacher_courses', get_courses_teacher),
-    path('api/course/create_course', create_course),
-    path('api/course/create_options_list', create_options_list),
-    path('api/course/add_course_to_options_list', add_course_to_options_list),
+    path('api/course/get_courses', get_courses),
     path('api/course/student/create_or_update_student_choices', create_or_uptate_student_choices),
     path('api/course/student/get_student_options_lists', get_student_options_lists),
     path('api/password_reset', include('django_rest_passwordreset.urls', namespace='password_reset'))

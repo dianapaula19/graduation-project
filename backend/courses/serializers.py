@@ -6,6 +6,12 @@ class OptionsListSerializer(serializers.ModelSerializer):
 		model = OptionsList
 		fields = ['id', 'domain', 'learning_mode', 'degree', 'study_program', 'year', 'semester', 'title']
 
+
+class CourseSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Course
+		fields = ['id', 'title']
+
 class StudentCourseSerializer(serializers.ModelSerializer):
 	teacher_first_name = serializers.CharField(source='teacher.user.first_name')
 	teacher_last_name = serializers.CharField(source='teacher.user.last_name')

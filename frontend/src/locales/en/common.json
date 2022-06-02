@@ -64,7 +64,7 @@
     "login": {
         "codes": {
             "NO_PASSWORD_OR_EMAIL_PROVIDED": "Please provide both a password and an email",
-            "INVALID_CREDENTIALS": "The password or the email or wrong",
+            "INVALID_CREDENTIALS": "The password or the email were wrong",
             "ACCOUNT_NOT_VERIFIED": "Your account wasn`t verified yet. You will receive an email as soon as your account is verified.",
             "PASSWORD_NOT_CHANGED": "Please reset your password before logging in for the first time",
             "SUCCESS": "SUCCESS"
