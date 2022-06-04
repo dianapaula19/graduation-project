@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
 import { loginUserData } from '../../features/auth/loginSlice';
+import OptionsListsPage from '../pages/admin/OptionsListsPage';
 import LoginPage from '../pages/auth/LoginPage';
 import RegisterPage from '../pages/auth/RegisterPage';
 import PersonalDataPage from '../pages/PersonalDataPage';
@@ -44,6 +45,10 @@ const App = () => {
                 action={AuthentificationAction.resetPassword}
               />
             }
+          />
+          <Route 
+            path="admin/optionsLists"
+            element={<OptionsListsPage />}
           />
           <Route 
             path="/"

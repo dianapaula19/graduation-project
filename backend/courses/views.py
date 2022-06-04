@@ -153,6 +153,7 @@ def create_options_list(request):
     title = request.data.get("title")
     year = request.data.get("year")
     semester = request.data.get("semester")
+    courses = request.data.get("courses")
 
     try:
         OptionsList.objects.create(
@@ -193,6 +194,10 @@ def create_options_list(request):
             and student.current_year == check_year:
             if student not in options_list.students:
                 options_list.students.add(student)
+    
+    for course in courses:
+        course_obj = Course.objects.get(id=course.id)
+        options_list.courses.add(course_obj)
 
     return Response({
         'code': ResponseCode.SUCCESS.value

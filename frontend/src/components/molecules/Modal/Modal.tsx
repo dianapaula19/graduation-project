@@ -34,9 +34,11 @@ const Modal = ({
                     onClick={closeModal}
                 />
                 </div>
-                
-                {children}
-
+                <div
+                    className={`${contentClassName}__children`}
+                >
+                    {children}
+                </div>
             </div>
         </div>
     );

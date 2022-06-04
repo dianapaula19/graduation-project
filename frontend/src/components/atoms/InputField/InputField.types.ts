@@ -3,7 +3,8 @@ import { InputHTMLAttributes } from "react";
 enum InputFieldType {
     email = "email",
     password = "password",
-    text = "text"
+    text = "text",
+    number = "number"
 }
 
 enum InputFieldModifier {

@@ -32,6 +32,43 @@
         "MATE": "Matematică",
         "MA": "Matematici Aplicate"
     },
+    "forms": {
+        "createOptionsList": {
+            "dropDownFields": {
+                "domain": {
+                    "label": "Domain",
+                    "errorMessage": "Please select a domain"
+                },
+                "learningMode": {
+                    "label": "Learning Mode",
+                    "errorMessage": "Please select a learning mode"
+                },
+                "degree": {
+                    "label": "Degree",
+                    "errorMessage": "Please select a degree"
+                },
+                "studyProgram": {
+                    "label": "Study Program",
+                    "errorMessage": "Please select a study program"
+                }
+            },
+            "inputFields": {
+                "title": {
+                    "label": "Title",
+                    "errorMessage": "Please provide a title for the options list"
+                },
+                "year": {
+                    "label": "Year",
+                    "errorMessage": "Please provide a year for the options list"
+                },
+                "semester": {
+                    "label": "Semester",
+                    "errorMessage": "Please provide a semester for the options list"
+                }
+            },
+            "createButton": "Create the options list"
+        }
+    },
     "registration": {
         "codes": {
             "NO_PASSWORD_OR_EMAIL_PROVIDED": "Please provide both a password and an email",
@@ -188,6 +225,11 @@
                 "author": "Vincent Van Gogh"
             }
         ]
+    },
+    "pages": {
+        "optionsLists": {
+            "createButton": "Create a new options list"
+        }
     },
     "saveButton": "Salvează modificările",
     "excelButton": "Exportă ca .xlsx",
