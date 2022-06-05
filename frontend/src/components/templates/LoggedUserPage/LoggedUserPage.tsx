@@ -1,5 +1,5 @@
-import React from "react";
-import { Navigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../../app/hooks";
 import { loginStatus } from "../../../features/auth/loginSlice";
 import { ApiStatus } from "../../../features/Utils";
@@ -12,6 +12,16 @@ const LoggedUserPage = ({
 }: ILoggedUserPageProps) => {
 
     const componentClassName = "logged-user-template";
+
+    const status = useAppSelector(loginStatus);
+    let navigate = useNavigate();
+
+    useEffect(() => {
+      if (status !== ApiStatus.success) {
+        navigate('login');
+      }
+    }, [])
+    
 
     return (
         <div 

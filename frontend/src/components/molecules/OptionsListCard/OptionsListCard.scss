@@ -1,13 +1,21 @@
 .optionals-list-card {
   display: flex;
   flex-direction: column;
+  border: #c4c4c4 solid .05rem;
+  background-color: #ffffff;
+  box-shadow: .1rem .1rem .05rem #c4c4c4;
+  padding: .75rem 1.5rem;
   gap: 2.5rem;
 
   &__main-title {
     font-size: x-large;
   }
 
+  &__sub-title {
+    font-size: x-large;
+  }
+
   &__title {
-    font-size: larger;
+    font-size: x-large;
   }
 }

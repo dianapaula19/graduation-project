@@ -1,5 +1,10 @@
 .options-lists-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  color: #525252;
   &__title {
     font-size: xx-large;
+    font-weight: bold;
   }
 }

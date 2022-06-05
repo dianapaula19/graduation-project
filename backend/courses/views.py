@@ -10,7 +10,7 @@ from rest_framework.status import (
     HTTP_500_INTERNAL_SERVER_ERROR
 )
 
-from .serializers import CourseSerializer, StudentCourseSerializer, StudentOptionChoiceSerializer, StudentOptionsListSerializer
+from .serializers import CourseSerializer, StudentCourseSerializer
 
 from .models import Course, OptionsList, StudentOptionChoice
 from users.models import Student, Teacher, User
@@ -153,7 +153,7 @@ def create_options_list(request):
     title = request.data.get("title")
     year = request.data.get("year")
     semester = request.data.get("semester")
-    courses = request.data.get("courses")
+    courses_ids = request.data.get("courses_ids")
 
     try:
         OptionsList.objects.create(
@@ -195,8 +195,8 @@ def create_options_list(request):
             if student not in options_list.students:
                 options_list.students.add(student)
     
-    for course in courses:
-        course_obj = Course.objects.get(id=course.id)
+    for course_id in courses_ids:
+        course_obj = Course.objects.get(id=course_id)
         options_list.courses.add(course_obj)
 
     return Response({

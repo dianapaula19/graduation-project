@@ -231,6 +231,12 @@
             "createButton": "Create a new options list"
         }
     },
+    "molecules": {
+        "optionsListCard": {
+            "year": "Anul",
+            "semester": "Semestrul"
+        }
+    },
     "saveButton": "Salvează modificările",
     "excelButton": "Exportă ca .xlsx",
     "syllabusButton": "Vezi fișa disciplinei"

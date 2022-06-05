@@ -7,6 +7,8 @@ import registerReducer from "../features/auth/registerSlice";
 import studentDataReducer from "../features/user/student/studentDataSlice";
 import studentOptionalsListsReducer from '../features/user/student/studentOptionalsListsSlice';
 import saveStudentChoicesReducer from "../features/user/student/saveStudentChoicesSlice";
+import createOptionsListReducer from "../features/user/admin/createOptionsListSlice";
+import getCoursesReducer from "../features/user/admin/getCoursesSlice";
 import teacherCoursesReducer from "../features/course/teacherCourseSlice";
 import { 
   FLUSH, 
@@ -27,6 +29,8 @@ const reducers = combineReducers({
   studentData: studentDataReducer,
   studentOptionalsLists: studentOptionalsListsReducer,
   saveStudentChoices: saveStudentChoicesReducer,
+  createOptionsList: createOptionsListReducer,
+  getCourses: getCoursesReducer,
   teacherCourse: teacherCoursesReducer
 });
 

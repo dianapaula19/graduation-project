@@ -235,6 +235,12 @@
             "createButton": "Create a new options list"
         }
     },
+    "molecules": {
+        "optionsListCard": {
+            "year": "Year",
+            "semester": "Semester"
+        }
+    },
     "saveButton": "Save changes",
     "excelButton": "Export as .xlsx",
     "syllabusButton": "View the syllabus"

@@ -3,8 +3,9 @@ import { CheckBoxProps } from "./CheckBox.types";
 import "./CheckBox.scss";
 
 const CheckBox = ({
+  label,
   id,
-  label
+  ...rest
 }: CheckBoxProps
 ) => {
 
@@ -17,8 +18,8 @@ const CheckBox = ({
     >
       <input 
         className={`${componentClassName}__input`}
-        type="checkbox" 
-        id={id} 
+        type="checkbox"
+        {...rest}
       />
       <label
         className={`${componentClassName}__label`} 

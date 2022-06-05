@@ -31,7 +31,8 @@ urlpatterns = [
     path('api/user/register_batch_students', register_batch_students),
     path('api/user/register_batch_teachers', register_batch_teachers),
     path('api/user/student/data', get_student_data),
-    path('api/course/get_courses', get_courses),
+    path('api/course/admin/get_courses', get_courses),
+    path('api/course/admin/create_options_list', create_options_list),
     path('api/course/student/create_or_update_student_choices', create_or_uptate_student_choices),
     path('api/course/student/get_student_options_lists', get_student_options_lists),
     path('api/password_reset', include('django_rest_passwordreset.urls', namespace='password_reset'))

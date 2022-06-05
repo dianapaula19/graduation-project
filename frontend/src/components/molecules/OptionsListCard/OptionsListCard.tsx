@@ -26,7 +26,12 @@ IOptionalsListCardProps) => {
       <span
         className={`${componentClassName}__main-title`}
       >
-        {t(`domains.${domain}`)}, {t(`degrees.${degree}`)}, {t(`learningModes.${learningMode}`)}, {t(`studyPrograms.${studyProgram}`)}, {year}, {semester} 
+        {t(`domains.${domain}`)}, {t(`degrees.${degree}`)}, {t(`learningModes.${learningMode}`)}, {t(`studyPrograms.${studyProgram}`)} 
+      </span>
+      <span
+        className={`${componentClassName}__sub-title`}
+      >
+        {t('molecules.optionsListCard.year')} {year}, {t('molecules.optionsListCard.semester')} {semester}
       </span>
       <span
         className={`${componentClassName}__title`}
