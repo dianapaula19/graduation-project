@@ -4,14 +4,25 @@ import Button, { ButtonModifier } from "../../../atoms/Button";
 import CheckBox from "../../../atoms/CheckBox";
 import DropDown from "../../../atoms/DropDown";
 import InputField, { InputFieldType } from "../../../atoms/InputField";
-import { ICreateOptionsListFormData, ICreateOptionsListFormProps } from "./CreateOptionsListForm.types";
+import { CreateOptionsListFormType, ICreateOptionsListFormData, ICreateOptionsListFormProps } from "./CreateOptionsListForm.types";
 import "./CreateOptionsListForm.scss";
 import { useAppDispatch } from "../../../../app/hooks";
 import { createOptionsListAsync } from "../../../../features/user/admin/createOptionsListSlice";
+import { regexRules } from "../utils";
+import { Degree, Domain, LearningMode, StudyProgram } from "../../../App";
 
 
 const CreateOptionsListForm = ({
-  courses
+  title = "",
+  year = "", 
+  semester = "",
+  domain = "", 
+  learningMode = "",
+  degree = "",
+  studyProgram = "",
+  coursesIds = [],
+  courses,
+  type = CreateOptionsListFormType.create,
 }
 : ICreateOptionsListFormProps
 ) => {
@@ -24,25 +35,34 @@ const CreateOptionsListForm = ({
   const componentId = "create-options-list-form";
   const dispatch = useAppDispatch();
 
-
-  const domains: string[] = [];
-  const learningModes: string[] = [];
-  const degrees: string[] = [];
-  const studyPrograms: string[] = [];
-
-
   const { t } = useTranslation();
 
+  const domains: {[id: string]: string} = t("domains", {returnObjects: true}) as {[id: string]: string};
+  const learningModes: {[id: string]: string} = t("learningModes", {returnObjects: true}) as {[id: string]: string};
+  const degrees: {[id: string]: string} = t("degrees", {returnObjects: true}) as {[id: string]: string};
+  const studyPrograms: {[id: string]: string} = t("studyPrograms", {returnObjects: true}) as {[id: string]: string};
+
   const [data, setData] = useState<ICreateOptionsListFormData>({
-    title: "",
-    year: 0,
-    semester: 0,
-    domain: "",
-    learningMode: "",
-    degree: "",
-    studyProgram: "",
+    title: title,
+    year: parseInt(year),
+    semester: parseInt(semester),
+    domain: domain as Domain,
+    learningMode: learningMode as LearningMode,
+    degree: degree as Degree,
+    studyProgram: studyProgram as StudyProgram,
     coursesIds: []
   });
+
+  const validation = {
+    title: data.title === "",
+    year: data.year < 2 && data.year > 4,
+    semester: data.semester < 1 && data.semester > 2,
+    domain: !(data.domain === t(`${dropDownTranslate}.domain.placeholder`)),
+    learningMode: !(data.learningMode === t(`${dropDownTranslate}.learningMode.placeholder`)),
+    degree: !(data.degree === t(`${dropDownTranslate}.degree.placeholder`)),
+    studyProgram: !(data.studyProgram === t(`${dropDownTranslate}.studyProgram.placeholder`)),
+    coursesIds: data.coursesIds.length < 2
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>): void => {
     const name = e.target.name;
@@ -61,6 +81,7 @@ const CreateOptionsListForm = ({
         [name]: value
       });
     }
+    console.log(data);
   }
 
   const onSubmit = () => {
@@ -76,16 +97,6 @@ const CreateOptionsListForm = ({
     }))
   }
 
-  let dictionary = t("domains", {returnObjects: true}) as {[id: string]: string}
-  Object.keys(dictionary).map((key) => domains.push(dictionary[key] as string)) 
-  dictionary = t("learningModes", {returnObjects: true}) as {[id: string]: string}
-  Object.keys(dictionary).map((key) => learningModes.push(dictionary[key] as string))
-  dictionary = t("degrees", {returnObjects: true}) as {[id: string]: string}
-  Object.keys(dictionary).map((key) => degrees.push(dictionary[key] as string))
-  dictionary = t("studyPrograms", {returnObjects: true}) as {[id: string]: string}
-  Object.keys(dictionary).map((key) => studyPrograms.push(dictionary[key] as string))
-  
-
   return (
     <div
       className={componentClassName}
@@ -96,15 +107,18 @@ const CreateOptionsListForm = ({
         <DropDown 
           id={`${componentId}-domain`}
           name="domain"
-          error={false} 
+          error={validation.domain} 
           errorMessage={t(`${dropDownTranslate}.domain.errorMessage`)} 
           label={t(`${dropDownTranslate}.domain.label`)} 
+          placeholder={t(`${dropDownTranslate}.domain.placeholder`)}
           onChange={handleChange}
         >
-          {domains.map((domain) => {
+          {Object.keys(domains).map((key) => {
             return (
-              <option>
-                {domain}
+              <option
+                value={key}
+              >
+                {domains[key]}
               </option>
             )
           })}        
@@ -112,15 +126,18 @@ const CreateOptionsListForm = ({
         <DropDown
           id={`${componentId}-learning-mode`}
           name="learning-mode" 
-          error={false} 
+          error={validation.learningMode} 
           errorMessage={t(`${dropDownTranslate}.learningMode.errorMessage`)} 
           label={t(`${dropDownTranslate}.learningMode.label`)}
+          placeholder={t(`${dropDownTranslate}.learningMode.placeholder`)}
           onChange={handleChange}
         >
-          {learningModes.map((learningMode) => {
+          {Object.keys(learningModes).map((key) => {
             return (
-              <option>
-                {learningMode}
+              <option
+                value={key}
+              >
+                {learningModes[key]}
               </option>
             )
           })}
@@ -128,15 +145,18 @@ const CreateOptionsListForm = ({
         <DropDown
           id={`${componentId}-degree`}
           name="degree" 
-          error={false} 
+          error={validation.degree} 
           errorMessage={t(`${dropDownTranslate}.degree.errorMessage`)} 
           label={t(`${dropDownTranslate}.degree.label`)}
+          placeholder={t(`${dropDownTranslate}.degree.placeholder`)}
           onChange={handleChange}
         >
-          {degrees.map((degree) => {
+          {Object.keys(degrees).map((key) => {
             return (
-              <option>
-                {degree}
+              <option
+                value={key}
+              >
+                {degrees[key]}
               </option>
             )
           })}
@@ -144,15 +164,18 @@ const CreateOptionsListForm = ({
         <DropDown 
           id={`${componentId}-study-program`}
           name="study-program"
-          error={false} 
+          error={validation.studyProgram} 
           errorMessage={t(`${dropDownTranslate}.studyProgram.errorMessage`)} 
           label={t(`${dropDownTranslate}.studyProgram.label`)}
+          placeholder={t(`${dropDownTranslate}.studyProgram.placeholder`)}
           onChange={handleChange}
         >
-          {studyPrograms.map((studyProgram) => {
+          {Object.keys(studyPrograms).map((key) => {
             return (
-              <option>
-                {studyProgram}
+              <option
+                value={key}
+              >
+                {studyPrograms[key]}
               </option>
             )
           })}
@@ -161,27 +184,32 @@ const CreateOptionsListForm = ({
           id={`${componentId}-title`}
           name="title"
           type={InputFieldType.text} 
-          error={false} 
+          error={validation.title} 
           errorMessage={t(`${inputTranslate}.title.errorMessage`)}
           label={t(`${inputTranslate}.title.label`)}
+          placeholder={t(`${inputTranslate}.title.placeholder`)}
           onChange={handleChange} 
         />
         <InputField 
           id={`${componentId}-year`}
           name="year"
           type={InputFieldType.number} 
-          error={false} 
+          min={2} max={4}
+          error={validation.year} 
           errorMessage={t(`${inputTranslate}.year.errorMessage`)}
           label={t(`${inputTranslate}.year.label`)}
+          placeholder={t(`${inputTranslate}.year.placeholder`)}
           onChange={handleChange}
         />
         <InputField 
           id={`${componentId}-semester`}
           name="semester"
           type={InputFieldType.number} 
-          error={false} 
+          min={1} max={2}
+          error={validation.semester} 
           errorMessage={t(`${inputTranslate}.semester.errorMessage`)}
           label={t(`${inputTranslate}.semester.label`)}
+          placeholder={t(`${inputTranslate}.semester.placeholder`)}
           onChange={handleChange} 
         />
         <div
@@ -196,18 +224,29 @@ const CreateOptionsListForm = ({
             className={`${coursesContainerClassName}__courses`}
           >
             {courses.map((course) => {
-              return <CheckBox
+              const idx = coursesIds.indexOf(course.id)
+              if (idx === -1) {
+                return <CheckBox
                         value={course.id}
                         name="courses" 
                         label={course.title}
                         onChange={handleChange} 
                       />
+              }
+              return <CheckBox
+                      checked
+                      value={course.id}
+                      name="courses" 
+                      label={course.title}
+                      onChange={handleChange} 
+                    />
             })}
+            {validation.coursesIds && (<p>Please select at least one course</p>)}
           </div>
         </div>
       </div>
       <Button 
-        label={t("forms.createOptionsList.createButton")} 
+        label={type === CreateOptionsListFormType.create ? t("forms.createOptionsList.createButton") : t("forms.createOptionsList.updateButton")} 
         disabled={false} 
         modifier={ButtonModifier.save}
         onClick={onSubmit}
@@ -215,5 +254,6 @@ const CreateOptionsListForm = ({
     </div>
   )  
 }
+
 
 export default CreateOptionsListForm;

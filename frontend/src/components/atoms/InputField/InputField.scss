@@ -53,6 +53,28 @@
 
 }
 
+input[type="file"] {
+    display: none;
+}
+
+.file-upload {
+    display: flex;
+    flex-direction: row;
+    font-weight: bold;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    color: #0366d6;
+    background-color: transparent;
+    border: #0366d6 solid .2rem;
+    grid-area: excel-button;
+    margin: 0;
+    &:hover {
+        color: white;
+        background-color: #0366d6;
+    }
+}
+
 .input-field--error {
     &__error-group {
         display: flex;

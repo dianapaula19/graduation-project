@@ -74,3 +74,21 @@
         background-color: #525252;
     }   
 }
+
+.button--delete {
+    display: flex;
+    flex-direction: row;
+    font-weight: bold;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    color: crimson;
+    background-color: transparent;
+    border: crimson solid .2rem;
+    grid-area: delete-button;
+    margin: 0;
+    &:hover {
+        color: white;
+        background-color: crimson;
+    }   
+}

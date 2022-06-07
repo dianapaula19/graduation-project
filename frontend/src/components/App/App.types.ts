@@ -1,9 +1,9 @@
 enum Role {
-  none = "none",
-  student = "student",
-  teacher = "teacher",
-  secretary = "secretary",
-  admin = "admin"
+  STUDENT = "student",
+  TEACHER = "teacher",
+  SECRETARY = "secretary",
+  ADMIN = "admin",
+  NONE = "none"
 }
 
 enum Domain {

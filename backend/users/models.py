@@ -5,66 +5,11 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 
-class UserManager(BaseUserManager):
-    def create_user(self, email, password, **extra_fields):
-        if not email:
-            raise ValueError('The Email must be set')
-        
-        email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
-        user.set_password(password)
-        user.save()
-        
-        return user
-    
-    def create_superuser(self, email, password, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-
-        if extra_fields.get('is_staff') is not True:
-            raise ValueError('Superuser must have is_staff=True.')
-        if extra_fields.get('is_superuser') is not True:
-            raise ValueError('Superuser must have is_superuser=True')
-        
-        return self.create_user(email, password, **extra_fields)
-
-
 class Role(models.TextChoices):
     STUDENT = 'student',
     TEACHER = 'teacher',
-    SECRETARY = 'secretary'
-
-class StudentManager(models.Manager):
-    def get_queryset(self):
-        return super().get_queryset().filter(role=Role.STUDENT)
-
-class TeacherManager(models.Manager):
-    def get_queryset(self):
-        return super().get_queryset().filter(role=Role.TEACHER)
-
-class SecretaryManager(models.Manager):
-    def get_queryset(self):
-        return super().get_queryset().filter(role=Role.SECRETARY)
-
-class User(AbstractUser):
-    username = None
-    email = models.EmailField(unique=True)
-    first_name = models.TextField(max_length=50)
-    last_name = models.TextField(max_length=50)
-    role = models.TextField(choices=Role.choices, null=True)
-    verified = models.BooleanField(default=True)
-    changed_password = models.BooleanField(default=False)
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
-
-    objects = UserManager()
-    students = StudentManager()
-    teachers = TeacherManager()
-    secretaries = SecretaryManager()
-
-    def __str__(self):
-        return self.email
+    SECRETARY = 'secretary',
+    ADMIN = 'admin'
 
 class Domain(models.TextChoices):
     INFO = 'INFO',
@@ -97,6 +42,65 @@ class StudyProgram(models.TextChoices):
     MATE = 'MATE',
     MA = 'MA'
 
+
+class UserManager(BaseUserManager):
+    def create_user(self, email, password, **extra_fields):
+        if not email:
+            raise ValueError('The Email must be set')
+        
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save()
+        
+        return user
+    
+    def create_superuser(self, email, password, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault('role', Role.ADMIN)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True')
+        
+        return self.create_user(email, password, **extra_fields)
+
+
+class StudentManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(role=Role.STUDENT)
+
+class TeacherManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(role=Role.TEACHER)
+
+class SecretaryManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(role=Role.SECRETARY)
+
+
+class User(AbstractUser):
+    username = None
+    email = models.EmailField(unique=True)
+    first_name = models.TextField(max_length=50)
+    last_name = models.TextField(max_length=50)
+    role = models.TextField(choices=Role.choices, null=True)
+    verified = models.BooleanField(default=True)
+    changed_password = models.BooleanField(default=False)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+    objects = UserManager()
+    students = StudentManager()
+    teachers = TeacherManager()
+    secretaries = SecretaryManager()
+
+    def __str__(self):
+        return self.email
+
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     domain = models.TextField(choices=Domain.choices, null=True)
@@ -123,6 +127,10 @@ class Student(models.Model):
 class Teacher(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
+
+class Secretary(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    
 
 class GradeManager(models.Manager):
     def get_student_current_grade(self, student):

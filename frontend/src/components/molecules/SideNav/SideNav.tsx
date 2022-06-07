@@ -11,7 +11,7 @@ import Button from "../../atoms/Button";
 import { loginStatus, loginUserData, revertLogin } from "../../../features/auth/loginSlice";
 import { revertStudentData } from "../../../features/user/student/studentDataSlice";
 import { useAppSelector } from "../../../app/hooks";
-import { links, secretaryLinks, studentLinks, teacherLinks } from "./Utils";
+import { adminLinks, links, secretaryLinks, studentLinks, teacherLinks } from "./Utils";
 import { Role } from "../../App";
 
 const SideNav = () => {
@@ -55,17 +55,21 @@ const SideNav = () => {
     let pathName: string = '';
 
     switch(role) {
-        case Role.student:
+        case Role.STUDENT:
             links = studentLinks;
             pathName = 'studentLinks'
             break;
-        case Role.teacher:
+        case Role.TEACHER:
             links = teacherLinks;
             pathName = 'teacherLinks'
             break;
-        case Role.secretary:
+        case Role.SECRETARY:
             links = secretaryLinks;
             pathName = 'secretaryLinks'
+            break;
+        case Role.ADMIN:
+            links = adminLinks;
+            pathName = 'adminLinks'
             break;
         default:
             break;    

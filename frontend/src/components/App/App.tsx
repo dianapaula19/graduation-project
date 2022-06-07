@@ -6,7 +6,7 @@ import OptionsListsPage from '../pages/admin/OptionsListsPage';
 import LoginPage from '../pages/auth/LoginPage';
 import RegisterPage from '../pages/auth/RegisterPage';
 import PersonalDataPage from '../pages/PersonalDataPage';
-import AccountsPage from '../pages/secretary/AccountsPage';
+import AccountsPage from '../templates/AccountsPage';
 import OptionalCoursesSelectionPage from '../pages/student/OptionalCoursesSelectionPage';
 import OptionalCoursesList from '../pages/teacher/Courses';
 import AuthentificationPage from '../templates/AuthentificationPage/';
@@ -51,33 +51,48 @@ const App = () => {
             element={<OptionsListsPage />}
           />
           <Route 
+              path="admin/accounts"
+              element={<AccountsPage role={Role.STUDENT} />}
+            />
+          <Route 
+            path="admin/accounts/notVerified"
+            element={<AccountsPage role={Role.NONE}/>}
+          />
+          <Route 
+            path="admin/accounts/students"
+            element={<AccountsPage role={Role.STUDENT}/>}
+          />
+          <Route 
+            path="admin/accounts/teachers"
+            element={<AccountsPage role={Role.TEACHER}/>}
+          />
+          <Route 
+            path="admin/accounts/secretaries"
+            element={<AccountsPage role={Role.SECRETARY}/>}
+          />
+          <Route 
             path="/"
             element={<PersonalDataPage />}
           />
-          {role === Role.student && (
             <Route 
               path="student/optionals"
               element={
                 <OptionalCoursesSelectionPage />
               }
             />  
-          )}
-          {role === Role.teacher && (
+          
             <Route
               path="teacher/courses"
               element={
                 <OptionalCoursesList />
               }
             />  
-          )}
-          {role === Role.secretary && (
+          
             <Route 
               path="secretary/accounts"
-              element={
-                <AccountsPage />
-              }
+              element={<AccountsPage role={Role.STUDENT} />}
             />  
-          )}
+          
         </Routes>
       </BrowserRouter>  
     </Suspense>

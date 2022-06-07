@@ -92,7 +92,7 @@ const PersonalDataPage = () => {
     const studentData = useAppSelector(studentDataData);
 
     useEffect(() => {
-        if (role === Role.student) {
+        if (role === Role.STUDENT) {
             if (studentStatus === ApiStatus.idle && email !== undefined && token !== null) {
                 dispatch(studentDataAsync({
                     token, 
@@ -104,7 +104,7 @@ const PersonalDataPage = () => {
 
     let component = null;
 
-    if (role === Role.student 
+    if (role === Role.STUDENT 
         && studentStatus === ApiStatus.success
         && studentData !== null
     ) {

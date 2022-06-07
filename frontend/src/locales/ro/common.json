@@ -1,6 +1,11 @@
 {
     "en": "Engleză",
     "ro": "Română",
+    "roles": {
+        "STUDENT": "student",
+        "TEACHER": "profesor",
+        "SECRETARY": "secretară"
+    },
     "domains": {
         "INFO": "Informatică",
         "CTI": "Calculatoare și tehnologia informatiei",
@@ -37,36 +42,80 @@
             "dropDownFields": {
                 "domain": {
                     "label": "Domain",
+                    "placeholder": "Domain",
                     "errorMessage": "Please select a domain"
                 },
                 "learningMode": {
                     "label": "Learning Mode",
+                    "placeholder": "Learning Mode",
                     "errorMessage": "Please select a learning mode"
                 },
                 "degree": {
                     "label": "Degree",
+                    "placeholder": "Degree",
                     "errorMessage": "Please select a degree"
                 },
                 "studyProgram": {
                     "label": "Study Program",
+                    "placeholder": "Study Program",
                     "errorMessage": "Please select a study program"
                 }
             },
             "inputFields": {
                 "title": {
                     "label": "Title",
+                    "placeholder": "Title",
                     "errorMessage": "Please provide a title for the options list"
                 },
                 "year": {
                     "label": "Year",
+                    "placeholder": "Year",
                     "errorMessage": "Please provide a year for the options list"
                 },
                 "semester": {
                     "label": "Semester",
+                    "placeholder": "Semester",
                     "errorMessage": "Please provide a semester for the options list"
                 }
             },
-            "createButton": "Create the options list"
+            "createButton": "Create the options list",
+            "update": "Update the options list"
+        },
+        "userData": {
+            "dropDownFields": {
+                "role": {
+                    "label": "Role",
+                    "placeholder": "Role",
+                    "errorMessage": "Please provide a role for the user"
+                }
+            },
+            "inputFields": {
+                "firstName": {
+                    "label": "First Name",
+                    "placeholder": "First Name",
+                    "errorMessage": "Please provide the user's first name"
+                },
+                "lastName": {
+                    "label": "Last Name",
+                    "placeholder": "Last Name",
+                    "errorMessage": "Please provide the user's last name"
+                }
+            }
+        }
+    },
+    "lists": {
+        "accounts": {
+            "header": {
+                "email": "Email",
+                "action": "Acțiune"
+            }    
+        },
+        "students": {
+            "header": {
+                "name": "Nume și Prenume",
+                "email": "Email"    
+            },
+            "sheetName": "Studenți Înscriși"    
         }
     },
     "registration": {
@@ -187,7 +236,17 @@
             "courses": "Cursuri"
         },
         "secretaryLinks": {
-            "accounts": "Conturi"
+            "accounts": "Conturi Studenti"
+        },
+        "adminLinks": {
+            "optionsLists": "Liste Opționale",
+            "cursuri": "Cursuri",
+            "accounts": {
+                "notVerified": "Conturi Neverificate",
+                "students": "Conturi studenți",
+                "teachers": "Conturi profesori",
+                "secretaries": "Conturi secretare"
+            }
         },
         "facultyName": "Facultatea de Matematică și Informatică",
         "displayMessage": {
@@ -229,6 +288,24 @@
     "pages": {
         "optionsLists": {
             "createButton": "Create a new options list"
+        },
+        "accounts": {
+            "notVerified": {
+                "accountsListTitle": "",
+                "fileUploadLabel": ""
+            },
+            "students": {
+                "accountsListTitle": "",
+                "fileUploadLabel": ""
+            },
+            "teachers": {
+                "accountsListTitle": "",
+                "fileUploadLabel": ""
+            },
+            "secretaries": {
+                "accountsListTitle": "",
+                "fileUploadLabel": ""
+            }
         }
     },
     "molecules": {

@@ -1,6 +1,11 @@
 {
     "en": "English",
     "ro": "Romanian",
+    "roles": {
+        "STUDENT": "student",
+        "TEACHER": "teacher",
+        "SECRETARY": "secretary"
+    },
     "domains": {
         "INFO": "Computer Science",
         "CTI": "Computers and Information Technology",
@@ -37,36 +42,80 @@
             "dropDownFields": {
                 "domain": {
                     "label": "Domain",
+                    "placeholder": "Domain",
                     "errorMessage": "Please select a domain"
                 },
                 "learningMode": {
                     "label": "Learning Mode",
+                    "placeholder": "Learning Mode",
                     "errorMessage": "Please select a learning mode"
                 },
                 "degree": {
                     "label": "Degree",
+                    "placeholder": "Degree",
                     "errorMessage": "Please select a degree"
                 },
                 "studyProgram": {
                     "label": "Study Program",
+                    "placeholder": "Study Program",
                     "errorMessage": "Please select a study program"
                 }
             },
             "inputFields": {
                 "title": {
                     "label": "Title",
+                    "placeholder": "Title",
                     "errorMessage": "Please provide a title for the options list"
-                },
-                "semester": {
-                    "label": "Semester",
-                    "errorMessage": "Please provide a semester for the options list"
                 },
                 "year": {
                     "label": "Year",
-                    "errorMessage": "Please provide a year for the options list"
+                    "placeholder": "Year",
+                    "errorMessage": "Please select a value between 2 and 4"
+                },
+                "semester": {
+                    "label": "Semester",
+                    "placeholder": "Semester",
+                    "errorMessage": "Please select a value between 1 and 2"
                 }
             },
-            "createButton": "Create the options list"
+            "createButton": "Create the options list",
+            "update": "Update the options list"
+        },
+        "userData": {
+            "dropDownFields": {
+                "role": {
+                    "label": "Role",
+                    "placeholder": "Role",
+                    "errorMessage": "Please provide a role for the user"
+                }
+            },
+            "inputFields": {
+                "firstName": {
+                    "label": "First Name",
+                    "placeholder": "First Name",
+                    "errorMessage": "Please provide the user's first name"
+                },
+                "lastName": {
+                    "label": "Last Name",
+                    "placeholder": "Last Name",
+                    "errorMessage": "Please provide the user's last name"
+                }
+            }
+        }
+    },
+    "lists": {
+        "accounts": {
+            "header": {
+                "email": "Email",
+                "action": "Action"
+            }    
+        },
+        "students": {
+            "header": {
+                "name": "Last Name and First Name",
+                "email": "Email"    
+            },
+            "sheetName": "Enrolled Students"    
         }
     },
     "registration": {
@@ -189,9 +238,18 @@
         },
         "teacherLinks": {
             "courses": "Courses"
+        },"secretaryLinks": {
+            "accounts": "Conturi Studenți"
         },
-        "secretaryLinks": {
-            "accounts": "Accounts"
+        "adminLinks": {
+            "optionsLists": "Liste Opționale",
+            "cursuri": "Cursuri",
+            "accounts": {
+                "notVerified": "Conturi Neverificate",
+                "students": "Conturi studenți",
+                "teachers": "Conturi profesori",
+                "secretaries": "Conturi secretare"
+            }
         },
         "facultyName": "Faculty of Mathematics and Computer Science",
         "displayMessage": {
@@ -202,20 +260,6 @@
     "teacher": {
         "courses": {
             "mailButton": "Send an announcement"
-        }
-    },
-    "studentsList": {
-        "header": {
-            "name": "Last Name and First Name",
-            "email": "Email"    
-        },
-        "sheetName": "Enrolled Students"
-    },
-    "accountsList": {
-        "header": {
-            "email": "Email",
-            "role": "Role",
-            "status": "Status"
         }
     },
     "loadingPage": {
@@ -233,6 +277,24 @@
     "pages": {
         "optionsLists": {
             "createButton": "Create a new options list"
+        },
+        "accounts": {
+            "notVerified": {
+                "accountsListTitle": "Not Verified",
+                "fileUploadLabel": ""
+            },
+            "students": {
+                "accountsListTitle": "Students",
+                "fileUploadLabel": ""
+            },
+            "teachers": {
+                "accountsListTitle": "Teachers",
+                "fileUploadLabel": ""
+            },
+            "secretaries": {
+                "accountsListTitle": "Secretaries",
+                "fileUploadLabel": ""
+            }
         }
     },
     "molecules": {

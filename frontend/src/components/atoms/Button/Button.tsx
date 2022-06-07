@@ -3,7 +3,7 @@ import React from "react";
 import { ButtonModifier, IButtonProps } from "./Button.types";
 import "./Button.scss"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileExcel, faFloppyDisk, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faFileExcel, faFloppyDisk, faEnvelope, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 const Button = ({
     label,
@@ -29,6 +29,9 @@ const Button = ({
             break;
         case ButtonModifier.mail:
             icon = <FontAwesomeIcon icon={faEnvelope} />
+            break;
+        case ButtonModifier.delete:
+            icon = <FontAwesomeIcon icon={faTrashCan} />
             break;
         default:
             break;

@@ -4,7 +4,8 @@ enum InputFieldType {
     email = "email",
     password = "password",
     text = "text",
-    number = "number"
+    number = "number",
+    file = "file"
 }
 
 enum InputFieldModifier {

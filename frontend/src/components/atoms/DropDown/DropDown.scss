@@ -39,6 +39,23 @@ $icon: "%3Csvg /%3E%3C/svg%3E";
 
 }
 
+.dropdown--error {
+    &__error-group {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: .2rem;
+        &__icon {
+            color: crimson;
+        }
+        &__span {
+            color: crimson;
+            white-space: pre-wrap;           
+        }    
+    }
+
+}
+
 .dropdown--teacher-list {
     grid-area: dropdown-teacher-list;
 }

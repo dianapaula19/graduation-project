@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import classNames from "classnames";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLock, faEnvelope, faUser, faEye, faEyeSlash, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faLock, faEnvelope, faUser, faEye, faEyeSlash, faXmark, faFileArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { InputFieldModifier, InputFieldProps, InputFieldType } from "./InputField.types";
 import "./InputField.scss";
 
@@ -20,6 +20,7 @@ const InputField = ({
     const componentClassName = "input-field";
     const inputGroupClassName = `${componentClassName}__input-group`;
     const errorGroupClassName = `${componentClassName}--error__error-group`;
+    const fileUploadClassName = "file-upload";
 
     const componentClassNames = classNames(
         componentClassName,
@@ -37,14 +38,19 @@ const InputField = ({
     
     const iconSwitch = (type: InputFieldType): JSX.Element | null => {
         switch (type) {
-            case 'email':
+            case InputFieldType.email:
                 return <FontAwesomeIcon 
                             icon={faEnvelope} 
                             className={`${inputGroupClassName}__icon`}
                         />
-            case 'password':
+            case InputFieldType.password:
                 return <FontAwesomeIcon 
                             icon={faLock} 
+                            className={`${inputGroupClassName}__icon`}
+                        />
+            case InputFieldType.file:
+                return <FontAwesomeIcon 
+                            icon={faFileArrowUp} 
                             className={`${inputGroupClassName}__icon`}
                         />
             default:
@@ -81,9 +87,32 @@ const InputField = ({
                 return InputFieldType.email
             case InputFieldType.password:
                 return showPassword ? InputFieldType.text : InputFieldType.password
+            case InputFieldType.number:
+                return InputFieldType.number
+            case InputFieldType.file:
+                return InputFieldType.file
             default:
                 return InputFieldType.text
         }
+    }
+
+    if (type === InputFieldType.file) {
+        return (
+            <div
+                className={fileUploadClassName}
+            >
+                {iconSwitch(InputFieldType.file)}
+                <label 
+                    htmlFor={id} 
+                >
+                    {label}
+                </label>
+                <input 
+                    id={id} 
+                    type={InputFieldType.file}
+                />
+            </div>
+        )
     }
 
     return(

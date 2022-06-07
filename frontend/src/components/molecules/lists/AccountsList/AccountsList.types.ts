@@ -7,7 +7,8 @@ interface Account {
 }
 
 interface IAccountsListProps {
-  accounts: Account[]
+  title: string;
+  accounts: Account[];
 }
 
 export type {

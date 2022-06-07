@@ -2,6 +2,7 @@ import { ButtonHTMLAttributes } from "react";
 
 enum ButtonModifier {
     disabled = "disabled",
+    delete = "delete",
     excel = "excel",
     save = "save",
     mail = "mail"

@@ -5,4 +5,10 @@
     gap: 2rem;
     margin-bottom: 5rem;
   }
+
+  &__lists {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
 }

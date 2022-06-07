@@ -16,12 +16,12 @@ DefaultAccountsList.args = {
     accounts: [
         {
           email: "rachel@chu.com",
-          role: Role.student,
+          role: Role.STUDENT,
           verified: false
         },
         {
           email: "nick@young.com",
-          role: Role.student,
+          role: Role.STUDENT,
           verified: true
         },
     ]
