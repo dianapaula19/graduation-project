@@ -33,7 +33,7 @@ const CourseForm = ({
   const [courseData, setCourseData] = useState({
     title: '',
     link: '',
-    capacity: 1,
+    capacity: 0,
     teacher: 'placeholder'
   });
   
@@ -50,7 +50,7 @@ const CourseForm = ({
   const validation = {
     title: courseData.title.length < 1,
     link: courseData.link.length < 1,
-    capacity: courseData.capacity < 1 && courseData.capacity > 100,
+    capacity: courseData.capacity < 1 || courseData.capacity > 100,
     teacher: courseData.teacher === 'placeholder'
   }
 
@@ -101,7 +101,7 @@ const CourseForm = ({
         type={InputFieldType.number}
         id={`${componentId}-capacity`}
         name={"capacity"}
-        defaultValue={courseData.capacity} 
+        value={courseData.capacity} 
         error={validation.capacity} 
         errorMessage={t(`${inputFieldsTranslate}.capacity.errorMessage`)} 
         label={t(`${inputFieldsTranslate}.capacity.label`)} 

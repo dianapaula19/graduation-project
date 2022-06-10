@@ -1,20 +1,15 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { IOptionalCourseCardProps } from "../OptionalCourseCard/OptionalCourseCard.types";
-import { IOptionalsListCardProps } from "./OptionsListCard.types";
+import { IOptionsListCardProps } from "./OptionsListCard.types";
 import "./OptionsListCard.scss";
 
 const OptionsListCard = ({
-  title,
-  year, 
-  semester,
-  domain,
-  degree,
-  learningMode, 
-  studyProgram   
+  data,
+  onClick   
 }
 : 
-IOptionalsListCardProps) => {
+IOptionsListCardProps) => {
   
   const componentClassName = "optionals-list-card";
   const { t } = useTranslation();
@@ -22,21 +17,22 @@ IOptionalsListCardProps) => {
   return (
     <div
       className={componentClassName}
+      onClick={onClick}
     >
       <span
         className={`${componentClassName}__main-title`}
       >
-        {t(`domains.${domain}`)}, {t(`degrees.${degree}`)}, {t(`learningModes.${learningMode}`)}, {t(`studyPrograms.${studyProgram}`)} 
+        {t(`degrees.${data.degree}`)}, {t(`learningModes.${data.learning_mode}`)}, {t(`studyPrograms.${data.study_program}`)} 
       </span>
       <span
         className={`${componentClassName}__sub-title`}
       >
-        {t('molecules.optionsListCard.year')} {year}, {t('molecules.optionsListCard.semester')} {semester}
+        {t('molecules.optionsListCard.year')} {data.year}, {t('molecules.optionsListCard.semester')} {data.semester}
       </span>
       <span
         className={`${componentClassName}__title`}
       >
-        {title}
+        {data.title}
       </span>
 
     </div>

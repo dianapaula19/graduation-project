@@ -76,8 +76,8 @@ export const updateCourseSlice = createSlice({
 
 export const { revertUpdateCourse } = updateCourseSlice.actions;
 
-export const UpdateCourseStatus = (root: RootState) => root.updateCourse.status;
-export const UpdateCourseShowModal = (root: RootState) => root.updateCourse.showModal;
-export const UpdateCourseCode = (root: RootState) => root.updateCourse.code;
+export const updateCourseStatus = (root: RootState) => root.updateCourse.status;
+export const updateCourseShowModal = (root: RootState) => root.updateCourse.showModal;
+export const updateCourseCode = (root: RootState) => root.updateCourse.code;
 
 export default updateCourseSlice.reducer; 

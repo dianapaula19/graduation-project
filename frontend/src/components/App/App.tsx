@@ -13,6 +13,9 @@ import TeacherCoursesPage from '../pages/teacher/CoursesPage';
 import AuthentificationPage from '../templates/AuthentificationPage/';
 import { AuthentificationAction } from '../templates/AuthentificationPage/';
 import { Role } from './App.types';
+import RecoverAccountPage from '../pages/auth/RecoverAccountPage';
+import ResetPasswordPage from '../pages/auth/ResetPasswordPage';
+import SettingsPage from '../pages/admin/SettingsPage';
 
 const App = () => {
 
@@ -33,19 +36,11 @@ const App = () => {
           />
           <Route 
             path="recoverAccount"
-            element={
-              <AuthentificationPage 
-                action={AuthentificationAction.recoverAccount}                
-              />
-            }
+            element={<RecoverAccountPage />}
           />
           <Route 
             path="resetPassword"
-            element={
-              <AuthentificationPage 
-                action={AuthentificationAction.resetPassword}
-              />
-            }
+            element={<ResetPasswordPage />}
           />
           <Route 
             path="admin/optionsLists"
@@ -66,6 +61,10 @@ const App = () => {
           <Route 
             path="admin/accounts/teachers"
             element={<AccountsPage role={Role.TEACHER}/>}
+          />
+          <Route
+            path="admin/settings"
+            element={<SettingsPage />}
           />
           <Route 
             path="/"

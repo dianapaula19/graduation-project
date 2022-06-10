@@ -48,7 +48,7 @@ const StudentsList = ({
                         <span
                             className={`${componentClassName}__name`}
                         >
-                            {student.name}
+                            {`${student.first_name} ${student.last_name}`}
                         </span>
                         <a
                             className={`${componentClassName}__email`}

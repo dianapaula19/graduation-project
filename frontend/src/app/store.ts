@@ -3,6 +3,8 @@ import storage from 'redux-persist/lib/storage';
 import languagesReducer from "../components/atoms/LanguagesSwitch/LanguageSwitchSlice";
 import loginReducer from "../features/auth/loginSlice";
 import registerReducer from "../features/auth/registerSlice";
+import recoverAccountReducer from "../features/auth/recoverAccountSlice";
+import resetPasswordReducer from "../features/auth/resetPasswordSlice";
 import studentDataReducer from "../features/user/student/studentDataSlice";
 import studentOptionalsListsReducer from '../features/user/student/studentOptionalsListsSlice';
 import saveStudentChoicesReducer from "../features/user/student/saveStudentChoicesSlice";
@@ -18,7 +20,10 @@ import updateTeacherInfoReducer from "../features/user/admin/updateTeacherInfoSl
 import getStudentsReducer from "../features/user/admin/getStudentsSlice";
 import getTeachersReducer from "../features/user/admin/getTeachersSlice";
 import getCoursesReducer from "../features/user/admin/getCoursesSlice";
+import getOptionsListsReducer from "../features/user/admin/getOptionsListsSlice";
+import updateOptionsListReducer from "../features/user/admin/updateOptionsListSlice";
 import getTeacherCoursesReducer from "../features/user/teacher/getTeacherCoursesSlice";
+import sendAnnouncementReducer from '../features/user/teacher/sendAnnouncementSlice';
 import { 
   FLUSH, 
   PAUSE, 
@@ -35,12 +40,16 @@ const reducers = combineReducers({
   // auth
   login: loginReducer,
   register: registerReducer,
+  recoverAccount: recoverAccountReducer,
+  resetPassword: resetPasswordReducer,
   // student
   studentData: studentDataReducer,
   studentOptionalsLists: studentOptionalsListsReducer,
   saveStudentChoices: saveStudentChoicesReducer,
   // admin
   createOptionsList: createOptionsListReducer,
+  updateOptionsList: updateOptionsListReducer, 
+  getOptionsLists: getOptionsListsReducer,
   createCourse: createCourseReducer,
   updateCourse: updateCourseReducer,
   registerBatchStudents: registerBatchStudentsReducer,
@@ -52,7 +61,10 @@ const reducers = combineReducers({
   getNotVerifiedUsers: getNotVerifiedUsersReducer,
   verifyUser: verifyUserReducer,
   getCourses: getCoursesReducer,
-  getTeacherCourses: getTeacherCoursesReducer
+
+  // teacher
+  getTeacherCourses: getTeacherCoursesReducer,
+  sendAnnouncement: sendAnnouncementReducer
 });
 
 const persistConfig = {

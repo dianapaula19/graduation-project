@@ -1,5 +1,5 @@
-from courses.serializers import CourseSerializer, OptionsListSerializer, StudentOptionChoiceSerializer, StudentOptionsListSerializer
-from courses.models import OptionsList, StudentOptionChoice, Course
+from courses.serializers import CourseSerializer
+from courses.models import Course
 from .models import Grade, Teacher, User, Student
 from rest_framework import serializers
 

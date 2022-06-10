@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import { registerCode, registerShowModal, registerStatus, revert } from "../../../../features/auth/registerSlice";
+import { registerCode, registerShowModal, registerStatus, revertRegister } from "../../../../features/auth/registerSlice";
 import { ApiStatus } from "../../../../features/Utils";
 import Modal from "../../../molecules/Modal";
 import AuthentificationPage from "../../../templates/AuthentificationPage";
@@ -29,7 +29,7 @@ const RegisterPage = () => {
             <Modal
               show={showModal}
               closeModal={() => {
-                dispatch(revert());
+                dispatch(revertRegister());
               }}                
             >
               <span>{code !== null ? t(`register.codes.${code}`) : 'Error'}</span>
@@ -43,7 +43,7 @@ const RegisterPage = () => {
           <Modal
             show={showModal}
             closeModal={() => {
-              dispatch(revert());
+              dispatch(revertRegister());
             }}                
           >
             <span>{code !== null ? t(`register.codes.${code}`) : 'Error'}</span>

@@ -22,7 +22,8 @@ from users.views import login, \
                         get_student_data, \
                         not_verified_users, \
                         students, \
-                        teachers
+                        teachers, \
+                        send_announcement
 from courses.views import create_or_uptate_student_choices, \
                             create_course, \
                             update_course, \
@@ -39,6 +40,7 @@ urlpatterns = [
     # users urls
     path('api/user/login', login),
     path('api/user/register', register),
+    path('api/user/password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
     
     # student
     path('api/user/student/data', get_student_data),
@@ -49,6 +51,9 @@ urlpatterns = [
     path('api/user/admin/not_verified_users', not_verified_users),
     path('api/user/admin/students', students),
     path('api/user/admin/teachers', teachers),
+
+    # teacher
+    path('api/user/teacher/send_announcement', send_announcement),
    
     # courses urls
     # student
@@ -65,5 +70,4 @@ urlpatterns = [
     
     # teacher
     path('api/course/teacher/get_teacher_courses', get_teacher_courses),
-    path('api/password_reset', include('django_rest_passwordreset.urls', namespace='password_reset'))
 ]

@@ -7,6 +7,8 @@ import { regexRules } from "../utils";
 import { IRecoverAccountFormData } from "./RecoverAccountForm.types";
 import LogoSvg from "../../../../assets/logo.svg";
 import "./RecoverAccountForm.scss";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
+import { recoverAccountAsync, recoverAccountShowModal } from "../../../../features/auth/recoverAccountSlice";
 
 const RecoverAccountForm = () => {
 
@@ -14,9 +16,18 @@ const RecoverAccountForm = () => {
         email: "",
     });
 
+    const validation = {
+        email: !regexRules.email.test(data.email)
+    }
+
     const componentClassName = "recover-account-form";
+    const componentId = "recover-account-form";
 
     const { t } = useTranslation();
+    const dispatch = useAppDispatch();
+
+    const inputFieldsTranslate = "forms.recoverAccount.inputFields";
+    const submitButtonsTranslate = "forms.recoverAccount.submitButtons";
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const name = e.target.name;
@@ -28,7 +39,9 @@ const RecoverAccountForm = () => {
     }
 
     const onSubmit = (): void => {
-        console.log(data);
+        dispatch(recoverAccountAsync({
+            email: data.email
+        }));
     }
 
     return(
@@ -46,17 +59,16 @@ const RecoverAccountForm = () => {
             <InputField 
                 type={InputFieldType.email}
                 name={"email"}
-                id={"registration-form-email"}
-                placeholder={t("recoverAccount.form.email.placeholder")} 
-                errorMessage={t("recoverAccount.form.email.errorMessage")}
-                label={t("recoverAccount.form.email.label")}
-                required={false}
-                error={false}
+                id={`${componentId}-email`}
+                placeholder={t(`${inputFieldsTranslate}.email.placeholder`)} 
+                errorMessage={t(`${inputFieldsTranslate}.email.errorMessage`)}
+                label={t(`${inputFieldsTranslate}.email.label`)}
+                error={validation.email}
                 onChange={handleChange}            
             />
             <Button 
-                label={t("recoverAccount.form.button.label")} 
-                disabled={false}
+                label={t(`${submitButtonsTranslate}.sendInstructions`)} 
+                disabled={validation.email}
                 onClick={onSubmit}
             />
         </div>

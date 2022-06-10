@@ -10,7 +10,7 @@ from rest_framework.status import (
     HTTP_500_INTERNAL_SERVER_ERROR
 )
 
-from .serializers import CourseSerializer, OptionsListSerializer
+from .serializers import CourseSerializer, OptionsListSerializer, TeacherCourseSerializer
 
 from .models import Course, OptionsList, StudentOptionChoice
 from users.models import Student, Teacher, User
@@ -158,7 +158,7 @@ def get_options_lists(request):
     serializer = OptionsListSerializer(options_lists, many=True)
     return Response({
         'options_lists': serializer.data,
-        'code': ResponseCode.SUCCESS
+        'code': ResponseCode.SUCCESS.value
         },
         status=HTTP_200_OK
     )
@@ -418,7 +418,7 @@ def get_teacher_courses(request):
         status=HTTP_404_NOT_FOUND
         )
     
-    serializer = CourseSerializer(teacher.courses.all(), many=True)
+    serializer = TeacherCourseSerializer(teacher.courses.all(), many=True)
     
     return Response({
             'courses': serializer.data,

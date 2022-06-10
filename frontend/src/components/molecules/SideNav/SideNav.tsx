@@ -19,6 +19,7 @@ import { revertGetStudents } from "../../../features/user/admin/getStudentsSlice
 import { revertGetNotVerifiedUsers } from "../../../features/user/admin/getNotVerifiedUsersSlice";
 import { revertGetTeachers } from "../../../features/user/admin/getTeachersSlice";
 import { revertGetTeacherCourses } from "../../../features/user/teacher/getTeacherCoursesSlice";
+import { revertGetOptionsLists } from "../../../features/user/admin/getOptionsListsSlice";
 
 const SideNav = () => {
     
@@ -132,11 +133,11 @@ const SideNav = () => {
                             dispatch(revertGetTeacherCourses());
                         }
                         if (role === Role.ADMIN) {
-                            dispatch(revertGetCourses());
                             dispatch(revertGetStudents());
                             dispatch(revertGetNotVerifiedUsers());
                             dispatch(revertGetTeachers());
                             dispatch(revertGetCourses());
+                            dispatch(revertGetOptionsLists());
                         }
                         navigate('/login');
                     }}

@@ -73,21 +73,21 @@ const UserDataForm = ({
       } 
     }
 
-  }, [student])
+  }, [student, teacher])
 
   const validationUserData = {
     firstName: userData.firstName.length < 1,
     lastName: userData.lastName.length < 1,
-    role: userData.role === t('roles.PLACEHOLDER')
+    role: userData.role === 'placeholder'
   }
 
   const validationStudentData = {
-    domain: studentData.domain === t('domains.PLACEHOLDER'),
-    learningMode: studentData.learningMode === t('learningModes.PLACEHOLDER'),
-    degree: studentData.degree === t('degrees.PLACEHOLDER'),
-    studyProgram: studentData.studyProgram === t('studyPrograms.PLACEHOLDER'),
+    domain: studentData.domain === 'placeholder',
+    learningMode: studentData.learningMode === 'placeholder',
+    degree: studentData.degree === 'placeholder',
+    studyProgram: studentData.studyProgram === 'placeholder',
     currentGroup: studentData.currentGroup.length < 1,
-    currentYear: studentData.currentYear < 1 && studentData.currentYear > 4 
+    currentYear: studentData.currentYear < 1 || studentData.currentYear > 4 
   }
 
   const handleChangeUserData = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>): void => {
@@ -141,6 +141,7 @@ const UserDataForm = ({
           name={"firstName"}
           id={`${componentId}-first-name`}
           defaultValue={userData.firstName}
+          value={userData.firstName}
           error={validationUserData.firstName} 
           errorMessage={t(`${inputTranslate}.firstName.errorMessage`)} 
           label={t(`${inputTranslate}.firstName.label`)}
@@ -152,6 +153,7 @@ const UserDataForm = ({
           id={`${componentId}-last-name`}
           name={"lastName"} 
           defaultValue={userData.lastName}
+          value={userData.lastName}
           error={validationUserData.lastName} 
           errorMessage={t(`${inputTranslate}.lastName.errorMessage`)} 
           label={t(`${inputTranslate}.lastName.label`)}
@@ -164,6 +166,7 @@ const UserDataForm = ({
               error={validationUserData.role}
               id={`${componentId}-role`}
               name={"role"} 
+              defaultValue={userData.role}
               value={userData.role}
               errorMessage={t(`${dropDownTranslate}.role.errorMessage`)} 
               label={t(`${dropDownTranslate}.role.label`)}
@@ -191,6 +194,7 @@ const UserDataForm = ({
               errorMessage={t(`${dropDownTranslate}.domain.errorMessage`)} 
               label={t(`${dropDownTranslate}.domain.label`)}
               placeholder={t(`${dropDownTranslate}.domain.placeholder`)}
+              defaultValue={studentData.domain}
               value={studentData.domain}
               onChange={handleChangeStudentData}
             >
@@ -212,6 +216,7 @@ const UserDataForm = ({
               errorMessage={t(`${dropDownTranslate}.learningMode.errorMessage`)} 
               label={t(`${dropDownTranslate}.learningMode.label`)}
               placeholder={t(`${dropDownTranslate}.learningMode.placeholder`)}
+              defaultValue={studentData.learningMode}
               value={studentData.learningMode}
               onChange={handleChangeStudentData}
             >
@@ -233,6 +238,7 @@ const UserDataForm = ({
               errorMessage={t(`${dropDownTranslate}.degree.errorMessage`)} 
               label={t(`${dropDownTranslate}.degree.label`)}
               placeholder={t(`${dropDownTranslate}.degree.placeholder`)}
+              defaultValue={studentData.degree}
               value={studentData.degree}
               onChange={handleChangeStudentData}
             >
@@ -254,6 +260,7 @@ const UserDataForm = ({
               errorMessage={t(`${dropDownTranslate}.studyProgram.errorMessage`)} 
               label={t(`${dropDownTranslate}.studyProgram.label`)}
               placeholder={t(`${dropDownTranslate}.studyProgram.placeholder`)}
+              defaultValue={studentData.studyProgram}
               value={studentData.studyProgram}
               onChange={handleChangeStudentData}
             >
@@ -273,6 +280,7 @@ const UserDataForm = ({
               id={`${componentId}-current-group`}
               name={"currentGroup"} 
               defaultValue={studentData.currentGroup}
+              value={studentData.currentGroup}
               error={validationStudentData.currentGroup} 
               errorMessage={t(`${inputTranslate}.currentGroup.errorMessage`)} 
               label={t(`${inputTranslate}.currentGroup.label`)}
@@ -284,6 +292,7 @@ const UserDataForm = ({
               id={`${componentId}-current-year`}
               name={"currentYear"} 
               defaultValue={studentData.currentYear}
+              value={studentData.currentYear}
               error={validationStudentData.currentYear} 
               errorMessage={t(`${inputTranslate}.currentYear.errorMessage`)} 
               label={t(`${inputTranslate}.currentYear.label`)}

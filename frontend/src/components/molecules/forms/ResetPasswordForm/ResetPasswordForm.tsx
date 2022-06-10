@@ -7,6 +7,9 @@ import { regexRules } from "../utils";
 import { IResetPasswordFormData } from "./ResetPasswordForm.types";
 import LogoSvg from "../../../../assets/logo.svg";
 import "./ResetPasswordForm.scss";
+import { useParams } from "react-router-dom";
+import { useAppDispatch } from "../../../../app/hooks";
+import { resetPasswordAsync } from "../../../../features/auth/resetPasswordSlice";
 
 const ResetPasswordForm = () => {
 
@@ -16,8 +19,16 @@ const ResetPasswordForm = () => {
     });
 
     const componentClassName = "reset-password-form";
+    const componentId = "reset-password-form";
+
+    const inputFieldsTranslate = "forms.resetPassword.inputFields";
+    const submitButtonsTranslate = "forms.resetPassword.submitButtons";
 
     const { t } = useTranslation();
+    const dispatch = useAppDispatch();
+
+    const queryParams = new URLSearchParams(window.location.search)
+    const token = queryParams.get("token")
 
     const validation = {
         password: !regexRules.password.test(data.password),
@@ -34,7 +45,13 @@ const ResetPasswordForm = () => {
     }
 
     const onSubmit = (): void => {
-        console.log(data);
+        console.log(token);
+        if (token) {
+            dispatch(resetPasswordAsync({
+                token: token,
+                password: data.password
+            }))
+        }
     }
 
     return(
@@ -51,28 +68,26 @@ const ResetPasswordForm = () => {
             <InputField 
                 type={InputFieldType.password}
                 name={"password"}
-                id={"reset-password-form-password"}
-                placeholder={t("resetPassword.form.password.placeholder")} 
-                errorMessage={t("resetPassword.form.password.errorMessage")}
-                label={t("resetPassword.form.password.label")}
-                required={true}
+                id={`${componentId}-password`}
+                placeholder={t(`${inputFieldsTranslate}.password.placeholder`)} 
+                errorMessage={t(`${inputFieldsTranslate}.password.errorMessage`)}
+                label={t(`${inputFieldsTranslate}.password.label`)}
                 error={validation.password}
                 onChange={handleChange}               
             />
             <InputField 
                 type={InputFieldType.password}
                 name={"confirmPassword"}
-                id={"reset-password-form-confirm-password"}
-                placeholder={t("resetPassword.form.confirmPassword.placeholder")} 
-                errorMessage={t("resetPassword.form.confirmPassword.errorMessage")}
-                label={t("resetPassword.form.confirmPassword.label")}
-                required={true}
+                id={`${componentId}-confirm-password`}
+                placeholder={t(`${inputFieldsTranslate}.confirmPassword.placeholder`)} 
+                errorMessage={t(`${inputFieldsTranslate}.confirmPassword.errorMessage`)}
+                label={t(`${inputFieldsTranslate}.confirmPassword.label`)}
                 error={validation.confirmPassword}
                 onChange={handleChange}               
             />
             <Button 
-                label={t("resetPassword.form.button.label")} 
-                disabled={validation.confirmPassword && validation.password}
+                label={t(`${submitButtonsTranslate}.resetPassword`)} 
+                disabled={validation.confirmPassword || validation.password}
                 onClick={onSubmit}
             />
         </div>

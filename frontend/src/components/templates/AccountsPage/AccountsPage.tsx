@@ -31,7 +31,6 @@ const AccountsPage = ({
   const statusGetStudents = useAppSelector(getStudentsStatus);
   const statusGetTeachers = useAppSelector(getTeachersStatus);
   const statusGetNotVerifiedUsers = useAppSelector(getNotVerifiedUsersStatus);
-  const showModalVerifyUser = useAppSelector(verifyUserShowModal);
   const students = useAppSelector(getStudentsStudents);
   const teachers = useAppSelector(getTeachersTeachers)
   const users = useAppSelector(getNotVerifiedUsersUsers);

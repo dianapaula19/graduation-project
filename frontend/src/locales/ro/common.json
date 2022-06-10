@@ -161,6 +161,98 @@
                 "update": "Update the course's info",
                 "delete": "Delete the course"
             }
+        },
+        "sendAnnouncement": {
+            "inputFields": {
+                "subject": {
+                    "label": "Subject",
+                    "placeholder": "Subject",
+                    "errorMessage": "Please provide a subject for the announcement"
+                }
+            },
+            "textAreaFields": {
+                "body": {
+                    "label": "Body"
+                }
+            },
+            "submitButtons": {
+                "sendTheAnnouncement": "Send the announcement"
+            }
+        },
+        "login": {
+            "inputFields": {
+                "email": {
+                    "placeholder": "Email",
+                    "label": "Email"
+                },
+                "password": {
+                    "placeholder": "Parolă",
+                    "label": "Parolă"
+                }
+            },
+            "forgotPassword": "Ți-ai uitat parola?",
+            "newUser": {
+                "text": "Utilizator nou? Crează-ți cont ",
+                "link": "Aici" 
+            },           
+            "submitButtons": {
+                "signIn": "Loghează-te"
+            }
+        },
+        "registration": {
+            "inputFields": {
+                "email": {
+                    "placeholder": "Email",
+                    "errorMessage": "Text",
+                    "label": "Email"
+                },
+                "password": {
+                    "placeholder": "Parolă",
+                    "errorMessage": "Text",
+                    "label": "Parolă"
+                },
+                "confirmPassword": {
+                    "placeholder": "Confirmă Parola",
+                    "errorMessage": "Text",
+                    "label": "Confirmă Parola"
+                }
+            },
+            "alreadyAnUser": {
+                "text": "Ai deja cont? Loghează-te ",
+                "link": "Aici"
+            },
+            "submitButtons": {
+                "signUp": "Crează-ți cont"
+            }
+        },
+        "recoverAccount": {
+            "inputFields": {
+                "email": {
+                    "placeholder": "Email",
+                    "errorMessage": "Introduceți o adresă validă de email",
+                    "label": "Email"
+                }
+            },
+            "submitButtons": {
+                "sendInstructions": "Trimite Instrucțiuni"
+            }
+        }, 
+        "resetPassword": {
+            "inputFields": {
+                "password": {
+                    "placeholder": "Parolă",
+                    "errorMessage": "Parola trebuie să conțină măcar o literă mică, o literă mare, și o cifră",
+                    "label": "Parolă"
+                },
+                "confirmPassword": {
+                    "placeholder": "Confirmă Parola",
+                    "errorMessage": "Parolele trebuie să fie identite",
+                    "label": "Confirmă Parola"
+                }
+            },
+            "submitButtons": {
+                "resetPassword": "Resetează parola"
+            }
         }
     },
     "lists": {
@@ -181,6 +273,9 @@
             "header": {
                 "title": "Title",
                 "teacher": "Teacher"
+            },
+            "buttons": {
+                "create": "Create a new course"
             }
         }
     },
@@ -263,33 +358,6 @@
             "gradeHeader": "Media Aritmetică"
         }
     },
-    "resetPassword.form": {
-        "instructions": "Noua ta parolă trebuie să fie diferită de parolele folosite anterior.",
-        "password": {
-            "placeholder": "Parolă",
-            "errorMessage": "Text",
-            "label": "Parolă"
-        },
-        "confirmPassword": {
-            "placeholder": "Confirmă Parola",
-            "errorMessage": "Text",
-            "label": "Confirmă Parola"
-        },
-        "button": {
-            "label": "Resetează parola"
-        }
-    },
-    "recoverAccount.form": {
-        "instructions": "Introdu adresa de email asociată contului tău și îți vom trimite un email cu instrucțiuni pentru resetarea parolei.",
-        "email": {
-            "placeholder": "Email",
-            "errorMessage": "Text",
-            "label": "Email"
-        },
-        "button": {
-            "label": "Trimite Instrucțiuni"
-        }
-    },
     "sidenav": {
         "links": {
             "signOut": "Deconectează-te",
@@ -302,6 +370,7 @@
             "courses": "Cursuri"
         },
         "adminLinks": {
+            "settings": "Setări",
             "optionsLists": "Liste Opționale",
             "courses": "Cursuri",
             "accounts": "Conturi"
@@ -413,11 +482,34 @@
                 "fileUploadLabel": "Upload teachers' info excel file"
             }
         },
-        "adminCourses": {
-            "buttons": {
-                "create": "Create a new course"
+        "admin": {
+            "accounts": {
+                "notVerified": {
+                    "accountsListTitle": "Not Verified",
+                    "fileUploadLabel": ""
+                },
+                "students": {
+                    "accountsListTitle": "Students",
+                    "fileUploadLabel": "Upload students' info excel file"
+                },
+                "teachers": {
+                    "accountsListTitle": "Teachers",
+                    "fileUploadLabel": "Upload teachers' info excel file"
+                }
+            },
+            "optionsLists": {
+
+            },
+            "courses": {
+                "buttons": {
+                    "create": "Create a new course"
+                }    
+            },
+            "settings": {
+
             }
         }
+        
     },
     "molecules": {
         "optionsListCard": {

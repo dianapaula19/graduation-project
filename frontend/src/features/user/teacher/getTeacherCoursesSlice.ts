@@ -3,19 +3,27 @@ import axios from "axios";
 import { RootState } from "../../../app/store";
 import { ApiStatus, API_URL_COURSE, API_URL_USER } from "../../Utils";
 
+interface IStudent {
+  email: string;
+  first_name: string;
+  last_name: string;
+}
 interface ICourse {
   id: number;
   title: string;
+  students: IStudent[];
 }
 
 interface IGetTeacherCoursesState {
   status: ApiStatus;
   courses: null | ICourse[];
+  currentCourse: null | ICourse;
   code: null | string;
 }
 
 const initialState: IGetTeacherCoursesState = {
   status: ApiStatus.idle,
+  currentCourse: null,
   courses: null,
   code: null
 }
@@ -31,6 +39,10 @@ interface IGetTeacherCoursesResponse {
 
 interface IGetTeacherCoursesError {
   code: string; 
+}
+
+interface IGetCurrentCoursePayload {
+  id: number;
 }
 
 export const getTeacherCoursesAsync = createAsyncThunk(
@@ -49,11 +61,22 @@ export const getTeacherCoursesAsync = createAsyncThunk(
 )
 
 export const getTeacherCoursesSlice = createSlice({
-  name: 'getTeachers',
+  name: 'getTeacherCourses',
   initialState,
   reducers: {
     revertGetTeacherCourses: () => {
       return initialState;
+    },
+    getCurrentTeacherCourse: (state: IGetTeacherCoursesState, action: PayloadAction<IGetCurrentCoursePayload>) => {
+      const res = action.payload;
+      if (state.courses) {
+        state.currentCourse = state.courses.filter((course) => course.id === res.id)[0];
+      }
+      return state;
+    },
+    revertCurrentTeacherCourse: (state: IGetTeacherCoursesState) => {
+      state.currentCourse = null;
+      return state;
     }
   },
   extraReducers: (builder) => {
@@ -75,10 +98,11 @@ export const getTeacherCoursesSlice = createSlice({
   }
 });
 
-export const { revertGetTeacherCourses } = getTeacherCoursesSlice.actions;
+export const { revertGetTeacherCourses, getCurrentTeacherCourse } = getTeacherCoursesSlice.actions;
 
 export const getTeacherCoursesStatus = (root: RootState) => root.getTeacherCourses.status;
 export const getTeacherCoursesCode = (root: RootState) => root.getTeacherCourses.code;
 export const getTeacherCoursesCourses = (root: RootState) => root.getTeacherCourses.courses;
+export const getTeacherCoursesCurrentCourse = (root: RootState) => root.getTeacherCourses.currentCourse;
 
 export default getTeacherCoursesSlice.reducer;

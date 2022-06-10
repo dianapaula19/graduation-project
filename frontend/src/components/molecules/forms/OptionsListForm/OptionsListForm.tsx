@@ -4,25 +4,17 @@ import Button, { ButtonModifier } from "../../../atoms/Button";
 import CheckBox from "../../../atoms/CheckBox";
 import DropDown from "../../../atoms/DropDown";
 import InputField, { InputFieldType } from "../../../atoms/InputField";
-import { OptionsListFormType, IOptionsListFormData, IOptionsListFormProps } from "./OptionsListForm.types";
+import { IOptionsListFormData, IOptionsListFormProps } from "./OptionsListForm.types";
 import "./OptionsListForm.scss";
-import { useAppDispatch } from "../../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { createOptionsListAsync } from "../../../../features/user/admin/createOptionsListSlice";
-import { regexRules } from "../utils";
 import { Degree, Domain, LearningMode, StudyProgram } from "../../../App";
+import { getCoursesCourses } from "../../../../features/user/admin/getCoursesSlice";
+import { getOptionsListsCurrentOptionsList } from "../../../../features/user/admin/getOptionsListsSlice";
 
 
-const CreateOptionsListForm = ({
-  title = "",
-  year = "", 
-  semester = "",
-  domain = "", 
-  learningMode = "",
-  degree = "",
-  studyProgram = "",
-  coursesIds = [],
-  courses,
-  type = OptionsListFormType.create,
+const OptionsListForm = ({
+  type,
 }
 : IOptionsListFormProps
 ) => {
@@ -30,9 +22,15 @@ const CreateOptionsListForm = ({
   const componentClassName = "create-options-list-form";
   const fieldsContainerClassName = `${componentClassName}__fields-container`;
   const coursesContainerClassName = `${fieldsContainerClassName}__courses-container`;
+  
+  const componentId = "create-options-list-form";
+
   const dropDownTranslate = "forms.createOptionsList.dropDownFields";
   const inputTranslate = "forms.createOptionsList.inputFields";
-  const componentId = "create-options-list-form";
+
+  const courses = useAppSelector(getCoursesCourses);
+  const currentOptionsList = useAppSelector(getOptionsListsCurrentOptionsList);
+  
   const dispatch = useAppDispatch();
 
   const { t } = useTranslation();
@@ -43,38 +41,59 @@ const CreateOptionsListForm = ({
   const studyPrograms: {[id: string]: string} = t("studyPrograms", {returnObjects: true}) as {[id: string]: string};
 
   const [data, setData] = useState<IOptionsListFormData>({
-    title: title,
-    year: parseInt(year),
-    semester: parseInt(semester),
-    domain: domain as Domain,
-    learningMode: learningMode as LearningMode,
-    degree: degree as Degree,
-    studyProgram: studyProgram as StudyProgram,
+    title: '',
+    year: 2,
+    semester: 1,
+    domain: 'placeholder',
+    learningMode: 'placeholder',
+    degree: 'placeholder',
+    studyProgram: 'placeholder',
     coursesIds: []
   });
 
   const validation = {
     title: data.title === "",
-    year: data.year < 2 && data.year > 4,
-    semester: data.semester < 1 && data.semester > 2,
-    domain: !(data.domain === t(`${dropDownTranslate}.domain.placeholder`)),
-    learningMode: !(data.learningMode === t(`${dropDownTranslate}.learningMode.placeholder`)),
-    degree: !(data.degree === t(`${dropDownTranslate}.degree.placeholder`)),
-    studyProgram: !(data.studyProgram === t(`${dropDownTranslate}.studyProgram.placeholder`)),
-    coursesIds: data.coursesIds.length < 2
-  }
+    year: data.year < 2 || data.year > 4,
+    semester: data.semester < 1 || data.semester > 2,
+    domain: data.domain === 'placeholder',
+    learningMode: data.learningMode === 'placeholder',
+    degree: data.degree === 'placeholder',
+    studyProgram: data.studyProgram === 'placeholder',
+    coursesIds: data.coursesIds.length < 1
+  }  
+
+  useEffect(() => {
+    if (currentOptionsList) {
+      setData({
+        title: currentOptionsList.title,
+        year: currentOptionsList.year,
+        semester: currentOptionsList.semester,
+        domain: currentOptionsList.domain,
+        learningMode: currentOptionsList.learning_mode,
+        degree: currentOptionsList.degree,
+        studyProgram: currentOptionsList.study_program,
+        coursesIds: Array.from(currentOptionsList.courses, course => course.id)
+      })
+    }
+  }, [])
+  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>): void => {
     const name = e.target.name;
     const value = e.target.value;
     if (name === "courses") {
+      const copy = data.coursesIds;
       const id = parseInt(value)
-      const index = data.coursesIds.indexOf(parseInt(value));
+      const index = copy.indexOf(parseInt(value));
       if (index === -1) {
-        data.coursesIds.push(id);
+        copy.push(id);
       } else {
-        data.coursesIds.splice(index, 1);
+        copy.splice(index, 1);
       }
+      setData({
+        ...data,
+        coursesIds: copy
+      })
     } else {
       setData({
         ...data,
@@ -111,6 +130,8 @@ const CreateOptionsListForm = ({
           errorMessage={t(`${dropDownTranslate}.domain.errorMessage`)} 
           label={t(`${dropDownTranslate}.domain.label`)} 
           placeholder={t(`${dropDownTranslate}.domain.placeholder`)}
+          defaultValue={data.domain}
+          value={data.domain}
           onChange={handleChange}
         >
           {Object.keys(domains).map((key) => {
@@ -125,11 +146,13 @@ const CreateOptionsListForm = ({
         </DropDown>
         <DropDown
           id={`${componentId}-learning-mode`}
-          name="learning-mode" 
+          name="learningMode" 
           error={validation.learningMode} 
           errorMessage={t(`${dropDownTranslate}.learningMode.errorMessage`)} 
           label={t(`${dropDownTranslate}.learningMode.label`)}
           placeholder={t(`${dropDownTranslate}.learningMode.placeholder`)}
+          defaultValue={data.learningMode}
+          value={data.learningMode}
           onChange={handleChange}
         >
           {Object.keys(learningModes).map((key) => {
@@ -149,6 +172,8 @@ const CreateOptionsListForm = ({
           errorMessage={t(`${dropDownTranslate}.degree.errorMessage`)} 
           label={t(`${dropDownTranslate}.degree.label`)}
           placeholder={t(`${dropDownTranslate}.degree.placeholder`)}
+          defaultValue={data.degree}
+          value={data.degree}
           onChange={handleChange}
         >
           {Object.keys(degrees).map((key) => {
@@ -163,11 +188,13 @@ const CreateOptionsListForm = ({
         </DropDown>
         <DropDown 
           id={`${componentId}-study-program`}
-          name="study-program"
+          name="studyProgram"
           error={validation.studyProgram} 
           errorMessage={t(`${dropDownTranslate}.studyProgram.errorMessage`)} 
           label={t(`${dropDownTranslate}.studyProgram.label`)}
           placeholder={t(`${dropDownTranslate}.studyProgram.placeholder`)}
+          defaultValue={data.studyProgram}
+          value={data.studyProgram}
           onChange={handleChange}
         >
           {Object.keys(studyPrograms).map((key) => {
@@ -188,6 +215,7 @@ const CreateOptionsListForm = ({
           errorMessage={t(`${inputTranslate}.title.errorMessage`)}
           label={t(`${inputTranslate}.title.label`)}
           placeholder={t(`${inputTranslate}.title.placeholder`)}
+          value={data.title}
           onChange={handleChange} 
         />
         <InputField 
@@ -199,6 +227,7 @@ const CreateOptionsListForm = ({
           errorMessage={t(`${inputTranslate}.year.errorMessage`)}
           label={t(`${inputTranslate}.year.label`)}
           placeholder={t(`${inputTranslate}.year.placeholder`)}
+          value={data.year}
           onChange={handleChange}
         />
         <InputField 
@@ -210,6 +239,7 @@ const CreateOptionsListForm = ({
           errorMessage={t(`${inputTranslate}.semester.errorMessage`)}
           label={t(`${inputTranslate}.semester.label`)}
           placeholder={t(`${inputTranslate}.semester.placeholder`)}
+          value={data.semester}
           onChange={handleChange} 
         />
         <div
@@ -223,18 +253,10 @@ const CreateOptionsListForm = ({
           <div
             className={`${coursesContainerClassName}__courses`}
           >
-            {courses.map((course) => {
-              const idx = coursesIds.indexOf(course.id)
-              if (idx === -1) {
-                return <CheckBox
-                        value={course.id}
-                        name="courses" 
-                        label={course.title}
-                        onChange={handleChange} 
-                      />
-              }
+            {courses && courses.map((course) => {
+              const idx = data.coursesIds.indexOf(course.id)
               return <CheckBox
-                      checked
+                      checked={idx === -1 ? false : true}
                       value={course.id}
                       name="courses" 
                       label={course.title}
@@ -246,7 +268,7 @@ const CreateOptionsListForm = ({
         </div>
       </div>
       <Button 
-        label={type === OptionsListFormType.create ? t("forms.createOptionsList.createButton") : t("forms.createOptionsList.updateButton")} 
+        label={type === "create" ? t("forms.createOptionsList.createButton") : t("forms.createOptionsList.updateButton")} 
         disabled={false} 
         modifier={ButtonModifier.save}
         onClick={onSubmit}
@@ -256,4 +278,4 @@ const CreateOptionsListForm = ({
 }
 
 
-export default CreateOptionsListForm;
+export default OptionsListForm;

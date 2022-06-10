@@ -41,12 +41,12 @@ const DropDown = ({
                 )}
                 {...rest}
             >   
-                {rest.value === DropDownOptionsValue.placeholder && (
+                {rest.defaultValue === "placeholder" && (
                     <option 
                         hidden 
                         disabled 
                         selected 
-                        value={DropDownOptionsValue.placeholder}
+                        value={"placeholder"}
                     >
                         {placeholder}
                     </option>

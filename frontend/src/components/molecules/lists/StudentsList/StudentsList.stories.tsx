@@ -14,11 +14,13 @@ export const DefaultStudentsList = Template.bind({});
 DefaultStudentsList.args = {
     students: [
         {
-            name: "Rachel Chu",
+            first_name: "Rachel",
+            last_name: "Chu",
             email: "rachel@chu.com"
         },
         {
-            name: "Nick Young",
+            first_name: "Nick",
+            last_name: "Young",
             email: "nick@young.com"
         },
     ]

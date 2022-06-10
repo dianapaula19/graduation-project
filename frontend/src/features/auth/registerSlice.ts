@@ -49,7 +49,7 @@ export const registerSlice = createSlice({
     name: 'auth/register',
     initialState,
     reducers: {
-        revert: () => {
+        revertRegister: () => {
             return initialState;
         }
     },
@@ -73,7 +73,7 @@ export const registerSlice = createSlice({
     },
 });
 
-export const { revert } = registerSlice.actions;
+export const { revertRegister } = registerSlice.actions;
 
 export const registerStatus = (state: RootState) => state.register.status;
 export const registerCode = (state: RootState) => state.register.code;

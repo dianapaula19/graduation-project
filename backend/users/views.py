@@ -2,20 +2,18 @@ from email.headerregistry import Group
 from enum import Enum
 from nis import cat
 from sre_constants import SUCCESS
+from django.conf import settings
 from django.db import IntegrityError
 from django.shortcuts import render
 
 # Create your views here.
 from django.contrib.auth import authenticate
-from courses.models import Course
-
-from backend.permissions import IsStudent
 
 from .serializers import StudentDataSerializer, TeacherDataSerializer, UserDataSerializer
 from .models import Grade, Role, User, Student, Teacher
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny
 from rest_framework.status import (
     HTTP_400_BAD_REQUEST,
     HTTP_404_NOT_FOUND,
@@ -124,17 +122,13 @@ def register(request):
 @receiver(reset_password_token_created)
 def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
 
-    email_plaintext_message = "{}?token={}".format(reverse('password_reset:reset-password-request'), reset_password_token.key)
-
+    email_plaintext_message = "http://localhost:3000/resetPassword/?token={}".format(reset_password_token.key)
+    
     send_mail(
-        # title:
-        "Password Reset for {title}".format(title="Some website title"),
-        # message:
-        email_plaintext_message,
-        # from:
-        "noreply@somehost.local",
-        # to:
-        [reset_password_token.user.email]
+        subject="Password Reset",
+        message=email_plaintext_message,
+        from_email=settings.EMAIL_HOST_USER,
+        recipient_list=[reset_password_token.user.email]
     )
 
 @api_view(["POST"])
@@ -150,7 +144,7 @@ def register_batch_students(request):
         try:
             User.objects.create_user(
                 email=student['email'],
-                password='Password@123',
+                password=settings.DEFAULT_PASSWORD,
                 first_name=student['first_name'],
                 last_name=student['last_name'],
                 verified=True,
@@ -171,6 +165,15 @@ def register_batch_students(request):
             current_group=student['current_group'],
             current_year=student['current_year']
         )
+        try:
+            send_mail(
+                subject="Account created successfully",
+                message="Congrats. Your account was create successfully.",
+                from_email=settings.EMAIL_HOST_USER,
+                recipient_list=[student['email']]
+            )
+        except:
+            pass
 
     return Response(
         {
@@ -193,7 +196,7 @@ def register_batch_teachers(request):
         try:
             User.objects.create(
                 email=teacher['email'],
-                password='Password@123',
+                password=settings.DEFAULT_PASSWORD,
                 first_name=teacher['first_name'],
                 last_name=teacher['last_name'],
                 verified=True,
@@ -205,6 +208,15 @@ def register_batch_teachers(request):
         
         user = User.objects.get(email=teacher['email'])
         Teacher.objects.create(user=user)
+        try:
+            send_mail(
+                subject="Account created successfully",
+                message="Congrats. Your account was create successfully.",
+                from_email=settings.EMAIL_HOST_USER,
+                recipient_list=[teacher['email']]
+            )
+        except:
+            pass
 
     return Response(
         {
@@ -283,7 +295,16 @@ def not_verified_users(request):
             'code': ResponseCode.USER_NOT_FOUND.value
             },
             status=HTTP_200_OK
-        )    
+        )  
+    try:
+        send_mail(
+            subject="Account Verified",
+            message="Congrats. Your account was verfied successfully",
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=[email]
+        )
+    except:
+        pass  
 
     return Response({
         'code': ResponseCode.SUCCESS.value
@@ -371,6 +392,34 @@ def teachers(request):
     return Response({
         'teachers': serializer.data,
         'code': ResponseCode.SUCCESS.value
+        },
+        status=HTTP_200_OK
+    )
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def send_announcement(request):
+    subject = request.data.get("subject")
+    message = request.data.get("message")
+    from_email = request.data.get("from_email")
+    recipient_list = request.data.get("recipient_list")
+
+    try:
+        send_mail(
+            subject=subject,
+            message=message,
+            from_email=from_email,
+            recipient_list=recipient_list
+        )
+    except:
+        return Response({
+                'code': ResponseCode.ERROR.value
+            },
+            status=HTTP_500_INTERNAL_SERVER_ERROR
+        )
+    
+    return Response({
+            'code': ResponseCode.SUCCESS.value
         },
         status=HTTP_200_OK
     )

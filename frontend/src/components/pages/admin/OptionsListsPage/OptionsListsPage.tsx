@@ -3,9 +3,11 @@ import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { createOptionsListCode, createOptionsListShowModal, createOptionsListStatus, revertCreateOptionsList } from "../../../../features/user/admin/createOptionsListSlice";
 import { getCoursesAsync, getCoursesCourses, getCoursesStatus } from "../../../../features/user/admin/getCoursesSlice";
+import { getCurrentOptionsList, getOptionsListsAsync, getOptionsListsCode, getOptionsListsOptionsLists, getOptionsListsStatus, revertCurrentOptionsList } from "../../../../features/user/admin/getOptionsListsSlice";
 import { ApiStatus } from "../../../../features/Utils";
 import { Degree, Domain, LearningMode, StudyProgram } from "../../../App";
 import Button from "../../../atoms/Button";
+import OptionsListForm from "../../../molecules/forms/OptionsListForm";
 import CreateOptionsListForm from "../../../molecules/forms/OptionsListForm";
 import Modal from "../../../molecules/Modal";
 import OptionsListCard from "../../../molecules/OptionsListCard";
@@ -16,27 +18,38 @@ import "./OptionsListsPage.scss";
 const OptionsListsPage = () => {
 
   const componentClassName = "options-lists-page";
-  const [showCreateOptionsListFormModal, setShowCreateOptionsListFormModal] = useState<boolean>(false);
+  const [showModalOptionsListForm, setShowModalOptionsListForm] = useState<boolean>(false);
+  const [formType, setFormType] = useState<'create' | 'update'>('create');
   const { t } = useTranslation();
 
   const dispatch = useAppDispatch();
 
-  const showModal = useAppSelector(createOptionsListShowModal);
+  const optionsLists = useAppSelector(getOptionsListsOptionsLists);
+
+  const showModalCreateOptionsList = useAppSelector(createOptionsListShowModal);
   const code = useAppSelector(createOptionsListCode);
-  const statusCourses = useAppSelector(getCoursesStatus);
+  const statusGetCourses = useAppSelector(getCoursesStatus);
+  const statusGetOptionsLists = useAppSelector(getOptionsListsStatus);
   const courses = useAppSelector(getCoursesCourses);
 
   useEffect(() => {
-    if (statusCourses === ApiStatus.idle) {
+    if (statusGetCourses === ApiStatus.idle) {
       dispatch(getCoursesAsync());
     }
-    if (showModal === true) {
-      setShowCreateOptionsListFormModal(false)
+    if (
+      statusGetOptionsLists === ApiStatus.idle ||
+      statusGetOptionsLists === ApiStatus.failed
+    ) {
+      dispatch(getOptionsListsAsync());
+    }
+    if (showModalCreateOptionsList) {
+      setShowModalOptionsListForm(false)
     }
   }, [
-    statusCourses, 
-    showModal, 
-    setShowCreateOptionsListFormModal
+    statusGetCourses, 
+    statusGetOptionsLists,
+    showModalCreateOptionsList, 
+    setShowModalOptionsListForm
   ])
   
 
@@ -51,53 +64,46 @@ const OptionsListsPage = () => {
           Options Lists
         </span>
         {
-        [
-          {
-            title: 'Discipline de specialitate',
-            year: 3,
-            semester: 1,
-            domain: Domain.CTI,
-            degree: Degree.BACHELOR,
-            learningMode: LearningMode.IF,
-            studyProgram: StudyProgram.TI,
-          },
-          {
-            title: 'Discipline de specialitate',
-            year: 3,
-            semester: 1,
-            domain: Domain.CTI,
-            degree: Degree.BACHELOR,
-            learningMode: LearningMode.IF,
-            studyProgram: StudyProgram.TI,
-          }
-        ].map((optionsList) => {
+        optionsLists && optionsLists.map((optionsList) => {
             return (
               <OptionsListCard 
-                title={optionsList.title} 
-                year={optionsList.year} 
-                semester={optionsList.semester} 
-                domain={Domain.INFO} 
-                degree={Degree.BACHELOR} 
-                learningMode={LearningMode.IF} 
-                studyProgram={StudyProgram.NLP} 
+                data={optionsList}
+                onClick={() => {
+                  setFormType('update');
+                  dispatch(getCurrentOptionsList({
+                    id: optionsList.id
+                  }));
+                  setShowModalOptionsListForm(true);
+                }}
               />
             )
           })
         }
         <Button 
           label={t("pages.optionsLists.createButton")} 
-          onClick={() => setShowCreateOptionsListFormModal(true)}
+          onClick={() => {
+            setShowModalOptionsListForm(true);
+          }}
           disabled={false} 
         />
       </div>
       <Modal 
-        show={showCreateOptionsListFormModal} 
-        closeModal={() => setShowCreateOptionsListFormModal(false)}
+        show={showModalOptionsListForm} 
+        closeModal={() => {
+          dispatch(revertCurrentOptionsList());
+          setShowModalOptionsListForm(false);
+        }}
       >
-        <CreateOptionsListForm courses={courses !== null ? courses : []} />
+        <OptionsListForm type={formType} />
       </Modal>
-      <Modal show={showModal} closeModal={() => {dispatch(revertCreateOptionsList())}}>
-        {code}
+      <Modal 
+        show={showModalCreateOptionsList} 
+        closeModal={() => {
+          dispatch(revertCreateOptionsList())
+
+        }}
+      >
+        
       </Modal>
     </LoggedUserPage>
   )

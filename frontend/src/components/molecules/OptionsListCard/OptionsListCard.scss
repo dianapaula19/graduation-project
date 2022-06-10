@@ -7,6 +7,11 @@
   padding: .75rem 1.5rem;
   gap: 2.5rem;
 
+  cursor: pointer;
+  &:hover {
+    background-color: #f1eff1;
+  }
+
   &__main-title {
     font-size: x-large;
   }

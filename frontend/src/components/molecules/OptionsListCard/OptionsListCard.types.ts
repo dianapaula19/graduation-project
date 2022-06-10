@@ -1,15 +1,18 @@
-import { Degree, Domain, LearningMode, StudyProgram } from "../../App";
-
-interface IOptionalsListCardProps {
+interface IOptionsList {
   title: string;
   year: number;
   semester: number;
-  domain: Domain;
-  degree: Degree;
-  learningMode: LearningMode;
-  studyProgram: StudyProgram;
+  domain: string;
+  degree: string;
+  learning_mode: string;
+  study_program: string;
+}
+
+interface IOptionsListCardProps {
+  data: IOptionsList;
+  onClick: () => void;
 }
 
 export type {
-  IOptionalsListCardProps
+  IOptionsListCardProps
 }
