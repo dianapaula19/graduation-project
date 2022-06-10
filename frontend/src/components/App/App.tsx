@@ -3,12 +3,13 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
 import { loginUserData } from '../../features/auth/loginSlice';
 import OptionsListsPage from '../pages/admin/OptionsListsPage';
+import AdminCoursesPage from '../pages/admin/CoursesPage';
 import LoginPage from '../pages/auth/LoginPage';
 import RegisterPage from '../pages/auth/RegisterPage';
 import PersonalDataPage from '../pages/PersonalDataPage';
 import AccountsPage from '../templates/AccountsPage';
 import OptionalCoursesSelectionPage from '../pages/student/OptionalCoursesSelectionPage';
-import OptionalCoursesList from '../pages/teacher/Courses';
+import TeacherCoursesPage from '../pages/teacher/CoursesPage';
 import AuthentificationPage from '../templates/AuthentificationPage/';
 import { AuthentificationAction } from '../templates/AuthentificationPage/';
 import { Role } from './App.types';
@@ -50,10 +51,10 @@ const App = () => {
             path="admin/optionsLists"
             element={<OptionsListsPage />}
           />
-          <Route 
-              path="admin/accounts"
-              element={<AccountsPage role={Role.STUDENT} />}
-            />
+          <Route
+            path="admin/courses"
+            element={<AdminCoursesPage />}
+          />
           <Route 
             path="admin/accounts/notVerified"
             element={<AccountsPage role={Role.NONE}/>}
@@ -65,10 +66,6 @@ const App = () => {
           <Route 
             path="admin/accounts/teachers"
             element={<AccountsPage role={Role.TEACHER}/>}
-          />
-          <Route 
-            path="admin/accounts/secretaries"
-            element={<AccountsPage role={Role.SECRETARY}/>}
           />
           <Route 
             path="/"
@@ -84,15 +81,9 @@ const App = () => {
             <Route
               path="teacher/courses"
               element={
-                <OptionalCoursesList />
+                <TeacherCoursesPage />
               }
-            />  
-          
-            <Route 
-              path="secretary/accounts"
-              element={<AccountsPage role={Role.STUDENT} />}
-            />  
-          
+            />          
         </Routes>
       </BrowserRouter>  
     </Suspense>

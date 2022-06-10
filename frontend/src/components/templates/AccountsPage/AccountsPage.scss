@@ -1,9 +1,13 @@
 .accounts-page {
-  &__excel-import-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+
+  &__buttons {
     display: flex;
     flex-direction: row;
     gap: 2rem;
-    margin-bottom: 5rem;
+    margin-bottom: 1rem;
   }
 
   &__lists {

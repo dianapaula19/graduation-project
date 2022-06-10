@@ -4,8 +4,8 @@ import Button, { ButtonModifier } from "../../../atoms/Button";
 import CheckBox from "../../../atoms/CheckBox";
 import DropDown from "../../../atoms/DropDown";
 import InputField, { InputFieldType } from "../../../atoms/InputField";
-import { CreateOptionsListFormType, ICreateOptionsListFormData, ICreateOptionsListFormProps } from "./CreateOptionsListForm.types";
-import "./CreateOptionsListForm.scss";
+import { OptionsListFormType, IOptionsListFormData, IOptionsListFormProps } from "./OptionsListForm.types";
+import "./OptionsListForm.scss";
 import { useAppDispatch } from "../../../../app/hooks";
 import { createOptionsListAsync } from "../../../../features/user/admin/createOptionsListSlice";
 import { regexRules } from "../utils";
@@ -22,9 +22,9 @@ const CreateOptionsListForm = ({
   studyProgram = "",
   coursesIds = [],
   courses,
-  type = CreateOptionsListFormType.create,
+  type = OptionsListFormType.create,
 }
-: ICreateOptionsListFormProps
+: IOptionsListFormProps
 ) => {
 
   const componentClassName = "create-options-list-form";
@@ -42,7 +42,7 @@ const CreateOptionsListForm = ({
   const degrees: {[id: string]: string} = t("degrees", {returnObjects: true}) as {[id: string]: string};
   const studyPrograms: {[id: string]: string} = t("studyPrograms", {returnObjects: true}) as {[id: string]: string};
 
-  const [data, setData] = useState<ICreateOptionsListFormData>({
+  const [data, setData] = useState<IOptionsListFormData>({
     title: title,
     year: parseInt(year),
     semester: parseInt(semester),
@@ -246,7 +246,7 @@ const CreateOptionsListForm = ({
         </div>
       </div>
       <Button 
-        label={type === CreateOptionsListFormType.create ? t("forms.createOptionsList.createButton") : t("forms.createOptionsList.updateButton")} 
+        label={type === OptionsListFormType.create ? t("forms.createOptionsList.createButton") : t("forms.createOptionsList.updateButton")} 
         disabled={false} 
         modifier={ButtonModifier.save}
         onClick={onSubmit}

@@ -1,6 +1,5 @@
 import { configureStore, ThunkAction, Action, combineReducers } from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage';
-import counterReducer from '../features/counter/counterSlice';
 import languagesReducer from "../components/atoms/LanguagesSwitch/LanguageSwitchSlice";
 import loginReducer from "../features/auth/loginSlice";
 import registerReducer from "../features/auth/registerSlice";
@@ -8,8 +7,18 @@ import studentDataReducer from "../features/user/student/studentDataSlice";
 import studentOptionalsListsReducer from '../features/user/student/studentOptionalsListsSlice';
 import saveStudentChoicesReducer from "../features/user/student/saveStudentChoicesSlice";
 import createOptionsListReducer from "../features/user/admin/createOptionsListSlice";
+import createCourseReducer from "../features/user/admin/createCourseSlice";
+import updateCourseReducer from "../features/user/admin/updateCourseSlice";
+import registerBatchStudentsReducer from "../features/user/admin/registerBatchStudentsSlice";
+import registerBatchTeachersReducer from "../features/user/admin/registerBatchTeachersSlice";
+import getNotVerifiedUsersReducer from "../features/user/admin/getNotVerifiedUsersSlice";
+import verifyUserReducer from "../features/user/admin/verifyUserSlice";
+import updateStudentInfoReducer from "../features/user/admin/updateStudentInfoSlice";
+import updateTeacherInfoReducer from "../features/user/admin/updateTeacherInfoSlice";
+import getStudentsReducer from "../features/user/admin/getStudentsSlice";
+import getTeachersReducer from "../features/user/admin/getTeachersSlice";
 import getCoursesReducer from "../features/user/admin/getCoursesSlice";
-import teacherCoursesReducer from "../features/course/teacherCourseSlice";
+import getTeacherCoursesReducer from "../features/user/teacher/getTeacherCoursesSlice";
 import { 
   FLUSH, 
   PAUSE, 
@@ -22,16 +31,28 @@ import {
 
 
 const reducers = combineReducers({
-  counter: counterReducer,
   languages: languagesReducer,
+  // auth
   login: loginReducer,
   register: registerReducer,
+  // student
   studentData: studentDataReducer,
   studentOptionalsLists: studentOptionalsListsReducer,
   saveStudentChoices: saveStudentChoicesReducer,
+  // admin
   createOptionsList: createOptionsListReducer,
+  createCourse: createCourseReducer,
+  updateCourse: updateCourseReducer,
+  registerBatchStudents: registerBatchStudentsReducer,
+  registerBatchTeachers: registerBatchTeachersReducer, 
+  getStudents: getStudentsReducer,
+  updateStudentInfo: updateStudentInfoReducer,
+  getTeachers: getTeachersReducer,
+  updateTeacherInfo: updateTeacherInfoReducer,
+  getNotVerifiedUsers: getNotVerifiedUsersReducer,
+  verifyUser: verifyUserReducer,
   getCourses: getCoursesReducer,
-  teacherCourse: teacherCoursesReducer
+  getTeacherCourses: getTeacherCoursesReducer
 });
 
 const persistConfig = {

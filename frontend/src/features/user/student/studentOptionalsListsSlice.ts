@@ -16,6 +16,7 @@ export interface Course {
 export interface OptionsList {
   id: number;
   title: string;
+  semester: number;
   courses: Course[];
 }
 
@@ -69,7 +70,6 @@ export const studentOptionalsListsSlice = createSlice({
     })
     .addCase(studentOptionalsListsAsync.fulfilled, (state, action) => {
       const res = action.payload as IStudentOptionalsListsResponse;
-      console.log(res);
       state.studentOptionsLists = res.student_options_lists;
       state.status = ApiStatus.success;
     })

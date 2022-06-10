@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
 import React from "react";
 import "./DropDown.scss";
-import { DropDownModifier, IDropDownProps } from "./DropDown.types";
+import { DropDownModifier, DropDownOptionsValue, IDropDownProps } from "./DropDown.types";
 
 
 const DropDown = ({
@@ -40,10 +40,17 @@ const DropDown = ({
                     `${componentClassName}__select`
                 )}
                 {...rest}
-            >
-                <option hidden disabled selected>
-                    {placeholder}
-                </option>
+            >   
+                {rest.value === DropDownOptionsValue.placeholder && (
+                    <option 
+                        hidden 
+                        disabled 
+                        selected 
+                        value={DropDownOptionsValue.placeholder}
+                    >
+                        {placeholder}
+                    </option>
+                )}
                 {children}
             </select>   
             { error && (

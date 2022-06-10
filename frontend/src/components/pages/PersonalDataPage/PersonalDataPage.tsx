@@ -133,11 +133,7 @@ const PersonalDataPage = () => {
             {
                 name: t('profile.studentDataFields.currentYear'),
                 data: studentData.current_year
-            },
-            {
-                name: t('profile.studentDataFields.currentSemester'),
-                data: studentData.current_semester
-            },
+            }
         ];
 
         component = (

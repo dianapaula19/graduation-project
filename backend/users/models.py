@@ -6,10 +6,9 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 # Create your models here.
 
 class Role(models.TextChoices):
-    STUDENT = 'student',
-    TEACHER = 'teacher',
-    SECRETARY = 'secretary',
-    ADMIN = 'admin'
+    STUDENT = 'STUDENT',
+    TEACHER = 'TEACHER',
+    ADMIN = 'ADMIN'
 
 class Domain(models.TextChoices):
     INFO = 'INFO',
@@ -76,10 +75,9 @@ class TeacherManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(role=Role.TEACHER)
 
-class SecretaryManager(models.Manager):
+class NotVerifiedUserManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(role=Role.SECRETARY)
-
+        return super().get_queryset().filter(verified=False)
 
 class User(AbstractUser):
     username = None
@@ -87,7 +85,7 @@ class User(AbstractUser):
     first_name = models.TextField(max_length=50)
     last_name = models.TextField(max_length=50)
     role = models.TextField(choices=Role.choices, null=True)
-    verified = models.BooleanField(default=True)
+    verified = models.BooleanField(default=False)
     changed_password = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
@@ -96,7 +94,7 @@ class User(AbstractUser):
     objects = UserManager()
     students = StudentManager()
     teachers = TeacherManager()
-    secretaries = SecretaryManager()
+    not_verified_users = NotVerifiedUserManager()
 
     def __str__(self):
         return self.email
@@ -107,8 +105,7 @@ class Student(models.Model):
     learning_mode = models.TextField(choices=LearningMode.choices, null=True)
     degree = models.TextField(choices=Degree.choices, null=True)
     study_program = models.TextField(choices=StudyProgram.choices, null=True)
-    options_lists = models.ManyToManyField('courses.OptionsList', related_name='options_lists')
-    current_group = models.CharField(max_length=3)
+    current_group = models.CharField(max_length=3, null=True)
     current_year = models.IntegerField(
         validators=[
             MinValueValidator(1),
@@ -116,21 +113,10 @@ class Student(models.Model):
         ],
         default=1
     )
-    current_semester = models.IntegerField(
-        validators=[
-            MinValueValidator(1),
-            MaxValueValidator(2)
-        ],
-        default=1
-    )
+    options_lists = models.ManyToManyField('courses.OptionsList', related_name='options_lists')
 
 class Teacher(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-
-
-class Secretary(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    
 
 class GradeManager(models.Manager):
     def get_student_current_grade(self, student):

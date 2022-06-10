@@ -11,14 +11,18 @@
     text-align: center;
     vertical-align: middle;
     cursor: pointer;
-
-    
     &:disabled {
         background-color: #c4c4c4;
         color: #525252;   
         cursor: not-allowed; 
     }
+}
 
+.button--unselected {
+    background-color: rgba($color: #0366d6, $alpha: 0.75);
+    &:hover {
+        background-color: #0366d6;
+    }
 }
 
 .button--save {

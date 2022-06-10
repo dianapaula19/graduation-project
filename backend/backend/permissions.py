@@ -42,8 +42,8 @@ class IsTeacher(permissions.BasePermission):
             return False
         return False
 
-class IsSecretary(permissions.BasePermission):
-    message = 'Not a secretary'
+class IsAdmin(permissions.BasePermission):
+    message = 'Not an admin'
 
     def has_permission(self, request, view):
         key = request.META.get('HTTP_AUTHORIZATION')[7:]
@@ -51,6 +51,6 @@ class IsSecretary(permissions.BasePermission):
         if token:
             user = User.objects.get(email=token.user)
             if user:
-                return user.role == Role.SECRETARY
+                return user.role == Role.ADMIN
             return False
         return False

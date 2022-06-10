@@ -23,7 +23,6 @@ export interface StudentData {
   study_program: StudyProgram;
   current_group: string;
   current_year: number;
-  current_semester: number;
   grades: Grade[]
 }
 

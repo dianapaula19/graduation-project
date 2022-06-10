@@ -1,9 +1,9 @@
-from courses.serializers import OptionsListSerializer, StudentOptionChoiceSerializer, StudentOptionsListSerializer
-from courses.models import OptionsList, StudentOptionChoice
-from .models import Grade, User, Student
+from courses.serializers import CourseSerializer, OptionsListSerializer, StudentOptionChoiceSerializer, StudentOptionsListSerializer
+from courses.models import OptionsList, StudentOptionChoice, Course
+from .models import Grade, Teacher, User, Student
 from rest_framework import serializers
 
-class UserSerializer(serializers.ModelSerializer):
+class UserDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['email', 'first_name', 'last_name', 'role']
@@ -15,6 +15,10 @@ class GradeSerializer(serializers.ModelSerializer):
 
 class StudentDataSerializer(serializers.ModelSerializer):
 
+    email = serializers.CharField(source='user.email')
+    first_name = serializers.CharField(source='user.first_name')
+    last_name = serializers.CharField(source='user.last_name')
+
     grades = serializers.SerializerMethodField()
 
     def get_grades(self, obj):
@@ -25,4 +29,20 @@ class StudentDataSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Student
-        fields = ['domain', 'learning_mode', 'degree', 'study_program', 'current_group', 'current_year', 'current_semester', 'grades']
+        fields = ['email', 'first_name', 'last_name', 'domain', 'learning_mode', 'degree', 'study_program', 'current_group', 'current_year', 'grades']
+
+class TeacherDataSerializer(serializers.ModelSerializer):
+
+    email = serializers.CharField(source='user.email')
+    first_name = serializers.CharField(source='user.first_name')
+    last_name = serializers.CharField(source='user.last_name')
+    courses = serializers.SerializerMethodField()
+
+    def get_courses(self, obj):
+        courses_query = Course.objects.filter(teacher=obj)
+        serializers = CourseSerializer(courses_query, many=True)
+
+        return serializers.data
+    class Meta:
+        model = Teacher
+        fields = ['email', 'first_name', 'last_name', 'courses']

@@ -3,19 +3,26 @@ import { useTranslation } from "react-i18next";
 import "./AccountsList.scss";
 import { IAccountsListProps } from "./AccountsList.types";
 import "./AccountsList.scss";
-import Button, { ButtonModifier } from "../../../atoms/Button";
 import Modal from "../../Modal";
 import UserDataForm from "../../forms/UserDataForm";
+import { Role } from "../../../App";
+import { useAppDispatch } from "../../../../app/hooks";
+import { getCurrentStudent, revertCurrentStudent } from "../../../../features/user/admin/getStudentsSlice";
+import { getCurrentTeacher, revertCurrentTeacher } from "../../../../features/user/admin/getTeachersSlice";
 
 const AccountsList = ({
-  accounts,
-  title
+    role,
+    emails,
+    title
 }: IAccountsListProps) => {
 
   const componentClassName = "accounts-list";
   const [showUserDataFormModal, setShowUserDataFormModal] = useState<boolean>(false);
+  const [currentEmail, setCurrentEmail] = useState<string | null>(null);
     
   const { t } = useTranslation();
+
+  const dispatch = useAppDispatch();
 
   return (
       <>
@@ -42,11 +49,24 @@ const AccountsList = ({
                 </span>
                 
             </div>
-            {accounts.map((account, idx) => {
+            {emails.map((email, idx) => {
                 return (
                     <div 
                         className={`${componentClassName}__item`}
-                        onClick={() => setShowUserDataFormModal(true)}
+                        onClick={() => {
+                            setCurrentEmail(email);
+                            if (role === Role.STUDENT) {
+                                dispatch(getCurrentStudent({
+                                    email: email
+                                }))
+                            }
+                            if (role === Role.TEACHER) {
+                                dispatch(getCurrentTeacher({
+                                    email: email
+                                }))
+                            }
+                            setShowUserDataFormModal(true);
+                        }}
                     >
                         <span
                             className={`${componentClassName}__index`}
@@ -56,7 +76,7 @@ const AccountsList = ({
                         <span
                             className={`${componentClassName}__email`}
                         >
-                            {account.email}
+                            {email}
                         </span>
                     </div>
                 )
@@ -64,9 +84,22 @@ const AccountsList = ({
         </div>
         <Modal 
             show={showUserDataFormModal} 
-            closeModal={() => setShowUserDataFormModal(false)}
+            closeModal={() => {
+                setShowUserDataFormModal(false);
+                if (role === Role.STUDENT) {
+                    dispatch(revertCurrentStudent());
+                }
+                if (role === Role.TEACHER) {
+                    dispatch(revertCurrentTeacher());
+                }
+            }}
         >
-            <UserDataForm firstName={""} lastName={""} role={""} domain={""} degree={""} learningMode={""} studyProgram={""} currentGroup={""} currentYear={""} />    
+            {currentEmail && (
+                <UserDataForm
+                    role={role}
+                    email={currentEmail}   
+                />    
+            )}   
         </Modal>
       </>
   );

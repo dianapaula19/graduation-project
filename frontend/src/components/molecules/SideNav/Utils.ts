@@ -23,28 +23,17 @@ export const teacherLinks = [
   }
 ]
 
-export const secretaryLinks = [
-  {
-    path: '/secretary/accounts',
-    label: 'accounts'
-  }
-]
-
 export const adminLinks = [
   {
     path: '/admin/accounts/notVerified',
-    label: 'accounts.notVerified'
+    label: 'accounts'
   },
   {
-    path: '/admin/accounts/students',
-    label: 'accounts.students'
+    path: '/admin/optionsLists',
+    label: 'optionsLists'
   },
   {
-    path: '/admin/accounts/teachers',
-    label: 'accounts.teachers'
-  },
-  {
-    path: '/admin/accounts/secretaries',
-    label: 'accounts.secretaries'
+    path: '/admin/courses',
+    label: 'courses'
   }
 ]

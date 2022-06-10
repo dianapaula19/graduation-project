@@ -11,8 +11,14 @@ import Button from "../../atoms/Button";
 import { loginStatus, loginUserData, revertLogin } from "../../../features/auth/loginSlice";
 import { revertStudentData } from "../../../features/user/student/studentDataSlice";
 import { useAppSelector } from "../../../app/hooks";
-import { adminLinks, links, secretaryLinks, studentLinks, teacherLinks } from "./Utils";
+import { adminLinks, studentLinks, teacherLinks } from "./Utils";
 import { Role } from "../../App";
+import { revertStudentOptionalsLists } from "../../../features/user/student/studentOptionalsListsSlice";
+import { revertGetCourses } from "../../../features/user/admin/getCoursesSlice";
+import { revertGetStudents } from "../../../features/user/admin/getStudentsSlice";
+import { revertGetNotVerifiedUsers } from "../../../features/user/admin/getNotVerifiedUsersSlice";
+import { revertGetTeachers } from "../../../features/user/admin/getTeachersSlice";
+import { revertGetTeacherCourses } from "../../../features/user/teacher/getTeacherCoursesSlice";
 
 const SideNav = () => {
     
@@ -31,8 +37,10 @@ const SideNav = () => {
 
     let hr = (new Date()).getHours();
 
-    if (hr >= 4 && hr <= 18) {
+    if (hr >= 6 && hr < 12) {
         time = 'morning';
+    } else if (hr >= 12 && hr <= 18 ) {
+        time = 'afternoon';
     } else {
         time = 'night';
     }
@@ -44,6 +52,10 @@ const SideNav = () => {
         case 'morning':
             displayMessage = t("sidenav.displayMessage.morning");
             emoji = <span aria-label="sunflower">🌻</span>;
+            break;
+        case 'afternoon':
+            displayMessage = t("sidenav.displayMessage.afternoon");
+            emoji = <span aria-label="">👋</span>;
             break;
         case 'night':
             displayMessage = t("sidenav.displayMessage.night");
@@ -62,10 +74,6 @@ const SideNav = () => {
         case Role.TEACHER:
             links = teacherLinks;
             pathName = 'teacherLinks'
-            break;
-        case Role.SECRETARY:
-            links = secretaryLinks;
-            pathName = 'secretaryLinks'
             break;
         case Role.ADMIN:
             links = adminLinks;
@@ -116,7 +124,20 @@ const SideNav = () => {
                     label={t("sidenav.links.signOut")} 
                     onClick={() => {
                         dispatch(revertLogin());
-                        dispatch(revertStudentData());
+                        if (role === Role.STUDENT) {
+                            dispatch(revertStudentData());
+                            dispatch(revertStudentOptionalsLists());    
+                        }
+                        if (role === Role.TEACHER) {
+                            dispatch(revertGetTeacherCourses());
+                        }
+                        if (role === Role.ADMIN) {
+                            dispatch(revertGetCourses());
+                            dispatch(revertGetStudents());
+                            dispatch(revertGetNotVerifiedUsers());
+                            dispatch(revertGetTeachers());
+                            dispatch(revertGetCourses());
+                        }
                         navigate('/login');
                     }}
                     disabled={false}                    

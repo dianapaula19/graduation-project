@@ -1,17 +1,12 @@
 import { Role } from "../../../App";
 
-interface Account {
-  email: string;
-  role: Role;
-  verified: boolean;
-}
 
 interface IAccountsListProps {
+  role: Role;
   title: string;
-  accounts: Account[];
+  emails: string[];
 }
 
 export type {
-  Account,
   IAccountsListProps
 }

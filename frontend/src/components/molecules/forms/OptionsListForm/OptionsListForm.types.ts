@@ -5,12 +5,12 @@ interface Course {
   title: string;
 }
 
-enum CreateOptionsListFormType {
+enum OptionsListFormType {
   create = "create",
   update = "update",
 }
 
-interface ICreateOptionsListFormProps {
+interface IOptionsListFormProps {
   title?: string;
   year?: string;
   semester?: string;
@@ -20,10 +20,10 @@ interface ICreateOptionsListFormProps {
   studyProgram?: string;
   coursesIds?: number[];
   courses: Course[];
-  type?: CreateOptionsListFormType
+  type?: OptionsListFormType
 }
 
-interface ICreateOptionsListFormData {
+interface IOptionsListFormData {
   title: string;
   year: number;
   semester: number;
@@ -35,10 +35,10 @@ interface ICreateOptionsListFormData {
 }
 
 export type {
-  ICreateOptionsListFormProps,
-  ICreateOptionsListFormData
+  IOptionsListFormProps,
+  IOptionsListFormData
 }
 
 export {
-  CreateOptionsListFormType
+  OptionsListFormType
 }

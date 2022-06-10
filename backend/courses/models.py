@@ -6,7 +6,6 @@ from users.models import Degree, Domain, LearningMode, StudyProgram
 # Create your models here.
 class Course(models.Model):
     teacher = models.ForeignKey('users.Teacher', related_name='courses', on_delete=models.SET_NULL, null=True)
-    students = models.ManyToManyField('users.Student', related_name='enrolled_students')
     title = models.CharField(max_length=255)
     link = models.URLField(max_length=200, null=True)
     capacity = models.IntegerField(default=0, validators=[MinValueValidator(1), MaxValueValidator(100)])

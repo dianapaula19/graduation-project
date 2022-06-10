@@ -1,4 +1,4 @@
-type Time =  'morning' | 'night' | null;
+type Time =  'morning' | 'afternoon' | 'night' | null;
 
 export type {
     Time

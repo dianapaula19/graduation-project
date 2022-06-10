@@ -6,7 +6,7 @@ import { getCoursesAsync, getCoursesCourses, getCoursesStatus } from "../../../.
 import { ApiStatus } from "../../../../features/Utils";
 import { Degree, Domain, LearningMode, StudyProgram } from "../../../App";
 import Button from "../../../atoms/Button";
-import CreateOptionsListForm from "../../../molecules/forms/CreateOptionsListForm";
+import CreateOptionsListForm from "../../../molecules/forms/OptionsListForm";
 import Modal from "../../../molecules/Modal";
 import OptionsListCard from "../../../molecules/OptionsListCard";
 import OptionalsListCard from "../../../molecules/OptionsListCard";

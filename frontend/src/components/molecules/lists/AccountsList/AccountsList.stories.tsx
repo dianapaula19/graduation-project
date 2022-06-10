@@ -13,16 +13,8 @@ const Template: ComponentStory<typeof AccountsList> = (args) => <AccountsList {.
 export const DefaultAccountsList = Template.bind({});
 
 DefaultAccountsList.args = {
-    accounts: [
-        {
-          email: "rachel@chu.com",
-          role: Role.STUDENT,
-          verified: false
-        },
-        {
-          email: "nick@young.com",
-          role: Role.STUDENT,
-          verified: true
-        },
+    emails: [
+      'rachel@chu.com',
+      'nick@young.com'
     ]
 }

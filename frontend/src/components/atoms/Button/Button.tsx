@@ -16,7 +16,7 @@ const Button = ({
     const componentClassName = "button";
     const componentClassNames = classNames(
         componentClassName,
-        modifier && `${componentClassName}--${modifier}`
+        (modifier && modifier !== ButtonModifier.none) && `${componentClassName}--${modifier}`
     )
     
     let icon = null;

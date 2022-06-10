@@ -5,6 +5,10 @@ enum DropDownModifier {
     teacherList = "teacher-list"
 }
 
+enum DropDownOptionsValue {
+    placeholder = "placeholder"
+}
+
 interface Option {
     label: string;
     value: string;
@@ -22,5 +26,6 @@ export type {
 }
 
 export {
-    DropDownModifier
+    DropDownModifier,
+    DropDownOptionsValue
 }

@@ -1,32 +1,43 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../../../app/store";
 import { ApiStatus, API_URL_COURSE } from "../../Utils";
 
-interface Course {
-  title: string;
+interface ICourse {
   id: number;
+  title: string;
+  capacity: number;
+  link: string;
+  teacher_email: string;
+  teacher_first_name: string;
+  teacher_last_name: string;
 }
 
 interface IGetCoursesState {
   status: ApiStatus;
-  courses: null | Course[];
+  courses: null | ICourse[];
+  currentCourse: null | ICourse;
   code: null | string;
 }
 
 const initialState: IGetCoursesState = {
   status: ApiStatus.idle,
   courses: null,
+  currentCourse: null,
   code: null
 }
 
 interface ICreateOptionsListResponse {
   code: string;
-  courses: Course[]; 
+  courses: ICourse[]; 
 }
 
 interface ICreateOptionsListError {
   code: string; 
+}
+
+interface IGetCurrentCoursePayload {
+  id: number;
 }
 
 export const getCoursesAsync = createAsyncThunk(
@@ -44,11 +55,25 @@ export const getCoursesAsync = createAsyncThunk(
 )
 
 export const getCoursesSlice = createSlice({
-  name: 'createOptionsList',
+  name: 'getCourses',
   initialState,
   reducers: {
-    revertCreateOptionsList: () => {
+    revertGetCourses: () => {
       return initialState;
+    },
+    getCurrentCourse: (
+      state: IGetCoursesState, 
+      action: PayloadAction<IGetCurrentCoursePayload>
+    ) => {
+      const res = action.payload;
+      if (state.courses) {
+        state.currentCourse = state.courses.filter((course) => course.id === res.id)[0];
+      }
+      return state;
+    },
+    revertCurrentCourse: (state: IGetCoursesState) => {
+      state.currentCourse = null;
+      return state;
     }
   },
   extraReducers: (builder) => {
@@ -70,8 +95,11 @@ export const getCoursesSlice = createSlice({
   }
 });
 
+export const { revertGetCourses, getCurrentCourse, revertCurrentCourse } = getCoursesSlice.actions;
+
 export const getCoursesStatus = (root: RootState) => root.getCourses.status;
 export const getCoursesCode = (root: RootState) => root.getCourses.code;
 export const getCoursesCourses = (root: RootState) => root.getCourses.courses;
+export const getCoursesCurrentCourse = (root: RootState) => root.getCourses.currentCourse;
 
 export default getCoursesSlice.reducer;

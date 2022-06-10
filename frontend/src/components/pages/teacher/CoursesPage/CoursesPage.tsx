@@ -7,20 +7,24 @@ import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
 
 
-import "./Courses.scss";
+import "./CoursesPage.scss";
 import DropDown from "../../../atoms/DropDown";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import Modal from "../../../molecules/Modal";
 import InputField, { InputFieldType } from "../../../atoms/InputField";
 import TextAreaField from "../../../atoms/TextAreaField";
 import LinkButton from "../../../atoms/LinkButton";
-import { getCoursesTeacherAsync, teacherCourses } from "../../../../features/course/teacherCourseSlice";
+import { getTeacherCoursesAsync, getTeacherCoursesCode, getTeacherCoursesCourses, getTeacherCoursesStatus } from "../../../../features/user/teacher/getTeacherCoursesSlice";
+import { loginUserData } from "../../../../features/auth/loginSlice";
+import { ApiStatus } from "../../../../features/Utils";
 
 const OptionalCoursesList = () => {
 
     const componentClassName = "courses";
 
-    const courses = useAppSelector(teacherCourses);
+    const statusTeacherCourses = useAppSelector(getTeacherCoursesStatus);
+    const courses = useAppSelector(getTeacherCoursesCourses);
+    const userData = useAppSelector(loginUserData);
 
     const dispatch = useAppDispatch();
 
@@ -74,8 +78,10 @@ const OptionalCoursesList = () => {
     }
 
     useEffect(() => {
-      if (courses === null) {
-        dispatch(getCoursesTeacherAsync('john.keating@unibuc.ro'));
+      if (userData && statusTeacherCourses === ApiStatus.idle) {
+        dispatch(getTeacherCoursesAsync({
+            email: userData.email
+        }));
       }
     }, [courses])
     
@@ -91,9 +97,15 @@ const OptionalCoursesList = () => {
                     placeholder={"Choose an optional course"}
                     label={"Choose an optional course"}
                 >
-                    <option>
-                        English Literature
-                    </option>
+                    {courses && courses.map((course) => {
+                        return (
+                            <option
+                                value={course.id}
+                            >
+                                {course.title}
+                            </option>
+                        )
+                    })}
                 </DropDown>
                 <StudentsList students={studentsList}/>
                 <Button 

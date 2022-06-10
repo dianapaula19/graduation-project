@@ -3,8 +3,7 @@
     "ro": "Romanian",
     "roles": {
         "STUDENT": "student",
-        "TEACHER": "teacher",
-        "SECRETARY": "secretary"
+        "TEACHER": "teacher"
     },
     "domains": {
         "INFO": "Computer Science",
@@ -87,6 +86,26 @@
                     "label": "Role",
                     "placeholder": "Role",
                     "errorMessage": "Please provide a role for the user"
+                },
+                "domain": {
+                    "label": "Domain",
+                    "placeholder": "Domain",
+                    "errorMessage": "Please select a domain"
+                },
+                "learningMode": {
+                    "label": "Learning Mode",
+                    "placeholder": "Learning Mode",
+                    "errorMessage": "Please select a learning mode"
+                },
+                "degree": {
+                    "label": "Degree",
+                    "placeholder": "Degree",
+                    "errorMessage": "Please select a degree"
+                },
+                "studyProgram": {
+                    "label": "Study Program",
+                    "placeholder": "Study Program",
+                    "errorMessage": "Please select a study program"
                 }
             },
             "inputFields": {
@@ -100,6 +119,80 @@
                     "placeholder": "Last Name",
                     "errorMessage": "Please provide the user's last name"
                 }
+            }
+        },
+        "course": {
+            "inputFields": {
+                "title": {
+                    "label": "Title",
+                    "placeholder": "Title",
+                    "errorMessage": "Please provide a title for the course"
+                },
+                "capacity": {
+                    "label": "Capacity",
+                    "placeholder": "Capacity",
+                    "errorMessage": "Please provide the capacity for the course. It must be between 1 and 100"
+                },
+                "link": {
+                    "label": "Link",
+                    "placeholder": "Link",
+                    "errorMessage": "Please provide a link for the course"
+                }    
+            },
+            "dropDownFields": {
+                "teacher": {
+                    "label": "Teacher",
+                    "placeholder": "Teacher",
+                    "errorMessage": "Please choose a teacher for the course"
+                }
+            }
+        },
+        "registration": {
+            "inputFields": {
+                "email": {
+                    "placeholder": "Email",
+                    "errorMessage": "Please provide an email",
+                    "label": "Email"
+                },
+                "password": {
+                    "placeholder": "Password",
+                    "errorMessage": "Please provide a password",
+                    "label": "Password"
+                },
+                "confirmPassword": {
+                    "placeholder": "Confirm Password",
+                    "errorMessage": "The passwords must match",
+                    "label": "Confirm Password"
+                }    
+            },
+            "signUpbutton": {
+                "label": "Sign Up"
+            },
+            "alreadyAnUser": {
+                "text": "Already an user? ",
+                "link": "Sign In"
+            }
+        },
+        "login": {
+            "inputFields": {
+                "email": {
+                    "placeholder": "Email",
+                    "label": "Email"
+                },
+                "password": {
+                    "placeholder": "Password",
+                    "label": "Password"
+                }
+            },
+            "signInButton": {
+                "label": "Sign In"
+            },
+            "forgotPassword": {
+                "text": ""
+            },
+            "newUser": {
+                "text": "New user? ",
+                "link": "Sign Up"
             }
         }
     },
@@ -116,6 +209,12 @@
                 "email": "Email"    
             },
             "sheetName": "Enrolled Students"    
+        },
+        "courses": {
+            "header": {
+                "title": "Title",
+                "teacher": "Teacher"
+            }
         }
     },
     "registration": {
@@ -158,12 +257,10 @@
         "form": {
             "email": {
                 "placeholder": "Email",
-                "errorMessage": "Text",
                 "label": "Email"
             },
             "password": {
                 "placeholder": "Password",
-                "errorMessage": "Text",
                 "label": "Password"
             },
             "forgotPassword": "Forgot your password?",
@@ -238,22 +335,16 @@
         },
         "teacherLinks": {
             "courses": "Courses"
-        },"secretaryLinks": {
-            "accounts": "Conturi Studenți"
         },
         "adminLinks": {
-            "optionsLists": "Liste Opționale",
-            "cursuri": "Cursuri",
-            "accounts": {
-                "notVerified": "Conturi Neverificate",
-                "students": "Conturi studenți",
-                "teachers": "Conturi profesori",
-                "secretaries": "Conturi secretare"
-            }
+            "optionsLists": "Optionals Lists",
+            "cursuri": "Courses",
+            "accounts": "Accounts"
         },
         "facultyName": "Faculty of Mathematics and Computer Science",
         "displayMessage": {
             "morning": "Good morning",
+            "afternoon": "Good afternoon",
             "night": "Good evening"
         }
     },
@@ -275,6 +366,57 @@
         ]
     },
     "pages": {
+        "registration": {
+            "codes": {
+                "NO_PASSWORD_OR_EMAIL_PROVIDED": "Please provide both a password and an email",
+                "ALREADY_REGISTERED": "You are already registered",
+                "SUCCESS": "Your account was created succesfully. Once your account is verified, you will be notified by email"
+            }
+        },
+        "login": {
+            "codes": {
+                "NO_PASSWORD_OR_EMAIL_PROVIDED": "Please provide both a password and an email",
+                "INVALID_CREDENTIALS": "The password or the email were wrong",
+                "ACCOUNT_NOT_VERIFIED": "Your account wasn`t verified yet. You will receive an email as soon as your account is verified.",
+                "PASSWORD_NOT_CHANGED": "Please reset your password before logging in for the first time",
+                "SUCCESS": "SUCCESS"
+            }
+        },
+        "loading": {
+            "quotes": [
+                {
+                    "text": "Education is the passport to the future, for tomorrow belongs to those who prepare for it today.",
+                    "author": "Malcom X"
+                },
+                {
+                    "text": "What would life be if we had no courage to attempt anything?",
+                    "author": "Vincent Van Gogh"
+                }
+            ]
+        },
+        "profile": {
+            "personalData": "Personal Data",
+            "profile": "Profile",
+            "profileDataFields": {
+                "email": "E-mail",
+                "name": "Full Name"
+            },
+            "studentDataFields": {
+                "domain": "Domain",
+                "learningMode": "Learning Mode",
+                "degree": "Degree",
+                "studyProgram": "Study Program",
+                "currentGroup": "Current Group",
+                "currentYear": "Current Year",
+                "currentSemester": "Current Semester"
+            },
+            "studentData": "Student Data",
+            "grade": "Grades",
+            "studentGradeFields": {
+                "yearHeader": "Year",
+                "gradeHeader": "Grade"
+            }
+        },
         "optionsLists": {
             "createButton": "Create a new options list"
         },
@@ -285,15 +427,11 @@
             },
             "students": {
                 "accountsListTitle": "Students",
-                "fileUploadLabel": ""
+                "fileUploadLabel": "Upload students' info excel file"
             },
             "teachers": {
                 "accountsListTitle": "Teachers",
-                "fileUploadLabel": ""
-            },
-            "secretaries": {
-                "accountsListTitle": "Secretaries",
-                "fileUploadLabel": ""
+                "fileUploadLabel": "Upload teachers' info excel file"
             }
         }
     },

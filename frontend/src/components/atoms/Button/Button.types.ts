@@ -1,7 +1,9 @@
 import { ButtonHTMLAttributes } from "react";
 
 enum ButtonModifier {
+    none = "none",
     disabled = "disabled",
+    unselected = "unselected",
     delete = "delete",
     excel = "excel",
     save = "save",

@@ -48,25 +48,66 @@ const OptionalCoursesSelectionPage = () => {
         case ApiStatus.success:
             component = (
                 <div>
-                    {optionsLists !== null && optionsLists.map((optionsList) => {
-                        let courses: IOptionalCourseCard[] = []
-                        optionsList.courses.forEach(course => {
-                            courses.push({
-                                courseId: course.id,
-                                courseTitle: course.title,
-                                teacherName: `${course.teacher_first_name} ${course.teacher_last_name}`,
-                                teacherEmail: course.teacher_email,
-                                linkDocument: course.link,
-                            })
-                        });
-                        return (
-                            <OptionalCoursesContainer 
-                                optionalsListId={optionsList.id} 
-                                title={optionsList.title} 
-                                courses={courses} 
-                            />
-                        )
-                    })}
+                    <div>
+                        <span
+                            style={{
+                                fontSize: 'x-large'
+                            }}
+                        >
+                            Semestrul I
+                        </span>
+                        <div>
+                        {optionsLists !== null && optionsLists.filter((optionsList) => optionsList.semester == 1).map((optionsList) => {
+                            let courses: IOptionalCourseCard[] = []
+                            optionsList.courses.forEach(course => {
+                                courses.push({
+                                    courseId: course.id,
+                                    courseTitle: course.title,
+                                    teacherName: `${course.teacher_first_name} ${course.teacher_last_name}`,
+                                    teacherEmail: course.teacher_email,
+                                    linkDocument: course.link,
+                                })
+                            });
+                            return (
+                                <OptionalCoursesContainer 
+                                    optionalsListId={optionsList.id} 
+                                    title={optionsList.title} 
+                                    courses={courses} 
+                                />
+                            )
+                        })}
+                        </div>
+                    </div>
+                    <div>
+                        <span
+                            style={{
+                                fontSize: 'x-large'
+                            }}
+                        >
+                            Semestrul al II-lea
+                        </span>
+                        <div>
+                        {optionsLists !== null && optionsLists.filter((optionsList) => optionsList.semester == 2).map((optionsList) => {
+                            let courses: IOptionalCourseCard[] = []
+                            optionsList.courses.forEach(course => {
+                                courses.push({
+                                    courseId: course.id,
+                                    courseTitle: course.title,
+                                    teacherName: `${course.teacher_first_name} ${course.teacher_last_name}`,
+                                    teacherEmail: course.teacher_email,
+                                    linkDocument: course.link,
+                                })
+                            });
+                            return (
+                                <OptionalCoursesContainer 
+                                    optionalsListId={optionsList.id} 
+                                    title={optionsList.title} 
+                                    courses={courses} 
+                                />
+                            )
+                        })}
+                        </div>
+                    </div>
                 </div>
             )
             break;
