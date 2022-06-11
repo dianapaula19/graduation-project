@@ -32,43 +32,43 @@ interface ISendAnnouncementError {
 export const sendAnnouncementAsync = createAsyncThunk(
   'user/admin/sendAnnouncement',
   async (request: ISendAnnouncementRequest, {rejectWithValue}) => await axios
-    .post(
-      API_URL_USER + "/teacher/send_announcement",
-      request
-    )
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      return rejectWithValue(error.response.data);
-    })
+  .post(
+    API_URL_USER + "/teacher/send_announcement",
+    request
+  )
+  .then((response) => {
+    return response.data;
+  })
+  .catch((error) => {
+    return rejectWithValue(error.response.data);
+  })
 )
 
 export const sendAnnouncementSlice = createSlice({
   name: 'sendAnnouncement',
   initialState,
   reducers: {
-    revertSendAnnouncement: () => {
-      return initialState;
-    }
+  revertSendAnnouncement: () => {
+    return initialState;
+  }
   },
   extraReducers: (builder) => {
-    builder
-    .addCase(sendAnnouncementAsync.pending, (state, action) => {
-      state.status = ApiStatus.loading;
-    })
-    .addCase(sendAnnouncementAsync.fulfilled, (state, action) => {
-      const res = action.payload as ISendAnnouncementResponse;
-      state.code = res.code;
-      state.showModal = true;
-      state.status = ApiStatus.success;
-    })
-    .addCase(sendAnnouncementAsync.rejected, (state, action) => {
-      const res = action.payload as ISendAnnouncementError;
-      state.code = res.code;
-      state.showModal = true;
-      state.status = ApiStatus.failed;
-    })
+  builder
+  .addCase(sendAnnouncementAsync.pending, (state, action) => {
+    state.status = ApiStatus.loading;
+  })
+  .addCase(sendAnnouncementAsync.fulfilled, (state, action) => {
+    const res = action.payload as ISendAnnouncementResponse;
+    state.code = res.code;
+    state.showModal = true;
+    state.status = ApiStatus.success;
+  })
+  .addCase(sendAnnouncementAsync.rejected, (state, action) => {
+    const res = action.payload as ISendAnnouncementError;
+    state.code = res.code;
+    state.showModal = true;
+    state.status = ApiStatus.failed;
+  })
   }
 });
 

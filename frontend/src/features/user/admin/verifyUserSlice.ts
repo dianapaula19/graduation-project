@@ -33,43 +33,43 @@ interface IVerifyUserError {
 export const verifyUserAsync = createAsyncThunk(
   'user/admin/verifyUser',
   async (request: IVerifyUserRequest, {rejectWithValue}) => await axios
-    .post(
-      API_URL_USER + "/admin/not_verified_users",
-      request
-    )
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      return rejectWithValue(error.response.data);
-    })
+  .post(
+    API_URL_USER + "/admin/not_verified_users",
+    request
+  )
+  .then((response) => {
+    return response.data;
+  })
+  .catch((error) => {
+    return rejectWithValue(error.response.data);
+  })
 )
 
 export const verifyUserSlice = createSlice({
   name: 'verifyUser',
   initialState,
   reducers: {
-    revertVerifyUser: () => {
-      return initialState;
-    }
+  revertVerifyUser: () => {
+    return initialState;
+  }
   },
   extraReducers: (builder) => {
-    builder
-    .addCase(verifyUserAsync.pending, (state, action) => {
-      state.status = ApiStatus.loading;
-    })
-    .addCase(verifyUserAsync.fulfilled, (state, action) => {
-      const res = action.payload as IVerifyUserResponse;
-      state.code = res.code;
-      state.showModal = true;
-      state.status = ApiStatus.success;
-    })
-    .addCase(verifyUserAsync.rejected, (state, action) => {
-      const res = action.payload as IVerifyUserError;
-      state.code = res.code;
-      state.showModal = true;
-      state.status = ApiStatus.failed;
-    })
+  builder
+  .addCase(verifyUserAsync.pending, (state, action) => {
+    state.status = ApiStatus.loading;
+  })
+  .addCase(verifyUserAsync.fulfilled, (state, action) => {
+    const res = action.payload as IVerifyUserResponse;
+    state.code = res.code;
+    state.showModal = true;
+    state.status = ApiStatus.success;
+  })
+  .addCase(verifyUserAsync.rejected, (state, action) => {
+    const res = action.payload as IVerifyUserError;
+    state.code = res.code;
+    state.showModal = true;
+    state.status = ApiStatus.failed;
+  })
   }
 });
 

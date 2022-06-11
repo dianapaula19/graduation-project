@@ -3,8 +3,8 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import LoggedUserPage from "./LoggedUserPage";
 
 export default {
-    title: "Templates/LoggedUserPage",
-    component: LoggedUserPage
+  title: "Templates/LoggedUserPage",
+  component: LoggedUserPage
 } as ComponentMeta<typeof LoggedUserPage>;
 
 const Template: ComponentStory<typeof LoggedUserPage> = () => <LoggedUserPage />;

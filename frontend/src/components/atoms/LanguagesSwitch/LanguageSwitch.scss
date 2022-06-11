@@ -1,22 +1,22 @@
 .language-switch {
-    
-    display: flex;
-    flex-direction: row;
-    grid-area: languages;
-    padding: 1rem 0 0 1rem;
-    width: fit-content;
-    height: 2.5vh;
-    gap: 1rem;
-    
-    &__img {
-        cursor: pointer;
-        opacity: 50%;
-        &:hover {
-            opacity: 100%;
-        }
+  
+  display: flex;
+  flex-direction: row;
+  grid-area: languages;
+  padding: 1rem 0 0 1rem;
+  width: fit-content;
+  height: 2.5vh;
+  gap: 1rem;
+  
+  &__img {
+    cursor: pointer;
+    opacity: 50%;
+    &:hover {
+      opacity: 100%;
     }
+  }
 
-    &__img--selected {
-        opacity: 100%;
-    }
+  &__img--selected {
+    opacity: 100%;
+  }
 }

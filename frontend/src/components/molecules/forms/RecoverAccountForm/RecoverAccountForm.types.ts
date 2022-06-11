@@ -1,7 +1,7 @@
 interface IRecoverAccountFormData {
-    email: string;
+  email: string;
 }
 
 export type {
-    IRecoverAccountFormData
+  IRecoverAccountFormData
 }

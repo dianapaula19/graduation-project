@@ -7,6 +7,7 @@ interface ICourse {
   id: number;
   title: string;
   capacity: number;
+  semester: number;
   link: string;
   teacher_email: string;
   teacher_first_name: string;
@@ -43,55 +44,55 @@ interface IGetCurrentCoursePayload {
 export const getCoursesAsync = createAsyncThunk(
   'user/admin/getCourses',
   async (request, {rejectWithValue}) => await axios
-    .get(
-      API_URL_COURSE + "/admin/get_courses",
-    )
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      return rejectWithValue(error.response.data);
-    })
+  .get(
+    API_URL_COURSE + "/admin/get_courses",
+  )
+  .then((response) => {
+    return response.data;
+  })
+  .catch((error) => {
+    return rejectWithValue(error.response.data);
+  })
 )
 
 export const getCoursesSlice = createSlice({
   name: 'getCourses',
   initialState,
   reducers: {
-    revertGetCourses: () => {
-      return initialState;
-    },
-    getCurrentCourse: (
-      state: IGetCoursesState, 
-      action: PayloadAction<IGetCurrentCoursePayload>
-    ) => {
-      const res = action.payload;
-      if (state.courses) {
-        state.currentCourse = state.courses.filter((course) => course.id === res.id)[0];
-      }
-      return state;
-    },
-    revertCurrentCourse: (state: IGetCoursesState) => {
-      state.currentCourse = null;
-      return state;
+  revertGetCourses: () => {
+    return initialState;
+  },
+  getCurrentCourse: (
+    state: IGetCoursesState, 
+    action: PayloadAction<IGetCurrentCoursePayload>
+  ) => {
+    const res = action.payload;
+    if (state.courses) {
+    state.currentCourse = state.courses.filter((course) => course.id === res.id)[0];
     }
+    return state;
+  },
+  revertCurrentCourse: (state: IGetCoursesState) => {
+    state.currentCourse = null;
+    return state;
+  }
   },
   extraReducers: (builder) => {
-    builder
-    .addCase(getCoursesAsync.pending, (state, action) => {
-      state.status = ApiStatus.loading;
-    })
-    .addCase(getCoursesAsync.fulfilled, (state, action) => {
-      const res = action.payload as ICreateOptionsListResponse;
-      state.courses = res.courses;
-      state.code = res.code;
-      state.status = ApiStatus.success;
-    })
-    .addCase(getCoursesAsync.rejected, (state, action) => {
-      const res = action.payload as ICreateOptionsListError;
-      state.code = res.code;
-      state.status = ApiStatus.failed;
-    })
+  builder
+  .addCase(getCoursesAsync.pending, (state, action) => {
+    state.status = ApiStatus.loading;
+  })
+  .addCase(getCoursesAsync.fulfilled, (state, action) => {
+    const res = action.payload as ICreateOptionsListResponse;
+    state.courses = res.courses;
+    state.code = res.code;
+    state.status = ApiStatus.success;
+  })
+  .addCase(getCoursesAsync.rejected, (state, action) => {
+    const res = action.payload as ICreateOptionsListError;
+    state.code = res.code;
+    state.status = ApiStatus.failed;
+  })
   }
 });
 

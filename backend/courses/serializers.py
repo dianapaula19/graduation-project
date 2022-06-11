@@ -20,17 +20,17 @@ class CourseSerializer(serializers.ModelSerializer):
 	teacher_email = serializers.CharField(source='teacher.user.email')
 	class Meta:
 		model = Course
-		fields = ['id', 'title', 'link', 'capacity', 'teacher_first_name', 'teacher_last_name', 'teacher_email']
+		fields = ['id', 'title', 'link', 'capacity', 'semester', 'teacher_first_name', 'teacher_last_name', 'teacher_email']
 
 class StudentSerializer(serializers.ModelSerializer):
 
-    email = serializers.CharField(source='user.email')
-    first_name = serializers.CharField(source='user.first_name')
-    last_name = serializers.CharField(source='user.last_name')
-    
-    class Meta:
-        model = Student
-        fields = ['email', 'first_name', 'last_name']
+  email = serializers.CharField(source='user.email')
+  first_name = serializers.CharField(source='user.first_name')
+  last_name = serializers.CharField(source='user.last_name')
+  
+  class Meta:
+    model = Student
+    fields = ['email', 'first_name', 'last_name']
 
 class TeacherCourseSerializer(serializers.ModelSerializer):
 

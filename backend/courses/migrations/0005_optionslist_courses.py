@@ -5,14 +5,14 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('courses', '0004_rename_group_id_optionslist_group_and_more'),
-    ]
+  dependencies = [
+    ('courses', '0004_rename_group_id_optionslist_group_and_more'),
+  ]
 
-    operations = [
-        migrations.AddField(
-            model_name='optionslist',
-            name='courses',
-            field=models.ManyToManyField(related_name='course', to='courses.course'),
-        ),
-    ]
+  operations = [
+    migrations.AddField(
+      model_name='optionslist',
+      name='courses',
+      field=models.ManyToManyField(related_name='course', to='courses.course'),
+    ),
+  ]

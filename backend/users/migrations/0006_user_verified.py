@@ -5,14 +5,14 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('users', '0005_group'),
-    ]
+  dependencies = [
+    ('users', '0005_group'),
+  ]
 
-    operations = [
-        migrations.AddField(
-            model_name='user',
-            name='verified',
-            field=models.BooleanField(default=True, verbose_name='verified'),
-        ),
-    ]
+  operations = [
+    migrations.AddField(
+      model_name='user',
+      name='verified',
+      field=models.BooleanField(default=True, verbose_name='verified'),
+    ),
+  ]

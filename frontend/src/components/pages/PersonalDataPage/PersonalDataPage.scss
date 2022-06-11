@@ -2,46 +2,46 @@
   display: flex;
   flex-direction: column;
   &__personal-data {
-    font-size: xx-large;
-    font-weight: bold;
-    color: #525252;
+  font-size: xx-large;
+  font-weight: bold;
+  color: #525252;
   }
   &__profile {
+  font-size: x-large;
+  font-weight: bold;
+  color: #525252;
+  }
+
+  &__student {
+  &__data {
     font-size: x-large;
     font-weight: bold;
     color: #525252;
   }
-
-  &__student {
-    &__data {
-      font-size: x-large;
-      font-weight: bold;
-      color: #525252;
+  &__grade {
+    font-size: x-large;
+    font-weight: bold;
+    color: #525252;
+  }
+  &__grades {
+    &__header {
+    color: #c4c4c4;
+    font-size: large;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+      "grades-header-year grades-header-grade";
+    border-bottom: #c4c4c4 .1rem solid;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    &__year {
+      grid-area: grades-header-year;
     }
     &__grade {
-      font-size: x-large;
-      font-weight: bold;
-      color: #525252;
+      grid-area: grades-header-grade;
     }
-    &__grades {
-      &__header {
-        color: #c4c4c4;
-        font-size: large;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-areas: 
-          "grades-header-year grades-header-grade";
-        border-bottom: #c4c4c4 .1rem solid;
-        padding-bottom: 1rem;
-        margin-bottom: 1.5rem;
-        &__year {
-          grid-area: grades-header-year;
-        }
-        &__grade {
-          grid-area: grades-header-grade;
-        }
-      }
     }
+  }
   }
 }
 
@@ -49,7 +49,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-areas: 
-    "data-row-name data-row-data";
+  "data-row-name data-row-data";
   border-bottom: #c4c4c4 .1rem solid;
   padding-bottom: 1rem;
   margin-bottom: 1.5rem;
@@ -57,13 +57,13 @@
   font-size: large;
 
   &__name {
-    grid-area: data-row-name;
-    color: #c4c4c4;
+  grid-area: data-row-name;
+  color: #c4c4c4;
   }
 
   &__data {
-    grid-area: data-row-data;
-    color: #525252;
+  grid-area: data-row-data;
+  color: #525252;
   }
 }
 
@@ -71,7 +71,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-areas: 
-    "grade-row-year grade-row-grade";
+  "grade-row-year grade-row-grade";
   border-bottom: #c4c4c4 .1rem solid;
   padding-bottom: 1rem;
   margin-bottom: 1.5rem;
@@ -79,13 +79,13 @@
   font-size: large;
 
   &__year {
-    grid-area: grade-row-year;
-    color: #525252;
+  grid-area: grade-row-year;
+  color: #525252;
   }
 
   &__grade {
-    grid-area: grade-row-grade;
-    color: #525252;
+  grid-area: grade-row-grade;
+  color: #525252;
   }
 
 }

@@ -49,55 +49,55 @@ interface IGetCurrentCoursePayload {
 export const getOptionsListsAsync = createAsyncThunk(
   'user/admin/getOptionsLists',
   async (request, {rejectWithValue}) => await axios
-    .get(
-      API_URL_COURSE + "/admin/get_options_lists",
-    )
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      return rejectWithValue(error.response.data);
-    })
+  .get(
+    API_URL_COURSE + "/admin/get_options_lists",
+  )
+  .then((response) => {
+    return response.data;
+  })
+  .catch((error) => {
+    return rejectWithValue(error.response.data);
+  })
 )
 
 export const getOptionsListsSlice = createSlice({
   name: 'getOptionsLists',
   initialState,
   reducers: {
-    revertGetOptionsLists: () => {
-      return initialState;
-    },
-    getCurrentOptionsList: (
-      state: IGetOptionsListsState, 
-      action: PayloadAction<IGetCurrentCoursePayload>
-    ) => {
-      const res = action.payload;
-      if (state.optionsLists) {
-        state.currentOptionsList = state.optionsLists.filter((optionsList) => optionsList.id === res.id)[0];
-      }
-      return state;
-    },
-    revertCurrentOptionsList: (state: IGetOptionsListsState) => {
-      state.currentOptionsList = null;
-      return state;
+  revertGetOptionsLists: () => {
+    return initialState;
+  },
+  getCurrentOptionsList: (
+    state: IGetOptionsListsState, 
+    action: PayloadAction<IGetCurrentCoursePayload>
+  ) => {
+    const res = action.payload;
+    if (state.optionsLists) {
+    state.currentOptionsList = state.optionsLists.filter((optionsList) => optionsList.id === res.id)[0];
     }
+    return state;
+  },
+  revertCurrentOptionsList: (state: IGetOptionsListsState) => {
+    state.currentOptionsList = null;
+    return state;
+  }
   },
   extraReducers: (builder) => {
-    builder
-    .addCase(getOptionsListsAsync.pending, (state, action) => {
-      state.status = ApiStatus.loading;
-    })
-    .addCase(getOptionsListsAsync.fulfilled, (state, action) => {
-      const res = action.payload as ICreateOptionsListResponse;
-      state.optionsLists = res.options_lists;
-      state.code = res.code;
-      state.status = ApiStatus.success;
-    })
-    .addCase(getOptionsListsAsync.rejected, (state, action) => {
-      const res = action.payload as ICreateOptionsListError;
-      state.code = res.code;
-      state.status = ApiStatus.failed;
-    })
+  builder
+  .addCase(getOptionsListsAsync.pending, (state, action) => {
+    state.status = ApiStatus.loading;
+  })
+  .addCase(getOptionsListsAsync.fulfilled, (state, action) => {
+    const res = action.payload as ICreateOptionsListResponse;
+    state.optionsLists = res.options_lists;
+    state.code = res.code;
+    state.status = ApiStatus.success;
+  })
+  .addCase(getOptionsListsAsync.rejected, (state, action) => {
+    const res = action.payload as ICreateOptionsListError;
+    state.code = res.code;
+    state.status = ApiStatus.failed;
+  })
   }
 });
 

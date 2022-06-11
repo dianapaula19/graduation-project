@@ -1,60 +1,60 @@
 .authentification-template {
-    height: 100vh;
+  height: 100vh;
+  display: grid;
+  gap: 3rem;
+  min-height: 100%;
+  background-color: rgba($color: #0366d6, $alpha: .75);
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-rows: .25fr 3fr .25fr;
+  grid-template-areas: 
+    "languages . ."
+    ". main ."
+    ". . .";
+
+  &__main {
+    height: 100%;
     display: grid;
-    gap: 3rem;
-    min-height: 100%;
-    background-color: rgba($color: #0366d6, $alpha: .75);
-    grid-template-columns: 1fr 3fr 1fr;
-    grid-template-rows: .25fr 3fr .25fr;
+    grid-template-columns: 1fr 1fr;
+    grid-area: main;
     grid-template-areas: 
-        "languages . ."
-        ". main ."
-        ". . .";
+      "image-container form-container";
 
-    &__main {
-        height: 100%;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-area: main;
-        grid-template-areas: 
-            "image-container form-container";
-
-        @media screen and (max-width: 60rem) {
-            grid-template-areas: 
-            "form-container form-container";
-        }
-
-        &__image-container {
-            grid-area: image-container;
-            display: grid;
-            background-color: rgba($color: #ffffff, $alpha: 40%);
-            border-radius: 1rem 0 0 1rem;
-            grid-template-rows: 1fr 2fr 1fr;
-            grid-template-areas: 
-                "."
-                "img"
-                ".";
-            &__img {
-                grid-area: img;
-                width: 100%;
-                height: 100%;
-            }
-            @media screen and (max-width: 60rem) {
-                visibility: hidden;
-            }
-        }
-
-        &__form-container {
-            grid-area: form-container;
-            display: grid;
-            background-color: white;
-            border-radius: 0 1rem 1rem 0;
-            padding: 2.5rem 2.5rem;
-            align-items: center;
-            justify-content: center;
-            @media screen and (max-width: 60rem) {
-                border-radius: 1rem 1rem;
-            }
-        }
+    @media screen and (max-width: 60rem) {
+      grid-template-areas: 
+      "form-container form-container";
     }
+
+    &__image-container {
+      grid-area: image-container;
+      display: grid;
+      background-color: rgba($color: #ffffff, $alpha: 40%);
+      border-radius: 1rem 0 0 1rem;
+      grid-template-rows: 1fr 2fr 1fr;
+      grid-template-areas: 
+        "."
+        "img"
+        ".";
+      &__img {
+        grid-area: img;
+        width: 100%;
+        height: 100%;
+      }
+      @media screen and (max-width: 60rem) {
+        visibility: hidden;
+      }
+    }
+
+    &__form-container {
+      grid-area: form-container;
+      display: grid;
+      background-color: white;
+      border-radius: 0 1rem 1rem 0;
+      padding: 2.5rem 2.5rem;
+      align-items: center;
+      justify-content: center;
+      @media screen and (max-width: 60rem) {
+        border-radius: 1rem 1rem;
+      }
+    }
+  }
 }

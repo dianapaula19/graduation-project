@@ -35,38 +35,38 @@ export interface IRegisterBatchTeachersResponse {
 export const registerBatchTeachersAsync = createAsyncThunk(
   'user/admin/registerBatchTeachers',
   async (request: IRegisterBatchTeachersRequest, {rejectWithValue}) => await axios
-    .post(
-      API_URL_USER + "/admin/register_batch_teachers",
-      request
-    )
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      return rejectWithValue(error.response.data);
-    })
+  .post(
+    API_URL_USER + "/admin/register_batch_teachers",
+    request
+  )
+  .then((response) => {
+    return response.data;
+  })
+  .catch((error) => {
+    return rejectWithValue(error.response.data);
+  })
 )
 
 export const registerBatchTeachersSlice = createSlice({
   name: 'registerBatchTeachers',
   initialState,
   reducers: {
-    revertRegisterBatchTeachers: () => {
-      return initialState;
-    }
+  revertRegisterBatchTeachers: () => {
+    return initialState;
+  }
   },
   extraReducers: (builder) => {
-    builder
-    .addCase(registerBatchTeachersAsync.pending, (state, action) => {
-      state.status = ApiStatus.loading;
-    })
-    .addCase(registerBatchTeachersAsync.fulfilled, (state, action) => {
-      const res = action.payload as IRegisterBatchTeachersResponse;
-      state.code = res.code;
-      state.errorMessages = res.error_messages;
-      state.showModal = true;
-      state.status = ApiStatus.success;
-    })
+  builder
+  .addCase(registerBatchTeachersAsync.pending, (state, action) => {
+    state.status = ApiStatus.loading;
+  })
+  .addCase(registerBatchTeachersAsync.fulfilled, (state, action) => {
+    const res = action.payload as IRegisterBatchTeachersResponse;
+    state.code = res.code;
+    state.errorMessages = res.error_messages;
+    state.showModal = true;
+    state.status = ApiStatus.success;
+  })
   }
 });
 

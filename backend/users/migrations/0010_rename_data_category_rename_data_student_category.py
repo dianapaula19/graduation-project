@@ -5,19 +5,19 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('courses', '0009_rename_data_optionslist_category'),
-        ('users', '0009_rename_group_data_rename_group_student_data'),
-    ]
+  dependencies = [
+    ('courses', '0009_rename_data_optionslist_category'),
+    ('users', '0009_rename_group_data_rename_group_student_data'),
+  ]
 
-    operations = [
-        migrations.RenameModel(
-            old_name='Data',
-            new_name='Category',
-        ),
-        migrations.RenameField(
-            model_name='student',
-            old_name='data',
-            new_name='category',
-        ),
-    ]
+  operations = [
+    migrations.RenameModel(
+      old_name='Data',
+      new_name='Category',
+    ),
+    migrations.RenameField(
+      model_name='student',
+      old_name='data',
+      new_name='category',
+    ),
+  ]

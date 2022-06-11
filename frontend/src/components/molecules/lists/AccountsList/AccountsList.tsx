@@ -16,9 +16,9 @@ import { getNotVerifiedUsersAsync } from "../../../../features/user/admin/getNot
 import { ApiStatus } from "../../../../features/Utils";
 
 const AccountsList = ({
-    role,
-    emails,
-    title
+  role,
+  emails,
+  title
 }: IAccountsListProps) => {
 
   const componentClassName = "accounts-list";
@@ -32,135 +32,138 @@ const AccountsList = ({
   const statusVerifyUser = useAppSelector(verifyUserStatus);
   const statusUpdateStudentInfo = useAppSelector(updateStudentInfoStatus);
   const statusUpdateTeacherInfo = useAppSelector(updateTeacherInfoStatus);
-    
+  
   const { t } = useTranslation();
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (statusVerifyUser === ApiStatus.failed || statusVerifyUser === ApiStatus.success) {
-        setShowUserDataFormModal(false);
-    }
-    if (statusUpdateStudentInfo === ApiStatus.failed || statusUpdateStudentInfo === ApiStatus.success) {
-        setShowUserDataFormModal(false);
-    }
-    if (statusUpdateTeacherInfo === ApiStatus.failed || statusUpdateTeacherInfo === ApiStatus.success) {
-        setShowUserDataFormModal(false);
-    }
-  }, [])
+  if (
+    showModalVerifyUser || 
+    showModalUpdateStudentInfo || 
+    showModalUpdateTeacherInfo
+  ) {
+    setShowUserDataFormModal(false);
+  }
+  }, [
+    showModalVerifyUser, 
+    showModalUpdateTeacherInfo, 
+    showModalUpdateStudentInfo, 
+    setShowUserDataFormModal
+  ])
   
 
   return (
-      <>
-        <div 
-          className={componentClassName}
+    <>
+    <div 
+      className={componentClassName}
+    >
+      <span
+        className={`${componentClassName}__title`}
+      >
+        {title}
+      </span>
+      <div 
+        className={`${componentClassName}__header`}
+      >
+        <span
+          className={`${componentClassName}__index`}
         >
+          #
+        </span>
+        <span
+          className={`${componentClassName}__email`}
+        >
+          {t("lists.accounts.header.email")}
+        </span>
+        
+      </div>
+      {emails.map((email, idx) => {
+        return (
+          <div 
+            className={`${componentClassName}__item`}
+            onClick={() => {
+              setCurrentEmail(email);
+              if (role === Role.STUDENT) {
+                dispatch(getCurrentStudent({
+                  email: email
+                }))
+              }
+              if (role === Role.TEACHER) {
+                dispatch(getCurrentTeacher({
+                  email: email
+                }))
+              }
+              setShowUserDataFormModal(true);
+            }}
+          >
             <span
-                className={`${componentClassName}__title`}
+              className={`${componentClassName}__index`}
             >
-                {title}
+              {idx + 1}
             </span>
-            <div 
-                className={`${componentClassName}__header`}
+            <span
+              className={`${componentClassName}__email`}
             >
-                <span
-                    className={`${componentClassName}__index`}
-                >
-                    #
-                </span>
-                <span
-                    className={`${componentClassName}__email`}
-                >
-                    {t("lists.accounts.header.email")}
-                </span>
-                
-            </div>
-            {emails.map((email, idx) => {
-                return (
-                    <div 
-                        className={`${componentClassName}__item`}
-                        onClick={() => {
-                            setCurrentEmail(email);
-                            if (role === Role.STUDENT) {
-                                dispatch(getCurrentStudent({
-                                    email: email
-                                }))
-                            }
-                            if (role === Role.TEACHER) {
-                                dispatch(getCurrentTeacher({
-                                    email: email
-                                }))
-                            }
-                            setShowUserDataFormModal(true);
-                        }}
-                    >
-                        <span
-                            className={`${componentClassName}__index`}
-                        >
-                            {idx + 1}
-                        </span>
-                        <span
-                            className={`${componentClassName}__email`}
-                        >
-                            {email}
-                        </span>
-                    </div>
-                )
-            })}
-        </div>
-        <Modal 
-            show={showUserDataFormModal} 
-            closeModal={() => {
-                setShowUserDataFormModal(false);
-                if (role === Role.STUDENT) {
-                    dispatch(revertCurrentStudent());
-                }
-                if (role === Role.TEACHER) {
-                    dispatch(revertCurrentTeacher());
-                }
-            }}
-        >
-            {currentEmail && (
-                <UserDataForm
-                    role={role}
-                    email={currentEmail}   
-                />    
-            )}   
-        </Modal>
-        <Modal 
-            show={showModalVerifyUser} 
-            closeModal={() => {
-                dispatch(getNotVerifiedUsersAsync());
-                dispatch(revertVerifyUser());
-            }}
-        >
-            Not Verified TBA
-        </Modal>
-        <Modal 
-            show={showModalUpdateStudentInfo} 
-            closeModal={() => {
-                dispatch(getStudentsAsync());
-                if (role === Role.STUDENT) {
-                    dispatch(revertCurrentStudent());
-                }
-                dispatch(revertUpdateStudentInfo());
-            }}
-        >
-            Update Student TBA
-        </Modal>
-        <Modal 
-            show={showModalUpdateTeacherInfo} 
-            closeModal={() => {
-                dispatch(getTeachersAsync());
-                if (role === Role.TEACHER) {
-                    dispatch(revertCurrentTeacher());
-                }
-                dispatch(revertUpdateTeacherInfo());
-            }}
-        >
-            Update Teacher TBA
-        </Modal>
-      </>
+              {email}
+            </span>
+          </div>
+        )
+      })}
+    </div>
+    <Modal 
+      show={showUserDataFormModal} 
+      closeModal={() => {
+        setShowUserDataFormModal(false);
+        if (role === Role.STUDENT) {
+          dispatch(revertCurrentStudent());
+        }
+        if (role === Role.TEACHER) {
+          dispatch(revertCurrentTeacher());
+        }
+      }}
+    >
+      {currentEmail && (
+        <UserDataForm
+          role={role}
+          email={currentEmail}   
+        />  
+      )}   
+    </Modal>
+    <Modal 
+      show={showModalVerifyUser} 
+      closeModal={() => {
+        dispatch(getNotVerifiedUsersAsync());
+        dispatch(revertVerifyUser());
+      }}
+    >
+      Not Verified TBA
+    </Modal>
+    <Modal 
+      show={showModalUpdateStudentInfo} 
+      closeModal={() => {
+        dispatch(getStudentsAsync());
+        if (role === Role.STUDENT) {
+          dispatch(revertCurrentStudent());
+        }
+        dispatch(revertUpdateStudentInfo());
+      }}
+    >
+      Update Student TBA
+    </Modal>
+    <Modal 
+      show={showModalUpdateTeacherInfo} 
+      closeModal={() => {
+        dispatch(getTeachersAsync());
+        if (role === Role.TEACHER) {
+          dispatch(revertCurrentTeacher());
+        }
+        dispatch(revertUpdateTeacherInfo());
+      }}
+    >
+      Update Teacher TBA
+    </Modal>
+    </>
   );
 
 };

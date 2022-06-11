@@ -24,54 +24,54 @@ const SendAnnouncementForm = () => {
   const dispatch = useAppDispatch();
 
   const [data, setData] = useState({
-    subject: '',
-    message: ''
+  subject: '',
+  message: ''
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setData({
-        ...data,
-        [name]: value
-    });
+  const name = e.target.name;
+  const value = e.target.value;
+  setData({
+    ...data,
+    [name]: value
+  });
   }
 
   const handleSubmit = () => {
-    if (currentTeacherCourse && userData) {
-      const recipient_list = Array.from(currentTeacherCourse.students, student => student.email);
-      dispatch(sendAnnouncementAsync({
-        subject: `${data.subject} [${currentTeacherCourse.title}]`,
-        message: data.message,
-        recipient_list: recipient_list,
-      }))
-    }
+  if (currentTeacherCourse && userData) {
+    const recipient_list = Array.from(currentTeacherCourse.students, student => student.email);
+    dispatch(sendAnnouncementAsync({
+    subject: `${data.subject} [${currentTeacherCourse.title}]`,
+    message: data.message,
+    recipient_list: recipient_list,
+    }))
+  }
   }
 
   return (
-    <div className={componentClassName}>
-      <InputField 
-        type={InputFieldType.text}
-        id={`${componentId}-subject`}
-        name={"subject"} 
-        error={data.subject.length < 1} 
-        errorMessage={t(`${inputFieldsTranslate}.subject.errorMessage`)} 
-        label={t(`${inputFieldsTranslate}.subject.label`)}
-        placeholder={t(`${inputFieldsTranslate}.subject.placeholder`)}
-        onChange={handleChange} 
-      />
-      <TextAreaField 
-        id={`${componentId}-message`}
-        name={"message"}
-        label={t(`${textAreaFieldsTranslate}.message.label`)}
-        onChange={handleChange}
-      />
-      <Button 
-        label={t(`${submitButtonsTranslate}.sendTheAnnouncement`)} 
-        disabled={data.subject.length < 1} 
-        onSubmit={handleSubmit}
-      />
-    </div>
+  <div className={componentClassName}>
+    <InputField 
+    type={InputFieldType.text}
+    id={`${componentId}-subject`}
+    name={"subject"} 
+    error={data.subject.length < 1} 
+    errorMessage={t(`${inputFieldsTranslate}.subject.errorMessage`)} 
+    label={t(`${inputFieldsTranslate}.subject.label`)}
+    placeholder={t(`${inputFieldsTranslate}.subject.placeholder`)}
+    onChange={handleChange} 
+    />
+    <TextAreaField 
+    id={`${componentId}-message`}
+    name={"message"}
+    label={t(`${textAreaFieldsTranslate}.message.label`)}
+    onChange={handleChange}
+    />
+    <Button 
+    label={t(`${submitButtonsTranslate}.sendTheAnnouncement`)} 
+    disabled={data.subject.length < 1} 
+    onSubmit={handleSubmit}
+    />
+  </div>
   )
 }
 

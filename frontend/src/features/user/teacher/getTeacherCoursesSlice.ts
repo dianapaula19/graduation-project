@@ -48,53 +48,53 @@ interface IGetCurrentCoursePayload {
 export const getTeacherCoursesAsync = createAsyncThunk(
   'user/admin/getTeacherCourses',
   async (request: IGetTeacherCoursesRequest, {rejectWithValue}) => await axios
-    .post(
-      API_URL_COURSE + "/teacher/get_teacher_courses",
-      request
-    )
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      return rejectWithValue(error.response.data);
-    })
+  .post(
+    API_URL_COURSE + "/teacher/get_teacher_courses",
+    request
+  )
+  .then((response) => {
+    return response.data;
+  })
+  .catch((error) => {
+    return rejectWithValue(error.response.data);
+  })
 )
 
 export const getTeacherCoursesSlice = createSlice({
   name: 'getTeacherCourses',
   initialState,
   reducers: {
-    revertGetTeacherCourses: () => {
-      return initialState;
-    },
-    getCurrentTeacherCourse: (state: IGetTeacherCoursesState, action: PayloadAction<IGetCurrentCoursePayload>) => {
-      const res = action.payload;
-      if (state.courses) {
-        state.currentCourse = state.courses.filter((course) => course.id === res.id)[0];
-      }
-      return state;
-    },
-    revertCurrentTeacherCourse: (state: IGetTeacherCoursesState) => {
-      state.currentCourse = null;
-      return state;
+  revertGetTeacherCourses: () => {
+    return initialState;
+  },
+  getCurrentTeacherCourse: (state: IGetTeacherCoursesState, action: PayloadAction<IGetCurrentCoursePayload>) => {
+    const res = action.payload;
+    if (state.courses) {
+    state.currentCourse = state.courses.filter((course) => course.id === res.id)[0];
     }
+    return state;
+  },
+  revertCurrentTeacherCourse: (state: IGetTeacherCoursesState) => {
+    state.currentCourse = null;
+    return state;
+  }
   },
   extraReducers: (builder) => {
-    builder
-    .addCase(getTeacherCoursesAsync.pending, (state, action) => {
-      state.status = ApiStatus.loading;
-    })
-    .addCase(getTeacherCoursesAsync.fulfilled, (state, action) => {
-      const res = action.payload as IGetTeacherCoursesResponse;
-      state.courses = res.courses;
-      state.code = res.code;
-      state.status = ApiStatus.success;
-    })
-    .addCase(getTeacherCoursesAsync.rejected, (state, action) => {
-      const res = action.payload as IGetTeacherCoursesError;
-      state.code = res.code;
-      state.status = ApiStatus.failed;
-    })
+  builder
+  .addCase(getTeacherCoursesAsync.pending, (state, action) => {
+    state.status = ApiStatus.loading;
+  })
+  .addCase(getTeacherCoursesAsync.fulfilled, (state, action) => {
+    const res = action.payload as IGetTeacherCoursesResponse;
+    state.courses = res.courses;
+    state.code = res.code;
+    state.status = ApiStatus.success;
+  })
+  .addCase(getTeacherCoursesAsync.rejected, (state, action) => {
+    const res = action.payload as IGetTeacherCoursesError;
+    state.code = res.code;
+    state.status = ApiStatus.failed;
+  })
   }
 });
 

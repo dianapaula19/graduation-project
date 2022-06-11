@@ -7,50 +7,50 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('users', '0006_user_verified'),
-    ]
+  dependencies = [
+    ('users', '0006_user_verified'),
+  ]
 
-    operations = [
-        migrations.RemoveField(
-            model_name='student',
-            name='degree',
-        ),
-        migrations.RemoveField(
-            model_name='student',
-            name='domain',
-        ),
-        migrations.RemoveField(
-            model_name='student',
-            name='learning_mode',
-        ),
-        migrations.RemoveField(
-            model_name='student',
-            name='study_program',
-        ),
-        migrations.AddField(
-            model_name='group',
-            name='semester',
-            field=models.IntegerField(default=1, validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(2)]),
-        ),
-        migrations.AddField(
-            model_name='student',
-            name='current_semester',
-            field=models.IntegerField(default=1, validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(2)]),
-        ),
-        migrations.AddField(
-            model_name='student',
-            name='group',
-            field=models.OneToOneField(null=True, on_delete=django.db.models.deletion.SET_NULL, to='users.group'),
-        ),
-        migrations.AlterField(
-            model_name='group',
-            name='year',
-            field=models.IntegerField(default=1, validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(4)]),
-        ),
-        migrations.AlterField(
-            model_name='student',
-            name='current_year',
-            field=models.IntegerField(default=1, validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(4)]),
-        ),
-    ]
+  operations = [
+    migrations.RemoveField(
+      model_name='student',
+      name='degree',
+    ),
+    migrations.RemoveField(
+      model_name='student',
+      name='domain',
+    ),
+    migrations.RemoveField(
+      model_name='student',
+      name='learning_mode',
+    ),
+    migrations.RemoveField(
+      model_name='student',
+      name='study_program',
+    ),
+    migrations.AddField(
+      model_name='group',
+      name='semester',
+      field=models.IntegerField(default=1, validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(2)]),
+    ),
+    migrations.AddField(
+      model_name='student',
+      name='current_semester',
+      field=models.IntegerField(default=1, validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(2)]),
+    ),
+    migrations.AddField(
+      model_name='student',
+      name='group',
+      field=models.OneToOneField(null=True, on_delete=django.db.models.deletion.SET_NULL, to='users.group'),
+    ),
+    migrations.AlterField(
+      model_name='group',
+      name='year',
+      field=models.IntegerField(default=1, validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(4)]),
+    ),
+    migrations.AlterField(
+      model_name='student',
+      name='current_year',
+      field=models.IntegerField(default=1, validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(4)]),
+    ),
+  ]

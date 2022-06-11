@@ -10,49 +10,49 @@ const LoadingPage = () => {
   const contentClassName = `${componentClassName}__content`;
 
   const [quote, setQuote] = useState<Quote>({
-    text: '',
-    author: ''
+  text: '',
+  author: ''
   });
 
   const { t } = useTranslation();
   
   useEffect(() => {
-    if (quote.text === '' || quote.author === '') {
-      const index = (Math.floor(Math.random() * 2)).toString();
-      setQuote({
-        ['text']: t(`loadingPage.quotes.${index}.text`),
-        ['author']: t(`loadingPage.quotes.${index}.author`)
-      });
-    }
+  if (quote.text === '' || quote.author === '') {
+    const index = (Math.floor(Math.random() * 2)).toString();
+    setQuote({
+    ['text']: t(`loadingPage.quotes.${index}.text`),
+    ['author']: t(`loadingPage.quotes.${index}.author`)
+    });
+  }
   }, [quote, setQuote, t])
   
   
   return (
-    <div 
-      className={componentClassName}
+  <div 
+    className={componentClassName}
+  >
+    <div
+    className={contentClassName}
     >
-      <div
-        className={contentClassName}
-      >
-        <span 
-          aria-label="sparkles"
-          className={`${contentClassName}__emoji`}
-        >
-            ✨
-        </span>
-        <span
-          className={`${contentClassName}__text`}
-        >
-          {quote.text}
-        </span>
-        <span
-          className={`${contentClassName}__author`}
-        >
-          - {quote.author}
-        </span>
-        <Loader />
-      </div>
+    <span 
+      aria-label="sparkles"
+      className={`${contentClassName}__emoji`}
+    >
+      ✨
+    </span>
+    <span
+      className={`${contentClassName}__text`}
+    >
+      {quote.text}
+    </span>
+    <span
+      className={`${contentClassName}__author`}
+    >
+      - {quote.author}
+    </span>
+    <Loader />
     </div>
+  </div>
   )
 }
 

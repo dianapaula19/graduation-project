@@ -7,50 +7,50 @@
   grid-area: accounts-list;
 
   &__header {
-      display: grid;
-      border-bottom: #525252 solid .1rem;
-      padding-bottom: 1rem;
-      margin-bottom: 2.5rem;
-      text-transform: uppercase;
-      grid-template-columns: .1fr 3fr 2fr;
-      grid-template-areas: 
-          "header-index header-title header-teacher";
+    display: grid;
+    border-bottom: #525252 solid .1rem;
+    padding-bottom: 1rem;
+    margin-bottom: 2.5rem;
+    text-transform: uppercase;
+    grid-template-columns: .1fr 3fr 2fr;
+    grid-template-areas: 
+      "header-index header-title header-teacher";
 
-      &__index {
-        grid-area: header-index;
-      }
+    &__index {
+    grid-area: header-index;
+    }
 
-      &__title {
-        grid-area: header-title;
-      }
+    &__title {
+    grid-area: header-title;
+    }
 
-      &__teacher {
-        grid-area: header-teacher;
-      }
+    &__teacher {
+    grid-area: header-teacher;
+    }
   }
 
   &__item {
-      padding: .75rem 0;
-      display: grid;
-      grid-template-columns: .1fr 3fr 2fr;
-      grid-template-areas: 
-          "item-index item-title item-teacher";
+    padding: .75rem 0;
+    display: grid;
+    grid-template-columns: .1fr 3fr 2fr;
+    grid-template-areas: 
+      "item-index item-title item-teacher";
 
-      cursor: pointer;
-      &:hover {
-        background-color: #f1eff1;
-      }
-      
-      &__index {
-          grid-area: item-index;
-      }
+    cursor: pointer;
+    &:hover {
+    background-color: #f1eff1;
+    }
+    
+    &__index {
+      grid-area: item-index;
+    }
 
-      &__title {
-          grid-area: item-email;
-      }
+    &__title {
+      grid-area: item-email;
+    }
 
-      &__teacher {
-        grid-area: item-teacher;
-      }
+    &__teacher {
+    grid-area: item-teacher;
+    }
   }
 }

@@ -1,31 +1,29 @@
-.create-options-list-form {
-  display: grid;
-  grid-template-areas: 
-    "fields-container fields-container fields-container"
-    ". . save-button";
+.options-list-form {
+  display: flex;
+  flex-direction: column;
   gap: 2rem;
   padding: 1rem;
 
   &__fields-container {
+  display: flex;
+  flex-direction: column;
+  grid-area: fields-container;
+  gap: 1rem;
+
+  &__courses-container {
     display: flex;
     flex-direction: column;
-    grid-area: fields-container;
-    gap: 1rem;
-
-    &__courses-container {
-      display: flex;
-      flex-direction: column;
-      gap: .5rem;
-      &__title {
-        font-size: x-large;
-        color: #525252;
-      }
-      &__courses {
-        display: flex;
-        flex-direction: column;
-        gap: .5rem;
-      }
+    gap: .5rem;
+    &__title {
+    font-size: x-large;
+    color: #525252;
     }
+    &__courses {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    }
+  }
   }
 
 }

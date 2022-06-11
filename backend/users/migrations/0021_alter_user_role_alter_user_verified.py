@@ -5,19 +5,19 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('users', '0020_remove_student_current_semester_and_more'),
-    ]
+  dependencies = [
+    ('users', '0020_remove_student_current_semester_and_more'),
+  ]
 
-    operations = [
-        migrations.AlterField(
-            model_name='user',
-            name='role',
-            field=models.TextField(choices=[('STUDENT', 'Student'), ('TEACHER', 'Teacher'), ('ADMIN', 'Admin')], null=True),
-        ),
-        migrations.AlterField(
-            model_name='user',
-            name='verified',
-            field=models.BooleanField(default=False),
-        ),
-    ]
+  operations = [
+    migrations.AlterField(
+      model_name='user',
+      name='role',
+      field=models.TextField(choices=[('STUDENT', 'Student'), ('TEACHER', 'Teacher'), ('ADMIN', 'Admin')], null=True),
+    ),
+    migrations.AlterField(
+      model_name='user',
+      name='verified',
+      field=models.BooleanField(default=False),
+    ),
+  ]

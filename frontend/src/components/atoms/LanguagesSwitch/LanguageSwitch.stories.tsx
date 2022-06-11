@@ -3,8 +3,8 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import Languages from "./LanguageSwitch";
 
 export default {
-    title: "Molecules/Languages",
-    component: Languages
+  title: "Molecules/Languages",
+  component: Languages
 } as ComponentMeta<typeof Languages>;
 
 const Template: ComponentStory<typeof Languages> = () => <Languages />;

@@ -4,8 +4,8 @@ import AccountsList from "./AccountsList";
 import { Role } from "../../../App";
 
 export default {
-    title: "Molecules/AccountsList",
-    component: AccountsList
+  title: "Molecules/AccountsList",
+  component: AccountsList
 } as ComponentMeta<typeof AccountsList>;
 
 const Template: ComponentStory<typeof AccountsList> = (args) => <AccountsList {...args}/>;
@@ -13,8 +13,8 @@ const Template: ComponentStory<typeof AccountsList> = (args) => <AccountsList {.
 export const DefaultAccountsList = Template.bind({});
 
 DefaultAccountsList.args = {
-    emails: [
-      'rachel@chu.com',
-      'nick@young.com'
-    ]
+  emails: [
+    'rachel@chu.com',
+    'nick@young.com'
+  ]
 }

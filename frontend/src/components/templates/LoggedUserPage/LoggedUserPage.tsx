@@ -8,35 +8,35 @@ import "./LoggedUserPage.scss";
 import { ILoggedUserPageProps } from "./LoggedUserPage.types";
 
 const LoggedUserPage = ({
-    children
+  children
 }: ILoggedUserPageProps) => {
 
-    const componentClassName = "logged-user-template";
+  const componentClassName = "logged-user-template";
 
-    const status = useAppSelector(loginStatus);
-    let navigate = useNavigate();
+  const status = useAppSelector(loginStatus);
+  let navigate = useNavigate();
 
-    // useEffect(() => {
-    //   if (status !== ApiStatus.success) {
-    //     navigate('login');
-    //   }
-    // }, [])
-    
+  // useEffect(() => {
+  //   if (status !== ApiStatus.success) {
+  //   navigate('login');
+  //   }
+  // }, [])
+  
 
-    return (
-        <div 
-            className={componentClassName}
-        >
-            <SideNav />
-            <div
-                className={`${componentClassName}__layout`}
-            >
-                <div className={`${componentClassName}__layout__content`}>
-                    {children}
-                </div>
-            </div>
+  return (
+    <div 
+      className={componentClassName}
+    >
+      <SideNav />
+      <div
+        className={`${componentClassName}__layout`}
+      >
+        <div className={`${componentClassName}__layout__content`}>
+          {children}
         </div>
-    )
+      </div>
+    </div>
+  )
 }
 
 export default LoggedUserPage;

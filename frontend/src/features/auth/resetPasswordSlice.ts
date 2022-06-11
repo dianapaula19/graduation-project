@@ -32,46 +32,46 @@ export interface IResetPasswordError {
 };
 
 export const resetPasswordAsync = createAsyncThunk(
-    'auth/resetPassword',
-    async (request: IResetPasswordRequest, {rejectWithValue}) => await axios
-        .post(
-            API_URL_USER + "/password_reset/confirm/", 
-            request
-        )
-        .then((response) => {
-            return response.data;
-        })
-        .catch((error) => {
-            return rejectWithValue(error.response.data);
-        })
+  'auth/resetPassword',
+  async (request: IResetPasswordRequest, {rejectWithValue}) => await axios
+    .post(
+      API_URL_USER + "/password_reset/confirm/", 
+      request
+    )
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      return rejectWithValue(error.response.data);
+    })
 );
 
 export const resetPasswordSlice = createSlice({
-    name: 'resetPassword',
-    initialState,
-    reducers: {
-        revertResetPassword: () => {
-            return initialState;
-        }
-    },
-    extraReducers: (builder) => {
-        builder
-        .addCase(resetPasswordAsync.pending, (state) => {
-            state.status = ApiStatus.loading;
-        })
-        .addCase(resetPasswordAsync.fulfilled, (state, action) => {
-            const res = action.payload as IResetPasswordResponse;
-            state.code = res.status;
-            state.showModal = true;
-            state.status = ApiStatus.success;
-        })
-        .addCase(resetPasswordAsync.rejected, (state, action) => {
-            const res = action.payload as IResetPasswordError;
-            state.errorMessage = res.detail;
-            state.showModal = true;
-            state.status = ApiStatus.failed;
-        })
+  name: 'resetPassword',
+  initialState,
+  reducers: {
+    revertResetPassword: () => {
+      return initialState;
     }
+  },
+  extraReducers: (builder) => {
+    builder
+    .addCase(resetPasswordAsync.pending, (state) => {
+      state.status = ApiStatus.loading;
+    })
+    .addCase(resetPasswordAsync.fulfilled, (state, action) => {
+      const res = action.payload as IResetPasswordResponse;
+      state.code = res.status;
+      state.showModal = true;
+      state.status = ApiStatus.success;
+    })
+    .addCase(resetPasswordAsync.rejected, (state, action) => {
+      const res = action.payload as IResetPasswordError;
+      state.errorMessage = res.detail;
+      state.showModal = true;
+      state.status = ApiStatus.failed;
+    })
+  }
 });
 
 export const { revertResetPassword }  = resetPasswordSlice.actions;

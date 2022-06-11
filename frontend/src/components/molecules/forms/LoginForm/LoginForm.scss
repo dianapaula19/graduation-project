@@ -1,31 +1,31 @@
 .login-form {
 
-    display: flex;
-    flex-direction: column;  
-    align-items: center;
-    align-self: center;
-    gap: .5rem;
-    background-color: #ffffff;
+  display: flex;
+  flex-direction: column;  
+  align-items: center;
+  align-self: center;
+  gap: .5rem;
+  background-color: #ffffff;
 
-    &__img {
-        margin-bottom: 7.5rem;
-        width: 100%;
-        height: 100%;
-    }
-    
-    &__a {
-        all: unset;
-        color: #0366d6;
-        text-transform: uppercase;
-        margin-bottom: .5rem;
-        align-self: flex-start;
-        cursor: pointer;
-    }
-    
-    &__p {
-        color: #525252;
-        text-transform: uppercase;
-        justify-self: center;
-    }
-    
+  &__img {
+    margin-bottom: 7.5rem;
+    width: 100%;
+    height: 100%;
+  }
+  
+  &__a {
+    all: unset;
+    color: #0366d6;
+    text-transform: uppercase;
+    margin-bottom: .5rem;
+    align-self: flex-start;
+    cursor: pointer;
+  }
+  
+  &__p {
+    color: #525252;
+    text-transform: uppercase;
+    justify-self: center;
+  }
+  
 }

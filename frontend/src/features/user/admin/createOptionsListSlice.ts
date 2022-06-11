@@ -38,43 +38,43 @@ interface ICreateOptionsListError {
 export const createOptionsListAsync = createAsyncThunk(
   'user/admin/createOptionsList',
   async (request: ICreateOptionsListRequest, {rejectWithValue}) => await axios
-    .post(
-      API_URL_COURSE + "/admin/create_options_list",
-      request
-    )
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      return rejectWithValue(error.response.data);
-    })
+  .post(
+    API_URL_COURSE + "/admin/create_options_list",
+    request
+  )
+  .then((response) => {
+    return response.data;
+  })
+  .catch((error) => {
+    return rejectWithValue(error.response.data);
+  })
 )
 
 export const createOptionsListSlice = createSlice({
   name: 'createOptionsList',
   initialState,
   reducers: {
-    revertCreateOptionsList: () => {
-      return initialState;
-    }
+  revertCreateOptionsList: () => {
+    return initialState;
+  }
   },
   extraReducers: (builder) => {
-    builder
-    .addCase(createOptionsListAsync.pending, (state, action) => {
-      state.status = ApiStatus.loading;
-    })
-    .addCase(createOptionsListAsync.fulfilled, (state, action) => {
-      const res = action.payload as ICreateOptionsListResponse;
-      state.code = res.code;
-      state.showModal = true;
-      state.status = ApiStatus.success;
-    })
-    .addCase(createOptionsListAsync.rejected, (state, action) => {
-      const res = action.payload as ICreateOptionsListError;
-      state.code = res.code;
-      state.showModal = true;
-      state.status = ApiStatus.failed;
-    })
+  builder
+  .addCase(createOptionsListAsync.pending, (state, action) => {
+    state.status = ApiStatus.loading;
+  })
+  .addCase(createOptionsListAsync.fulfilled, (state, action) => {
+    const res = action.payload as ICreateOptionsListResponse;
+    state.code = res.code;
+    state.showModal = true;
+    state.status = ApiStatus.success;
+  })
+  .addCase(createOptionsListAsync.rejected, (state, action) => {
+    const res = action.payload as ICreateOptionsListError;
+    state.code = res.code;
+    state.showModal = true;
+    state.status = ApiStatus.failed;
+  })
   }
 });
 

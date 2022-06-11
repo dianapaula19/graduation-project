@@ -5,72 +5,72 @@ import { Role } from "../../components/App";
 import { ApiStatus, API_URL_USER } from "../Utils";
 
 export interface RecoverAccountState {
-    code: string | null;
-    errorMessages: string[] | null;
-    showModal: boolean;
-    status: ApiStatus;
+  code: string | null;
+  errorMessages: string[] | null;
+  showModal: boolean;
+  status: ApiStatus;
 };
 
 const initialState: RecoverAccountState = {
-    code: null,
-    errorMessages: null,
-    showModal: false,
-    status: ApiStatus.idle
+  code: null,
+  errorMessages: null,
+  showModal: false,
+  status: ApiStatus.idle
 };
 
 export interface IRecoverAccountRequest {
-    email: string;
+  email: string;
 };
 
 export interface IRecoverAccountResponse {
-    status: string;
+  status: string;
 };
 
 export interface IRecoverAccountError {
-    email: string[];
+  email: string[];
 };
 
 export const recoverAccountAsync = createAsyncThunk(
-    'auth/recoverAccount',
-    async (request: IRecoverAccountRequest, {rejectWithValue}) => await axios
-        .post(
-            API_URL_USER + "/password_reset/", 
-            request
-        )
-        .then((response) => {
-            return response.data;
-        })
-        .catch((error) => {
-            return rejectWithValue(error.response.data);
-        })
+  'auth/recoverAccount',
+  async (request: IRecoverAccountRequest, {rejectWithValue}) => await axios
+    .post(
+      API_URL_USER + "/password_reset/", 
+      request
+    )
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      return rejectWithValue(error.response.data);
+    })
 );
 
 export const recoverAccountSlice = createSlice({
-    name: 'recoverAccount',
-    initialState,
-    reducers: {
-        revertRecoverAccount: () => {
-            return initialState;
-        }
-    },
-    extraReducers: (builder) => {
-        builder
-        .addCase(recoverAccountAsync.pending, (state) => {
-            state.status = ApiStatus.loading;
-        })
-        .addCase(recoverAccountAsync.fulfilled, (state, action) => {
-            const res = action.payload as IRecoverAccountResponse;
-            state.code = res.status;
-            state.showModal = true;
-            state.status = ApiStatus.success;
-        })
-        .addCase(recoverAccountAsync.rejected, (state, action) => {
-            const res = action.payload as IRecoverAccountError;
-            state.errorMessages = res.email;
-            state.showModal = true;
-            state.status = ApiStatus.failed;
-        })
+  name: 'recoverAccount',
+  initialState,
+  reducers: {
+    revertRecoverAccount: () => {
+      return initialState;
     }
+  },
+  extraReducers: (builder) => {
+    builder
+    .addCase(recoverAccountAsync.pending, (state) => {
+      state.status = ApiStatus.loading;
+    })
+    .addCase(recoverAccountAsync.fulfilled, (state, action) => {
+      const res = action.payload as IRecoverAccountResponse;
+      state.code = res.status;
+      state.showModal = true;
+      state.status = ApiStatus.success;
+    })
+    .addCase(recoverAccountAsync.rejected, (state, action) => {
+      const res = action.payload as IRecoverAccountError;
+      state.errorMessages = res.email;
+      state.showModal = true;
+      state.status = ApiStatus.failed;
+    })
+  }
 });
 
 export const { revertRecoverAccount }  = recoverAccountSlice.actions;

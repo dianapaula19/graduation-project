@@ -5,13 +5,13 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('users', '0014_student_options_lists_user_changed_password_and_more'),
-    ]
+  dependencies = [
+    ('users', '0014_student_options_lists_user_changed_password_and_more'),
+  ]
 
-    operations = [
-        migrations.AddConstraint(
-            model_name='grade',
-            constraint=models.UniqueConstraint(fields=('student', 'year'), name='unique_migration_grade_student_year'),
-        ),
-    ]
+  operations = [
+    migrations.AddConstraint(
+      model_name='grade',
+      constraint=models.UniqueConstraint(fields=('student', 'year'), name='unique_migration_grade_student_year'),
+    ),
+  ]

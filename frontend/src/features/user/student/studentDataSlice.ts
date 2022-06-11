@@ -55,49 +55,49 @@ export interface IStudentDataError {
 export const studentDataAsync = createAsyncThunk(
   'user/student/data',
   async (request: IStudentDataRequest, {rejectWithValue}) => await axios
-    .post(
-        API_URL_USER + "/student/data",
-        {
-          email: request.email
-        }, 
-        {
-          headers: {
-            Authorization: `Bearer ${request.token}`
-          }
-        }
-      )
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      return rejectWithValue(error.response.data)
-    })
+  .post(
+    API_URL_USER + "/student/data",
+    {
+      email: request.email
+    }, 
+    {
+      headers: {
+      Authorization: `Bearer ${request.token}`
+      }
+    }
+    )
+  .then((response) => {
+    return response.data;
+  })
+  .catch((error) => {
+    return rejectWithValue(error.response.data)
+  })
 )
 
 export const studentDataSlice = createSlice({
   name: 'studentData',
   initialState,
   reducers: {
-    revertStudentData: () => {
-      return initialState;
-    }
+  revertStudentData: () => {
+    return initialState;
+  }
   },
   extraReducers: (builder) => {
-    builder
-    .addCase(studentDataAsync.pending, (state) => {
-      state.status = ApiStatus.loading;
-    })
-    .addCase(studentDataAsync.fulfilled, (state, action) => {
-      const res = action.payload as IStudentDataResponse;
-      state.code = res.code;
-      state.studentData = res.student_data;
-      state.status = ApiStatus.success;
-    })
-    .addCase(studentDataAsync.rejected, (state, action) => {
-      const res = action.payload as IStudentDataError;
-      state.code = res.code;
-      state.status = ApiStatus.failed;
-    })
+  builder
+  .addCase(studentDataAsync.pending, (state) => {
+    state.status = ApiStatus.loading;
+  })
+  .addCase(studentDataAsync.fulfilled, (state, action) => {
+    const res = action.payload as IStudentDataResponse;
+    state.code = res.code;
+    state.studentData = res.student_data;
+    state.status = ApiStatus.success;
+  })
+  .addCase(studentDataAsync.rejected, (state, action) => {
+    const res = action.payload as IStudentDataError;
+    state.code = res.code;
+    state.status = ApiStatus.failed;
+  })
   }
 });
 

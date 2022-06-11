@@ -28,41 +28,41 @@ interface ICreateOptionsListError {
 export const getNotVerifiedUsersAsync = createAsyncThunk(
   'user/admin/NotVerifiedUsers',
   async (request, {rejectWithValue}) => await axios
-    .get(
-      API_URL_USER + "/admin/not_verified_users",
-    )
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      return rejectWithValue(error.response.data);
-    })
+  .get(
+    API_URL_USER + "/admin/not_verified_users",
+  )
+  .then((response) => {
+    return response.data;
+  })
+  .catch((error) => {
+    return rejectWithValue(error.response.data);
+  })
 )
 
 export const getNotVerifiedUsersSlice = createSlice({
   name: 'notVerifiedUsers',
   initialState,
   reducers: {
-    revertGetNotVerifiedUsers: () => {
-      return initialState;
-    }
+  revertGetNotVerifiedUsers: () => {
+    return initialState;
+  }
   },
   extraReducers: (builder) => {
-    builder
-    .addCase(getNotVerifiedUsersAsync.pending, (state, action) => {
-      state.status = ApiStatus.loading;
-    })
-    .addCase(getNotVerifiedUsersAsync.fulfilled, (state, action) => {
-      const res = action.payload as ICreateOptionsListResponse;
-      state.users = res.users;
-      state.code = res.code;
-      state.status = ApiStatus.success;
-    })
-    .addCase(getNotVerifiedUsersAsync.rejected, (state, action) => {
-      const res = action.payload as ICreateOptionsListError;
-      state.code = res.code;
-      state.status = ApiStatus.failed;
-    })
+  builder
+  .addCase(getNotVerifiedUsersAsync.pending, (state, action) => {
+    state.status = ApiStatus.loading;
+  })
+  .addCase(getNotVerifiedUsersAsync.fulfilled, (state, action) => {
+    const res = action.payload as ICreateOptionsListResponse;
+    state.users = res.users;
+    state.code = res.code;
+    state.status = ApiStatus.success;
+  })
+  .addCase(getNotVerifiedUsersAsync.rejected, (state, action) => {
+    const res = action.payload as ICreateOptionsListError;
+    state.code = res.code;
+    state.status = ApiStatus.failed;
+  })
   }
 });
 

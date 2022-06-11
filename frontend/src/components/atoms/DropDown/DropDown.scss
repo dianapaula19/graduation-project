@@ -2,60 +2,60 @@ $icon: "%3Csvg /%3E%3C/svg%3E";
 
 .dropdown {
 
-    display: flex;
-    flex-direction: column;
-    gap: .75rem;
-    width: 100%; 
-    margin: .5rem 0 1rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  width: 100%; 
+  margin: .5rem 0 1rem 0;
 
-    &__label {
-        color: #525252;
-        text-transform: uppercase;
+  &__label {
+    color: #525252;
+    text-transform: uppercase;
+  }
+
+  &__select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    &:focus {
+      border-color: #0366d6;
+      background-image: url('./angle-circle-arrow-down-focus.svg');
     }
-
-    &__select {
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        outline: none;
-        &:focus {
-            border-color: #0366d6;
-            background-image: url('./angle-circle-arrow-down-focus.svg');
-        }
-        &:hover {
-            border-color: #0366d6;
-            background-image: url('./angle-circle-arrow-down-focus.svg');
-        }
-        padding: 0 1rem;
-        border-radius: .5rem;
-        border: .15rem solid #c4c4c4;
-        height: 3.5rem;
-        background: url('./angle-circle-arrow-down.svg') no-repeat right center;
-        background-size: 2rem;
-        background-position: 97% 50%;
-        background-color: white;
-
+    &:hover {
+      border-color: #0366d6;
+      background-image: url('./angle-circle-arrow-down-focus.svg');
     }
+    padding: 0 1rem;
+    border-radius: .5rem;
+    border: .15rem solid #c4c4c4;
+    height: 3.5rem;
+    background: url('./angle-circle-arrow-down.svg') no-repeat right center;
+    background-size: 2rem;
+    background-position: 97% 50%;
+    background-color: white;
+
+  }
 
 }
 
 .dropdown--error {
-    &__error-group {
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: .2rem;
-        &__icon {
-            color: crimson;
-        }
-        &__span {
-            color: crimson;
-            white-space: pre-wrap;           
-        }    
+  &__error-group {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .2rem;
+    &__icon {
+      color: crimson;
     }
+    &__span {
+      color: crimson;
+      white-space: pre-wrap;       
+    }  
+  }
 
 }
 
 .dropdown--teacher-list {
-    grid-area: dropdown-teacher-list;
+  grid-area: dropdown-teacher-list;
 }

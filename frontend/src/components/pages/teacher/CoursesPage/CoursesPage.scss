@@ -1,9 +1,9 @@
 .courses {
-    display: grid;
-    row-gap: 5rem;
-    grid-template-areas: 
-        "dropdown-teacher-list . . . ."
-        ". . . . ."
-        "students-list students-list students-list students-list students-list"
-        ". . mail-button . excel-button";
+  display: grid;
+  row-gap: 5rem;
+  grid-template-areas: 
+    "dropdown-teacher-list . . . ."
+    ". . . . ."
+    "students-list students-list students-list students-list students-list"
+    ". . mail-button . excel-button";
 }

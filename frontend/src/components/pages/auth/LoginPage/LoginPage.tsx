@@ -20,36 +20,36 @@ const LoginPage = () => {
   const { t } = useTranslation();
 
   switch (status) {
-    case ApiStatus.loading:
-      return (
-        <LoadingPage />
-      )
-    case ApiStatus.success:
-      return (
-        <Navigate to="/" />
-      )
-    case ApiStatus.failed:
-      return (
-        <>
-          <AuthentificationPage 
-            action={AuthentificationAction.login} 
-          />
-          <Modal
-            show={showModal}
-            closeModal={() => {
-              dispatch(revertLogin())
-            }}                
-          >
-            <span>{code !== null ? t(`login.codes.${code}`) : ''}</span>
-          </Modal>
-        </>
-      )
-    default:
-      return (
-        <AuthentificationPage 
-          action={AuthentificationAction.login} 
-        />
-      )
+  case ApiStatus.loading:
+    return (
+    <LoadingPage />
+    )
+  case ApiStatus.success:
+    return (
+    <Navigate to="/" />
+    )
+  case ApiStatus.failed:
+    return (
+    <>
+      <AuthentificationPage 
+      action={AuthentificationAction.login} 
+      />
+      <Modal
+      show={showModal}
+      closeModal={() => {
+        dispatch(revertLogin())
+      }}        
+      >
+      <span>{code !== null ? t(`login.codes.${code}`) : ''}</span>
+      </Modal>
+    </>
+    )
+  default:
+    return (
+    <AuthentificationPage 
+      action={AuthentificationAction.login} 
+    />
+    )
   }
 
 };

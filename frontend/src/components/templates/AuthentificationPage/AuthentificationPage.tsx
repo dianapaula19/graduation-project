@@ -12,53 +12,53 @@ import ResetPasswordSvg from "./assets/reset-password.svg";
 import "./AuthentificationPage.scss";
 
 const AuthentificationPage = ({
-    action
+  action
 }
 : IAuthentificationPageProps) => {
 
-    const componentClassName = "authentification-template";
-    const mainClassName = `${componentClassName}__main`;
-    const imageClassName = `${mainClassName}__image-container`;
-    const formClassName = `${mainClassName}__form-container`;
+  const componentClassName = "authentification-template";
+  const mainClassName = `${componentClassName}__main`;
+  const imageClassName = `${mainClassName}__image-container`;
+  const formClassName = `${mainClassName}__form-container`;
 
-    let form = null;
-    let image = null;
+  let form = null;
+  let image = null;
 
-    switch (action) {
-        case AuthentificationAction.register:
-            form = <RegistrationForm />;
-            image = RegistrationSvg;
-            break;
-        case AuthentificationAction.login:
-            form = <LoginForm />;
-            image = LoginSvg;
-            break;
-        case AuthentificationAction.recoverAccount:
-            form = <RecoverAccountForm />;
-            image = RecoverAccountSvg;
-            break;
-        case AuthentificationAction.resetPassword:
-            form = <ResetPasswordForm />;
-            image = ResetPasswordSvg;
-            break;
-    }
+  switch (action) {
+    case AuthentificationAction.register:
+      form = <RegistrationForm />;
+      image = RegistrationSvg;
+      break;
+    case AuthentificationAction.login:
+      form = <LoginForm />;
+      image = LoginSvg;
+      break;
+    case AuthentificationAction.recoverAccount:
+      form = <RecoverAccountForm />;
+      image = RecoverAccountSvg;
+      break;
+    case AuthentificationAction.resetPassword:
+      form = <ResetPasswordForm />;
+      image = ResetPasswordSvg;
+      break;
+  }
 
-    return(
-        <div className={componentClassName}>
-            <Languages/>
-            <div className={mainClassName}>
-                <div className={imageClassName}>
-                    <img
-                        src={image}
-                        className={`${imageClassName}__img`}
-                    />
-                </div>
-                <div className={formClassName}>
-                    {form}
-                </div>
-            </div>
+  return(
+    <div className={componentClassName}>
+      <Languages/>
+      <div className={mainClassName}>
+        <div className={imageClassName}>
+          <img
+            src={image}
+            className={`${imageClassName}__img`}
+          />
         </div>
-    )
+        <div className={formClassName}>
+          {form}
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export default AuthentificationPage;

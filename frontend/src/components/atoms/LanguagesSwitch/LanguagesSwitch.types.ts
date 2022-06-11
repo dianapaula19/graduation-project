@@ -1,16 +1,16 @@
 enum Language {
-    ro = "ro",
-    en = "en"
+  ro = "ro",
+  en = "en"
 }
 
 interface LanguageState {
-    language: Language
+  language: Language
 }
 
 export type {
-    LanguageState
+  LanguageState
 }
 
 export {
-    Language
+  Language
 }

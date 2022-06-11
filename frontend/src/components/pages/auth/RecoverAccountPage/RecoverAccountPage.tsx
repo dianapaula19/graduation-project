@@ -15,23 +15,23 @@ const RecoverAccountPage = () => {
   const dispatch = useAppDispatch();
 
   if (status === ApiStatus.loading) {
-    return <LoadingPage />;
+  return <LoadingPage />;
   }
 
   return (
-    <>
-      <AuthentificationPage 
-        action={AuthentificationAction.recoverAccount} 
-      />
-      <Modal
-          show={showModal}
-          closeModal={() => {
-            dispatch(revertRecoverAccount());
-          }}                
-      >
-        <span></span>
-      </Modal>
-    </>
+  <>
+    <AuthentificationPage 
+    action={AuthentificationAction.recoverAccount} 
+    />
+    <Modal
+      show={showModal}
+      closeModal={() => {
+      dispatch(revertRecoverAccount());
+      }}        
+    >
+    <span></span>
+    </Modal>
+  </>
   ) 
   
 }

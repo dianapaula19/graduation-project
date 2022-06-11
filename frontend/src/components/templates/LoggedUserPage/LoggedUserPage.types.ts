@@ -1,9 +1,9 @@
 interface ILoggedUserPageProps {
-    children?: React.ReactNode
+  children?: React.ReactNode
 }
 
 export type {
-    ILoggedUserPageProps
+  ILoggedUserPageProps
 }
 
 export {

@@ -1,34 +1,34 @@
 .optional-course-card {
-    display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
-    grid-template-areas: 
-        "drag-icon info syllabus-button";
-    
-    column-gap: .5rem;
-    border: #c4c4c4 solid .05rem;
-    background-color: #ffffff;
-    box-shadow: .1rem .1rem .05rem #c4c4c4;
-    padding: .75rem 1.5rem;
-    height: 3rem;
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-areas: 
+    "drag-icon info syllabus-button";
+  
+  column-gap: .5rem;
+  border: #c4c4c4 solid .05rem;
+  background-color: #ffffff;
+  box-shadow: .1rem .1rem .05rem #c4c4c4;
+  padding: .75rem 1.5rem;
+  height: 3rem;
 
-    align-items: center;
+  align-items: center;
 
-    &__drag-icon {
-        grid-area: drag-icon; 
-        color: #525252;
-        justify-self: start;
-        height: 1.5rem;
-        cursor: pointer;
-    }
+  &__drag-icon {
+    grid-area: drag-icon; 
+    color: #525252;
+    justify-self: start;
+    height: 1.5rem;
+    cursor: pointer;
+  }
 
-    &__info {
-        grid-area: info;
-        color: #525252;
-        justify-self: center;
-        font-size: small;
-    }
+  &__info {
+    grid-area: info;
+    color: #525252;
+    justify-self: center;
+    font-size: small;
+  }
 
-    &__a {
-        justify-self: end;
-    }
+  &__a {
+    justify-self: end;
+  }
 }

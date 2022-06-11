@@ -1,26 +1,26 @@
 import { IOptionalCourseCardProps } from "../OptionalCourseCard/OptionalCourseCard.types";
 
 interface IOptionalCourseCard {
-    courseId: number;
-    courseTitle: string;
-    teacherName: string;
-    teacherEmail: string;
-    linkDocument?: string;
+  courseId: number;
+  courseTitle: string;
+  teacherName: string;
+  teacherEmail: string;
+  linkDocument?: string;
 }
 
 interface IDataRef {
-    position: number;
-    id: number;
+  position: number;
+  id: number;
 }
 
 interface IOptionalCoursesContainerProps {
-    optionalsListId: number;
-    title: string;
-    courses: IOptionalCourseCard[];
+  optionalsListId: number;
+  title: string;
+  courses: IOptionalCourseCard[];
 }
 
 export type {
-    IOptionalCourseCard,
-    IDataRef,
-    IOptionalCoursesContainerProps
+  IOptionalCourseCard,
+  IDataRef,
+  IOptionalCoursesContainerProps
 }

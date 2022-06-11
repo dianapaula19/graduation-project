@@ -19,38 +19,38 @@ const RegisterPage = () => {
   const { t } = useTranslation();
 
   switch (status) {
-    case ApiStatus.loading:
-      return <LoadingPage />;  
-    case ApiStatus.success:
-      return <>
-            <AuthentificationPage 
-              action={AuthentificationAction.register} 
-            />
-            <Modal
-              show={showModal}
-              closeModal={() => {
-                dispatch(revertRegister());
-              }}                
-            >
-              <span>{code !== null ? t(`register.codes.${code}`) : 'Error'}</span>
-            </Modal>
-          </>;
-    case ApiStatus.failed:
-      return <>
-          <AuthentificationPage 
-            action={AuthentificationAction.register} 
-          />
-          <Modal
-            show={showModal}
-            closeModal={() => {
-              dispatch(revertRegister());
-            }}                
-          >
-            <span>{code !== null ? t(`register.codes.${code}`) : 'Error'}</span>
-          </Modal>
-        </>;  
-    default:
-      return <AuthentificationPage action={AuthentificationAction.register} />;
+  case ApiStatus.loading:
+    return <LoadingPage />;  
+  case ApiStatus.success:
+    return <>
+      <AuthentificationPage 
+        action={AuthentificationAction.register} 
+      />
+      <Modal
+        show={showModal}
+        closeModal={() => {
+        dispatch(revertRegister());
+        }}        
+      >
+        <span>{code !== null ? t(`register.codes.${code}`) : 'Error'}</span>
+      </Modal>
+      </>;
+  case ApiStatus.failed:
+    return <>
+      <AuthentificationPage 
+      action={AuthentificationAction.register} 
+      />
+      <Modal
+      show={showModal}
+      closeModal={() => {
+        dispatch(revertRegister());
+      }}        
+      >
+      <span>{code !== null ? t(`register.codes.${code}`) : 'Error'}</span>
+      </Modal>
+    </>;  
+  default:
+    return <AuthentificationPage action={AuthentificationAction.register} />;
   }
 
 };

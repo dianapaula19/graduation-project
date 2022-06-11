@@ -1,18 +1,18 @@
 enum AuthentificationAction {
-    login = "login",
-    register = "register",
-    recoverAccount = "recover account",
-    resetPassword = "reset password"
+  login = "login",
+  register = "register",
+  recoverAccount = "recover account",
+  resetPassword = "reset password"
 }
 
 interface IAuthentificationPageProps {
-    action: AuthentificationAction
+  action: AuthentificationAction
 }
 
 export type {
-    IAuthentificationPageProps
+  IAuthentificationPageProps
 }
 
 export {
-    AuthentificationAction
+  AuthentificationAction
 }

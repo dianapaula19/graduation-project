@@ -7,49 +7,49 @@
   grid-area: accounts-list;
 
   &__title {
-    font-size: larger;
-    font-weight: bold;
-    margin-bottom: 1.5rem;
+  font-size: larger;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
   }
 
   &__header {
-      display: grid;
-      border-bottom: #525252 solid .1rem;
-      padding-bottom: 1rem;
-      margin-bottom: 2.5rem;
-      text-transform: uppercase;
-      grid-template-columns: .1fr 2fr;
-      grid-template-areas: 
-          "header-index header-email";
+    display: grid;
+    border-bottom: #525252 solid .1rem;
+    padding-bottom: 1rem;
+    margin-bottom: 2.5rem;
+    text-transform: uppercase;
+    grid-template-columns: .1fr 2fr;
+    grid-template-areas: 
+      "header-index header-email";
 
-      &__index {
-          grid-area: header-index;
-      }
+    &__index {
+      grid-area: header-index;
+    }
 
-      &__email {
-          grid-area: header-email;
-      }
+    &__email {
+      grid-area: header-email;
+    }
   }
 
   &__item {
-      padding: .75rem 0;
-      display: grid;
-      grid-template-columns: .1fr 2fr;
-      grid-template-areas: 
-          "item-index item-email";
+    padding: .75rem 0;
+    display: grid;
+    grid-template-columns: .1fr 2fr;
+    grid-template-areas: 
+      "item-index item-email";
 
-      cursor: pointer;
-      &:hover {
-        background-color: #f1eff1;
-      }
-      
-      &__index {
-          grid-area: item-index;
-      }
+    cursor: pointer;
+    &:hover {
+    background-color: #f1eff1;
+    }
+    
+    &__index {
+      grid-area: item-index;
+    }
 
-      &__email {
-          grid-area: item-email;
-      }
+    &__email {
+      grid-area: item-email;
+    }
 
 
   }

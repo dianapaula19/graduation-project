@@ -7,18 +7,18 @@
   font-size: large;
 
   &:hover {
-    background-color: #f1eff1;
+  background-color: #f1eff1;
 
   }
 
   &__input {
-    background-color: #0366d6;
-    margin: 0;
-    width: 1.75rem;
-    height: 1.75rem;
-    border: 0.15rem solid #c4c4c4;
-    border-radius: 0.25rem;
-    transform: translateY(0.1rem);
+  background-color: #0366d6;
+  margin: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 0.15rem solid #c4c4c4;
+  border-radius: 0.25rem;
+  transform: translateY(0.1rem);
 
   }
 }

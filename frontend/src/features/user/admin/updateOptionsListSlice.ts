@@ -38,43 +38,43 @@ interface IUpdateOptionsListError {
 export const updateOptionsListAsync = createAsyncThunk(
   'user/admin/updateOptionsList',
   async (request: IUpdateOptionsListRequest, {rejectWithValue}) => await axios
-    .post(
-      API_URL_COURSE + "/admin/update_course",
-      request
-    )
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      return rejectWithValue(error.response.data);
-    })
+  .post(
+    API_URL_COURSE + "/admin/update_course",
+    request
+  )
+  .then((response) => {
+    return response.data;
+  })
+  .catch((error) => {
+    return rejectWithValue(error.response.data);
+  })
 )
 
 export const updateOptionsListSlice = createSlice({
   name: 'updateOptionsList',
   initialState,
   reducers: {
-    revertUpdateOptionsList: () => {
-      return initialState;
-    }
+  revertUpdateOptionsList: () => {
+    return initialState;
+  }
   },
   extraReducers: (builder) => {
-    builder
-    .addCase(updateOptionsListAsync.pending, (state, action) => {
-      state.status = ApiStatus.loading;
-    })
-    .addCase(updateOptionsListAsync.fulfilled, (state, action) => {
-      const res = action.payload as IUpdateOptionsListResponse;
-      state.code = res.code;
-      state.showModal = true;
-      state.status = ApiStatus.success;
-    })
-    .addCase(updateOptionsListAsync.rejected, (state, action) => {
-      const res = action.payload as IUpdateOptionsListError;
-      state.code = res.code;
-      state.showModal = true;
-      state.status = ApiStatus.failed;
-    })
+  builder
+  .addCase(updateOptionsListAsync.pending, (state, action) => {
+    state.status = ApiStatus.loading;
+  })
+  .addCase(updateOptionsListAsync.fulfilled, (state, action) => {
+    const res = action.payload as IUpdateOptionsListResponse;
+    state.code = res.code;
+    state.showModal = true;
+    state.status = ApiStatus.success;
+  })
+  .addCase(updateOptionsListAsync.rejected, (state, action) => {
+    const res = action.payload as IUpdateOptionsListError;
+    state.code = res.code;
+    state.showModal = true;
+    state.status = ApiStatus.failed;
+  })
   }
 });
 

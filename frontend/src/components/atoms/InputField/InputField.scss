@@ -1,93 +1,93 @@
 .input-field {
 
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  width: 100%;
+  margin: .5rem 0 1rem 0;
+
+  &__label {
+    color: #525252;
+    text-transform: uppercase;
+  }
+
+  &__input-group {
+
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 1rem;
+    border-radius: .5rem;
+    border: .15rem solid #c4c4c4;
+    height: 3.5rem;
+    background-color: white;
+
+    &:hover {
+      border-color: #0366d6;
+    }
+
     gap: .75rem;
-    width: 100%;
-    margin: .5rem 0 1rem 0;
-
-    &__label {
-        color: #525252;
-        text-transform: uppercase;
+    
+    &__icon {
+      color: #525252;
     }
 
-    &__input-group {
-
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        padding: 0 1rem;
-        border-radius: .5rem;
-        border: .15rem solid #c4c4c4;
-        height: 3.5rem;
-        background-color: white;
-
-        &:hover {
-            border-color: #0366d6;
-        }
-
-        gap: .75rem;
-        
-        &__icon {
-            color: #525252;
-        }
-
-        &__icon--password {
-            cursor: pointer;
-            margin-left: auto;
-        }
-
-        &__input {
-            all: unset;
-            color: #525252;
-            flex: 1;
-            &::placeholder {
-                color: #c4c4c4;
-            }
-        }
+    &__icon--password {
+      cursor: pointer;
+      margin-left: auto;
     }
 
-    &__input-group--error {
-        border-color: crimson;
+    &__input {
+      all: unset;
+      color: #525252;
+      flex: 1;
+      &::placeholder {
+        color: #c4c4c4;
+      }
     }
+  }
+
+  &__input-group--error {
+    border-color: crimson;
+  }
 
 }
 
 input[type="file"] {
-    display: none;
+  display: none;
 }
 
 .file-upload {
-    display: flex;
-    flex-direction: row;
-    font-weight: bold;
-    gap: 1rem;
-    align-items: center;
-    justify-content: center;
-    color: #0366d6;
-    background-color: transparent;
-    border: #0366d6 solid .2rem;
-    grid-area: excel-button;
-    margin: 0;
-    &:hover {
-        color: white;
-        background-color: #0366d6;
-    }
+  display: flex;
+  flex-direction: row;
+  font-weight: bold;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  color: #0366d6;
+  background-color: transparent;
+  border: #0366d6 solid .2rem;
+  grid-area: excel-button;
+  margin: 0;
+  &:hover {
+    color: white;
+    background-color: #0366d6;
+  }
 }
 
 .input-field--error {
-    &__error-group {
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: .2rem;
-        &__icon {
-            color: crimson;
-        }
-        &__span {
-            color: crimson;
-            white-space: pre-wrap;           
-        }    
+  &__error-group {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .2rem;
+    &__icon {
+      color: crimson;
     }
+    &__span {
+      color: crimson;
+      white-space: pre-wrap;       
+    }  
+  }
 
 }

@@ -20,6 +20,7 @@ interface ICreateCourseRequest {
   title: string;
   link: string;
   capacity: number;
+  semester: number;
   teacher_email: string;
 }
 
@@ -34,43 +35,43 @@ interface ICreateCourseError {
 export const createCourseAsync = createAsyncThunk(
   'user/admin/createCourse',
   async (request: ICreateCourseRequest, {rejectWithValue}) => await axios
-    .post(
-      API_URL_COURSE + "/admin/create_course",
-      request
-    )
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      return rejectWithValue(error.response.data);
-    })
+  .post(
+    API_URL_COURSE + "/admin/create_course",
+    request
+  )
+  .then((response) => {
+    return response.data;
+  })
+  .catch((error) => {
+    return rejectWithValue(error.response.data);
+  })
 )
 
 export const createCourseSlice = createSlice({
   name: 'createCourse',
   initialState,
   reducers: {
-    revertCreateCourse: () => {
-      return initialState;
-    }
+  revertCreateCourse: () => {
+    return initialState;
+  }
   },
   extraReducers: (builder) => {
-    builder
-    .addCase(createCourseAsync.pending, (state, action) => {
-      state.status = ApiStatus.loading;
-    })
-    .addCase(createCourseAsync.fulfilled, (state, action) => {
-      const res = action.payload as ICreateCourseResponse;
-      state.code = res.code;
-      state.showModal = true;
-      state.status = ApiStatus.success;
-    })
-    .addCase(createCourseAsync.rejected, (state, action) => {
-      const res = action.payload as ICreateCourseError;
-      state.code = res.code;
-      state.showModal = true;
-      state.status = ApiStatus.failed;
-    })
+  builder
+  .addCase(createCourseAsync.pending, (state, action) => {
+    state.status = ApiStatus.loading;
+  })
+  .addCase(createCourseAsync.fulfilled, (state, action) => {
+    const res = action.payload as ICreateCourseResponse;
+    state.code = res.code;
+    state.showModal = true;
+    state.status = ApiStatus.success;
+  })
+  .addCase(createCourseAsync.rejected, (state, action) => {
+    const res = action.payload as ICreateCourseError;
+    state.code = res.code;
+    state.showModal = true;
+    state.status = ApiStatus.failed;
+  })
   }
 });
 

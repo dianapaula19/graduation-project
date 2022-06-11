@@ -20,6 +20,7 @@ interface IUpdateCourseRequest {
   title: string;
   link: string;
   capacity: number;
+  semester: number;
   teacher_email: string;
 }
 
@@ -34,43 +35,43 @@ interface IUpdateCourseError {
 export const updateCourseAsync = createAsyncThunk(
   'user/admin/updateCourse',
   async (request: IUpdateCourseRequest, {rejectWithValue}) => await axios
-    .post(
-      API_URL_COURSE + "/admin/update_course",
-      request
-    )
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      return rejectWithValue(error.response.data);
-    })
+  .post(
+    API_URL_COURSE + "/admin/update_course",
+    request
+  )
+  .then((response) => {
+    return response.data;
+  })
+  .catch((error) => {
+    return rejectWithValue(error.response.data);
+  })
 )
 
 export const updateCourseSlice = createSlice({
   name: 'updateCourse',
   initialState,
   reducers: {
-    revertUpdateCourse: () => {
-      return initialState;
-    }
+  revertUpdateCourse: () => {
+    return initialState;
+  }
   },
   extraReducers: (builder) => {
-    builder
-    .addCase(updateCourseAsync.pending, (state, action) => {
-      state.status = ApiStatus.loading;
-    })
-    .addCase(updateCourseAsync.fulfilled, (state, action) => {
-      const res = action.payload as IUpdateCourseResponse;
-      state.code = res.code;
-      state.showModal = true;
-      state.status = ApiStatus.success;
-    })
-    .addCase(updateCourseAsync.rejected, (state, action) => {
-      const res = action.payload as IUpdateCourseError;
-      state.code = res.code;
-      state.showModal = true;
-      state.status = ApiStatus.failed;
-    })
+  builder
+  .addCase(updateCourseAsync.pending, (state, action) => {
+    state.status = ApiStatus.loading;
+  })
+  .addCase(updateCourseAsync.fulfilled, (state, action) => {
+    const res = action.payload as IUpdateCourseResponse;
+    state.code = res.code;
+    state.showModal = true;
+    state.status = ApiStatus.success;
+  })
+  .addCase(updateCourseAsync.rejected, (state, action) => {
+    const res = action.payload as IUpdateCourseError;
+    state.code = res.code;
+    state.showModal = true;
+    state.status = ApiStatus.failed;
+  })
   }
 });
 

@@ -5,13 +5,13 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('users', '0010_rename_data_category_rename_data_student_category'),
-    ]
+  dependencies = [
+    ('users', '0010_rename_data_category_rename_data_student_category'),
+  ]
 
-    operations = [
-        migrations.AddConstraint(
-            model_name='category',
-            constraint=models.UniqueConstraint(fields=('domain', 'learning_mode', 'degree', 'study_program'), name='unique_migration_domain_learning_mode_degree_study_program'),
-        ),
-    ]
+  operations = [
+    migrations.AddConstraint(
+      model_name='category',
+      constraint=models.UniqueConstraint(fields=('domain', 'learning_mode', 'degree', 'study_program'), name='unique_migration_domain_learning_mode_degree_study_program'),
+    ),
+  ]

@@ -16,23 +16,23 @@ const ResetPasswordPage = () => {
   const dispatch = useAppDispatch();
 
   if (status === ApiStatus.loading) {
-    return <LoadingPage />;
+  return <LoadingPage />;
   }
 
   return (
-    <>
-      <AuthentificationPage 
-        action={AuthentificationAction.resetPassword} 
-      />
-      <Modal
-          show={showModal}
-          closeModal={() => {
-            dispatch(revertResetPassword());
-          }}                
-      >
-        <span></span>
-      </Modal>
-    </>
+  <>
+    <AuthentificationPage 
+    action={AuthentificationAction.resetPassword} 
+    />
+    <Modal
+      show={showModal}
+      closeModal={() => {
+      dispatch(revertResetPassword());
+      }}        
+    >
+    <span></span>
+    </Modal>
+  </>
   )
 }
 

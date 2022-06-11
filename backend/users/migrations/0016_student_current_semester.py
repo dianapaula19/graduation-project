@@ -6,14 +6,14 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('users', '0015_grade_unique_migration_grade_student_year'),
-    ]
+  dependencies = [
+    ('users', '0015_grade_unique_migration_grade_student_year'),
+  ]
 
-    operations = [
-        migrations.AddField(
-            model_name='student',
-            name='current_semester',
-            field=models.IntegerField(default=1, validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(2)]),
-        ),
-    ]
+  operations = [
+    migrations.AddField(
+      model_name='student',
+      name='current_semester',
+      field=models.IntegerField(default=1, validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(2)]),
+    ),
+  ]

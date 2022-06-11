@@ -11,23 +11,23 @@ const TextAreaField = ({
   const componentClassName = "textarea-field";
 
   return (
-    <div
-      className={componentClassName}
-    >
-      <label 
-        htmlFor={id}
-        className={`${componentClassName}__label`}
-            >
-        {label}
-      </label>
-      <textarea
-        className={`${componentClassName}__textarea`}
-        id={id}
-        {...rest}
+  <div
+    className={componentClassName}
+  >
+    <label 
+    htmlFor={id}
+    className={`${componentClassName}__label`}
       >
+    {label}
+    </label>
+    <textarea
+    className={`${componentClassName}__textarea`}
+    id={id}
+    {...rest}
+    >
 
-      </textarea>
-    </div>
+    </textarea>
+  </div>
   )
 }
 

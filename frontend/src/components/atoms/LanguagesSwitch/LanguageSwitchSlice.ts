@@ -4,22 +4,22 @@ import { Language, LanguageState } from "./LanguagesSwitch.types";
 
 
 const initialState: LanguageState = {
-    language: localStorage.getItem('language') == 'en' ? Language.en : Language.ro
+  language: localStorage.getItem('language') == 'en' ? Language.en : Language.ro
 };
 
 export const languagesSlice = createSlice({
-    name: "language",
-    initialState,
-    reducers: {
-        switchToEnglish: (state: { language: Language; }) => {
-            state.language = Language.en;
-            localStorage.setItem('language', 'en');
-        },
-        switchToRomanian: (state: { language: Language; }) => {
-            state.language = Language.ro;
-            localStorage.setItem('language', 'ro');
-        }
+  name: "language",
+  initialState,
+  reducers: {
+    switchToEnglish: (state: { language: Language; }) => {
+      state.language = Language.en;
+      localStorage.setItem('language', 'en');
+    },
+    switchToRomanian: (state: { language: Language; }) => {
+      state.language = Language.ro;
+      localStorage.setItem('language', 'ro');
     }
+  }
 });
 
 export const { switchToEnglish, switchToRomanian } = languagesSlice.actions;

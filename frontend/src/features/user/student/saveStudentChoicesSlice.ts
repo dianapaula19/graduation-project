@@ -38,43 +38,43 @@ export interface ISaveStudentChoicesError {
 export const saveStudentChoicesAsync = createAsyncThunk(
   'user/student/saveStudentChoices',
   async (request: ISaveStudentChoicesRequest, {rejectWithValue}) => await axios
-    .post(
-      API_URL_COURSE + "/student/create_or_update_student_choices",
-      request
-    )
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      return error.response.data;
-    })
+  .post(
+    API_URL_COURSE + "/student/create_or_update_student_choices",
+    request
+  )
+  .then((response) => {
+    return response.data;
+  })
+  .catch((error) => {
+    return error.response.data;
+  })
 )
 
 export const saveStudentChoicesSlice = createSlice({
   name: 'saveStudentChoices',
   initialState,
   reducers: {
-    revertSaveStudentChoices: () => {
-      return initialState;
-    }
+  revertSaveStudentChoices: () => {
+    return initialState;
+  }
   },
   extraReducers: (builder) => {
-    builder
-    .addCase(saveStudentChoicesAsync.pending, (state, action) => {
-      state.status = ApiStatus.loading;
-    })
-    .addCase(saveStudentChoicesAsync.fulfilled, (state, action) => {
-      const res = action.payload as ISaveStudentChoicesResponse;
-      state.code = res.code;
-      state.showModal = true;
-      state.status = ApiStatus.success;
-    })
-    .addCase(saveStudentChoicesAsync.rejected, (state, action) => {
-      const res = action.payload as ISaveStudentChoicesError;
-      state.code = res.code;
-      state.showModal = true;
-      state.status = ApiStatus.failed;
-    })
+  builder
+  .addCase(saveStudentChoicesAsync.pending, (state, action) => {
+    state.status = ApiStatus.loading;
+  })
+  .addCase(saveStudentChoicesAsync.fulfilled, (state, action) => {
+    const res = action.payload as ISaveStudentChoicesResponse;
+    state.code = res.code;
+    state.showModal = true;
+    state.status = ApiStatus.success;
+  })
+  .addCase(saveStudentChoicesAsync.rejected, (state, action) => {
+    const res = action.payload as ISaveStudentChoicesError;
+    state.code = res.code;
+    state.showModal = true;
+    state.status = ApiStatus.failed;
+  })
   }
 });
 

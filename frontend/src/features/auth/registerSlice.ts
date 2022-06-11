@@ -4,73 +4,73 @@ import { RootState } from "../../app/store";
 import { ApiStatus, API_URL_USER } from "../Utils";
 
 export interface RegisterState {
-    code: null | string;
-    showModal: boolean;
-    status: ApiStatus;
+  code: null | string;
+  showModal: boolean;
+  status: ApiStatus;
 };
 
 const initialState: RegisterState = {
-    code: null,
-    showModal: false,
-    status: ApiStatus.idle,
+  code: null,
+  showModal: false,
+  status: ApiStatus.idle,
 };
 
 export interface IRegisterRequest {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
 };
 
 export interface IRegisterResponse {
-    code: string;
+  code: string;
 };
 
 export interface IRegisterError {
-    code: string;
+  code: string;
 };
 
 export const registerAsync = createAsyncThunk(
-    'auth/register',
-    
-    async (request: IRegisterRequest, {rejectWithValue}) => await axios
-        .post(
-            API_URL_USER + "/register",
-            request
-        )
-        .then((response) => {
-            return response.data;
-        })
-        .catch((error) => {
-            return rejectWithValue(error.response.data);
-        })
+  'auth/register',
+  
+  async (request: IRegisterRequest, {rejectWithValue}) => await axios
+    .post(
+      API_URL_USER + "/register",
+      request
+    )
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      return rejectWithValue(error.response.data);
+    })
 
 );
 
 export const registerSlice = createSlice({
-    name: 'auth/register',
-    initialState,
-    reducers: {
-        revertRegister: () => {
-            return initialState;
-        }
-    },
-    extraReducers: (builder) => {
-        builder
-        .addCase(registerAsync.pending, (state) => {
-            state.status = ApiStatus.loading;
-        })
-        .addCase(registerAsync.fulfilled, (state, action) => {
-            const res = action.payload as IRegisterResponse;
-            state.code = res.code;
-            state.showModal = true;
-            state.status = ApiStatus.success;
-        })
-        .addCase(registerAsync.rejected, (state, action) => {
-            const res = action.payload as IRegisterError;
-            state.code = res.code;
-            state.showModal = true;
-            state.status = ApiStatus.failed;
-        })
-    },
+  name: 'auth/register',
+  initialState,
+  reducers: {
+    revertRegister: () => {
+      return initialState;
+    }
+  },
+  extraReducers: (builder) => {
+    builder
+    .addCase(registerAsync.pending, (state) => {
+      state.status = ApiStatus.loading;
+    })
+    .addCase(registerAsync.fulfilled, (state, action) => {
+      const res = action.payload as IRegisterResponse;
+      state.code = res.code;
+      state.showModal = true;
+      state.status = ApiStatus.success;
+    })
+    .addCase(registerAsync.rejected, (state, action) => {
+      const res = action.payload as IRegisterError;
+      state.code = res.code;
+      state.showModal = true;
+      state.status = ApiStatus.failed;
+    })
+  },
 });
 
 export const { revertRegister } = registerSlice.actions;

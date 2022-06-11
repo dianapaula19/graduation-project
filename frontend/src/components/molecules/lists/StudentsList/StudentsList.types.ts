@@ -1,14 +1,14 @@
 interface Student {
-    first_name: string;
-    last_name: string;
-    email: string;
+  first_name: string;
+  last_name: string;
+  email: string;
 }
 
 interface IStudentsListProps {
-    students: Student[]
+  students: Student[]
 }
 
 export type {
-    Student,
-    IStudentsListProps
+  Student,
+  IStudentsListProps
 }

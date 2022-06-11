@@ -7,20 +7,20 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('users', '0017_alter_student_degree_alter_student_domain_and_more'),
-    ]
+  dependencies = [
+    ('users', '0017_alter_student_degree_alter_student_domain_and_more'),
+  ]
 
-    operations = [
-        migrations.CreateModel(
-            name='Secretary',
-            fields=[
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, serialize=False, to=settings.AUTH_USER_MODEL)),
-            ],
-        ),
-        migrations.AlterField(
-            model_name='user',
-            name='role',
-            field=models.TextField(choices=[('student', 'Student'), ('teacher', 'Teacher'), ('secretary', 'Secretary'), ('admin', 'Admin')], null=True),
-        ),
-    ]
+  operations = [
+    migrations.CreateModel(
+      name='Secretary',
+      fields=[
+        ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, serialize=False, to=settings.AUTH_USER_MODEL)),
+      ],
+    ),
+    migrations.AlterField(
+      model_name='user',
+      name='role',
+      field=models.TextField(choices=[('student', 'Student'), ('teacher', 'Teacher'), ('secretary', 'Secretary'), ('admin', 'Admin')], null=True),
+    ),
+  ]

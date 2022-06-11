@@ -5,18 +5,18 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('users', '0019_alter_user_role_delete_secretary'),
-    ]
+  dependencies = [
+    ('users', '0019_alter_user_role_delete_secretary'),
+  ]
 
-    operations = [
-        migrations.RemoveField(
-            model_name='student',
-            name='current_semester',
-        ),
-        migrations.AlterField(
-            model_name='student',
-            name='current_group',
-            field=models.CharField(max_length=3, null=True),
-        ),
-    ]
+  operations = [
+    migrations.RemoveField(
+      model_name='student',
+      name='current_semester',
+    ),
+    migrations.AlterField(
+      model_name='student',
+      name='current_group',
+      field=models.CharField(max_length=3, null=True),
+    ),
+  ]

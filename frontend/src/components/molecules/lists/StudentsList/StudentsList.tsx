@@ -4,63 +4,63 @@ import { useTranslation } from "react-i18next";
 import "./StudentsList.scss";
 
 const StudentsList = ({
-    students
+  students
 }: IStudentsListProps) => {
 
-    const componentClassName = "students-list";
-    
-    const { t } = useTranslation();
+  const componentClassName = "students-list";
+  
+  const { t } = useTranslation();
 
-    return (
-        <div 
-            className={componentClassName}
+  return (
+    <div 
+      className={componentClassName}
+    >
+      <div 
+        className={`${componentClassName}__header`}
+      >
+        <span
+          className={`${componentClassName}__index`}
         >
-            <div 
-                className={`${componentClassName}__header`}
+          #
+        </span>
+        <span
+          className={`${componentClassName}__name`}
+        >
+          {t("studentsList.header.name")}
+        </span>
+        <span
+          className={`${componentClassName}__email`}
+        >
+          {t("studentsList.header.email")}
+        </span>
+        
+      </div>
+      {students.map((student, idx) => {
+        return (
+          <div 
+            className={`${componentClassName}__item`}
+          >
+            <span
+              className={`${componentClassName}__index`}
             >
-                <span
-                    className={`${componentClassName}__index`}
-                >
-                    #
-                </span>
-                <span
-                    className={`${componentClassName}__name`}
-                >
-                    {t("studentsList.header.name")}
-                </span>
-                <span
-                    className={`${componentClassName}__email`}
-                >
-                    {t("studentsList.header.email")}
-                </span>
-                
-            </div>
-            {students.map((student, idx) => {
-                return (
-                    <div 
-                        className={`${componentClassName}__item`}
-                    >
-                        <span
-                            className={`${componentClassName}__index`}
-                        >
-                            {idx + 1}
-                        </span>
-                        <span
-                            className={`${componentClassName}__name`}
-                        >
-                            {`${student.first_name} ${student.last_name}`}
-                        </span>
-                        <a
-                            className={`${componentClassName}__email`}
-                            href={`mailto:${student.email}`}
-                        >
-                            {student.email}
-                        </a>
-                    </div>
-                )
-            })}
-        </div>
-    );
+              {idx + 1}
+            </span>
+            <span
+              className={`${componentClassName}__name`}
+            >
+              {`${student.first_name} ${student.last_name}`}
+            </span>
+            <a
+              className={`${componentClassName}__email`}
+              href={`mailto:${student.email}`}
+            >
+              {student.email}
+            </a>
+          </div>
+        )
+      })}
+    </div>
+  );
 }
 
 export default StudentsList;

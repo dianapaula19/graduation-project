@@ -42,147 +42,147 @@ const AccountsPage = ({
   let emails: string[] = [];
 
   if (users !== null && role === Role.NONE) {
-    emails = users;
+  emails = users;
   }
 
   if (students !== null && role === Role.STUDENT) {
-    students.forEach((student) => {
-      emails.push(student.email);
-    });
+  students.forEach((student) => {
+    emails.push(student.email);
+  });
   }
   if (teachers !== null && role === Role.TEACHER) {
-    teachers.forEach((teacher) => {
-      emails.push(teacher.email);
-    });
+  teachers.forEach((teacher) => {
+    emails.push(teacher.email);
+  });
   }
 
   useEffect(() => {
-    $('#import-excel-file-button').on('click', () => {
-      $('#import-excel-file-input').trigger('click')
-    });
-    if (
-      role === Role.STUDENT && 
-      (statusGetStudents === ApiStatus.idle || statusGetStudents === ApiStatus.failed)) 
-    {
-      dispatch(getStudentsAsync())
-    }
-    if (
-      role === Role.TEACHER && 
-      (statusGetTeachers === ApiStatus.idle || statusGetTeachers === ApiStatus.failed)) 
-    {
-      dispatch(getTeachersAsync())
-    }
-    if (
-      role === Role.NONE && 
-      statusGetNotVerifiedUsers === ApiStatus.idle) 
-    {
-      dispatch(getNotVerifiedUsersAsync())
-    }
+  $('#import-excel-file-button').on('click', () => {
+    $('#import-excel-file-input').trigger('click')
+  });
+  if (
+    role === Role.STUDENT && 
+    (statusGetStudents === ApiStatus.idle || statusGetStudents === ApiStatus.failed)) 
+  {
+    dispatch(getStudentsAsync())
+  }
+  if (
+    role === Role.TEACHER && 
+    (statusGetTeachers === ApiStatus.idle || statusGetTeachers === ApiStatus.failed)) 
+  {
+    dispatch(getTeachersAsync())
+  }
+  if (
+    role === Role.NONE && 
+    statusGetNotVerifiedUsers === ApiStatus.idle) 
+  {
+    dispatch(getNotVerifiedUsersAsync())
+  }
   }, [role, statusGetStudents, statusGetTeachers, statusGetNotVerifiedUsers])  
 
   const switchType = (role: Role): string =>  {
-    switch (role) {
-      case Role.NONE:
-        return 'notVerified' 
-      case Role.STUDENT:
-        return 'students'
-      case Role.TEACHER:
-        return 'teachers'
-      default:
-        return ''
-    }
+  switch (role) {
+    case Role.NONE:
+    return 'notVerified' 
+    case Role.STUDENT:
+    return 'students'
+    case Role.TEACHER:
+    return 'teachers'
+    default:
+    return ''
+  }
   }
 
   const onFileUpload = (e: React.ChangeEvent<HTMLInputElement>): void =>  {
-    e.preventDefault();
-    if (e.target.files) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const data = e.target?.result;
-        const workbook = XLSX.read(data, { type: "array" });
-        const sheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[sheetName];
-        if (role === Role.STUDENT) {
-          const json: IStudentData[] = XLSX.utils.sheet_to_json(worksheet);
-          dispatch(registerBatchStudentsAsync({students: json}))
-        } else if (role === Role.TEACHER) {
-          const json: ITeacherData[] = XLSX.utils.sheet_to_json(worksheet);
-          dispatch(registerBatchTeachersAsync({teachers: json}))
-        }
-      }
-      reader.readAsArrayBuffer(e.target.files[0]);
+  e.preventDefault();
+  if (e.target.files) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+    const data = e.target?.result;
+    const workbook = XLSX.read(data, { type: "array" });
+    const sheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[sheetName];
+    if (role === Role.STUDENT) {
+      const json: IStudentData[] = XLSX.utils.sheet_to_json(worksheet);
+      dispatch(registerBatchStudentsAsync({students: json}))
+    } else if (role === Role.TEACHER) {
+      const json: ITeacherData[] = XLSX.utils.sheet_to_json(worksheet);
+      dispatch(registerBatchTeachersAsync({teachers: json}))
     }
+    }
+    reader.readAsArrayBuffer(e.target.files[0]);
+  }
   }
   
 
   return (
-    <LoggedUserPage>
-      <div
-        className={componentClassName}
+  <LoggedUserPage>
+    <div
+    className={componentClassName}
+    >
+    <div 
+      className={`${componentClassName}__buttons`}
+    >
+      <Button 
+      label={"Not Verified Accounts"}
+      modifier={role !== Role.NONE ? ButtonModifier.unselected : ButtonModifier.none}
+      onClick={() => {navigate('/admin/accounts/notVerified')}} 
+      disabled={false} 
+      />
+      <Button 
+      label={"Students"} 
+      modifier={role !== Role.STUDENT ? ButtonModifier.unselected : ButtonModifier.none}
+      onClick={() => {navigate('/admin/accounts/students')}}
+      disabled={false} 
+      />
+      <Button 
+      label={"Teachers"}
+      modifier={role !== Role.TEACHER ? ButtonModifier.unselected : ButtonModifier.none} 
+      onClick={() => {navigate('/admin/accounts/teachers')}}
+      disabled={false} 
+      />
+    </div>
+    {role !== Role.NONE && (
+      <>
+      <Button 
+        id={"import-excel-file-button"}
+        label={t(`pages.accounts.${switchType(role)}.fileUploadLabel`)}
+        modifier={ButtonModifier.excel} 
+        disabled={false} 
+      />
+      <input 
+        type="file"
+        onChange={onFileUpload}
+        style={{
+        display: "none"
+        }}
+        id={"import-excel-file-input"}
+      />
+      </>
+    )}
+    <AccountsList
+      role={role} 
+      title={t(`pages.accounts.${switchType(role)}.accountsListTitle`)}
+      emails={emails} 
+    />
+    {role === Role.STUDENT && (
+      <Modal 
+      show={showModalRegisterBatchStudents} 
+      closeModal={() => {dispatch(revertRegisterBatchStudents());}}
       >
-        <div 
-          className={`${componentClassName}__buttons`}
-        >
-          <Button 
-            label={"Not Verified Accounts"}
-            modifier={role !== Role.NONE ? ButtonModifier.unselected : ButtonModifier.none}
-            onClick={() => {navigate('/admin/accounts/notVerified')}} 
-            disabled={false} 
-          />
-          <Button 
-            label={"Students"} 
-            modifier={role !== Role.STUDENT ? ButtonModifier.unselected : ButtonModifier.none}
-            onClick={() => {navigate('/admin/accounts/students')}}
-            disabled={false} 
-          />
-          <Button 
-            label={"Teachers"}
-            modifier={role !== Role.TEACHER ? ButtonModifier.unselected : ButtonModifier.none} 
-            onClick={() => {navigate('/admin/accounts/teachers')}}
-            disabled={false} 
-          />
-        </div>
-        {role !== Role.NONE && (
-          <>
-            <Button 
-              id={"import-excel-file-button"}
-              label={t(`pages.accounts.${switchType(role)}.fileUploadLabel`)}
-              modifier={ButtonModifier.excel} 
-              disabled={false} 
-            />
-            <input 
-              type="file"
-              onChange={onFileUpload}
-              style={{
-                display: "none"
-              }}
-              id={"import-excel-file-input"}
-            />
-          </>
-        )}
-        <AccountsList
-          role={role} 
-          title={t(`pages.accounts.${switchType(role)}.accountsListTitle`)}
-          emails={emails} 
-        />
-        {role === Role.STUDENT && (
-          <Modal 
-            show={showModalRegisterBatchStudents} 
-            closeModal={() => {dispatch(revertRegisterBatchStudents());}}
-          >
-          
-          </Modal>  
-        )}
-        {role === Role.TEACHER && (
-          <Modal 
-            show={showModalRegisterBatchTeachers} 
-            closeModal={() => {dispatch(revertRegisterBatchTeachers());}}
-          >
-        
-          </Modal>
-        )}
-      </div>
-    </LoggedUserPage>
+      
+      </Modal>  
+    )}
+    {role === Role.TEACHER && (
+      <Modal 
+      show={showModalRegisterBatchTeachers} 
+      closeModal={() => {dispatch(revertRegisterBatchTeachers());}}
+      >
+    
+      </Modal>
+    )}
+    </div>
+  </LoggedUserPage>
   )
 };
 

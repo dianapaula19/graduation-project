@@ -4,25 +4,25 @@ import "./Footer.scss";
 
 
 const Footer = () => {
-    
-    const componentClassName = "footer";
+  
+  const componentClassName = "footer";
 
-    const { t } = useTranslation();
+  const { t } = useTranslation();
+  
+  return (
     
-    return (
-        
-        <div 
-            className={componentClassName}
-        >
-            <span>
-                    © 2022
-            </span>
-            <br/>
-            <span>
-                {t("sidenav.facultyName")}
-            </span>
-        </div>
-    )
+    <div 
+      className={componentClassName}
+    >
+      <span>
+          © 2022
+      </span>
+      <br/>
+      <span>
+        {t("sidenav.facultyName")}
+      </span>
+    </div>
+  )
 }
 
 export default Footer;

@@ -4,8 +4,8 @@ import AuthentificationPage from "./AuthentificationPage";
 import { AuthentificationAction } from "./AuthentificationPage.types";
 
 export default {
-    title: "Templates/AuthentificationPage",
-    component: AuthentificationPage
+  title: "Templates/AuthentificationPage",
+  component: AuthentificationPage
 } as ComponentMeta<typeof AuthentificationPage>;
 
 const Template: ComponentStory<typeof AuthentificationPage> = (args) => <AuthentificationPage {...args}/>;
@@ -13,17 +13,17 @@ const Template: ComponentStory<typeof AuthentificationPage> = (args) => <Authent
 export const RegistrationPage = Template.bind({});
 
 RegistrationPage.args = {
-    action: AuthentificationAction.register
+  action: AuthentificationAction.register
 }
 
 export const LoginPage = Template.bind({});
 
 LoginPage.args = {
-    action: AuthentificationAction.login
+  action: AuthentificationAction.login
 }
 
 export const RecoverAccountPage = Template.bind({});
 
 LoginPage.args = {
-    action: AuthentificationAction.recoverAccount
+  action: AuthentificationAction.recoverAccount
 }

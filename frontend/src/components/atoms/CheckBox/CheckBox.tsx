@@ -13,21 +13,21 @@ const CheckBox = ({
   
 
   return (
-    <div
-      className={componentClassName}
+  <div
+    className={componentClassName}
+  >
+    <input 
+    className={`${componentClassName}__input`}
+    type="checkbox"
+    {...rest}
+    />
+    <label
+    className={`${componentClassName}__label`} 
+    htmlFor={id}
     >
-      <input 
-        className={`${componentClassName}__input`}
-        type="checkbox"
-        {...rest}
-      />
-      <label
-        className={`${componentClassName}__label`} 
-        htmlFor={id}
-      >
-          {label}
-      </label>
-    </div>
+      {label}
+    </label>
+  </div>
   )
 }
 

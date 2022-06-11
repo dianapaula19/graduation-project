@@ -41,43 +41,43 @@ interface IUpdateStudentInfoError {
 export const updateStudentInfoAsync = createAsyncThunk(
   'user/admin/updateStudentInfo',
   async (request: IUpdateStudentInfoRequest, {rejectWithValue}) => await axios
-    .post(
-      API_URL_USER + "/admin/students",
-      request
-    )
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      return rejectWithValue(error.response.data);
-    })
+  .post(
+    API_URL_USER + "/admin/students",
+    request
+  )
+  .then((response) => {
+    return response.data;
+  })
+  .catch((error) => {
+    return rejectWithValue(error.response.data);
+  })
 )
 
 export const updateStudentInfoSlice = createSlice({
   name: 'updateStudentInfo',
   initialState,
   reducers: {
-    revertUpdateStudentInfo: () => {
-      return initialState;
-    }
+  revertUpdateStudentInfo: () => {
+    return initialState;
+  }
   },
   extraReducers: (builder) => {
-    builder
-    .addCase(updateStudentInfoAsync.pending, (state, action) => {
-      state.status = ApiStatus.loading;
-    })
-    .addCase(updateStudentInfoAsync.fulfilled, (state, action) => {
-      const res = action.payload as IUpdateStudentInfoResponse;
-      state.code = res.code;
-      state.showModal = true;
-      state.status = ApiStatus.success;
-    })
-    .addCase(updateStudentInfoAsync.rejected, (state, action) => {
-      const res = action.payload as IUpdateStudentInfoError;
-      state.code = res.code;
-      state.showModal = true;
-      state.status = ApiStatus.failed;
-    })
+  builder
+  .addCase(updateStudentInfoAsync.pending, (state, action) => {
+    state.status = ApiStatus.loading;
+  })
+  .addCase(updateStudentInfoAsync.fulfilled, (state, action) => {
+    const res = action.payload as IUpdateStudentInfoResponse;
+    state.code = res.code;
+    state.showModal = true;
+    state.status = ApiStatus.success;
+  })
+  .addCase(updateStudentInfoAsync.rejected, (state, action) => {
+    const res = action.payload as IUpdateStudentInfoError;
+    state.code = res.code;
+    state.showModal = true;
+    state.status = ApiStatus.failed;
+  })
   }
 });
 

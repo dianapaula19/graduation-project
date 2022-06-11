@@ -4,8 +4,8 @@ import OptionsListCard from "./OptionsListCard";
 import { Degree, Domain, LearningMode, StudyProgram } from "../../App";
 
 export default {
-    title: "Molecules/OptionsListCard",
-    component: OptionsListCard
+  title: "Molecules/OptionsListCard",
+  component: OptionsListCard
 } as ComponentMeta<typeof OptionsListCard>;
 
 const Template: ComponentStory<typeof OptionsListCard> = (args) => <OptionsListCard {...args} />;

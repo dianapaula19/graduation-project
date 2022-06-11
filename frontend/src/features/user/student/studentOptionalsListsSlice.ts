@@ -43,39 +43,39 @@ export interface IStudentOptionalsListsResponse {
 export const studentOptionalsListsAsync = createAsyncThunk(
   'user/student/optionalsLists',
   async (request: IStudentOptionalsListsRequest, {rejectWithValue}) => await axios
-    .post(
-      API_URL_COURSE + "/student/get_student_options_lists",
-      request,
-    )
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      return rejectWithValue(error.response.data);
-    })
+  .post(
+    API_URL_COURSE + "/student/get_student_options_lists",
+    request,
+  )
+  .then((response) => {
+    return response.data;
+  })
+  .catch((error) => {
+    return rejectWithValue(error.response.data);
+  })
 )
 
 export const studentOptionalsListsSlice = createSlice({
   name: 'studentOptionalsLists',
   initialState,
   reducers: {
-    revertStudentOptionalsLists: () => {
-      return initialState;
-    }
+  revertStudentOptionalsLists: () => {
+    return initialState;
+  }
   },
   extraReducers: (builder) => {
-    builder
-    .addCase(studentOptionalsListsAsync.pending, (state) => {
-      state.status = ApiStatus.loading;
-    })
-    .addCase(studentOptionalsListsAsync.fulfilled, (state, action) => {
-      const res = action.payload as IStudentOptionalsListsResponse;
-      state.studentOptionsLists = res.student_options_lists;
-      state.status = ApiStatus.success;
-    })
-    .addCase(studentOptionalsListsAsync.rejected, (state, action) => {
-      state.status = ApiStatus.failed;
-    })
+  builder
+  .addCase(studentOptionalsListsAsync.pending, (state) => {
+    state.status = ApiStatus.loading;
+  })
+  .addCase(studentOptionalsListsAsync.fulfilled, (state, action) => {
+    const res = action.payload as IStudentOptionalsListsResponse;
+    state.studentOptionsLists = res.student_options_lists;
+    state.status = ApiStatus.success;
+  })
+  .addCase(studentOptionalsListsAsync.rejected, (state, action) => {
+    state.status = ApiStatus.failed;
+  })
   }
 });
 

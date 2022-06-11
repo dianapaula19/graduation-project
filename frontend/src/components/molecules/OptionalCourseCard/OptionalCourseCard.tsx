@@ -8,49 +8,49 @@ import { LinkButtonModifier } from "../../atoms/LinkButton";
 import "./OptionalCourseCard.scss";
 
 const OptionalCourseCard = ({
-    index,
-    optionalCourseId,
-    optionalsListId,
-    handleDragStart,
-    handleDragEnter,
-    optionalName,
-    teacherName,
-    teacherEmail,
-    linkDocument, 
+  index,
+  optionalCourseId,
+  optionalsListId,
+  handleDragStart,
+  handleDragEnter,
+  optionalName,
+  teacherName,
+  teacherEmail,
+  linkDocument, 
 }: IOptionalCourseCardProps) => {
 
-    const componentClassName = "optional-course-card";
+  const componentClassName = "optional-course-card";
 
-    const { t } = useTranslation();
+  const { t } = useTranslation();
 
-    return (
-        <div 
-            className={componentClassName}
-            onDragStart={() => handleDragStart(index, optionalsListId)}
-            onDragEnter={() => handleDragEnter(index, optionalsListId)}
-            onDragEnd={(e) => e.preventDefault()}
-            key={optionalCourseId}
-            draggable
-        >
-            <FontAwesomeIcon 
-                icon={faBars}
-                className={`${componentClassName}__drag-icon`} 
-            />
-            <span
-                className={`${componentClassName}__info`}
-            >
-                {optionalName} | {teacherName} ({teacherEmail})
-            </span>
-            {linkDocument && (
-                <LinkButton 
-                    text={t("syllabusButton")}
-                    modifier={LinkButtonModifier.syllabus} 
-                    href={linkDocument}       
-                    target="_blank"         
-                />      
-            )} 
-        </div>
-    )
+  return (
+    <div 
+      className={componentClassName}
+      onDragStart={() => handleDragStart(index, optionalsListId)}
+      onDragEnter={() => handleDragEnter(index, optionalsListId)}
+      onDragEnd={(e) => e.preventDefault()}
+      key={optionalCourseId}
+      draggable
+    >
+      <FontAwesomeIcon 
+        icon={faBars}
+        className={`${componentClassName}__drag-icon`} 
+      />
+      <span
+        className={`${componentClassName}__info`}
+      >
+        {optionalName} | {teacherName} ({teacherEmail})
+      </span>
+      {linkDocument && (
+        <LinkButton 
+          text={t("syllabusButton")}
+          modifier={LinkButtonModifier.syllabus} 
+          href={linkDocument}     
+          target="_blank"     
+        />    
+      )} 
+    </div>
+  )
 }
 
 export default OptionalCourseCard;

@@ -1,8 +1,8 @@
 interface IResetPasswordFormData {
-    password: string;
-    confirmPassword: string;
+  password: string;
+  confirmPassword: string;
 }
 
 export type {
-    IResetPasswordFormData
+  IResetPasswordFormData
 }

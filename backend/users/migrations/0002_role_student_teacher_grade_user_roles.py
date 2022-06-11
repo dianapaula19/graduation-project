@@ -8,47 +8,47 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('users', '0001_initial'),
-    ]
+  dependencies = [
+    ('users', '0001_initial'),
+  ]
 
-    operations = [
-        migrations.CreateModel(
-            name='Role',
-            fields=[
-                ('id', models.PositiveSmallIntegerField(choices=[(1, 'student'), (2, 'teacher'), (3, 'admin')], primary_key=True, serialize=False)),
-            ],
-        ),
-        migrations.CreateModel(
-            name='Student',
-            fields=[
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, serialize=False, to=settings.AUTH_USER_MODEL)),
-                ('domain', models.TextField(choices=[('Computer Science', 'Computer Science'), ('Computer Engineering', 'Computer Engineering'), ('Mathematics', 'Mathematics')])),
-                ('learning_mode', models.TextField(choices=[('IF', 'If'), ('IFR', 'Ifr'), ('ID', 'Id')])),
-                ('degree', models.TextField(choices=[('Bachelors', 'Bachelors'), ('Masters', 'Masters')])),
-                ('study_program', models.CharField(max_length=255)),
-                ('current_group', models.CharField(max_length=3)),
-                ('current_year', models.IntegerField(validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(4)])),
-            ],
-        ),
-        migrations.CreateModel(
-            name='Teacher',
-            fields=[
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, serialize=False, to=settings.AUTH_USER_MODEL)),
-            ],
-        ),
-        migrations.CreateModel(
-            name='Grade',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('grade', models.FloatField(validators=[django.core.validators.MinValueValidator(0.0), django.core.validators.MaxValueValidator(10.0)])),
-                ('year', models.IntegerField(validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(4)])),
-                ('student', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='grades', to='users.student')),
-            ],
-        ),
-        migrations.AddField(
-            model_name='user',
-            name='roles',
-            field=models.ManyToManyField(to='users.role'),
-        ),
-    ]
+  operations = [
+    migrations.CreateModel(
+      name='Role',
+      fields=[
+        ('id', models.PositiveSmallIntegerField(choices=[(1, 'student'), (2, 'teacher'), (3, 'admin')], primary_key=True, serialize=False)),
+      ],
+    ),
+    migrations.CreateModel(
+      name='Student',
+      fields=[
+        ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, serialize=False, to=settings.AUTH_USER_MODEL)),
+        ('domain', models.TextField(choices=[('Computer Science', 'Computer Science'), ('Computer Engineering', 'Computer Engineering'), ('Mathematics', 'Mathematics')])),
+        ('learning_mode', models.TextField(choices=[('IF', 'If'), ('IFR', 'Ifr'), ('ID', 'Id')])),
+        ('degree', models.TextField(choices=[('Bachelors', 'Bachelors'), ('Masters', 'Masters')])),
+        ('study_program', models.CharField(max_length=255)),
+        ('current_group', models.CharField(max_length=3)),
+        ('current_year', models.IntegerField(validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(4)])),
+      ],
+    ),
+    migrations.CreateModel(
+      name='Teacher',
+      fields=[
+        ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, serialize=False, to=settings.AUTH_USER_MODEL)),
+      ],
+    ),
+    migrations.CreateModel(
+      name='Grade',
+      fields=[
+        ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+        ('grade', models.FloatField(validators=[django.core.validators.MinValueValidator(0.0), django.core.validators.MaxValueValidator(10.0)])),
+        ('year', models.IntegerField(validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(4)])),
+        ('student', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='grades', to='users.student')),
+      ],
+    ),
+    migrations.AddField(
+      model_name='user',
+      name='roles',
+      field=models.ManyToManyField(to='users.role'),
+    ),
+  ]

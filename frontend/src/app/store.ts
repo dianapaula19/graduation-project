@@ -8,6 +8,7 @@ import resetPasswordReducer from "../features/auth/resetPasswordSlice";
 import studentDataReducer from "../features/user/student/studentDataSlice";
 import studentOptionalsListsReducer from '../features/user/student/studentOptionalsListsSlice';
 import saveStudentChoicesReducer from "../features/user/student/saveStudentChoicesSlice";
+import getStudentCoursesReducer from "../features/user/student/getStudentCoursesSlice";
 import createOptionsListReducer from "../features/user/admin/createOptionsListSlice";
 import createCourseReducer from "../features/user/admin/createCourseSlice";
 import updateCourseReducer from "../features/user/admin/updateCourseSlice";
@@ -22,6 +23,7 @@ import getTeachersReducer from "../features/user/admin/getTeachersSlice";
 import getCoursesReducer from "../features/user/admin/getCoursesSlice";
 import getOptionsListsReducer from "../features/user/admin/getOptionsListsSlice";
 import updateOptionsListReducer from "../features/user/admin/updateOptionsListSlice";
+import updateSelectionSessionOpenReducer from "../features/user/admin/updateSelectionSessionOpenSlice";
 import getTeacherCoursesReducer from "../features/user/teacher/getTeacherCoursesSlice";
 import sendAnnouncementReducer from '../features/user/teacher/sendAnnouncementSlice';
 import { 
@@ -46,6 +48,7 @@ const reducers = combineReducers({
   studentData: studentDataReducer,
   studentOptionalsLists: studentOptionalsListsReducer,
   saveStudentChoices: saveStudentChoicesReducer,
+  getStudentCourses: getStudentCoursesReducer,
   // admin
   createOptionsList: createOptionsListReducer,
   updateOptionsList: updateOptionsListReducer, 
@@ -61,6 +64,7 @@ const reducers = combineReducers({
   getNotVerifiedUsers: getNotVerifiedUsersReducer,
   verifyUser: verifyUserReducer,
   getCourses: getCoursesReducer,
+  updateSelectionSessionOpen: updateSelectionSessionOpenReducer,
 
   // teacher
   getTeacherCourses: getTeacherCoursesReducer,
@@ -80,9 +84,9 @@ export const store = configureStore({
   devTools: process.env.NODE_ENV !== 'production',
   middleware: (getDefaultMiddleware) =>
   getDefaultMiddleware({
-    serializableCheck: {
-      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-    },
+  serializableCheck: {
+    ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+  },
   }),
 });
 

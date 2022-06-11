@@ -5,43 +5,43 @@ import { IModalProps } from "./Modal.types";
 import "./Modal.scss";
 
 const Modal = ({
-    show,
-    closeModal,
-    children
+  show,
+  closeModal,
+  children
 }: IModalProps) => {
 
-    const componentClassName = "modal";
-    const contentClassName = `${componentClassName}__content`;
-    const headerClassName = `${contentClassName}__header`;
+  const componentClassName = "modal";
+  const contentClassName = `${componentClassName}__content`;
+  const headerClassName = `${contentClassName}__header`;
 
-    if (show === false) {
-        return null;
-    }
+  if (show === false) {
+    return null;
+  }
 
-    return (
+  return (
+    <div 
+      className={componentClassName}
+    >
+      <div
+        className={contentClassName}
+      >
         <div 
-            className={componentClassName}
+          className={headerClassName}
         >
-            <div
-                className={contentClassName}
-            >
-                <div 
-                    className={headerClassName}
-                >
-                <FontAwesomeIcon 
-                    icon={faXmark}
-                    className={`${headerClassName}__icon`}
-                    onClick={closeModal}
-                />
-                </div>
-                <div
-                    className={`${contentClassName}__children`}
-                >
-                    {children}
-                </div>
-            </div>
+        <FontAwesomeIcon 
+          icon={faXmark}
+          className={`${headerClassName}__icon`}
+          onClick={closeModal}
+        />
         </div>
-    );
+        <div
+          className={`${contentClassName}__children`}
+        >
+          {children}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Modal;

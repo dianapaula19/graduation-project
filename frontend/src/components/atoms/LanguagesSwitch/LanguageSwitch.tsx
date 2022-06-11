@@ -3,50 +3,50 @@ import classNames from "classnames";
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
-    currentLanguage,
-    switchToEnglish,
-    switchToRomanian
+  currentLanguage,
+  switchToEnglish,
+  switchToRomanian
 } from "./LanguageSwitchSlice";
 import "./LanguageSwitch.scss";
 import { Language } from "./LanguagesSwitch.types";
 
 const LanguageSwitch = () => {
 
-    const { t, i18n } = useTranslation();
-    const dispatch = useAppDispatch();
+  const { t, i18n } = useTranslation();
+  const dispatch = useAppDispatch();
 
-    const language = useAppSelector(currentLanguage);
-    
-    const componentClassName = "language-switch";
+  const language = useAppSelector(currentLanguage);
+  
+  const componentClassName = "language-switch";
 
-    return(
-        <div className={componentClassName}>
-            <img
-                className={classNames(
-                    `${componentClassName}__img`,
-                    language === Language.ro && `${componentClassName}__img--selected`
-                )}
-                alt={t("ro")}
-                src="http://purecatamphetamine.github.io/country-flag-icons/3x2/RO.svg"
-                onClick={() => {
-                    i18n.changeLanguage(Language.ro);
-                    dispatch(switchToRomanian());
-                }}
-            />
-            <img
-                className={classNames(
-                    `${componentClassName}__img`,
-                    language === Language.en && `${componentClassName}__img--selected`
-                )}
-                alt={t("en")}
-                src="http://purecatamphetamine.github.io/country-flag-icons/3x2/GB.svg"
-                onClick={() => {
-                    i18n.changeLanguage(Language.en);
-                    dispatch(switchToEnglish())
-                }}
-            />
-        </div>
-    )
+  return(
+    <div className={componentClassName}>
+      <img
+        className={classNames(
+          `${componentClassName}__img`,
+          language === Language.ro && `${componentClassName}__img--selected`
+        )}
+        alt={t("ro")}
+        src="http://purecatamphetamine.github.io/country-flag-icons/3x2/RO.svg"
+        onClick={() => {
+          i18n.changeLanguage(Language.ro);
+          dispatch(switchToRomanian());
+        }}
+      />
+      <img
+        className={classNames(
+          `${componentClassName}__img`,
+          language === Language.en && `${componentClassName}__img--selected`
+        )}
+        alt={t("en")}
+        src="http://purecatamphetamine.github.io/country-flag-icons/3x2/GB.svg"
+        onClick={() => {
+          i18n.changeLanguage(Language.en);
+          dispatch(switchToEnglish())
+        }}
+      />
+    </div>
+  )
 }
 
 export default LanguageSwitch;

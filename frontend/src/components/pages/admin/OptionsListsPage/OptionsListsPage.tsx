@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import { createOptionsListCode, createOptionsListShowModal, createOptionsListStatus, revertCreateOptionsList } from "../../../../features/user/admin/createOptionsListSlice";
+import { createOptionsListCode, createOptionsListShowModal, revertCreateOptionsList } from "../../../../features/user/admin/createOptionsListSlice";
 import { getCoursesAsync, getCoursesCourses, getCoursesStatus } from "../../../../features/user/admin/getCoursesSlice";
-import { getCurrentOptionsList, getOptionsListsAsync, getOptionsListsCode, getOptionsListsOptionsLists, getOptionsListsStatus, revertCurrentOptionsList } from "../../../../features/user/admin/getOptionsListsSlice";
+import { getCurrentOptionsList, getOptionsListsAsync, getOptionsListsOptionsLists, getOptionsListsStatus, revertCurrentOptionsList } from "../../../../features/user/admin/getOptionsListsSlice";
+import { revertUpdateOptionsList, updateOptionsListShowModal } from "../../../../features/user/admin/updateOptionsListSlice";
 import { ApiStatus } from "../../../../features/Utils";
-import { Degree, Domain, LearningMode, StudyProgram } from "../../../App";
 import Button from "../../../atoms/Button";
 import OptionsListForm from "../../../molecules/forms/OptionsListForm";
-import CreateOptionsListForm from "../../../molecules/forms/OptionsListForm";
 import Modal from "../../../molecules/Modal";
 import OptionsListCard from "../../../molecules/OptionsListCard";
-import OptionalsListCard from "../../../molecules/OptionsListCard";
+
 import LoggedUserPage from "../../../templates/LoggedUserPage";
 import "./OptionsListsPage.scss";
 
@@ -27,85 +26,113 @@ const OptionsListsPage = () => {
   const optionsLists = useAppSelector(getOptionsListsOptionsLists);
 
   const showModalCreateOptionsList = useAppSelector(createOptionsListShowModal);
-  const code = useAppSelector(createOptionsListCode);
+  const showModalUpdateOptionsList = useAppSelector(updateOptionsListShowModal);
   const statusGetCourses = useAppSelector(getCoursesStatus);
   const statusGetOptionsLists = useAppSelector(getOptionsListsStatus);
-  const courses = useAppSelector(getCoursesCourses);
+
+  const domains: {[id: string]: string} = t("domains", {returnObjects: true}) as {[id: string]: string};
 
   useEffect(() => {
-    if (statusGetCourses === ApiStatus.idle) {
-      dispatch(getCoursesAsync());
-    }
-    if (
-      statusGetOptionsLists === ApiStatus.idle ||
-      statusGetOptionsLists === ApiStatus.failed
-    ) {
-      dispatch(getOptionsListsAsync());
-    }
-    if (showModalCreateOptionsList) {
-      setShowModalOptionsListForm(false)
-    }
+  if (
+    statusGetCourses === ApiStatus.idle ||
+    statusGetCourses === ApiStatus.failed
+  ) {
+    dispatch(getCoursesAsync());
+  }
+  if (
+    statusGetOptionsLists === ApiStatus.idle ||
+    statusGetOptionsLists === ApiStatus.failed
+  ) {
+    dispatch(getOptionsListsAsync());
+  }
+  if (
+    showModalCreateOptionsList || 
+    showModalUpdateOptionsList
+  ) {
+    setShowModalOptionsListForm(false);
+  }
+
   }, [
-    statusGetCourses, 
-    statusGetOptionsLists,
-    showModalCreateOptionsList, 
-    setShowModalOptionsListForm
+  statusGetCourses, 
+  statusGetOptionsLists,
+  showModalCreateOptionsList, 
+  setShowModalOptionsListForm
   ])
   
 
   return (
-    <LoggedUserPage>
-      <div
-        className={componentClassName}
-      >
+  <LoggedUserPage>
+    <div
+    className={componentClassName}
+    >
+    <span
+      className={`${componentClassName}__title`}
+    >
+      Options Lists
+    </span>
+    {Object.keys(domains).map((key) => {
+      return (
+        <>
         <span
-          className={`${componentClassName}__title`}
-        >
-          Options Lists
-        </span>
-        {
-        optionsLists && optionsLists.map((optionsList) => {
-            return (
-              <OptionsListCard 
-                data={optionsList}
-                onClick={() => {
-                  setFormType('update');
-                  dispatch(getCurrentOptionsList({
-                    id: optionsList.id
-                  }));
-                  setShowModalOptionsListForm(true);
-                }}
-              />
-            )
-          })
-        }
-        <Button 
-          label={t("pages.optionsLists.createButton")} 
-          onClick={() => {
-            setShowModalOptionsListForm(true);
+          style={{
+          fontSize: 'x-large'
           }}
-          disabled={false} 
-        />
-      </div>
-      <Modal 
-        show={showModalOptionsListForm} 
-        closeModal={() => {
-          dispatch(revertCurrentOptionsList());
-          setShowModalOptionsListForm(false);
-        }}
-      >
-        <OptionsListForm type={formType} />
-      </Modal>
-      <Modal 
-        show={showModalCreateOptionsList} 
-        closeModal={() => {
-          dispatch(revertCreateOptionsList())
-
-        }}
-      >
-        
-      </Modal>
-    </LoggedUserPage>
+        >
+          {domains[key]}
+        </span>
+        {optionsLists && optionsLists.filter(optionsList => optionsList.domain === key).map((optionsList) => {
+          return (
+          <OptionsListCard 
+            data={optionsList}
+            onClick={() => {
+            setFormType('update');
+            dispatch(getCurrentOptionsList({
+              id: optionsList.id
+            }));
+            setShowModalOptionsListForm(true);
+            }}
+          />    
+          )
+        })}
+        </>
+      )
+      })}
+    <Button 
+      label={t("pages.optionsLists.createButton")} 
+      onClick={() => {
+      setShowModalOptionsListForm(true);
+      }}
+      disabled={false} 
+    />
+    </div>
+    <Modal 
+    show={showModalOptionsListForm} 
+    closeModal={() => {
+      dispatch(revertCurrentOptionsList());
+      setShowModalOptionsListForm(false);
+    }}
+    >
+    <OptionsListForm type={formType} />
+    </Modal>
+    <Modal 
+    show={showModalCreateOptionsList} 
+    closeModal={() => {
+      dispatch(revertCreateOptionsList())
+      dispatch(getOptionsListsAsync());
+    }}
+    >
+    Create TBA
+    </Modal>
+    <Modal 
+    show={showModalUpdateOptionsList} 
+    closeModal={() => {
+      dispatch(revertUpdateOptionsList())
+      dispatch(getOptionsListsAsync());
+    }}
+    >
+    Update TBA
+    </Modal>
+  </LoggedUserPage>
   )
 
 }

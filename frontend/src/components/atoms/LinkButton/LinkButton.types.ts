@@ -1,19 +1,19 @@
 import { AnchorHTMLAttributes } from "react";
 
 enum LinkButtonModifier {
-    syllabus = "syllabus"
+  syllabus = "syllabus"
 }
 
 interface ILinkButtonProps extends AnchorHTMLAttributes<HTMLAnchorElement>{
-    text: string;
-    href: string;
-    modifier?: LinkButtonModifier
+  text: string;
+  href: string;
+  modifier?: LinkButtonModifier
 }
 
 export type {
-    ILinkButtonProps
+  ILinkButtonProps
 }
 
 export {
-    LinkButtonModifier
+  LinkButtonModifier
 }
