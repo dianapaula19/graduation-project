@@ -12,6 +12,7 @@ import { getStudentsCurrentStudent } from "../../../../features/user/admin/getSt
 import { getTeachersCurrentTeacher } from "../../../../features/user/admin/getTeachersSlice";
 import { updateStudentInfoAsync } from "../../../../features/user/admin/updateStudentInfoSlice";
 import { updateTeacherInfoAsync } from "../../../../features/user/admin/updateTeacherInfoSlice";
+import { loginToken } from "../../../../features/auth/loginSlice";
 
 const UserDataForm = ({
   role,
@@ -30,6 +31,7 @@ const UserDataForm = ({
   
   const student = useAppSelector(getStudentsCurrentStudent);
   const teacher = useAppSelector(getTeachersCurrentTeacher);
+  const token = useAppSelector(loginToken);
 
   const [userData, setUserData] = useState({
   firstName: '',
@@ -314,12 +316,15 @@ const UserDataForm = ({
       label={t(`${submitButtonsTranslate}.verifyUser`)} 
       disabled={disableButtonVerifyUser} 
       onClick={() => {
-        dispatch(verifyUserAsync({
-          first_name: userData.firstName,
-          last_name: userData.lastName,
-          role: userData.role,
-          email: email
-        }))
+        if (token) {
+          dispatch(verifyUserAsync({
+            first_name: userData.firstName,
+            last_name: userData.lastName,
+            role: userData.role,
+            email: email,
+            token: token
+          }))
+        }
         }
       }
       />  
@@ -330,15 +335,18 @@ const UserDataForm = ({
       modifier={disableButtonUpdateStudentDataInfo ? ButtonModifier.disabled : ButtonModifier.save}
       disabled={disableButtonUpdateStudentDataInfo} 
       onClick={() => {
-        dispatch(updateStudentInfoAsync({
-          first_name: userData.firstName,
-          last_name: userData.lastName,
-          domain: studentData.domain,
-          learning_mode: studentData.learningMode,
-          degree: studentData.degree,
-          study_program: studentData.studyProgram,
-          grades: studentData.grades
-        }))
+        if (token) {
+          dispatch(updateStudentInfoAsync({
+            first_name: userData.firstName,
+            last_name: userData.lastName,
+            domain: studentData.domain,
+            learning_mode: studentData.learningMode,
+            degree: studentData.degree,
+            study_program: studentData.studyProgram,
+            grades: studentData.grades,
+            token: token
+          }))  
+        }
         }
       }
       />  
@@ -349,10 +357,13 @@ const UserDataForm = ({
       modifier={disableButtonUpdateTeacherDataInfo ? ButtonModifier.disabled : ButtonModifier.save}
       disabled={disableButtonUpdateTeacherDataInfo}
       onClick={() => {
-        dispatch(updateTeacherInfoAsync({
-        first_name: userData.firstName,
-        last_name: userData.lastName
-        }));
+        if (token) {
+          dispatch(updateTeacherInfoAsync({
+            first_name: userData.firstName,
+            last_name: userData.lastName,
+            token: token
+            }));  
+        }
       } }      
       />
     )}

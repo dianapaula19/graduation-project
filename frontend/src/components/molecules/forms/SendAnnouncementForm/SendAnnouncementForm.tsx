@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import { loginUserData } from "../../../../features/auth/loginSlice";
+import { loginToken, loginUserData } from "../../../../features/auth/loginSlice";
 import { getTeacherCoursesCurrentCourse } from "../../../../features/user/teacher/getTeacherCoursesSlice";
 import { sendAnnouncementAsync } from "../../../../features/user/teacher/sendAnnouncementSlice";
 import Button from "../../../atoms/Button";
@@ -18,6 +18,7 @@ const SendAnnouncementForm = () => {
 
   const currentTeacherCourse = useAppSelector(getTeacherCoursesCurrentCourse);
   const userData = useAppSelector(loginUserData);
+  const token = useAppSelector(loginToken);
 
   const { t } = useTranslation();
 
@@ -38,11 +39,12 @@ const SendAnnouncementForm = () => {
   }
 
   const handleSubmit = () => {
-  if (currentTeacherCourse && userData) {
+  if (currentTeacherCourse && userData && token) {
     const recipient_list = Array.from(currentTeacherCourse.students, student => student.email);
     dispatch(sendAnnouncementAsync({
     subject: `${data.subject} [${currentTeacherCourse.title}]`,
     message: data.message,
+    token: token,
     recipient_list: recipient_list,
     }))
   }

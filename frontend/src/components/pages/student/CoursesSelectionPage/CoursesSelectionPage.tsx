@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import { loginUserData } from "../../../../features/auth/loginSlice";
+import { loginToken, loginUserData } from "../../../../features/auth/loginSlice";
 import { revertSaveStudentChoices, saveStudentChoicesCode, saveStudentChoicesShowModal } from "../../../../features/user/student/saveStudentChoicesSlice";
 import { studentOptionalsListsAsync, studentOptionalsListsStatus, studentOptionalsLists, revertStudentOptionalsLists } from "../../../../features/user/student/studentOptionalsListsSlice";
 import { ApiStatus } from "../../../../features/Utils";
@@ -14,6 +14,7 @@ const CoursesSelectionPage = () => {
 
   const status = useAppSelector(studentOptionalsListsStatus);
   const userData = useAppSelector(loginUserData);
+  const token = useAppSelector(loginToken);
   const optionsLists = useAppSelector(studentOptionalsLists);
   const showModal = useAppSelector(saveStudentChoicesShowModal);
   const saveCode = useAppSelector(saveStudentChoicesCode);
@@ -21,9 +22,10 @@ const CoursesSelectionPage = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (status === ApiStatus.idle && userData !== null) {
+    if (status === ApiStatus.idle && userData && token) {
       dispatch(studentOptionalsListsAsync({
-        email: userData.email
+        email: userData.email,
+        token: token
       }))
     }
   }, [])

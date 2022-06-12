@@ -25,15 +25,19 @@ export const teacherLinks = [
 
 export const adminLinks = [
   {
-  path: '/admin/accounts/notVerified',
-  label: 'accounts'
+    path: '/admin/accounts/notVerified',
+    label: 'accounts'
   },
   {
-  path: '/admin/optionsLists',
-  label: 'optionsLists'
+    path: '/admin/optionsLists',
+    label: 'optionsLists'
   },
   {
-  path: '/admin/courses',
-  label: 'courses'
+    path: '/admin/courses',
+    label: 'courses'
+  },
+  {
+    path: '/admin/settings',
+    label: 'settings'
   }
 ]

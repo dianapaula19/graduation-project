@@ -25,6 +25,7 @@ interface IUpdateOptionsListRequest {
   semester: number;
   title: string;
   courses_ids: number[];
+  token: string;
 }
 
 interface IUpdateOptionsListResponse {
@@ -40,7 +41,12 @@ export const updateOptionsListAsync = createAsyncThunk(
   async (request: IUpdateOptionsListRequest, {rejectWithValue}) => await axios
   .post(
     API_URL_COURSE + "/admin/update_course",
-    request
+    request,
+    {
+      headers: {
+      Authorization: `Bearer ${request.token}`
+      }
+    }
   )
   .then((response) => {
     return response.data;

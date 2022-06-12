@@ -8,6 +8,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.contrib.auth import authenticate
+from backend.permissions import IsAdmin, IsStudent, IsTeacher
 
 from courses.utils import students_courses_assignment
 
@@ -138,7 +139,7 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
   )
 
 @api_view(["POST"])
-@permission_classes([AllowAny])
+@permission_classes([IsAdmin])
 def register_batch_students(request):
   students = request.data.get("students")
   error_messages = []
@@ -190,7 +191,7 @@ def register_batch_students(request):
   )
 
 @api_view(["POST"])
-@permission_classes([AllowAny])
+@permission_classes([IsAdmin])
 def register_batch_teachers(request):
   teachers = request.data.get("teachers")
   error_messages = []
@@ -233,7 +234,7 @@ def register_batch_teachers(request):
   )
 
 @api_view(["POST"])
-@permission_classes([AllowAny])
+@permission_classes([IsStudent])
 def get_student_data(request):
   email = request.data.get("email")
 
@@ -267,7 +268,7 @@ def get_student_data(request):
   )
 
 @api_view(["GET", "POST"])
-@permission_classes([AllowAny])
+@permission_classes([IsAdmin])
 def not_verified_users(request):
   if request.method == "GET":
     users = User.not_verified_users.all()
@@ -320,7 +321,7 @@ def not_verified_users(request):
 
 
 @api_view(["GET", "POST"])
-@permission_classes([AllowAny])
+@permission_classes([IsAdmin])
 def students(request):
   if request.method == "GET":
     students = Student.objects.all()
@@ -391,7 +392,7 @@ def students(request):
   )
 
 @api_view(["GET"])
-@permission_classes([AllowAny])
+@permission_classes([IsAdmin])
 def teachers(request):
   teachers = Teacher.objects.all()
   serializer = TeacherDataSerializer(teachers, many=True)
@@ -403,7 +404,7 @@ def teachers(request):
   )
 
 @api_view(["POST"])
-@permission_classes([AllowAny])
+@permission_classes([IsTeacher])
 def send_announcement(request):
   subject = request.data.get("subject")
   message = request.data.get("message")
@@ -431,7 +432,7 @@ def send_announcement(request):
   )
 
 @api_view(["POST"])
-@permission_classes([AllowAny])
+@permission_classes([IsAdmin])
 def update_selection_session_open(request):
   value = request.data.get("value")
   try:

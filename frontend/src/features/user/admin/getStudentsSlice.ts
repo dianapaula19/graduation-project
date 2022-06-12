@@ -35,12 +35,16 @@ const initialState: IGetStudentsState = {
   code: null
 }
 
-interface ICreateOptionsListResponse {
+interface IGetStudentsRequest {
+  token: string;
+}
+
+interface IGetStudentsResponse {
   code: string;
   students: IStudent[]; 
 }
 
-interface ICreateOptionsListError {
+interface IGetStudentsError {
   code: string; 
 }
 
@@ -50,9 +54,14 @@ interface IGetCurrentStudentPayload {
 
 export const getStudentsAsync = createAsyncThunk(
   'user/admin/students',
-  async (request, {rejectWithValue}) => await axios
+  async (request: IGetStudentsRequest, {rejectWithValue}) => await axios
   .get(
     API_URL_USER + "/admin/students",
+    {
+      headers: {
+      Authorization: `Bearer ${request.token}`
+      }
+    }
   )
   .then((response) => {
     return response.data;
@@ -88,13 +97,13 @@ export const getStudentsSlice = createSlice({
     state.status = ApiStatus.loading;
   })
   .addCase(getStudentsAsync.fulfilled, (state, action) => {
-    const res = action.payload as ICreateOptionsListResponse;
+    const res = action.payload as IGetStudentsResponse;
     state.students = res.students;
     state.code = res.code;
     state.status = ApiStatus.success;
   })
   .addCase(getStudentsAsync.rejected, (state, action) => {
-    const res = action.payload as ICreateOptionsListError;
+    const res = action.payload as IGetStudentsError;
     state.code = res.code;
     state.status = ApiStatus.failed;
   })

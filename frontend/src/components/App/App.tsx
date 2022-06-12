@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { useAppSelector } from '../../app/hooks';
-import { loginSelectionSessionOpen, loginUserData } from '../../features/auth/loginSlice';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { loginSelectionSessionOpen, loginUserData, setSelectionSessionOpenSetting } from '../../features/auth/loginSlice';
 import OptionsListsPage from '../pages/admin/OptionsListsPage';
 import AdminCoursesPage from '../pages/admin/CoursesPage';
 import LoginPage from '../pages/auth/LoginPage';
@@ -15,19 +15,43 @@ import { Role } from './App.types';
 import RecoverAccountPage from '../pages/auth/RecoverAccountPage';
 import ResetPasswordPage from '../pages/auth/ResetPasswordPage';
 import SettingsPage from '../pages/admin/SettingsPage';
-import { SelectionSessionSettingValue } from '../../features/Utils';
+import { ApiStatus, SelectionSessionSettingValue } from '../../features/Utils';
+import { revertUpdateSelectionSessionOpen, updateSelectionSessionOpenCode, updateSelectionSessionOpenStatus } from '../../features/user/admin/updateSelectionSessionOpenSlice';
 
 const App = () => {
 
   const userData = useAppSelector(loginUserData);
   const selectionSessionOpen = useAppSelector(loginSelectionSessionOpen);
+  const statusUpdateSelectionSessionOpen = useAppSelector(updateSelectionSessionOpenStatus);
+  const dispatch = useAppDispatch();
   const [role, setRole] = useState(Role.NONE);
 
   useEffect(() => {
-    if (userData) {
+    if (userData && role === Role.NONE) {
       setRole(userData.role)
     }
-  }, [])
+
+    if (statusUpdateSelectionSessionOpen === ApiStatus.success) {
+      let url = `ws://localhost:8000/ws/socket-server/`
+  
+      const socket = new WebSocket(url)
+      socket.onmessage = (e) => {
+      let data = JSON.parse(e.data);
+      if (data.type === 'set_selection_session_open') {
+          dispatch(setSelectionSessionOpenSetting({
+            value: data.SELECTION_SESSION_OPEN as SelectionSessionSettingValue
+          }))
+          dispatch(revertUpdateSelectionSessionOpen())
+        }
+      }
+      socket.onopen = () => {
+          socket.send(JSON.stringify({
+          'status': 'SUCCESS'
+        }))  
+      }
+    }
+  
+  }, [userData, setRole, role, statusUpdateSelectionSessionOpen])
   
   return (
   <Suspense fallback="loading">
@@ -55,52 +79,40 @@ const App = () => {
         />
         {selectionSessionOpen && (
           <>
-            {role === Role.ADMIN && (
-              <>
-                <Route 
-                  path="admin/optionsLists"
-                  element={<OptionsListsPage />}
-                />
-                <Route
-                  path="admin/courses"
-                  element={<AdminCoursesPage />}
-                />
-                <Route 
-                  path="admin/accounts/notVerified"
-                  element={<AccountsPage role={Role.NONE}/>}
-                />
-                <Route 
-                  path="admin/accounts/students"
-                  element={<AccountsPage role={Role.STUDENT}/>}
-                />
-                <Route 
-                  path="admin/accounts/teachers"
-                  element={<AccountsPage role={Role.TEACHER}/>}
-                />
-                <Route
-                  path="admin/settings"
-                  element={<SettingsPage />}
-                />
-              </>
-            )}
-            {role === Role.STUDENT && (
-              <>
-                <Route 
-                  path="student/courses"
-                  element={selectionSessionOpen === SelectionSessionSettingValue.FALSE ? <StudentCoursesPage /> : <CoursesSelectionPage />}
-                />      
-              </>
-            )}
-            {role === Role.TEACHER && (
-              <>
-                <Route
-                  path="teacher/courses"
-                  element={
-                    <TeacherCoursesPage />
-                  }
-                />
-              </>      
-            )}
+            <Route 
+              path="admin/optionsLists"
+              element={<OptionsListsPage />}
+            />
+            <Route
+              path="admin/courses"
+              element={<AdminCoursesPage />}
+            />
+            <Route 
+              path="admin/accounts/notVerified"
+              element={<AccountsPage role={Role.NONE}/>}
+            />
+            <Route 
+              path="admin/accounts/students"
+              element={<AccountsPage role={Role.STUDENT}/>}
+            />
+            <Route 
+              path="admin/accounts/teachers"
+              element={<AccountsPage role={Role.TEACHER}/>}
+            />
+            <Route
+              path="admin/settings"
+              element={<SettingsPage />}
+            />
+              <Route 
+                path="student/courses"
+                element={selectionSessionOpen === SelectionSessionSettingValue.FALSE ? <StudentCoursesPage /> : <CoursesSelectionPage />}
+              />      
+              <Route
+                path="teacher/courses"
+                element={
+                  <TeacherCoursesPage />
+                }
+              />
           </>
         )}      
       </Routes>

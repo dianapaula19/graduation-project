@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import { loginUserData } from "../../../../features/auth/loginSlice";
+import { loginToken, loginUserData } from "../../../../features/auth/loginSlice";
 import { getStudentCoursesAsync, getStudentCoursesCode, getStudentCoursesCourses, getStudentCoursesStatus } from "../../../../features/user/student/getStudentCoursesSlice";
 import { ApiStatus } from "../../../../features/Utils";
 import LoggedUserPage from "../../../templates/LoggedUserPage";
@@ -9,6 +9,7 @@ const CoursesPage = () => {
   
   const statusGetStudentCourses = useAppSelector(getStudentCoursesStatus);
   const userData = useAppSelector(loginUserData);
+  const token = useAppSelector(loginToken);
   const courses = useAppSelector(getStudentCoursesCourses);
 
   const dispatch = useAppDispatch();
@@ -17,10 +18,12 @@ const CoursesPage = () => {
     if (
       (statusGetStudentCourses === ApiStatus.idle ||
       statusGetStudentCourses === ApiStatus.failed) &&
-      userData 
+      userData &&
+      token 
     ) {
       dispatch(getStudentCoursesAsync({
-        email: userData.email
+        email: userData.email,
+        token: token
       }));
     }
   }, [statusGetStudentCourses])

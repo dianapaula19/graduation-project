@@ -16,20 +16,29 @@ const initialState: IGetNotVerifiedUsersState = {
   code: null
 }
 
-interface ICreateOptionsListResponse {
+interface IGetNotVerifiedUsersRequest {
+  token: string;
+}
+
+interface IGetNotVerifiedUsersResponse {
   code: string;
   users: string[]; 
 }
 
-interface ICreateOptionsListError {
+interface IGetNotVerifiedUsersError {
   code: string; 
 }
 
 export const getNotVerifiedUsersAsync = createAsyncThunk(
   'user/admin/NotVerifiedUsers',
-  async (request, {rejectWithValue}) => await axios
+  async (request: IGetNotVerifiedUsersRequest, {rejectWithValue}) => await axios
   .get(
     API_URL_USER + "/admin/not_verified_users",
+    {
+      headers: {
+      Authorization: `Bearer ${request.token}`
+      }
+    }
   )
   .then((response) => {
     return response.data;
@@ -53,13 +62,13 @@ export const getNotVerifiedUsersSlice = createSlice({
     state.status = ApiStatus.loading;
   })
   .addCase(getNotVerifiedUsersAsync.fulfilled, (state, action) => {
-    const res = action.payload as ICreateOptionsListResponse;
+    const res = action.payload as IGetNotVerifiedUsersResponse;
     state.users = res.users;
     state.code = res.code;
     state.status = ApiStatus.success;
   })
   .addCase(getNotVerifiedUsersAsync.rejected, (state, action) => {
-    const res = action.payload as ICreateOptionsListError;
+    const res = action.payload as IGetNotVerifiedUsersError;
     state.code = res.code;
     state.status = ApiStatus.failed;
   })

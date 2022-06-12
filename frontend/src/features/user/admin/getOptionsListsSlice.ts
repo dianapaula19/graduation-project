@@ -33,12 +33,16 @@ const initialState: IGetOptionsListsState = {
   code: null
 }
 
-interface ICreateOptionsListResponse {
+interface IGetOptionsListsRequest {
+  token: string;
+}
+
+interface IGetOptionsListsResponse {
   code: string;
   options_lists: IOptionsList[]; 
 }
 
-interface ICreateOptionsListError {
+interface IGetOptionsListsError {
   code: string; 
 }
 
@@ -48,9 +52,14 @@ interface IGetCurrentCoursePayload {
 
 export const getOptionsListsAsync = createAsyncThunk(
   'user/admin/getOptionsLists',
-  async (request, {rejectWithValue}) => await axios
+  async (request: IGetOptionsListsRequest, {rejectWithValue}) => await axios
   .get(
     API_URL_COURSE + "/admin/get_options_lists",
+    {
+      headers: {
+      Authorization: `Bearer ${request.token}`
+      }
+    }
   )
   .then((response) => {
     return response.data;
@@ -88,13 +97,13 @@ export const getOptionsListsSlice = createSlice({
     state.status = ApiStatus.loading;
   })
   .addCase(getOptionsListsAsync.fulfilled, (state, action) => {
-    const res = action.payload as ICreateOptionsListResponse;
+    const res = action.payload as IGetOptionsListsResponse;
     state.optionsLists = res.options_lists;
     state.code = res.code;
     state.status = ApiStatus.success;
   })
   .addCase(getOptionsListsAsync.rejected, (state, action) => {
-    const res = action.payload as ICreateOptionsListError;
+    const res = action.payload as IGetOptionsListsError;
     state.code = res.code;
     state.status = ApiStatus.failed;
   })

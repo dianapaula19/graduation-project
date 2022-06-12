@@ -14,7 +14,7 @@ from .serializers import CourseSerializer, OptionsListSerializer, TeacherCourseS
 
 from .models import Course, OptionsList, StudentOptionChoice
 from users.models import Student, Teacher, User
-from backend.permissions import IsStudent, IsTokenAuthentificated
+from backend.permissions import IsAdmin, IsStudent, IsTeacher, IsTokenAuthentificated
 
 
 class ResponseCode(Enum):
@@ -32,8 +32,8 @@ class ResponseCode(Enum):
 # STUDENT Views
 
 @api_view(["POST"])
-@permission_classes([AllowAny])
-def create_or_uptate_student_choices(request):
+@permission_classes([IsStudent])
+def create_or_update_student_choices(request):
   options_list_id = request.data.get('options_list_id')
   email = request.data.get('email')
   choices = request.data.get('choices')
@@ -98,7 +98,7 @@ def create_or_uptate_student_choices(request):
   
 
 @api_view(["POST"])
-@permission_classes([AllowAny])
+@permission_classes([IsStudent])
 def get_student_options_lists(request):
   user_email = request.data.get('email')
 
@@ -149,7 +149,7 @@ def get_student_options_lists(request):
   )
 
 @api_view(["POST"])
-@permission_classes([AllowAny])
+@permission_classes([IsStudent])
 def get_student_courses(request):
 	user_email = request.data.get('email')
 	
@@ -183,7 +183,7 @@ def get_student_courses(request):
 # Admin Views
 
 @api_view(["GET"])
-@permission_classes([AllowAny])
+@permission_classes([IsAdmin])
 def get_options_lists(request):
   options_lists = OptionsList.objects.all()
   serializer = OptionsListSerializer(options_lists, many=True)
@@ -195,7 +195,7 @@ def get_options_lists(request):
   )
 
 @api_view(["POST"])
-@permission_classes([AllowAny])
+@permission_classes([IsAdmin])
 def create_options_list(request):
   
   domain = request.data.get("domain")
@@ -259,7 +259,7 @@ def create_options_list(request):
   )
 
 @api_view(["POST"])
-@permission_classes([AllowAny])
+@permission_classes([IsAdmin])
 def update_options_list(request):
   id = request.data.get("id")
   domain = request.data.get("domain")
@@ -317,7 +317,7 @@ def update_options_list(request):
   )
 
 @api_view(["GET"])
-@permission_classes([AllowAny])
+@permission_classes([IsAdmin])
 def get_courses(request):
   courses = Course.objects.all()
 
@@ -377,7 +377,7 @@ def create_course(request):
   )
 
 @api_view(["POST"])
-@permission_classes([AllowAny])
+@permission_classes([IsAdmin])
 def update_course(request):
   
   id = request.data.get("id")
@@ -428,7 +428,7 @@ def update_course(request):
 
 # Teacher Views
 @api_view(["POST"])
-@permission_classes([AllowAny])
+@permission_classes([IsTeacher])
 def get_teacher_courses(request):
   
   email = request.data.get("email")

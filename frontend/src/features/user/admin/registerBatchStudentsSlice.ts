@@ -31,6 +31,7 @@ export interface IStudentData {
 
 export interface IRegisterBatchStudentsRequest {
   students: IStudentData[];
+  token: string;
 }
 
 export interface IRegisterBatchStudentsResponse {
@@ -43,7 +44,12 @@ export const registerBatchStudentsAsync = createAsyncThunk(
   async (request: IRegisterBatchStudentsRequest, {rejectWithValue}) => await axios
   .post(
     API_URL_USER + "/admin/register_batch_students",
-    request
+    request,
+    {
+      headers: {
+      Authorization: `Bearer ${request.token}`
+      }
+    }
   )
   .then((response) => {
     return response.data;

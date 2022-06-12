@@ -34,6 +34,7 @@ const initialState: StudentOptionalsListsState = {
 
 export interface IStudentOptionalsListsRequest {
   email: string;
+  token: string;
 }
 
 export interface IStudentOptionalsListsResponse {
@@ -46,6 +47,11 @@ export const studentOptionalsListsAsync = createAsyncThunk(
   .post(
     API_URL_COURSE + "/student/get_student_options_lists",
     request,
+    {
+      headers: {
+      Authorization: `Bearer ${request.token}`
+      }
+    }
   )
   .then((response) => {
     return response.data;

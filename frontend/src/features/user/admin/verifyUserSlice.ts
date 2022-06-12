@@ -19,6 +19,7 @@ interface IVerifyUserRequest {
   first_name: string;
   last_name: string;
   email: string;
+  token: string;
   role: string;
 }
 
@@ -35,7 +36,12 @@ export const verifyUserAsync = createAsyncThunk(
   async (request: IVerifyUserRequest, {rejectWithValue}) => await axios
   .post(
     API_URL_USER + "/admin/not_verified_users",
-    request
+    request,
+    {
+      headers: {
+      Authorization: `Bearer ${request.token}`
+      }
+    }
   )
   .then((response) => {
     return response.data;

@@ -16,11 +16,11 @@ const LoggedUserPage = ({
   const status = useAppSelector(loginStatus);
   let navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (status !== ApiStatus.success) {
-  //   navigate('login');
-  //   }
-  // }, [])
+  useEffect(() => {
+    if (status !== ApiStatus.success) {
+    navigate('login');
+    }
+  }, [status])
   
 
   return (

@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { loginUserData } from "../../../features/auth/loginSlice";
+import { loginToken, loginUserData } from "../../../features/auth/loginSlice";
 import { Choice, saveStudentChoicesAsync } from "../../../features/user/student/saveStudentChoicesSlice";
 import Button from "../../atoms/Button";
 import { ButtonModifier } from "../../atoms/Button/Button.types";
@@ -21,6 +21,7 @@ const OptionalCoursesContainer = ({
   
   const dispatch = useAppDispatch();
   const userData = useAppSelector(loginUserData);
+  const token = useAppSelector(loginToken);
 
   const [list, setList] = useState<IOptionalCourseCard[]>(courses);
 
@@ -28,7 +29,7 @@ const OptionalCoursesContainer = ({
   const dragOverItem = useRef<HTMLDivElement | IDataRef | null>(null);
   
   const saveChanges = () => {
-    if (userData !== null) {
+    if (userData && token) {
       let choices: Choice[] = []
       list.forEach((item, index) => {
         choices.push({
@@ -39,6 +40,7 @@ const OptionalCoursesContainer = ({
       dispatch(saveStudentChoicesAsync({
         options_list_id: optionalsListId,
         email: userData.email,
+        token: token,
         choices: choices 
       }))
     }

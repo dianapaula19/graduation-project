@@ -25,6 +25,7 @@ interface ICreateOptionsListRequest {
   degree: string | Degree;
   study_program: string | StudyProgram;
   courses_ids: number[];
+  token: string;
 }
 
 interface ICreateOptionsListResponse {
@@ -40,7 +41,12 @@ export const createOptionsListAsync = createAsyncThunk(
   async (request: ICreateOptionsListRequest, {rejectWithValue}) => await axios
   .post(
     API_URL_COURSE + "/admin/create_options_list",
-    request
+    request,
+    {
+      headers: {
+      Authorization: `Bearer ${request.token}`
+      }
+    }
   )
   .then((response) => {
     return response.data;

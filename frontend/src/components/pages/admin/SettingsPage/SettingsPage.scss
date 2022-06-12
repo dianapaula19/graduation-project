@@ -1,0 +1,17 @@
+.settings-page {
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  justify-self: center;
+
+  &__title {
+    font-size: x-large;
+  }
+
+  &__buttons-container {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+  }
+}

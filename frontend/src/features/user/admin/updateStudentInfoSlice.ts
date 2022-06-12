@@ -28,6 +28,7 @@ interface IUpdateStudentInfoRequest {
   degree: string;
   study_program: string;
   grades: IGrade[];
+  token: string;
 }
 
 interface IUpdateStudentInfoResponse {
@@ -43,7 +44,12 @@ export const updateStudentInfoAsync = createAsyncThunk(
   async (request: IUpdateStudentInfoRequest, {rejectWithValue}) => await axios
   .post(
     API_URL_USER + "/admin/students",
-    request
+    request,
+    {
+      headers: {
+      Authorization: `Bearer ${request.token}`
+      }
+    }
   )
   .then((response) => {
     return response.data;

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
+import { loginToken } from "../../../../features/auth/loginSlice";
 import { getCoursesAsync, getCoursesCourses, getCoursesStatus } from "../../../../features/user/admin/getCoursesSlice";
 import { getTeachersAsync, getTeachersStatus } from "../../../../features/user/admin/getTeachersSlice";
 import { getTeacherCoursesStatus } from "../../../../features/user/teacher/getTeacherCoursesSlice";
@@ -12,22 +13,27 @@ const CoursesPage = () => {
   const courses = useAppSelector(getCoursesCourses);
   const statusGetCourses = useAppSelector(getCoursesStatus);
   const statusGetTeachers = useAppSelector(getTeacherCoursesStatus);
+  const token = useAppSelector(loginToken)
   const dispatch = useAppDispatch();
 
   useEffect(() => {
   if (
-    statusGetCourses === ApiStatus.idle || 
-    statusGetCourses === ApiStatus.failed
+    statusGetCourses === ApiStatus.idle &&
+    token
   ) {
-    dispatch(getCoursesAsync());
+    dispatch(getCoursesAsync({
+      token: token
+    }));
   }
   if (
-    statusGetTeachers === ApiStatus.idle || 
-    statusGetTeachers === ApiStatus.failed
+    statusGetTeachers === ApiStatus.idle &&
+    token
   ) {
-    dispatch(getTeachersAsync());
+    dispatch(getTeachersAsync({
+      token: token
+    }));
   }
-  }, []);
+  }, [statusGetCourses, statusGetTeachers, token]);
   
   return (
   <LoggedUserPage>

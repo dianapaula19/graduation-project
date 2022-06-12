@@ -9,7 +9,7 @@ import DropDown from "../../../atoms/DropDown";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import Modal from "../../../molecules/Modal";
 import { getCurrentTeacherCourse, getTeacherCoursesAsync, getTeacherCoursesCode, getTeacherCoursesCourses, getTeacherCoursesCurrentCourse, getTeacherCoursesStatus } from "../../../../features/user/teacher/getTeacherCoursesSlice";
-import { loginUserData } from "../../../../features/auth/loginSlice";
+import { loginToken, loginUserData } from "../../../../features/auth/loginSlice";
 import { ApiStatus } from "../../../../features/Utils";
 import SendAnnouncementForm from "../../../molecules/forms/SendAnnouncementForm";
 import "./CoursesPage.scss";
@@ -22,6 +22,7 @@ const OptionalCoursesList = () => {
   const courses = useAppSelector(getTeacherCoursesCourses);
   const currentCourse = useAppSelector(getTeacherCoursesCurrentCourse);
   const userData = useAppSelector(loginUserData);
+  const token = useAppSelector(loginToken);
 
   const dispatch = useAppDispatch();
 
@@ -58,9 +59,10 @@ const OptionalCoursesList = () => {
   }
 
   useEffect(() => {
-    if (userData && statusTeacherCourses === ApiStatus.idle) {
+    if (userData && token && statusTeacherCourses === ApiStatus.idle) {
     dispatch(getTeacherCoursesAsync({
-      email: userData.email
+      email: userData.email,
+      token: token
     }));
     }
   }, [courses])

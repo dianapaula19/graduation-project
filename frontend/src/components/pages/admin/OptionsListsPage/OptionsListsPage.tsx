@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
+import { loginToken } from "../../../../features/auth/loginSlice";
 import { createOptionsListCode, createOptionsListShowModal, revertCreateOptionsList } from "../../../../features/user/admin/createOptionsListSlice";
 import { getCoursesAsync, getCoursesCourses, getCoursesStatus } from "../../../../features/user/admin/getCoursesSlice";
 import { getCurrentOptionsList, getOptionsListsAsync, getOptionsListsOptionsLists, getOptionsListsStatus, revertCurrentOptionsList } from "../../../../features/user/admin/getOptionsListsSlice";
@@ -29,21 +30,26 @@ const OptionsListsPage = () => {
   const showModalUpdateOptionsList = useAppSelector(updateOptionsListShowModal);
   const statusGetCourses = useAppSelector(getCoursesStatus);
   const statusGetOptionsLists = useAppSelector(getOptionsListsStatus);
+  const token = useAppSelector(loginToken);
 
   const domains: {[id: string]: string} = t("domains", {returnObjects: true}) as {[id: string]: string};
 
   useEffect(() => {
   if (
-    statusGetCourses === ApiStatus.idle ||
-    statusGetCourses === ApiStatus.failed
+    statusGetCourses === ApiStatus.idle &&
+    token
   ) {
-    dispatch(getCoursesAsync());
+    dispatch(getCoursesAsync({
+      token: token
+    }));
   }
   if (
-    statusGetOptionsLists === ApiStatus.idle ||
-    statusGetOptionsLists === ApiStatus.failed
+    statusGetOptionsLists === ApiStatus.idle &&
+    token
   ) {
-    dispatch(getOptionsListsAsync());
+    dispatch(getOptionsListsAsync({
+      token: token
+    }));
   }
   if (
     showModalCreateOptionsList || 
@@ -118,7 +124,11 @@ const OptionsListsPage = () => {
     show={showModalCreateOptionsList} 
     closeModal={() => {
       dispatch(revertCreateOptionsList())
-      dispatch(getOptionsListsAsync());
+      if (token) {
+        dispatch(getOptionsListsAsync({
+          token: token
+        }));
+      }
     }}
     >
     Create TBA
@@ -127,7 +137,11 @@ const OptionsListsPage = () => {
     show={showModalUpdateOptionsList} 
     closeModal={() => {
       dispatch(revertUpdateOptionsList())
-      dispatch(getOptionsListsAsync());
+      if (token) {
+        dispatch(getOptionsListsAsync({
+          token: token
+        }));  
+      }
     }}
     >
     Update TBA

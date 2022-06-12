@@ -29,6 +29,10 @@ const initialState: IGetTeachersState = {
   code: null
 }
 
+interface IGetTeachersRequest {
+  token: string;
+}
+
 interface IGetTeachersResponse {
   code: string;
   teachers: ITeacher[]; 
@@ -44,9 +48,14 @@ interface IGetCurrentTeacherPayload {
 
 export const getTeachersAsync = createAsyncThunk(
   'user/admin/getTeachers',
-  async (request, {rejectWithValue}) => await axios
+  async (request: IGetTeachersRequest, {rejectWithValue}) => await axios
   .get(
     API_URL_USER + "/admin/teachers",
+    {
+      headers: {
+      Authorization: `Bearer ${request.token}`
+      }
+    }
   )
   .then((response) => {
     return response.data;

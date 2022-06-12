@@ -25,7 +25,7 @@ from users.views import login, \
             teachers, \
             send_announcement, \
             update_selection_session_open
-from courses.views import create_or_uptate_student_choices, \
+from courses.views import create_or_update_student_choices, \
               create_course, \
               update_course, \
               create_options_list, \
@@ -60,7 +60,7 @@ urlpatterns = [
    
   # courses urls
   # student
-  path('api/course/student/create_or_update_student_choices', create_or_uptate_student_choices),
+  path('api/course/student/create_or_update_student_choices', create_or_update_student_choices),
   path('api/course/student/get_student_options_lists', get_student_options_lists),
   path('api/course/student/get_student_course', get_student_courses),
   

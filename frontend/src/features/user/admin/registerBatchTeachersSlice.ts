@@ -25,6 +25,7 @@ export interface ITeacherData {
 
 export interface IRegisterBatchTeachersRequest {
   teachers: ITeacherData[];
+  token: string;
 }
 
 export interface IRegisterBatchTeachersResponse {
@@ -37,7 +38,12 @@ export const registerBatchTeachersAsync = createAsyncThunk(
   async (request: IRegisterBatchTeachersRequest, {rejectWithValue}) => await axios
   .post(
     API_URL_USER + "/admin/register_batch_teachers",
-    request
+    request,
+    {
+      headers: {
+      Authorization: `Bearer ${request.token}`
+      }
+    }
   )
   .then((response) => {
     return response.data;

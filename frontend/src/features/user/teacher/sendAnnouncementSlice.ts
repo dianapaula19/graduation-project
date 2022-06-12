@@ -18,6 +18,7 @@ const initialState: ISendAnnouncementState = {
 interface ISendAnnouncementRequest {
   subject: string;
   message: string;
+  token: string;
   recipient_list: string[];
 }
 
@@ -34,7 +35,12 @@ export const sendAnnouncementAsync = createAsyncThunk(
   async (request: ISendAnnouncementRequest, {rejectWithValue}) => await axios
   .post(
     API_URL_USER + "/teacher/send_announcement",
-    request
+    request,
+    {
+      headers: {
+      Authorization: `Bearer ${request.token}`
+      }
+    }
   )
   .then((response) => {
     return response.data;

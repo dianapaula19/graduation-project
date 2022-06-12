@@ -14,6 +14,7 @@ import { revertUpdateStudentInfo, updateStudentInfoShowModal, updateStudentInfoS
 import { revertUpdateTeacherInfo, updateTeacherInfoShowModal, updateTeacherInfoStatus } from "../../../../features/user/admin/updateTeacherInfoSlice";
 import { getNotVerifiedUsersAsync } from "../../../../features/user/admin/getNotVerifiedUsersSlice";
 import { ApiStatus } from "../../../../features/Utils";
+import { loginToken } from "../../../../features/auth/loginSlice";
 
 const AccountsList = ({
   role,
@@ -29,9 +30,7 @@ const AccountsList = ({
   const showModalUpdateStudentInfo = useAppSelector(updateStudentInfoShowModal);
   const showModalUpdateTeacherInfo = useAppSelector(updateTeacherInfoShowModal);
 
-  const statusVerifyUser = useAppSelector(verifyUserStatus);
-  const statusUpdateStudentInfo = useAppSelector(updateStudentInfoStatus);
-  const statusUpdateTeacherInfo = useAppSelector(updateTeacherInfoStatus);
+  const token = useAppSelector(loginToken);
   
   const { t } = useTranslation();
 
@@ -133,8 +132,12 @@ const AccountsList = ({
     <Modal 
       show={showModalVerifyUser} 
       closeModal={() => {
-        dispatch(getNotVerifiedUsersAsync());
-        dispatch(revertVerifyUser());
+        if (token) {
+          dispatch(getNotVerifiedUsersAsync({
+            token: token
+          }));
+          dispatch(revertVerifyUser());
+        }
       }}
     >
       Not Verified TBA
@@ -142,11 +145,15 @@ const AccountsList = ({
     <Modal 
       show={showModalUpdateStudentInfo} 
       closeModal={() => {
-        dispatch(getStudentsAsync());
-        if (role === Role.STUDENT) {
-          dispatch(revertCurrentStudent());
+        if (token) {
+          dispatch(getStudentsAsync({
+            token: token
+          }));
+          if (role === Role.STUDENT) {
+            dispatch(revertCurrentStudent());
+          }
+          dispatch(revertUpdateStudentInfo());
         }
-        dispatch(revertUpdateStudentInfo());
       }}
     >
       Update Student TBA
@@ -154,11 +161,15 @@ const AccountsList = ({
     <Modal 
       show={showModalUpdateTeacherInfo} 
       closeModal={() => {
-        dispatch(getTeachersAsync());
+        if (token) {
+          dispatch(getTeachersAsync({
+            token: token
+          }));
         if (role === Role.TEACHER) {
           dispatch(revertCurrentTeacher());
         }
         dispatch(revertUpdateTeacherInfo());
+        }
       }}
     >
       Update Teacher TBA

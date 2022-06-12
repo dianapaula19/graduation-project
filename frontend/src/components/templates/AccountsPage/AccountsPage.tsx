@@ -19,6 +19,7 @@ import { getTeachersAsync, getTeachersStatus, getTeachersTeachers } from "../../
 import { getNotVerifiedUsersAsync, getNotVerifiedUsersStatus, getNotVerifiedUsersUsers } from "../../../features/user/admin/getNotVerifiedUsersSlice";
 import { revertVerifyUser, verifyUserShowModal } from "../../../features/user/admin/verifyUserSlice";
 import { useNavigate } from "react-router-dom";
+import { loginToken } from "../../../features/auth/loginSlice";
 
 const AccountsPage = ({
   role,
@@ -36,6 +37,7 @@ const AccountsPage = ({
   const users = useAppSelector(getNotVerifiedUsersUsers);
   const showModalRegisterBatchStudents = useAppSelector(registerBatchStudentsShowModal);
   const showModalRegisterBatchTeachers = useAppSelector(registerBatchTeachersShowModal);
+  const token = useAppSelector(loginToken);
 
   let navigate = useNavigate();
 
@@ -62,23 +64,34 @@ const AccountsPage = ({
   });
   if (
     role === Role.STUDENT && 
-    (statusGetStudents === ApiStatus.idle || statusGetStudents === ApiStatus.failed)) 
+    statusGetStudents === ApiStatus.idle &&
+    token) 
   {
-    dispatch(getStudentsAsync())
+    dispatch(getStudentsAsync({
+      token: token
+    }))
   }
   if (
     role === Role.TEACHER && 
-    (statusGetTeachers === ApiStatus.idle || statusGetTeachers === ApiStatus.failed)) 
+    statusGetTeachers === ApiStatus.idle &&
+    token
+    ) 
   {
-    dispatch(getTeachersAsync())
+    dispatch(getTeachersAsync({
+      token: token
+    }))
   }
   if (
     role === Role.NONE && 
-    statusGetNotVerifiedUsers === ApiStatus.idle) 
+    statusGetNotVerifiedUsers === ApiStatus.idle &&
+    token
+    ) 
   {
-    dispatch(getNotVerifiedUsersAsync())
+    dispatch(getNotVerifiedUsersAsync({
+      token: token
+    }))
   }
-  }, [role, statusGetStudents, statusGetTeachers, statusGetNotVerifiedUsers])  
+  }, [role, statusGetStudents, statusGetTeachers, statusGetNotVerifiedUsers, token])  
 
   const switchType = (role: Role): string =>  {
   switch (role) {
@@ -102,12 +115,14 @@ const AccountsPage = ({
     const workbook = XLSX.read(data, { type: "array" });
     const sheetName = workbook.SheetNames[0];
     const worksheet = workbook.Sheets[sheetName];
-    if (role === Role.STUDENT) {
-      const json: IStudentData[] = XLSX.utils.sheet_to_json(worksheet);
-      dispatch(registerBatchStudentsAsync({students: json}))
-    } else if (role === Role.TEACHER) {
-      const json: ITeacherData[] = XLSX.utils.sheet_to_json(worksheet);
-      dispatch(registerBatchTeachersAsync({teachers: json}))
+    if (token) {
+      if (role === Role.STUDENT) {
+        const json: IStudentData[] = XLSX.utils.sheet_to_json(worksheet);
+        dispatch(registerBatchStudentsAsync({students: json, token: token}))
+      } else if (role === Role.TEACHER) {
+        const json: ITeacherData[] = XLSX.utils.sheet_to_json(worksheet);
+        dispatch(registerBatchTeachersAsync({teachers: json, token: token}))
+      }
     }
     }
     reader.readAsArrayBuffer(e.target.files[0]);

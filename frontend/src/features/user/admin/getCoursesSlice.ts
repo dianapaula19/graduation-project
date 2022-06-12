@@ -28,12 +28,16 @@ const initialState: IGetCoursesState = {
   code: null
 }
 
-interface ICreateOptionsListResponse {
+interface IGetCoursesRequest {
+  token: string;
+}
+
+interface IGetCoursesResponse {
   code: string;
   courses: ICourse[]; 
 }
 
-interface ICreateOptionsListError {
+interface IGetCoursesError {
   code: string; 
 }
 
@@ -43,9 +47,14 @@ interface IGetCurrentCoursePayload {
 
 export const getCoursesAsync = createAsyncThunk(
   'user/admin/getCourses',
-  async (request, {rejectWithValue}) => await axios
+  async (request: IGetCoursesRequest, {rejectWithValue}) => await axios
   .get(
     API_URL_COURSE + "/admin/get_courses",
+    {
+      headers: {
+      Authorization: `Bearer ${request.token}`
+      }
+    }
   )
   .then((response) => {
     return response.data;
@@ -83,13 +92,13 @@ export const getCoursesSlice = createSlice({
     state.status = ApiStatus.loading;
   })
   .addCase(getCoursesAsync.fulfilled, (state, action) => {
-    const res = action.payload as ICreateOptionsListResponse;
+    const res = action.payload as IGetCoursesResponse;
     state.courses = res.courses;
     state.code = res.code;
     state.status = ApiStatus.success;
   })
   .addCase(getCoursesAsync.rejected, (state, action) => {
-    const res = action.payload as ICreateOptionsListError;
+    const res = action.payload as IGetCoursesError;
     state.code = res.code;
     state.status = ApiStatus.failed;
   })

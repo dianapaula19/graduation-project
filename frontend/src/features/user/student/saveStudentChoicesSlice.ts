@@ -24,6 +24,7 @@ const initialState: SaveStudentChoicesState = {
 export interface ISaveStudentChoicesRequest {
   options_list_id: number;
   email: string;
+  token: string;
   choices: Choice[];
 }
 
@@ -40,13 +41,18 @@ export const saveStudentChoicesAsync = createAsyncThunk(
   async (request: ISaveStudentChoicesRequest, {rejectWithValue}) => await axios
   .post(
     API_URL_COURSE + "/student/create_or_update_student_choices",
-    request
+    request,
+    {
+      headers: {
+      Authorization: `Bearer ${request.token}`
+      }
+    }
   )
   .then((response) => {
     return response.data;
   })
   .catch((error) => {
-    return error.response.data;
+    return rejectWithValue(error.response.data);
   })
 )
 

@@ -13,6 +13,7 @@ import { getCoursesCurrentCourse, getCurrentCourse } from "../../../../features/
 import { createCourseAsync } from "../../../../features/user/admin/createCourseSlice";
 import { updateCourseAsync } from "../../../../features/user/admin/updateCourseSlice";
 import { DropDownOptionsValue } from "../../../atoms/DropDown/DropDown.types";
+import { loginToken } from "../../../../features/auth/loginSlice";
 
 const CourseForm = ({
   type,
@@ -27,6 +28,7 @@ const CourseForm = ({
 
   const teachers = useAppSelector(getTeachersTeachers);
   const currentCourse = useAppSelector(getCoursesCurrentCourse);
+  const token = useAppSelector(loginToken);
 
   const dispatch = useAppDispatch();
 
@@ -147,24 +149,28 @@ const CourseForm = ({
     modifier={disableSubmitButton ? ButtonModifier.disabled : ButtonModifier.save} 
     disabled={disableSubmitButton}
     onClick={() => {
-      if (type === 'create') {
-      dispatch(createCourseAsync({
-        title: courseData.title,
-        link: courseData.link,
-        capacity: courseData.capacity,
-        semester: courseData.semester,
-        teacher_email: courseData.teacher
-      }))
+      if (token) {
+        if (type === 'create') {
+          dispatch(createCourseAsync({
+            title: courseData.title,
+            link: courseData.link,
+            capacity: courseData.capacity,
+            semester: courseData.semester,
+            teacher_email: courseData.teacher,
+            token: token
+          }))
+          }
+          if (type === 'update' && currentCourse) {
+          dispatch(updateCourseAsync({
+            id: currentCourse.id,
+            title: courseData.title,
+            link: courseData.link,
+            capacity: courseData.capacity,
+            semester: courseData.semester,
+            teacher_email: courseData.teacher,
+            token: token
+          }))
       }
-      if (type === 'update' && currentCourse) {
-      dispatch(updateCourseAsync({
-        id: currentCourse.id,
-        title: courseData.title,
-        link: courseData.link,
-        capacity: courseData.capacity,
-        semester: courseData.semester,
-        teacher_email: courseData.teacher
-      }))
       }
     }}
     />

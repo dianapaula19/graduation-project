@@ -22,6 +22,7 @@ interface ICreateCourseRequest {
   capacity: number;
   semester: number;
   teacher_email: string;
+  token: string;
 }
 
 interface ICreateCourseResponse {
@@ -37,7 +38,12 @@ export const createCourseAsync = createAsyncThunk(
   async (request: ICreateCourseRequest, {rejectWithValue}) => await axios
   .post(
     API_URL_COURSE + "/admin/create_course",
-    request
+    request,
+    {
+      headers: {
+      Authorization: `Bearer ${request.token}`
+      }
+    }
   )
   .then((response) => {
     return response.data;

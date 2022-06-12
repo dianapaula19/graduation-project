@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../../../app/store";
 import { ApiStatus, API_URL_COURSE, API_URL_USER, SelectionSessionSettingValue } from "../../Utils";
@@ -17,6 +17,7 @@ const initialState: IUpdateSelectionSessionOpenState = {
 
 interface IUpdateSelectionSessionOpenRequest {
   value: SelectionSessionSettingValue;
+  token: string;
 }
 
 interface IUpdateSelectionSessionOpenResponse {
@@ -31,8 +32,13 @@ export const updateSelectionSessionOpenAsync = createAsyncThunk(
   'user/admin/updateSelectionSessionOpen',
   async (request: IUpdateSelectionSessionOpenRequest, {rejectWithValue}) => await axios
   .post(
-    API_URL_USER + "/admin/update_course",
-    request
+    API_URL_USER + "/admin/update_selection_session_open",
+    request,
+    {
+      headers: {
+      Authorization: `Bearer ${request.token}`
+      }
+    }
   )
   .then((response) => {
     return response.data;
@@ -46,9 +52,9 @@ export const updateSelectionSessionOpenSlice = createSlice({
   name: 'updateSelectionSessionOpen',
   initialState,
   reducers: {
-  revertUpdateSelectionSessionOpen: () => {
-    return initialState;
-  }
+    revertUpdateSelectionSessionOpen: () => {
+      return initialState;
+    }
   },
   extraReducers: (builder) => {
   builder

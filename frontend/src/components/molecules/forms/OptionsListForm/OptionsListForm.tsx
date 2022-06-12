@@ -13,6 +13,7 @@ import { getCoursesCourses } from "../../../../features/user/admin/getCoursesSli
 import { getOptionsListsCurrentOptionsList } from "../../../../features/user/admin/getOptionsListsSlice";
 import { maxYears } from "../utils";
 import { updateOptionsListAsync } from "../../../../features/user/admin/updateOptionsListSlice";
+import { loginToken } from "../../../../features/auth/loginSlice";
 
 
 const OptionsListForm = ({
@@ -33,6 +34,7 @@ const OptionsListForm = ({
 
   const courses = useAppSelector(getCoursesCourses);
   const currentOptionsList = useAppSelector(getOptionsListsCurrentOptionsList);
+  const token = useAppSelector(loginToken);
   
   const dispatch = useAppDispatch();
 
@@ -78,14 +80,14 @@ const OptionsListForm = ({
   useEffect(() => {
   if (currentOptionsList) {
     setData({
-    title: currentOptionsList.title,
-    year: currentOptionsList.year,
-    semester: currentOptionsList.semester,
-    domain: currentOptionsList.domain,
-    learningMode: currentOptionsList.learning_mode,
-    degree: currentOptionsList.degree,
-    studyProgram: currentOptionsList.study_program,
-    coursesIds: Array.from(currentOptionsList.courses, course => course.id)
+      title: currentOptionsList.title,
+      year: currentOptionsList.year,
+      semester: currentOptionsList.semester,
+      domain: currentOptionsList.domain,
+      learningMode: currentOptionsList.learning_mode,
+      degree: currentOptionsList.degree,
+      studyProgram: currentOptionsList.study_program,
+      coursesIds: Array.from(currentOptionsList.courses, course => course.id)
     })
   }
   }, [])
@@ -117,31 +119,35 @@ const OptionsListForm = ({
   }
 
   const onSubmit = () => {
-  if (type === 'create') {
-    dispatch(createOptionsListAsync({
-    title: data.title,
-    year: data.year,
-    semester: data.semester,
-    domain: data.domain,
-    learning_mode: data.learningMode,
-    degree: data.degree,
-    study_program: data.studyProgram,
-    courses_ids: data.coursesIds
-    }))  
-  }
-  else if (type === 'update' && currentOptionsList) {
-    dispatch(updateOptionsListAsync({
-    id: currentOptionsList.id,
-    title: data.title,
-    year: data.year,
-    semester: data.semester,
-    domain: data.domain,
-    learning_mode: data.learningMode,
-    degree: data.degree,
-    study_program: data.studyProgram,
-    courses_ids: data.coursesIds
-    }))
-  }
+    if (token) {
+      if (type === 'create') {
+        dispatch(createOptionsListAsync({
+          title: data.title,
+          year: data.year,
+          semester: data.semester,
+          domain: data.domain,
+          learning_mode: data.learningMode,
+          degree: data.degree,
+          study_program: data.studyProgram,
+          courses_ids: data.coursesIds,
+          token: token
+        }))  
+      }
+      if (type === 'update' && currentOptionsList) {
+        dispatch(updateOptionsListAsync({
+          id: currentOptionsList.id,
+          title: data.title,
+          year: data.year,
+          semester: data.semester,
+          domain: data.domain,
+          learning_mode: data.learningMode,
+          degree: data.degree,
+          study_program: data.studyProgram,
+          courses_ids: data.coursesIds,
+          token: token
+        }))
+      }
+    }
   }
 
   return (

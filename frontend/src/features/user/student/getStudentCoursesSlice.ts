@@ -28,6 +28,7 @@ const initialState: IGetStudentCoursesState = {
 
 interface IGetStudentCoursesRequest {
   email: string;
+  token: string;
 }
 
 interface IGetStudentCoursesResponse {
@@ -44,7 +45,12 @@ export const getStudentCoursesAsync = createAsyncThunk(
   async (request: IGetStudentCoursesRequest, {rejectWithValue}) => await axios
   .post(
     API_URL_COURSE + "/student/get_student_course",
-    request
+    request,
+    {
+      headers: {
+      Authorization: `Bearer ${request.token}`
+      }
+    }
   )
   .then((response) => {
     return response.data;

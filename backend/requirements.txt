@@ -5,3 +5,5 @@ django-rest-passwordreset
 django-environ
 pandas
 openpyxl
+channels
+channels-redis

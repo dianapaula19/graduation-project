@@ -9,6 +9,7 @@ import Button from "../../../atoms/Button";
 import { getCoursesAsync, getCurrentCourse, revertCurrentCourse } from "../../../../features/user/admin/getCoursesSlice";
 import { revertUpdateCourse, updateCourseShowModal, updateCourseStatus } from "../../../../features/user/admin/updateCourseSlice";
 import { createCourseShowModal, createCourseStatus, revertCreateCourse } from "../../../../features/user/admin/createCourseSlice";
+import { loginToken } from "../../../../features/auth/loginSlice";
 
 const CoursesList = ({
   courses
@@ -24,6 +25,7 @@ const CoursesList = ({
   const showModalUpdateCourse = useAppSelector(updateCourseShowModal);
   const statusCreateCourse = useAppSelector(createCourseStatus);
   const statusUpdateCourse = useAppSelector(updateCourseStatus);
+  const token = useAppSelector(loginToken);
   
   const { t } = useTranslation();
 
@@ -117,8 +119,12 @@ const CoursesList = ({
     <Modal 
       show={showModalCreateCourse} 
       closeModal={() => {
-        dispatch(getCoursesAsync());
-        dispatch(revertCreateCourse());
+        if (token) {
+          dispatch(getCoursesAsync({
+            token: token
+          }));
+          dispatch(revertCreateCourse());
+        }
       }}
     >
       Create TBA
@@ -127,8 +133,12 @@ const CoursesList = ({
     <Modal 
       show={showModalUpdateCourse} 
       closeModal={() => {
-        dispatch(getCoursesAsync());
-        dispatch(revertUpdateCourse());
+        if (token) {
+          dispatch(getCoursesAsync({
+            token: token
+          }));
+          dispatch(revertUpdateCourse());
+        }
       }}
     >
       Update TBA

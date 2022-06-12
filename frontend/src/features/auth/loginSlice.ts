@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../../app/store";
 import { Role } from "../../components/App";
@@ -45,6 +45,10 @@ export interface ILoginError {
   code: string;
 };
 
+interface ISetSelectionSessionOpenPayload {
+  value: SelectionSessionSettingValue;
+}
+
 export const loginAsync = createAsyncThunk(
   'auth/login',
   async (request: ILoginRequest, {rejectWithValue}) => await axios
@@ -66,6 +70,14 @@ export const loginSlice = createSlice({
   reducers: {
     revertLogin: () => {
       return initialState;
+    },
+    setSelectionSessionOpenSetting: (
+      state: LoginState, 
+      action: PayloadAction<ISetSelectionSessionOpenPayload>
+    ) => {
+      const res = action.payload;
+      state.selectionSessionOpen = res.value;
+      return state;
     }
   },
   extraReducers: (builder) => {
@@ -90,7 +102,7 @@ export const loginSlice = createSlice({
   }
 });
 
-export const { revertLogin }  = loginSlice.actions;
+export const { revertLogin, setSelectionSessionOpenSetting }  = loginSlice.actions;
 
 export const loginStatus = (state: RootState) => state.login.status;
 export const loginToken = (state: RootState) => state.login.token;

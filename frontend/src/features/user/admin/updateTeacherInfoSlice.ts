@@ -23,6 +23,7 @@ const initialState: IUpdateTeacherInfoState = {
 interface IUpdateTeacherInfoRequest {
   first_name: string;
   last_name: string;
+  token: string;
 }
 
 interface IUpdateTeacherInfoResponse {
@@ -38,7 +39,12 @@ export const updateTeacherInfoAsync = createAsyncThunk(
   async (request: IUpdateTeacherInfoRequest, {rejectWithValue}) => await axios
   .post(
     API_URL_USER + "/admin/teachers",
-    request
+    request,
+    {
+      headers: {
+      Authorization: `Bearer ${request.token}`
+      }
+    }
   )
   .then((response) => {
     return response.data;
