@@ -11,7 +11,6 @@ import { createOptionsListAsync } from "../../../../features/user/admin/createOp
 import { Degree, Domain, LearningMode, StudyProgram } from "../../../App";
 import { getCoursesCourses } from "../../../../features/user/admin/getCoursesSlice";
 import { getOptionsListsCurrentOptionsList } from "../../../../features/user/admin/getOptionsListsSlice";
-import { maxYears } from "../utils";
 import { updateOptionsListAsync } from "../../../../features/user/admin/updateOptionsListSlice";
 import { loginToken } from "../../../../features/auth/loginSlice";
 
@@ -58,7 +57,7 @@ const OptionsListForm = ({
 
   const validation = {
   title: data.title === "",
-  year: data.year < 2 || data.year > maxYears(data.domain, data.degree),
+  year: data.year < 2 || data.year > 4,
   semester: data.semester < 1 || data.semester > 2,
   domain: data.domain === 'placeholder',
   learningMode: data.learningMode === 'placeholder',
@@ -256,7 +255,7 @@ const OptionsListForm = ({
       id={`${componentId}-year`}
       name="year"
       type={InputFieldType.number} 
-      min={2} max={maxYears(data.domain, data.degree)}
+      min={2} max={4}
       error={validation.year} 
       errorMessage={t(`${inputTranslate}.year.errorMessage`)}
       label={t(`${inputTranslate}.year.label`)}

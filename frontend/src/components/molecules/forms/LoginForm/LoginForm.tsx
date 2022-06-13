@@ -15,8 +15,6 @@ import { useNavigate } from "react-router-dom";
 const LoginForm = () => {
 
   const dispatch = useDispatch();
-  const status = useAppSelector(loginStatus);
-  let navigate = useNavigate();
 
   const [data, setData] = useState<ILoginFormData>({
     email: "",

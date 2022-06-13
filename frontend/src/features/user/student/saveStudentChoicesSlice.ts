@@ -66,7 +66,7 @@ export const saveStudentChoicesSlice = createSlice({
   },
   extraReducers: (builder) => {
   builder
-  .addCase(saveStudentChoicesAsync.pending, (state, action) => {
+  .addCase(saveStudentChoicesAsync.pending, (state) => {
     state.status = ApiStatus.loading;
   })
   .addCase(saveStudentChoicesAsync.fulfilled, (state, action) => {

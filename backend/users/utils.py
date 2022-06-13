@@ -1,13 +1,6 @@
 from courses.models import Course, OptionsList, StudentOptionChoice
 from .models import Degree, Domain, Student
 
-def get_max_years(domain: Domain, degree: Degree) -> int:
-  if degree == Degree.BACHELOR:
-    if domain == Domain.CTI:
-      return 4
-    return 3
-  return 2
-
 
 def reset_data():
   students = Student.objects.all()
@@ -29,7 +22,8 @@ def reset_data():
     for options_list in options_lists:
       if student.current_year == (options_list.year - 1):
         student.options_lists.add(options_list)
-      
+        options_list.students.add(student)
+        options_list.save()
     student.save()
 
   StudentOptionChoice.objects.all().delete()

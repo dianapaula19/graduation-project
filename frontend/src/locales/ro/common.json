@@ -217,17 +217,17 @@
       "inputFields": {
         "email": {
           "placeholder": "Email",
-          "errorMessage": "Text",
+          "errorMessage": "Introduceți o adresă validă de email",
           "label": "Email"
         },
         "password": {
           "placeholder": "Parolă",
-          "errorMessage": "Text",
+          "errorMessage": "Parola trebuie să conțină măcar o literă mică, o literă mare, și o cifră",
           "label": "Parolă"
         },
         "confirmPassword": {
           "placeholder": "Confirmă Parola",
-          "errorMessage": "Text",
+          "errorMessage": "Parolele trebuie să fie identice",
           "label": "Confirmă Parola"
         }
       },
@@ -260,7 +260,7 @@
         },
         "confirmPassword": {
           "placeholder": "Confirmă Parola",
-          "errorMessage": "Parolele trebuie să fie identite",
+          "errorMessage": "Parolele trebuie să fie identice",
           "label": "Confirmă Parola"
         }
       },
@@ -272,8 +272,7 @@
   "lists": {
     "accounts": {
       "header": {
-        "email": "Email",
-        "action": "Acțiune"
+        "email": "Email"
       }  
     },
     "students": {
@@ -285,11 +284,11 @@
     },
     "courses": {
       "header": {
-        "title": "Title",
-        "teacher": "Teacher"
+        "title": "Denumire",
+        "teacher": "Profesor"
       },
       "buttons": {
-        "create": "Create a new course"
+        "create": "Adaugă un curs nou"
       }
     }
   },
@@ -484,16 +483,16 @@
     },
     "accounts": {
       "notVerified": {
-        "accountsListTitle": "Not Verified",
+        "accountsListTitle": "Conturi neverificate",
         "fileUploadLabel": ""
       },
       "students": {
-        "accountsListTitle": "Students",
-        "fileUploadLabel": "Upload students' info excel file"
+        "accountsListTitle": "Studenți",
+        "fileUploadLabel": "Importă informațiile studenților în format .xlsx"
       },
       "teachers": {
-        "accountsListTitle": "Teachers",
-        "fileUploadLabel": "Upload teachers' info excel file"
+        "accountsListTitle": "Profesori",
+        "fileUploadLabel": "Importă informațiile profesorilor în format .xlsx"
       }
     },
     "admin": {

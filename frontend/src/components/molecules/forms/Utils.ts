@@ -1,7 +1,7 @@
 import { Degree, Domain } from "../../App"
 
 const regexRules = {
-  email: /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/,
+  email: /^[a-zA-Z0-9\.]+\@((s\.unibuc|unibuc)\.ro)$/,
   password: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
 }
 

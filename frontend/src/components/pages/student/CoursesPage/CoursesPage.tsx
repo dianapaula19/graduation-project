@@ -4,8 +4,11 @@ import { loginToken, loginUserData } from "../../../../features/auth/loginSlice"
 import { getStudentCoursesAsync, getStudentCoursesCode, getStudentCoursesCourses, getStudentCoursesStatus } from "../../../../features/user/student/getStudentCoursesSlice";
 import { ApiStatus } from "../../../../features/Utils";
 import LoggedUserPage from "../../../templates/LoggedUserPage";
+import "./CoursesPage.scss";
 
 const CoursesPage = () => {
+
+  const componentClassName = "courses-page";
   
   const statusGetStudentCourses = useAppSelector(getStudentCoursesStatus);
   const userData = useAppSelector(loginUserData);
@@ -31,27 +34,48 @@ const CoursesPage = () => {
   
   return (
     <LoggedUserPage>
-      <div>
-
-        <span>Semester 1</span>
+      <div
+        className={componentClassName}
+      >
+        <div
+          style={{
+            'fontSize': 'xx-large'
+          }}
+        >Ai fost repartizat/ă la optionalele de mai jos</div>
+        <span
+          style={{
+            'fontSize': 'x-large'
+          }}
+        >
+          Semestrul I
+        </span>
         {courses && courses.filter(course => course.semester === 1).map((course) => {
           return (
-            <>
-              <br/>
-              <span>{course.title}</span>
-              <br/>
-            </>
+            <div
+              style={{
+                'fontSize': 'larger'
+              }}
+            >
+              {course.title}
+            </div> 
           )
         })}
-        <br/>
-        <span>Semester 2</span>
+        <span
+          style={{
+            'fontSize': 'x-large'
+          }}
+        >
+          Semestrul al II-lea
+        </span>
         {courses && courses.filter(course => course.semester === 2).map((course) => {
           return (
-            <>
-              <br/>
-              <span>{course.title}</span>
-              <br/>
-            </>
+            <div
+              style={{
+                'fontSize': 'larger'
+              }}
+            >
+              {course.title}
+            </div>
           )
         })}
       </div>

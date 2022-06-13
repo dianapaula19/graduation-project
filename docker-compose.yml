@@ -1,6 +1,10 @@
 version: '3.8'
 
 services:
+  redis:
+    image: redis:latest
+    ports:
+      - "6000:6000"
   backend:
     build: ./backend
     command: python manage.py runserver 0.0.0.0:8000
@@ -8,6 +12,8 @@ services:
       - ./backend:/app
     ports:
       - "8000:8000"
+    depends_on:
+      - redis
   frontend:
     build: ./frontend
     command: npm start

@@ -14,14 +14,10 @@ const LoggedUserPage = ({
   const componentClassName = "logged-user-template";
 
   const status = useAppSelector(loginStatus);
-  let navigate = useNavigate();
 
-  useEffect(() => {
-    if (status !== ApiStatus.success) {
-    navigate('login');
-    }
-  }, [status])
-  
+  if (status !== ApiStatus.success) {
+    return <Navigate to={"/login"} />
+  }
 
   return (
     <div 

@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { loginSelectionSessionOpen, loginUserData, setSelectionSessionOpenSetting } from '../../features/auth/loginSlice';
+import { loginSelectionSessionOpen, loginStatus, loginUserData, revertLogin, setSelectionSessionOpenSetting } from '../../features/auth/loginSlice';
 import OptionsListsPage from '../pages/admin/OptionsListsPage';
 import AdminCoursesPage from '../pages/admin/CoursesPage';
 import LoginPage from '../pages/auth/LoginPage';
@@ -16,7 +16,7 @@ import RecoverAccountPage from '../pages/auth/RecoverAccountPage';
 import ResetPasswordPage from '../pages/auth/ResetPasswordPage';
 import SettingsPage from '../pages/admin/SettingsPage';
 import { ApiStatus, SelectionSessionSettingValue } from '../../features/Utils';
-import { revertUpdateSelectionSessionOpen, updateSelectionSessionOpenCode, updateSelectionSessionOpenStatus } from '../../features/user/admin/updateSelectionSessionOpenSlice';
+import { revertUpdateSelectionSessionOpen, updateSelectionSessionOpenStatus } from '../../features/user/admin/updateSelectionSessionOpenSlice';
 
 const App = () => {
 
@@ -24,9 +24,17 @@ const App = () => {
   const selectionSessionOpen = useAppSelector(loginSelectionSessionOpen);
   const statusUpdateSelectionSessionOpen = useAppSelector(updateSelectionSessionOpenStatus);
   const dispatch = useAppDispatch();
+  const statusLogin = useAppSelector(loginStatus);
   const [role, setRole] = useState(Role.NONE);
 
   useEffect(() => {
+
+    setTimeout(() => {
+      if (statusLogin === ApiStatus.loading) {
+        dispatch(revertLogin());
+      }
+    }, 3000);
+
     if (userData && role === Role.NONE) {
       setRole(userData.role)
     }
@@ -34,7 +42,7 @@ const App = () => {
     if (statusUpdateSelectionSessionOpen === ApiStatus.success) {
       let url = `ws://localhost:8000/ws/socket-server/`
   
-      const socket = new WebSocket(url)
+      const socket = new WebSocket(url, 'echo-protocol')
       socket.onmessage = (e) => {
       let data = JSON.parse(e.data);
       if (data.type === 'set_selection_session_open') {

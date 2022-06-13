@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import Button from "../../../atoms/Button/Button";
 import InputField from "../../../atoms/InputField/InputField";
 import { InputFieldType } from "../../../atoms/InputField/InputField.types";
-import { regexRules } from "../utils";
+import { regexRules } from "../Utils";
 import { IRegistrationFormData } from "./RegistrationForm.types";
 import LogoSvg from "../../../../assets/logo.svg";
 import "./RegistrationForm.scss";
@@ -21,6 +21,9 @@ const RegistrationForm = () => {
   });
 
   const componentClassName = "registration-form";
+  const inputFieldsTranslate = "forms.registration.inputFields";
+  const submitButtonsTranslate = "forms.registration.submitButtons";
+  const alreadyAnUserTranslate = "forms.registration.alreadyAnUser";
 
   const { t } = useTranslation();
 
@@ -29,6 +32,8 @@ const RegistrationForm = () => {
     password: !regexRules.password.test(data.password),
     confirmPassword: !(data.password === data.confirmPassword)
   }
+
+  console.log(validation.email)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const name = e.target.name;
@@ -56,10 +61,9 @@ const RegistrationForm = () => {
         type={InputFieldType.email}
         name={"email"}
         id={"registration-form-email"}
-        placeholder={t("registration.form.email.placeholder")} 
-        errorMessage={t("registration.form.email.errorMessage")}
-        label={t("registration.form.email.label")}
-        required={true}
+        placeholder={t(`${inputFieldsTranslate}.email.placeholder`)} 
+        errorMessage={t(`${inputFieldsTranslate}.email.errorMessage`)}
+        label={t(`${inputFieldsTranslate}.email.label`)}
         error={validation.email}
         onChange={handleChange}      
       />
@@ -67,10 +71,9 @@ const RegistrationForm = () => {
         type={InputFieldType.password}
         name={"password"}
         id={"registration-form-password"}
-        placeholder={t("registration.form.password.placeholder")} 
-        errorMessage={t("registration.form.password.errorMessage")}
-        label={t("registration.form.password.label")}
-        required={true}
+        placeholder={t(`${inputFieldsTranslate}.password.placeholder`)} 
+        errorMessage={t(`${inputFieldsTranslate}.password.errorMessage`)}
+        label={t(`${inputFieldsTranslate}.password.label`)}
         error={validation.password}
         onChange={handleChange}         
       />
@@ -78,26 +81,24 @@ const RegistrationForm = () => {
         type={InputFieldType.password}
         name={"confirmPassword"}
         id={"registration-form-confirm-password"}
-        placeholder={t("registration.form.confirmPassword.placeholder")} 
-        errorMessage={t("registration.form.confirmPassword.errorMessage")}
-        label={t("registration.form.confirmPassword.label")}
-        required={true}
+        placeholder={t(`${inputFieldsTranslate}.confirmPassword.placeholder`)} 
+        errorMessage={t(`${inputFieldsTranslate}.confirmPassword.errorMessage`)}
+        label={t(`${inputFieldsTranslate}.confirmPassword.label`)}
         error={validation.confirmPassword}
         onChange={handleChange}         
       />
       <Button 
-        label={t("registration.form.button.label")} 
-        // disabled={!(validation.confirmPassword && validation.password && validation.email)}
-        disabled={false}
+        label={t(`${submitButtonsTranslate}.signUp`)} 
+        disabled={validation.confirmPassword || validation.password || validation.email}
         onClick={onSubmit}
       />
       <p className={`${componentClassName}__p`}>
-        {t("registration.form.alreadyAnUser")}
+        {t(`${alreadyAnUserTranslate}.text`)}
         <a
           href="/login" 
           className={`${componentClassName}__a`}
         >
-          {t("registration.form.alreadyAnUserLink")}
+          {t(`${alreadyAnUserTranslate}.link`)}
         </a>
       </p>
     </div>
