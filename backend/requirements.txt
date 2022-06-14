@@ -3,7 +3,4 @@ djangorestframework
 django-cors-headers
 django-rest-passwordreset
 django-environ
-pandas
-openpyxl
 channels
-channels-redis

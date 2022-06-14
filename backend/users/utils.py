@@ -1,5 +1,5 @@
 from courses.models import Course, OptionsList, StudentOptionChoice
-from .models import Degree, Domain, Student
+from .models import Student
 
 
 def reset_data():
@@ -20,7 +20,11 @@ def reset_data():
     student.options_lists.clear()
     
     for options_list in options_lists:
-      if student.current_year == (options_list.year - 1):
+      if student.domain == options_list.domain and \
+        student.learning_mode == options_list.learning_mode and \
+        student.study_program == options_list.study_program and \
+        student.degree == options_list.degree and \
+        student.current_year == (options_list.year - 1):
         student.options_lists.add(options_list)
         options_list.students.add(student)
         options_list.save()

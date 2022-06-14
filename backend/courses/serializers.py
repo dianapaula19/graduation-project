@@ -3,6 +3,7 @@ from rest_framework import serializers
 from users.models import Student
 from .models import Course, OptionsList, StudentOptionChoice
 
+
 class OptionsListCourseSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Course

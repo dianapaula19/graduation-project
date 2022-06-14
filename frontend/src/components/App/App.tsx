@@ -42,7 +42,7 @@ const App = () => {
     if (statusUpdateSelectionSessionOpen === ApiStatus.success) {
       let url = `ws://localhost:8000/ws/socket-server/`
   
-      const socket = new WebSocket(url, 'echo-protocol')
+      const socket = new WebSocket(url);
       socket.onmessage = (e) => {
       let data = JSON.parse(e.data);
       if (data.type === 'set_selection_session_open') {
