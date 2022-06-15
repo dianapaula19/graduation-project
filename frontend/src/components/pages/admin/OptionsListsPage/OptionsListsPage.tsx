@@ -123,6 +123,7 @@ const OptionsListsPage = () => {
     <Modal 
     show={showModalCreateOptionsList} 
     closeModal={() => {
+      setShowModalOptionsListForm(false);
       dispatch(revertCreateOptionsList())
       if (token) {
         dispatch(getOptionsListsAsync({
@@ -136,6 +137,7 @@ const OptionsListsPage = () => {
     <Modal 
     show={showModalUpdateOptionsList} 
     closeModal={() => {
+      setShowModalOptionsListForm(false);
       dispatch(revertUpdateOptionsList())
       if (token) {
         dispatch(getOptionsListsAsync({

@@ -21,12 +21,15 @@ const initialState: IUpdateStudentInfoState = {
 }
 
 interface IUpdateStudentInfoRequest {
+  email: string;
   first_name: string;
   last_name: string;
   domain: string;
   learning_mode: string;
   degree: string;
   study_program: string;
+  current_group: string;
+  current_year: number;
   grades: IGrade[];
   token: string;
 }

@@ -40,10 +40,18 @@ enum StudyProgram {
   MA = 'MA'
 }
 
+enum Time {
+  SECOND = 1000,
+  MINUTE = 60 * SECOND,
+  HOUR = 60 * MINUTE,
+  DAY = 24 * HOUR
+}
+
 export {
   Domain, 
   LearningMode,
   Degree,
   StudyProgram,
-  Role
+  Role,
+  Time
 }

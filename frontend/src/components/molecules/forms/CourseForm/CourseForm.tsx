@@ -61,16 +61,16 @@ const CourseForm = ({
   const disableSubmitButton = validation.title || validation.link || validation.capacity;
 
   useEffect(() => {
-  if (currentCourse) {
-    setCourseData({
-    title: currentCourse.title,
-    link: currentCourse.link,
-    capacity: currentCourse.capacity,
-    semester: currentCourse.semester,
-    teacher: currentCourse.teacher_email
-    })
-  }
-  }, [])
+    if (currentCourse) {
+      setCourseData({
+      title: currentCourse.title,
+      link: currentCourse.link,
+      capacity: currentCourse.capacity,
+      semester: currentCourse.semester,
+      teacher: currentCourse.teacher_email
+      })
+    }
+  }, [currentCourse, setCourseData])
   
   
   return (

@@ -12,7 +12,7 @@ import { getStudentsCurrentStudent } from "../../../../features/user/admin/getSt
 import { getTeachersCurrentTeacher } from "../../../../features/user/admin/getTeachersSlice";
 import { updateStudentInfoAsync } from "../../../../features/user/admin/updateStudentInfoSlice";
 import { updateTeacherInfoAsync } from "../../../../features/user/admin/updateTeacherInfoSlice";
-import { loginToken } from "../../../../features/auth/loginSlice";
+import { loginToken, loginUserData } from "../../../../features/auth/loginSlice";
 
 const UserDataForm = ({
   role,
@@ -32,107 +32,98 @@ const UserDataForm = ({
   const student = useAppSelector(getStudentsCurrentStudent);
   const teacher = useAppSelector(getTeachersCurrentTeacher);
   const token = useAppSelector(loginToken);
+  const user = useAppSelector(loginUserData);
 
   const [userData, setUserData] = useState({
-  firstName: '',
-  lastName: '',
-  role: 'placeholder'
+    firstName: '',
+    lastName: '',
+    role: 'placeholder'
   });
 
   const [studentData, setStudentData] = useState({
-  domain: 'placeholder',
-  learningMode: 'placeholder',
-  degree: 'placeholder',
-  studyProgram: 'placeholder',
-  currentGroup: '',
-  currentYear: 1,
-  grades: [],
+    domain: 'placeholder',
+    learningMode: 'placeholder',
+    degree: 'placeholder',
+    studyProgram: 'placeholder',
+    currentGroup: '',
+    currentYear: 1,
+    grades: [],
   });
 
   useEffect(() => {
   if (role === Role.STUDENT) {
     if (student) {
-    setUserData({
-      ...userData,
-      firstName: student.first_name,
-      lastName: student.last_name
-    })
-    setStudentData({
-      ...studentData,
-      domain: student.domain === null ? 'placeholder' : student.domain,
-      learningMode: student.learning_mode === null ? 'placeholder' : student.learning_mode,
-      degree: student.degree === null ? 'placeholder' : student.degree,
-      studyProgram: student.study_program === null ? 'placeholder' : student.study_program,
-      currentGroup: student.current_group === null ? '' : student.current_group,
-      currentYear: student.current_year === null ? 1 : student.current_year
-    });
+      setUserData({
+        ...userData,
+        firstName: student.first_name,
+        lastName: student.last_name
+      })
+      setStudentData({
+        ...studentData,
+        domain: student.domain === null ? 'placeholder' : student.domain,
+        learningMode: student.learning_mode === null ? 'placeholder' : student.learning_mode,
+        degree: student.degree === null ? 'placeholder' : student.degree,
+        studyProgram: student.study_program === null ? 'placeholder' : student.study_program,
+        currentGroup: student.current_group === null ? '' : student.current_group,
+        currentYear: student.current_year === null ? 1 : student.current_year
+      });
     } 
   }
   if (role === Role.TEACHER) {
     if (teacher) {
-    setUserData({
-      ...userData,
-      firstName: teacher.first_name,
-      lastName: teacher.last_name
-    })
+      setUserData({
+        ...userData,
+        firstName: teacher.first_name,
+        lastName: teacher.last_name
+      })
     } 
   }
 
   }, [student, teacher])
 
   const validationUserData = {
-  firstName: userData.firstName.length < 1,
-  lastName: userData.lastName.length < 1,
-  role: userData.role === 'placeholder'
+    firstName: userData.firstName.length < 1,
+    lastName: userData.lastName.length < 1,
+    role: userData.role === 'placeholder'
   }
 
   const validationStudentData = {
-  domain: studentData.domain === 'placeholder',
-  learningMode: studentData.learningMode === 'placeholder',
-  degree: studentData.degree === 'placeholder',
-  studyProgram: studentData.studyProgram === 'placeholder',
-  currentGroup: studentData.currentGroup.length < 1,
-  currentYear: studentData.currentYear < 1 || studentData.currentYear > 4 
+    domain: studentData.domain === 'placeholder',
+    learningMode: studentData.learningMode === 'placeholder',
+    degree: studentData.degree === 'placeholder',
+    studyProgram: studentData.studyProgram === 'placeholder',
+    currentGroup: studentData.currentGroup.length < 1,
+    currentYear: studentData.currentYear < 1 || studentData.currentYear > 4 
   }
 
   const handleChangeUserData = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>): void => {
-  const name = e.target.name;
-  const value = e.target.value;
-  setUserData({
-    ...userData,
-    [name]: value
-  });
+    setUserData({
+      ...userData,
+      [e.target.name]: e.target.value
+    });
   }
 
   const handleChangeStudentData = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>): void => {
-  const name = e.target.name;
-  const value = e.target.value;
-  setStudentData({
-    ...studentData,
-    [name]: value
-  });
+    setStudentData({
+      ...studentData,
+      [e.target.name]: e.target.value
+    });
   } 
 
-  const roles: {[id: string]: string} = t("roles", {returnObjects: true}) as {[id: string]: string};
-  const domains: {[id: string]: string} = t("domains", {returnObjects: true}) as {[id: string]: string};
-  const learningModes: {[id: string]: string} = t("learningModes", {returnObjects: true}) as {[id: string]: string};
-  const degrees: {[id: string]: string} = t("degrees", {returnObjects: true}) as {[id: string]: string};
-  const studyPrograms: {[id: string]: string} = t("studyPrograms", {returnObjects: true}) as {[id: string]: string};
-
   const disableButtonUpdateStudentDataInfo = 
-  validationStudentData.degree || 
-  validationStudentData.learningMode || 
-  validationStudentData.degree || 
-  validationStudentData.studyProgram ||
-  validationStudentData.currentGroup ||
-  validationStudentData.currentYear;
+    validationStudentData.degree || 
+    validationStudentData.learningMode || 
+    validationStudentData.degree || 
+    validationStudentData.studyProgram ||
+    validationStudentData.currentGroup ||
+    validationStudentData.currentYear;
   const disableButtonUpdateTeacherDataInfo = 
-  validationUserData.firstName ||
-  validationUserData.lastName;
+    validationUserData.firstName ||
+    validationUserData.lastName;
   const disableButtonVerifyUser = 
-  validationUserData.firstName ||
-  validationUserData.lastName || 
-  validationUserData.role;
+    validationUserData.firstName ||
+    validationUserData.lastName || 
+    validationUserData.role;
 
   return (
   <div
@@ -177,13 +168,13 @@ const UserDataForm = ({
         label={t(`${dropDownTranslate}.role.label`)}
         onChange={handleChangeUserData}
       >
-      {Object.keys(roles).map((key) => {
+      {Object.keys(Role).map((key) => {
         return (
         <option
-        selected={userData.role === key ? true : false}
+          selected={userData.role === key ? true : false}
           value={key}
         >
-          {roles[key]}
+          {t(`roles.${key}`)}
         </option>
         )
       })}
@@ -203,13 +194,13 @@ const UserDataForm = ({
         value={studentData.domain}
         onChange={handleChangeStudentData}
       >
-      {Object.keys(domains).map((key) => {
+      {Object.keys(Domain).map((key) => {
         return (
         <option
           value={key}
           selected={studentData.domain === key ? true : false}
         >
-          {domains[key]}
+          {t(`domains.${key}`)}
         </option>
         )
       })}
@@ -225,13 +216,13 @@ const UserDataForm = ({
         value={studentData.learningMode}
         onChange={handleChangeStudentData}
       >
-      {Object.keys(learningModes).map((key) => {
+      {Object.keys(LearningMode).map((key) => {
         return (
         <option
           value={key}
           selected={studentData.learningMode === key ? true : false}
         >
-          {learningModes[key]}
+          {t(`learningModes.${key}`)}
         </option>
         )
       })}
@@ -247,13 +238,13 @@ const UserDataForm = ({
         value={studentData.degree}
         onChange={handleChangeStudentData}
       >
-      {Object.keys(degrees).map((key) => {
+      {Object.keys(Degree).map((key) => {
         return (
         <option
           value={key}
           selected={studentData.degree === key ? true : false}
         >
-          {degrees[key]}
+          {t(`degrees.${key}`)}
         </option>
         )
       })}
@@ -269,13 +260,13 @@ const UserDataForm = ({
         value={studentData.studyProgram}
         onChange={handleChangeStudentData}
       >
-      {Object.keys(studyPrograms).map((key) => {
+      {Object.keys(StudyProgram).map((key) => {
         return (
         <option
           value={key}
           selected={studentData.studyProgram === key ? true : false}
         >
-          {studyPrograms[key]}
+          {t(`studyPrograms.${key}`)}
         </option>
         )
       })}
@@ -335,14 +326,17 @@ const UserDataForm = ({
       modifier={disableButtonUpdateStudentDataInfo ? ButtonModifier.disabled : ButtonModifier.save}
       disabled={disableButtonUpdateStudentDataInfo} 
       onClick={() => {
-        if (token) {
+        if (token && student) {
           dispatch(updateStudentInfoAsync({
+            email: student.email,
             first_name: userData.firstName,
             last_name: userData.lastName,
             domain: studentData.domain,
             learning_mode: studentData.learningMode,
             degree: studentData.degree,
             study_program: studentData.studyProgram,
+            current_group: studentData.currentGroup,
+            current_year: studentData.currentYear,
             grades: studentData.grades,
             token: token
           }))  
@@ -357,8 +351,9 @@ const UserDataForm = ({
       modifier={disableButtonUpdateTeacherDataInfo ? ButtonModifier.disabled : ButtonModifier.save}
       disabled={disableButtonUpdateTeacherDataInfo}
       onClick={() => {
-        if (token) {
+        if (token && teacher) {
           dispatch(updateTeacherInfoAsync({
+            email: teacher.email,
             first_name: userData.firstName,
             last_name: userData.lastName,
             token: token

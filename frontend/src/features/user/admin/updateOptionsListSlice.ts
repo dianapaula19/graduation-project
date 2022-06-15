@@ -40,7 +40,7 @@ export const updateOptionsListAsync = createAsyncThunk(
   'user/admin/updateOptionsList',
   async (request: IUpdateOptionsListRequest, {rejectWithValue}) => await axios
   .post(
-    API_URL_COURSE + "/admin/update_course",
+    API_URL_COURSE + "/admin/update_options_list",
     request,
     {
       headers: {

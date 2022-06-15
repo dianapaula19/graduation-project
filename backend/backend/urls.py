@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from users.views import login, \
+from users.views import get_students_lists, login, \
             register, \
             register_batch_students, \
             register_batch_teachers, \
@@ -24,7 +24,8 @@ from users.views import login, \
             students, \
             teachers, \
             send_announcement, \
-            update_selection_session_open
+            update_selection_session_open, \
+            get_students_lists
 from courses.views import create_or_update_student_choices, \
               create_course, \
               update_course, \
@@ -54,6 +55,7 @@ urlpatterns = [
   path('api/user/admin/students', students),
   path('api/user/admin/teachers', teachers),
   path('api/user/admin/update_selection_session_open', update_selection_session_open),
+  path('api/user/admin/get_students_lists', get_students_lists),
 
   # teacher
   path('api/user/teacher/send_announcement', send_announcement),

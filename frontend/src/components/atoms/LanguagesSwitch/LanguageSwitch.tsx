@@ -4,11 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
   currentLanguage,
+  Language,
   switchToEnglish,
   switchToRomanian
-} from "./LanguageSwitchSlice";
+} from "../../../features/LanguageSwitchSlice";
 import "./LanguageSwitch.scss";
-import { Language } from "./LanguagesSwitch.types";
 
 const LanguageSwitch = () => {
 

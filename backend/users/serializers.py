@@ -1,6 +1,6 @@
 from courses.serializers import CourseSerializer
 from courses.models import Course
-from .models import Grade, Teacher, User, Student
+from .models import Domain, Grade, Teacher, User, Student
 from rest_framework import serializers
 
 class UserDataSerializer(serializers.ModelSerializer):
@@ -13,6 +13,20 @@ class GradeSerializer(serializers.ModelSerializer):
     model = Grade
     fields = ['grade', 'year']
 
+class StudentListSerializer(serializers.Serializer):
+  first_name = serializers.CharField()
+  last_name = serializers.CharField()
+  current_group = serializers.CharField()
+
+class StudentsListSerializer(serializers.Serializer):
+  course = serializers.CharField()
+  domain = serializers.CharField()
+  degree = serializers.CharField()
+  learning_mode = serializers.CharField()
+  study_program = serializers.CharField()
+  year = serializers.IntegerField()
+  students = StudentListSerializer(many=True)
+  
 class StudentDataSerializer(serializers.ModelSerializer):
 
   email = serializers.CharField(source='user.email')

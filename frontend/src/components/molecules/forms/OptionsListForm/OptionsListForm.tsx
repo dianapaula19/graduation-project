@@ -13,6 +13,7 @@ import { getCoursesCourses } from "../../../../features/user/admin/getCoursesSli
 import { getOptionsListsCurrentOptionsList } from "../../../../features/user/admin/getOptionsListsSlice";
 import { updateOptionsListAsync } from "../../../../features/user/admin/updateOptionsListSlice";
 import { loginToken } from "../../../../features/auth/loginSlice";
+import { currentLanguage } from "../../../../features/LanguageSwitchSlice";
 
 
 const OptionsListForm = ({
@@ -34,25 +35,20 @@ const OptionsListForm = ({
   const courses = useAppSelector(getCoursesCourses);
   const currentOptionsList = useAppSelector(getOptionsListsCurrentOptionsList);
   const token = useAppSelector(loginToken);
-  
+
   const dispatch = useAppDispatch();
 
   const { t } = useTranslation();
 
-  const domains: {[id: string]: string} = t("domains", {returnObjects: true}) as {[id: string]: string};
-  const learningModes: {[id: string]: string} = t("learningModes", {returnObjects: true}) as {[id: string]: string};
-  const degrees: {[id: string]: string} = t("degrees", {returnObjects: true}) as {[id: string]: string};
-  const studyPrograms: {[id: string]: string} = t("studyPrograms", {returnObjects: true}) as {[id: string]: string};
-
   const [data, setData] = useState<IOptionsListFormData>({
-  title: '',
-  year: 2,
-  semester: 1,
-  domain: 'placeholder',
-  learningMode: 'placeholder',
-  degree: 'placeholder',
-  studyProgram: 'placeholder',
-  coursesIds: []
+    title: '',
+    year: 2,
+    semester: 1,
+    domain: 'placeholder',
+    learningMode: 'placeholder',
+    degree: 'placeholder',
+    studyProgram: 'placeholder',
+    coursesIds: []
   });
 
   const validation = {
@@ -77,44 +73,43 @@ const OptionsListForm = ({
   validation.coursesIds; 
 
   useEffect(() => {
-  if (currentOptionsList) {
-    setData({
-      title: currentOptionsList.title,
-      year: currentOptionsList.year,
-      semester: currentOptionsList.semester,
-      domain: currentOptionsList.domain,
-      learningMode: currentOptionsList.learning_mode,
-      degree: currentOptionsList.degree,
-      studyProgram: currentOptionsList.study_program,
-      coursesIds: Array.from(currentOptionsList.courses, course => course.id)
-    })
-  }
-  }, [])
+    if (currentOptionsList) {
+      setData({
+        title: currentOptionsList.title,
+        year: currentOptionsList.year,
+        semester: currentOptionsList.semester,
+        domain: currentOptionsList.domain,
+        learningMode: currentOptionsList.learning_mode,
+        degree: currentOptionsList.degree,
+        studyProgram: currentOptionsList.study_program,
+        coursesIds: Array.from(currentOptionsList.courses, course => course.id)
+      })
+    }
+  }, [currentOptionsList, setData])
   
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>): void => {
-  const name = e.target.name;
-  const value = e.target.value;
-  if (name === "courses") {
-    const copy = data.coursesIds;
-    const id = parseInt(value)
-    const index = copy.indexOf(parseInt(value));
-    if (index === -1) {
-    copy.push(id);
-    } else {
-    copy.splice(index, 1);
-    }
-    setData({
-    ...data,
-    coursesIds: copy
-    })
-  } else {
+    const name = e.target.name;
+    const value = e.target.value;
+    if (name === "courses") {
+      const copy = data.coursesIds;
+      const id = parseInt(value)
+      const index = copy.indexOf(parseInt(value));
+      if (index === -1) {
+      copy.push(id);
+      } else {
+      copy.splice(index, 1);
+      }
+      setData({
+      ...data,
+      coursesIds: copy
+      })
+      return
+    } 
     setData({
     ...data,
     [name]: value
-    });
-  }
-  console.log(data);
+    });    
   }
 
   const onSubmit = () => {
@@ -167,12 +162,13 @@ const OptionsListForm = ({
       value={data.domain}
       onChange={handleChange}
     >
-      {Object.keys(domains).map((key) => {
+      
+      {Object.keys(Domain).map((key) => {
       return (
         <option
         value={key}
         >
-        {domains[key]}
+        {t(`domains.${key}`)}
         </option>
       )
       })}    
@@ -188,12 +184,12 @@ const OptionsListForm = ({
       value={data.learningMode}
       onChange={handleChange}
     >
-      {Object.keys(learningModes).map((key) => {
+      {Object.keys(LearningMode).map((key) => {
       return (
         <option
         value={key}
         >
-        {learningModes[key]}
+        {t(`learningModes.${key}`)}
         </option>
       )
       })}
@@ -209,12 +205,12 @@ const OptionsListForm = ({
       value={data.degree}
       onChange={handleChange}
     >
-      {Object.keys(degrees).map((key) => {
+      {Object.keys(Degree).map((key) => {
       return (
         <option
         value={key}
         >
-        {degrees[key]}
+        {t(`degrees.${key}`)}
         </option>
       )
       })}
@@ -230,12 +226,12 @@ const OptionsListForm = ({
       value={data.studyProgram}
       onChange={handleChange}
     >
-      {Object.keys(studyPrograms).map((key) => {
+      {Object.keys(StudyProgram).map((key) => {
       return (
         <option
         value={key}
         >
-        {studyPrograms[key]}
+        {t(`studyPrograms.${key}`)}
         </option>
       )
       })}

@@ -21,6 +21,7 @@ import { revertGetTeachers } from "../../../features/user/admin/getTeachersSlice
 import { revertGetTeacherCourses } from "../../../features/user/teacher/getTeacherCoursesSlice";
 import { revertGetOptionsLists } from "../../../features/user/admin/getOptionsListsSlice";
 import { revertGetStudentCourses } from "../../../features/user/student/getStudentCoursesSlice";
+import { revertGetStudentsLists } from "../../../features/user/admin/getStudentsListsSlice";
 
 const SideNav = () => {
   
@@ -140,6 +141,7 @@ const SideNav = () => {
               dispatch(revertGetTeachers());
               dispatch(revertGetCourses());
               dispatch(revertGetOptionsLists());
+              dispatch(revertGetStudentsLists());
             }
             navigate('/login');
           }}

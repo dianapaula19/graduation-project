@@ -24,7 +24,7 @@ class ResponseCode(Enum):
   OPTIONS_LIST_NOT_FOUND = 'OPTIONS_LIST_NOT_FOUND'
   COURSE_NOT_FOUND = 'COURSE_NOT_FOUND'
   COURSE_ALREADY_EXIST = 'COURSE_ALREADY_EXISTS'
-  INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR'
+  ERROR = 'ERROR'
   SUCCESS = 'SUCCESS'
 
 # Create your views here.
@@ -85,7 +85,7 @@ def create_or_update_student_choices(request):
       )
     except:
       return Response({
-        'code': ResponseCode.INTERNAL_SERVER_ERROR.value
+        'code': ResponseCode.ERROR.value
         },
       status=HTTP_500_INTERNAL_SERVER_ERROR
       )
@@ -178,8 +178,6 @@ def get_student_courses(request):
 		status=HTTP_200_OK
 	)
 
-
-
 # Admin Views
 
 @api_view(["GET"])
@@ -219,7 +217,7 @@ def create_options_list(request):
     )
   except:
     return Response({
-      'code': ResponseCode.INTERNAL_SERVER_ERROR.value
+      'code': ResponseCode.ERROR.value
     },
       status=HTTP_500_INTERNAL_SERVER_ERROR
     )
@@ -251,6 +249,7 @@ def create_options_list(request):
 
   options_list.students.set(students)
   options_list.courses.set(courses)
+  options_list.save()
 
   return Response({
     'code': ResponseCode.SUCCESS.value
@@ -277,18 +276,16 @@ def update_options_list(request):
     return Response({
       'code': ResponseCode.OPTIONS_LIST_NOT_FOUND.value
     },
-      status=HTTP_500_INTERNAL_SERVER_ERROR
+      status=HTTP_404_NOT_FOUND
     )
-
-  OptionsList.objects.filter(id=id).update(
-    domain=domain,
-    learning_mode=learning_mode,
-    degree=degree,
-    study_program=study_program,
-    title=title,
-    year=year,
-    semester=semester
-  )
+  
+  options_list.domain = domain
+  options_list.learning_mode = learning_mode
+  options_list.degree = degree
+  options_list.study_program = study_program
+  options_list.title = title
+  options_list.year = year
+  options_list.semester = semester
 
   check_year = year - 1
 
@@ -306,9 +303,11 @@ def update_options_list(request):
   for course_id in courses_ids:
     course = Course.objects.get(id=course_id)
     courses.append(course)
+  
 
   options_list.students.set(students)
   options_list.courses.set(courses)
+  options_list.save()
 
   return Response({
     'code': ResponseCode.SUCCESS.value
@@ -415,7 +414,7 @@ def update_course(request):
     )
   except:
     return Response({
-      'code': ResponseCode.INTERNAL_SERVER_ERROR.value
+      'code': ResponseCode.ERROR.value
       },
       status=HTTP_500_INTERNAL_SERVER_ERROR
     )

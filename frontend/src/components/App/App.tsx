@@ -11,7 +11,7 @@ import AccountsPage from '../templates/AccountsPage';
 import CoursesSelectionPage from '../pages/student/CoursesSelectionPage';
 import StudentCoursesPage from "../pages/student/CoursesPage";
 import TeacherCoursesPage from '../pages/teacher/CoursesPage';
-import { Role } from './App.types';
+import { Role, Time } from './App.types';
 import RecoverAccountPage from '../pages/auth/RecoverAccountPage';
 import ResetPasswordPage from '../pages/auth/ResetPasswordPage';
 import SettingsPage from '../pages/admin/SettingsPage';
@@ -33,7 +33,13 @@ const App = () => {
       if (statusLogin === ApiStatus.loading) {
         dispatch(revertLogin());
       }
-    }, 3000);
+    }, Time.SECOND * 5);
+
+    if (statusLogin === ApiStatus.success) {
+      setTimeout(() => {
+        dispatch(revertLogin());
+      }, Time.DAY)
+    }
 
     if (userData && role === Role.NONE) {
       setRole(userData.role)

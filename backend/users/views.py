@@ -1,10 +1,12 @@
 from email.headerregistry import Group
 from enum import Enum
+import json
 from nis import cat
 from sre_constants import SUCCESS
 from django.conf import settings
 from django.db import IntegrityError
 from django.shortcuts import render
+from django.core.serializers import serialize
 
 # Create your views here.
 from django.contrib.auth import authenticate
@@ -12,9 +14,9 @@ from backend.permissions import IsAdmin, IsStudent, IsTeacher
 
 from courses.utils import students_courses_assignment
 
-from .utils import reset_data
+from .utils import get_students_lists_fun, reset_data
 
-from .serializers import StudentDataSerializer, TeacherDataSerializer, UserDataSerializer
+from .serializers import StudentDataSerializer, StudentsListSerializer, TeacherDataSerializer, UserDataSerializer
 from .models import AppSetting, Grade, Role, SelectionSessionSettingValue, User, Student, Teacher
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, permission_classes
@@ -40,6 +42,7 @@ class ResponseCode(Enum):
   ALREADY_REGISTERED = 'ALREADY_REGISTERED'
   USER_NOT_FOUND = 'USER_NOT_FOUND'
   STUDENT_NOT_FOUND = 'STUDENT_NOT_FOUND'
+  COULD_NOT_SEND_EMAIL = 'COULD_NOT_SEND_EMAIL'
   ERROR = 'ERROR'
   SUCCESS = 'SUCCESS'
 
@@ -180,7 +183,7 @@ def register_batch_students(request):
         recipient_list=[student['email']]
       )
     except:
-      pass
+      error_messages.append("Row {}: Couldn't send email to the newly created user".format(idx))
 
   return Response(
     {
@@ -334,10 +337,11 @@ def students(request):
     )
   
   email = request.data.get("email")
+  print(request.data)
   
   try:
     user = User.objects.get(email=email)
-  except User.DoesNotExist:
+  except:
     return Response({
       'code': ResponseCode.USER_NOT_FOUND.value
       },
@@ -354,53 +358,77 @@ def students(request):
 
   try:
     student = Student.objects.get(user=user)
-    Student.objects.filter(user=user).update(
-      domain=domain,
-      learning_mode=learning_mode,
-      degree=degree,
-      study_program=study_program,
-      current_group=current_group,
-      current_year=current_year
-    )
   except Student.DoesNotExist:
     return Response({
       'code': ResponseCode.STUDENT_NOT_FOUND.value
       },
       status=HTTP_200_OK
-    )   
+    )
+  student.domain = domain
+  student.learning_mode = learning_mode
+  student.degree = degree
+  student.study_program = study_program
+  student.current_group = current_group
+  student.current_year = current_year
 
-  try:
-    for grade in grades:
-      Grade.objects.update_or_create(
-        student=student,
-        year=grade.year,
-        defaults={
-          'year': grade.year,
-          'grade': grade.grade
-        }
-      )
-  except:
-    return Response({
-      'code': ResponseCode.ERROR.value
-      },
-      status=HTTP_500_INTERNAL_SERVER_ERROR
-    )  
+  if grades:   
+    try:
+      for grade in grades:
+        Grade.objects.update_or_create(
+          student=student,
+          year=grade.year,
+          defaults={
+            'year': grade.year,
+            'grade': grade.grade
+          }
+        )
+    except:
+      return Response({
+        'code': ResponseCode.ERROR.value
+        },
+        status=HTTP_500_INTERNAL_SERVER_ERROR
+      )  
+  
+  student.save()
   return Response({
     'code': ResponseCode.SUCCESS.value
     },
     status=HTTP_200_OK
   )
 
-@api_view(["GET"])
+@api_view(["GET", "POST"])
 @permission_classes([IsAdmin])
 def teachers(request):
-  teachers = Teacher.objects.all()
-  serializer = TeacherDataSerializer(teachers, many=True)
+  if request.method == "GET":
+    teachers = Teacher.objects.all()
+    serializer = TeacherDataSerializer(teachers, many=True)
+    return Response({
+      'teachers': serializer.data,
+      'code': ResponseCode.SUCCESS.value
+      },
+      status=HTTP_200_OK
+    )
+  
+  email = request.data.get("email")
+  first_name = request.data.get("first_name")
+  last_name = request.data.get("last_name")
+
+  try:
+    User.objects.filter(email=email).update(
+      first_name=first_name,
+      last_name=last_name
+    )
+  except:
+    return Response({
+      'code': ResponseCode.ERROR.value
+      },
+      status=HTTP_500_INTERNAL_SERVER_ERROR
+    )
+  
   return Response({
-    'teachers': serializer.data,
-    'code': ResponseCode.SUCCESS.value
-    },
-    status=HTTP_200_OK
+      'code': ResponseCode.SUCCESS.value
+      },
+      status=HTTP_500_INTERNAL_SERVER_ERROR
   )
 
 @api_view(["POST"])
@@ -420,7 +448,7 @@ def send_announcement(request):
     )
   except:
     return Response({
-        'code': ResponseCode.ERROR.value
+        'code': ResponseCode.COULD_NOT_SEND_EMAIL.value
       },
       status=HTTP_500_INTERNAL_SERVER_ERROR
     )
@@ -453,6 +481,25 @@ def update_selection_session_open(request):
 
   return Response({
       'code': ResponseCode.SUCCESS.value
+    },
+    status=HTTP_200_OK
+  )
+
+@api_view(["GET"])
+@permission_classes([IsAdmin])
+def get_students_lists(request):
+  
+  try:
+    lists = get_students_lists_fun()
+  except:
+    return Response({
+        'code': ResponseCode.ERROR
+      },
+      status=HTTP_500_INTERNAL_SERVER_ERROR
+    )
+  return Response({
+      'code': ResponseCode.SUCCESS.value,
+      'lists': StudentsListSerializer(lists, many=True).data
     },
     status=HTTP_200_OK
   )

@@ -3,11 +3,6 @@ import axios from "axios";
 import { RootState } from "../../../app/store";
 import { ApiStatus, API_URL_COURSE, API_URL_USER } from "../../Utils";
 
-interface IGrade {
-  year: number;
-  grade: number;
-}
-
 interface IUpdateTeacherInfoState {
   status: ApiStatus;
   showModal: boolean;
@@ -21,6 +16,7 @@ const initialState: IUpdateTeacherInfoState = {
 }
 
 interface IUpdateTeacherInfoRequest {
+  email: string;
   first_name: string;
   last_name: string;
   token: string;

@@ -1,6 +1,6 @@
 import { configureStore, ThunkAction, Action, combineReducers } from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage';
-import languagesReducer from "../components/atoms/LanguagesSwitch/LanguageSwitchSlice";
+import languagesReducer from "../features/LanguageSwitchSlice";
 import loginReducer from "../features/auth/loginSlice";
 import registerReducer from "../features/auth/registerSlice";
 import recoverAccountReducer from "../features/auth/recoverAccountSlice";
@@ -23,6 +23,7 @@ import getTeachersReducer from "../features/user/admin/getTeachersSlice";
 import getCoursesReducer from "../features/user/admin/getCoursesSlice";
 import getOptionsListsReducer from "../features/user/admin/getOptionsListsSlice";
 import updateOptionsListReducer from "../features/user/admin/updateOptionsListSlice";
+import getStudentsListsReducer from "../features/user/admin/getStudentsListsSlice";
 import updateSelectionSessionOpenReducer from "../features/user/admin/updateSelectionSessionOpenSlice";
 import getTeacherCoursesReducer from "../features/user/teacher/getTeacherCoursesSlice";
 import sendAnnouncementReducer from '../features/user/teacher/sendAnnouncementSlice';
@@ -65,6 +66,7 @@ const reducers = combineReducers({
   verifyUser: verifyUserReducer,
   getCourses: getCoursesReducer,
   updateSelectionSessionOpen: updateSelectionSessionOpenReducer,
+  getStudentsLists: getStudentsListsReducer,
 
   // teacher
   getTeacherCourses: getTeacherCoursesReducer,
