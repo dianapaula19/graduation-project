@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { resetPasswordCode, resetPasswordErrorMesssage, resetPasswordShowModal, resetPasswordStatus, revertResetPassword } from "../../../../features/auth/resetPasswordSlice";
 import { ApiStatus } from "../../../../features/Utils";
@@ -12,6 +13,7 @@ const ResetPasswordPage = () => {
   const code = useAppSelector(resetPasswordCode);
   const errorMessage = useAppSelector(resetPasswordErrorMesssage);
   const showModal = useAppSelector(resetPasswordShowModal);
+  let navigate = useNavigate();
 
   const dispatch = useAppDispatch();
 
@@ -27,10 +29,9 @@ const ResetPasswordPage = () => {
     <Modal
       show={showModal}
       closeModal={() => {
-      dispatch(revertResetPassword());
+        dispatch(revertResetPassword());
       }}        
     >
-    <span></span>
     </Modal>
   </>
   )

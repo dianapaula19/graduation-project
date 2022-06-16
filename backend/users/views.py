@@ -1,12 +1,7 @@
 from email.headerregistry import Group
 from enum import Enum
-import json
-from nis import cat
-from sre_constants import SUCCESS
 from django.conf import settings
 from django.db import IntegrityError
-from django.shortcuts import render
-from django.core.serializers import serialize
 
 # Create your views here.
 from django.contrib.auth import authenticate
@@ -31,7 +26,7 @@ from rest_framework.status import (
 from rest_framework.response import Response
 from django.dispatch import receiver
 from django.urls import reverse
-from django_rest_passwordreset.signals import reset_password_token_created
+from django_rest_passwordreset.signals import reset_password_token_created, post_password_reset
 from django.core.mail import send_mail
 
 class ResponseCode(Enum):
@@ -140,6 +135,11 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     from_email=settings.EMAIL_HOST_USER,
     recipient_list=[reset_password_token.user.email]
   )
+
+@receiver(post_password_reset)
+def post_password_reset(sender,  user, *args, **kwargs):
+  user.changed_password = True
+  user.save()
 
 @api_view(["POST"])
 @permission_classes([IsAdmin])
