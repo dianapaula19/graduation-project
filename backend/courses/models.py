@@ -9,8 +9,12 @@ class Course(models.Model):
   students = models.ManyToManyField('users.Student', related_name='enrolled_students')
   title = models.CharField(max_length=255)
   link = models.URLField(max_length=200, null=True)
+  degree = models.TextField(choices=Degree.choices, null=True)
   capacity = models.IntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(100)])
   semester = models.IntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(2)])
+  class Meta:
+    verbose_name = 'course'
+    verbose_name_plural = "courses"
 
 class OptionsListManager(models.Manager):
   def get_students_sorted_by_grade(self, options_list):
@@ -43,6 +47,8 @@ class OptionsList(models.Model):
 
   objects = OptionsListManager()
   class Meta:
+    verbose_name = 'options list'
+    verbose_name_plural = "options lists"
     constraints = [
       models.UniqueConstraint(
         fields=['domain', 'learning_mode', 'degree', 'study_program', 'year', 'semester', 'title'], name='unique_migration_options_list'
@@ -66,6 +72,8 @@ class StudentOptionChoice(models.Model):
   objects = StudentOptionChoiceManager()
   
   class Meta:
+    verbose_name = 'student option choice'
+    verbose_name_plural = "student option choices"
     constraints = [
       models.UniqueConstraint(
         fields=['student', 'options_list', 'course'], name='unique_migration_student_options_list_course'

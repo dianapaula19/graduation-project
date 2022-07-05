@@ -7,12 +7,13 @@ import { IUserDataFormProps } from "./UserDataForm.types";
 import "./UserDataForm.scss";
 import Button, { ButtonModifier } from "../../../atoms/Button";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import { verifyUserAsync } from "../../../../features/user/admin/verifyUserSlice";
-import { getStudentsCurrentStudent } from "../../../../features/user/admin/getStudentsSlice";
-import { getTeachersCurrentTeacher } from "../../../../features/user/admin/getTeachersSlice";
-import { updateStudentInfoAsync } from "../../../../features/user/admin/updateStudentInfoSlice";
-import { updateTeacherInfoAsync } from "../../../../features/user/admin/updateTeacherInfoSlice";
+import { verifyUserAsync } from "../../../../features/user/admin/user/verifyUserSlice";
+import { getStudentsCurrentStudent } from "../../../../features/user/admin/user/getStudentsSlice";
+import { getTeachersCurrentTeacher } from "../../../../features/user/admin/user/getTeachersSlice";
+import { updateStudentInfoAsync } from "../../../../features/user/admin/user/updateStudentInfoSlice";
+import { updateTeacherInfoAsync } from "../../../../features/user/admin/user/updateTeacherInfoSlice";
 import { loginToken, loginUserData } from "../../../../features/auth/loginSlice";
+import { set } from "immer/dist/internal";
 
 const UserDataForm = ({
   role,
@@ -47,7 +48,10 @@ const UserDataForm = ({
     studyProgram: 'placeholder',
     currentGroup: '',
     currentYear: 1,
-    grades: [],
+    grades: [{
+      year: 1,
+      grade: 0.0
+    }],
   });
 
   useEffect(() => {
@@ -104,10 +108,29 @@ const UserDataForm = ({
   }
 
   const handleChangeStudentData = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>): void => {
-    setStudentData({
-      ...studentData,
-      [e.target.name]: e.target.value
-    });
+    if (e.target.name === "currentYear") {
+      const newGrades = []
+      const currentYear = e.target.value as unknown as number;
+      if (currentYear > 0 && currentYear < 5) {
+        for (let index = 0; index < currentYear; index++) {
+        newGrades.push({
+          year: index,
+          grade: 0.0 
+        })
+        }
+      }
+      setStudentData({
+        ...studentData,
+        currentYear: currentYear,
+        grades: newGrades
+      })
+    } else {
+      setStudentData({
+        ...studentData,
+        [e.target.name]: e.target.value
+      });
+    }
+    
   } 
 
   const disableButtonUpdateStudentDataInfo = 
@@ -169,14 +192,16 @@ const UserDataForm = ({
         onChange={handleChangeUserData}
       >
       {Object.keys(Role).map((key) => {
-        return (
-        <option
-          selected={userData.role === key ? true : false}
-          value={key}
-        >
-          {t(`roles.${key}`)}
-        </option>
-        )
+        if (key !== Role.ADMIN && key !== Role.NONE) {
+          return (
+            <option
+              selected={userData.role === key ? true : false}
+              value={key}
+            >
+              {t(`roles.${key}`)}
+            </option>
+            )  
+        }
       })}
       </DropDown>
       </>
@@ -297,11 +322,64 @@ const UserDataForm = ({
         min={1}
         max={4}
       />
-      <div>
-
-      </div>
+      {studentData.grades.length > 0 && (
+        <div>
+          <span
+            style={{
+              "fontSize": "medium"
+            }}
+          >
+            Grades
+          </span>
+          <div>
+          {[
+            studentData.grades.map((grade) => {
+              return (
+                <div
+                  style={{
+                    "display": "flex",
+                    "flexDirection": "row",
+                    "gap": "1rem"
+                  }}
+                >
+                  <InputField 
+                    type={InputFieldType.number} 
+                    defaultValue={grade.year + 1}
+                    error={false} 
+                    errorMessage={""} 
+                    label={"Year"} 
+                  />
+                  <InputField 
+                    type={InputFieldType.number}
+                    defaultValue={grade.grade} 
+                    error={false} 
+                    errorMessage={""} 
+                    label={"Grade"} 
+                  />
+                </div> 
+              )
+            })
+          ]}
+          </div>
+        </div>
+      )}
       </>
     )}
+    {role === Role.TEACHER && (
+      <InputField 
+        type={InputFieldType.text}
+        id={`${componentId}-department`}
+        name={"department"} 
+        defaultValue={studentData.currentYear}
+        value={studentData.currentYear}
+        error={validationStudentData.currentYear} 
+        errorMessage={t(`${inputTranslate}.currentYear.errorMessage`)} 
+        label={t(`${inputTranslate}.currentYear.label`)}
+        placeholder={t(`${inputTranslate}.currentYear.placeholder`)}
+        onChange={handleChangeStudentData} 
+      />
+    )}
+    <br/>
     {role === Role.NONE && (
       <Button 
       label={t(`${submitButtonsTranslate}.verifyUser`)} 

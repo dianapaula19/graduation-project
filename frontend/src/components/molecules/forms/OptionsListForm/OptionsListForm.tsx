@@ -7,11 +7,11 @@ import InputField, { InputFieldType } from "../../../atoms/InputField";
 import { IOptionsListFormData, IOptionsListFormProps } from "./OptionsListForm.types";
 import "./OptionsListForm.scss";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import { createOptionsListAsync } from "../../../../features/user/admin/createOptionsListSlice";
+import { createOptionsListAsync } from "../../../../features/user/admin/optionsList/createOptionsListSlice";
 import { Degree, Domain, LearningMode, StudyProgram } from "../../../App";
-import { getCoursesCourses } from "../../../../features/user/admin/getCoursesSlice";
-import { getOptionsListsCurrentOptionsList } from "../../../../features/user/admin/getOptionsListsSlice";
-import { updateOptionsListAsync } from "../../../../features/user/admin/updateOptionsListSlice";
+import { getCoursesCourses } from "../../../../features/user/admin/course/getCoursesSlice";
+import { getOptionsListsCurrentOptionsList } from "../../../../features/user/admin/optionsList/getOptionsListsSlice";
+import { updateOptionsListAsync } from "../../../../features/user/admin/optionsList/updateOptionsListSlice";
 import { loginToken } from "../../../../features/auth/loginSlice";
 import { currentLanguage } from "../../../../features/LanguageSwitchSlice";
 

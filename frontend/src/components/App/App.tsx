@@ -17,6 +17,8 @@ import ResetPasswordPage from '../pages/auth/ResetPasswordPage';
 import SettingsPage from '../pages/admin/SettingsPage';
 import { ApiStatus, SelectionSessionSettingValue } from '../../features/Utils';
 import { revertUpdateSelectionSessionOpen, updateSelectionSessionOpenStatus } from '../../features/user/admin/updateSelectionSessionOpenSlice';
+import NotFoundPage from '../pages/NotFoundPage';
+import LanguageSwitch from '../atoms/LanguagesSwitch/LanguageSwitch';
 
 const App = () => {
 
@@ -68,70 +70,74 @@ const App = () => {
   }, [userData, setRole, role, statusUpdateSelectionSessionOpen])
   
   return (
-  <Suspense fallback="loading">
-    <BrowserRouter>
-      <Routes>
-        <Route 
-          path="login" 
-          element={<LoginPage />} 
-        />
-        <Route 
-          path="register" 
-          element={<RegisterPage />} 
-        />
-        <Route 
-          path="recoverAccount"
-          element={<RecoverAccountPage />}
-        />
-        <Route 
-          path="resetPassword"
-          element={<ResetPasswordPage />}
-        />
-        <Route 
-          path="/"
-          element={<PersonalDataPage />}
-        />
-        {selectionSessionOpen && (
-          <>
-            <Route 
-              path="admin/optionsLists"
-              element={<OptionsListsPage />}
-            />
-            <Route
-              path="admin/courses"
-              element={<AdminCoursesPage />}
-            />
-            <Route 
-              path="admin/accounts/notVerified"
-              element={<AccountsPage role={Role.NONE}/>}
-            />
-            <Route 
-              path="admin/accounts/students"
-              element={<AccountsPage role={Role.STUDENT}/>}
-            />
-            <Route 
-              path="admin/accounts/teachers"
-              element={<AccountsPage role={Role.TEACHER}/>}
-            />
-            <Route
-              path="admin/settings"
-              element={<SettingsPage />}
-            />
+  <>
+    <Suspense fallback="loading">
+      <BrowserRouter>
+        <Routes>
+          <Route 
+            path="login" 
+            element={<LoginPage />} 
+          />
+          <Route 
+            path="register" 
+            element={<RegisterPage />} 
+          />
+          <Route 
+            path="recoverAccount"
+            element={<RecoverAccountPage />}
+          />
+          <Route 
+            path="resetPassword"
+            element={<ResetPasswordPage />}
+          />
+          <Route 
+            path="/"
+            element={<PersonalDataPage />}
+          />
+          {selectionSessionOpen && (
+            <>
               <Route 
-                path="student/courses"
-                element={selectionSessionOpen === SelectionSessionSettingValue.FALSE ? <StudentCoursesPage /> : <CoursesSelectionPage />}
-              />      
-              <Route
-                path="teacher/courses"
-                element={
-                  <TeacherCoursesPage />
-                }
+                path="admin/optionsLists"
+                element={<OptionsListsPage />}
               />
-          </>
-        )}      
-      </Routes>
-    </BrowserRouter>  
-  </Suspense>
+              <Route
+                path="admin/courses"
+                element={<AdminCoursesPage />}
+              />
+              <Route 
+                path="admin/accounts/notVerified"
+                element={<AccountsPage role={Role.NONE}/>}
+              />
+              <Route 
+                path="admin/accounts/students"
+                element={<AccountsPage role={Role.STUDENT}/>}
+              />
+              <Route 
+                path="admin/accounts/teachers"
+                element={<AccountsPage role={Role.TEACHER}/>}
+              />
+              <Route
+                path="admin/settings"
+                element={<SettingsPage />}
+              />
+                <Route 
+                  path="student/courses"
+                  element={selectionSessionOpen === SelectionSessionSettingValue.FALSE ? <StudentCoursesPage /> : <CoursesSelectionPage />}
+                />      
+                <Route
+                  path="teacher/courses"
+                  element={
+                    <TeacherCoursesPage />
+                  }
+                />
+            </>
+          )}
+          <Route path="*" element={<NotFoundPage />} />      
+        </Routes>
+      </BrowserRouter>  
+    </Suspense>
+  </>
+  
   );
 }
 

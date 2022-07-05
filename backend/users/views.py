@@ -118,6 +118,13 @@ def register(request):
       status=HTTP_500_INTERNAL_SERVER_ERROR
     )
 
+  send_mail(
+    subject="Account created successfully",
+    message="Congrats. Your account was create successfully.",
+    from_email=settings.EMAIL_HOST_USER,
+    recipient_list=[email]
+    )
+
   return Response({
     'code': ResponseCode.SUCCESS.value
     }, 
@@ -337,7 +344,8 @@ def students(request):
     )
   
   email = request.data.get("email")
-  print(request.data)
+  first_name = request.data.get("first_name")
+  last_name = request.data.get("last_name")
   
   try:
     user = User.objects.get(email=email)
@@ -364,6 +372,9 @@ def students(request):
       },
       status=HTTP_200_OK
     )
+  
+  user.first_name = first_name
+  user.last_name = last_name
   student.domain = domain
   student.learning_mode = learning_mode
   student.degree = degree
@@ -371,24 +382,25 @@ def students(request):
   student.current_group = current_group
   student.current_year = current_year
 
-  if grades:   
-    try:
-      for grade in grades:
-        Grade.objects.update_or_create(
-          student=student,
-          year=grade.year,
-          defaults={
-            'year': grade.year,
-            'grade': grade.grade
-          }
-        )
-    except:
-      return Response({
-        'code': ResponseCode.ERROR.value
-        },
-        status=HTTP_500_INTERNAL_SERVER_ERROR
-      )  
-  
+  # if grades:   
+  #   try:
+  #     for grade in grades:
+  #       Grade.objects.update_or_create(
+  #         student=student,
+  #         year=grade.year,
+  #         defaults={
+  #           'year': grade.year,
+  #           'grade': grade.grade
+  #         }
+  #       )
+  #   except:
+  #     return Response({
+  #       'code': ResponseCode.ERROR.value
+  #       },
+  #       status=HTTP_500_INTERNAL_SERVER_ERROR
+  #     )  
+      
+  user.save()
   student.save()
   return Response({
     'code': ResponseCode.SUCCESS.value

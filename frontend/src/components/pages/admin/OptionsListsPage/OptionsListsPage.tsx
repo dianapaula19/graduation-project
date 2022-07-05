@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { loginToken } from "../../../../features/auth/loginSlice";
-import { createOptionsListCode, createOptionsListShowModal, revertCreateOptionsList } from "../../../../features/user/admin/createOptionsListSlice";
-import { getCoursesAsync, getCoursesCourses, getCoursesStatus } from "../../../../features/user/admin/getCoursesSlice";
-import { getCurrentOptionsList, getOptionsListsAsync, getOptionsListsOptionsLists, getOptionsListsStatus, revertCurrentOptionsList } from "../../../../features/user/admin/getOptionsListsSlice";
-import { revertUpdateOptionsList, updateOptionsListShowModal } from "../../../../features/user/admin/updateOptionsListSlice";
+import { createOptionsListCode, createOptionsListShowModal, createOptionsListStatus, revertCreateOptionsList } from "../../../../features/user/admin/optionsList/createOptionsListSlice";
+import { getCoursesAsync, getCoursesCourses, getCoursesStatus } from "../../../../features/user/admin/course/getCoursesSlice";
+import { getCurrentOptionsList, getOptionsListsAsync, getOptionsListsOptionsLists, getOptionsListsStatus, revertCurrentOptionsList } from "../../../../features/user/admin/optionsList/getOptionsListsSlice";
+import { revertUpdateOptionsList, updateOptionsListShowModal, updateOptionsListStatus } from "../../../../features/user/admin/optionsList/updateOptionsListSlice";
 import { ApiStatus } from "../../../../features/Utils";
 import Button from "../../../atoms/Button";
+import Loader from "../../../atoms/Loader";
 import OptionsListForm from "../../../molecules/forms/OptionsListForm";
 import Modal from "../../../molecules/Modal";
 import OptionsListCard from "../../../molecules/OptionsListCard";
@@ -30,40 +31,90 @@ const OptionsListsPage = () => {
   const showModalUpdateOptionsList = useAppSelector(updateOptionsListShowModal);
   const statusGetCourses = useAppSelector(getCoursesStatus);
   const statusGetOptionsLists = useAppSelector(getOptionsListsStatus);
+  const statusCreateOptionsList = useAppSelector(createOptionsListStatus);
+  const statusUpdateOptionsList = useAppSelector(updateOptionsListStatus);
   const token = useAppSelector(loginToken);
 
   const domains: {[id: string]: string} = t("domains", {returnObjects: true}) as {[id: string]: string};
 
   useEffect(() => {
-  if (
-    statusGetCourses === ApiStatus.idle &&
-    token
-  ) {
-    dispatch(getCoursesAsync({
-      token: token
-    }));
-  }
-  if (
-    statusGetOptionsLists === ApiStatus.idle &&
-    token
-  ) {
-    dispatch(getOptionsListsAsync({
-      token: token
-    }));
-  }
-  if (
-    showModalCreateOptionsList || 
-    showModalUpdateOptionsList
-  ) {
-    setShowModalOptionsListForm(false);
-  }
+    if (
+      statusGetCourses === ApiStatus.idle &&
+      token
+    ) {
+      dispatch(getCoursesAsync({
+        token: token
+      }));
+    }
+    if (
+      statusGetOptionsLists === ApiStatus.idle &&
+      token
+    ) {
+      dispatch(getOptionsListsAsync({
+        token: token
+      }));
+    }
+    if (
+      showModalCreateOptionsList || 
+      showModalUpdateOptionsList
+    ) {
+      setShowModalOptionsListForm(false);
+    }
 
   }, [
-  statusGetCourses, 
-  statusGetOptionsLists,
-  showModalCreateOptionsList, 
-  setShowModalOptionsListForm
+    statusGetCourses, 
+    statusGetOptionsLists,
+    showModalCreateOptionsList, 
+    setShowModalOptionsListForm
   ])
+
+  let createOptionsListModalComponent = null;
+
+  switch (statusCreateOptionsList) {
+    case ApiStatus.loading:
+      createOptionsListModalComponent = <Loader />
+      break;
+    case ApiStatus.success:
+      createOptionsListModalComponent = (
+        <div>
+          The options list was created successfully
+        </div>
+      )
+      break;
+    case ApiStatus.failed:
+      createOptionsListModalComponent = (
+        <div>
+          There was an error creating the options list
+        </div>
+      )
+      break;
+    default:
+      break;
+  }
+
+  let updateOptionsListModalComponent = null;
+
+  switch (statusUpdateOptionsList) {
+    case ApiStatus.loading:
+      updateOptionsListModalComponent = <Loader />
+      break;
+    case ApiStatus.success:
+      updateOptionsListModalComponent = (
+        <div>
+          The options list was updated successfully
+        </div>
+      )
+      break;
+    case ApiStatus.failed:
+      updateOptionsListModalComponent = (
+        <div>
+          There was an error updating the options list
+        </div>
+      )
+      break;
+    default:
+      break;
+  }
   
 
   return (
@@ -132,7 +183,7 @@ const OptionsListsPage = () => {
       }
     }}
     >
-    Create TBA
+    {createOptionsListModalComponent}
     </Modal>
     <Modal 
     show={showModalUpdateOptionsList} 
@@ -146,7 +197,7 @@ const OptionsListsPage = () => {
       }
     }}
     >
-    Update TBA
+    {updateOptionsListModalComponent}
     </Modal>
   </LoggedUserPage>
   )

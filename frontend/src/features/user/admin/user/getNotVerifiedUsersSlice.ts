@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { RootState } from "../../../app/store";
-import { ApiStatus, API_URL_COURSE, API_URL_USER } from "../../Utils";
+import { RootState } from "../../../../app/store";
+import { ApiStatus, API_URL_COURSE, API_URL_USER } from "../../../Utils";
 
 
 interface IGetNotVerifiedUsersState {

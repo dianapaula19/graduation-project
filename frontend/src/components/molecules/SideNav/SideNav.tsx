@@ -14,14 +14,14 @@ import { useAppSelector } from "../../../app/hooks";
 import { adminLinks, studentLinks, teacherLinks } from "./Utils";
 import { Role } from "../../App";
 import { revertStudentOptionalsLists } from "../../../features/user/student/studentOptionalsListsSlice";
-import { revertGetCourses } from "../../../features/user/admin/getCoursesSlice";
-import { revertGetStudents } from "../../../features/user/admin/getStudentsSlice";
-import { revertGetNotVerifiedUsers } from "../../../features/user/admin/getNotVerifiedUsersSlice";
-import { revertGetTeachers } from "../../../features/user/admin/getTeachersSlice";
+import { revertGetCourses } from "../../../features/user/admin/course/getCoursesSlice";
+import { revertGetStudents } from "../../../features/user/admin/user/getStudentsSlice";
+import { revertGetNotVerifiedUsers } from "../../../features/user/admin/user/getNotVerifiedUsersSlice";
+import { revertGetTeachers } from "../../../features/user/admin/user/getTeachersSlice";
 import { revertGetTeacherCourses } from "../../../features/user/teacher/getTeacherCoursesSlice";
-import { revertGetOptionsLists } from "../../../features/user/admin/getOptionsListsSlice";
+import { revertGetOptionsLists } from "../../../features/user/admin/optionsList/getOptionsListsSlice";
 import { revertGetStudentCourses } from "../../../features/user/student/getStudentCoursesSlice";
-import { revertGetStudentsLists } from "../../../features/user/admin/getStudentsListsSlice";
+import { revertGetStudentsLists } from "../../../features/user/admin/user/getStudentsListsSlice";
 
 const SideNav = () => {
   
@@ -153,7 +153,7 @@ const SideNav = () => {
         className={`${componentClassName}__copyright`}
       >
         <span>
-          © 2022
+          © 2002 - 2022
         </span>
         <br/>
         <span>

@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { loginToken } from "../../../../features/auth/loginSlice";
-import { getCoursesAsync, getCoursesCourses, getCoursesStatus } from "../../../../features/user/admin/getCoursesSlice";
-import { getTeachersAsync, getTeachersStatus } from "../../../../features/user/admin/getTeachersSlice";
+import { getCoursesAsync, getCoursesCourses, getCoursesStatus } from "../../../../features/user/admin/course/getCoursesSlice";
+import { getTeachersAsync, getTeachersStatus } from "../../../../features/user/admin/user/getTeachersSlice";
 import { getTeacherCoursesStatus } from "../../../../features/user/teacher/getTeacherCoursesSlice";
 import { ApiStatus } from "../../../../features/Utils";
 import CoursesList from "../../../molecules/lists/CoursesList/CoursesList";

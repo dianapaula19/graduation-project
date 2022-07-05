@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { RootState } from "../../../app/store";
-import { ApiStatus, API_URL_COURSE, API_URL_USER } from "../../Utils";
+import { RootState } from "../../../../app/store";
+import { ApiStatus, API_URL_COURSE, API_URL_USER } from "../../../Utils";
 
 interface IUpdateTeacherInfoState {
   status: ApiStatus;
@@ -60,7 +60,8 @@ export const updateTeacherInfoSlice = createSlice({
   },
   extraReducers: (builder) => {
   builder
-  .addCase(updateTeacherInfoAsync.pending, (state, action) => {
+  .addCase(updateTeacherInfoAsync.pending, (state) => {
+    state.showModal = true;
     state.status = ApiStatus.loading;
   })
   .addCase(updateTeacherInfoAsync.fulfilled, (state, action) => {

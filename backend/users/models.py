@@ -9,6 +9,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 class Role(models.TextChoices):
   STUDENT = 'STUDENT',
   TEACHER = 'TEACHER',
+  SECRETARY = 'SECRETARY',
   ADMIN = 'ADMIN'
 
 class Domain(models.TextChoices):
@@ -42,9 +43,41 @@ class StudyProgram(models.TextChoices):
   MATE = 'MATE',
   MA = 'MA'
 
+class Department(models.TextChoices):
+  MATH = 'MATH'
+  COMPUTER_SCIENCE = 'COMPUTER_SCIENCE'
+
 class SelectionSessionSettingValue(Enum):
   TRUE = 'TRUE'
   FALSE = 'FALSE'
+
+class Category(models.Model):
+  domain = models.TextField(
+    choices=Domain.choices,
+    null=True
+  )
+  learning_mode = models.TextField(
+    choices=LearningMode.choices,
+    null=True
+  )
+  degree = models.TextField(
+    choices=Degree.choices,
+    null=True
+  )
+  study_program = models.TextField(
+    choices=StudyProgram.choices,
+    null=True
+  )
+  year = models.IntegerField(
+    validators=[
+      MinValueValidator(1),
+      MaxValueValidator(4)
+    ],
+    default=1
+  )
+  class Meta:
+    verbose_name = 'category'
+    verbose_name_plural = "categories"
 
 class UserManager(BaseUserManager):
   def create_user(self, email, password, **extra_fields):
@@ -74,10 +107,25 @@ class UserManager(BaseUserManager):
 class StudentManager(models.Manager):
   def get_queryset(self):
     return super().get_queryset().filter(role=Role.STUDENT)
+  
+  def get_secretary_students(self, secretary):
+    students = super().get_queryset()
+    secretary_students = []
+    categories = secretary.categories
+    for category in categories:
+      for student in students:
+        if student.category == category:
+          secretary_students.append(student)
+    return secretary_students
+
 
 class TeacherManager(models.Manager):
   def get_queryset(self):
     return super().get_queryset().filter(role=Role.TEACHER)
+
+class SecretaryManager(models.Manager):
+  def get_queryset(self):
+    return super().get_queryset().filter(role=Role.SECRETARY)
 
 class NotVerifiedUserManager(models.Manager):
   def get_queryset(self):
@@ -103,6 +151,10 @@ class User(AbstractUser):
   def __str__(self):
     return self.email
 
+  class Meta:
+    verbose_name = 'user'
+    verbose_name_plural = "users"
+
 class Student(models.Model):
   user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
   domain = models.TextField(choices=Domain.choices, null=True)
@@ -117,12 +169,28 @@ class Student(models.Model):
     ],
     default=1
   )
+  category = models.ForeignKey(Category, related_name='students', on_delete=models.SET_NULL, null=True)
   options_lists = models.ManyToManyField('courses.OptionsList', related_name='options_lists')
   courses = models.ManyToManyField('courses.Course', related_name='student_courses')
 
+  class Meta:
+    verbose_name = 'student'
+    verbose_name_plural = "students"
+
 class Teacher(models.Model):
   user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+  department = models.TextField(choices=Department.choices, null=True)
+  class Meta:
+    verbose_name = 'teacher'
+    verbose_name_plural = "teachers"
 
+class Secretary(models.Model):
+  user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+  categories = models.ManyToManyField('Category', related_name='responsible_for_categories')
+  class Meta:
+    verbose_name = 'secretary'
+    verbose_name_plural = "secretaries"
+    
 class GradeManager(models.Manager):
   def get_student_current_grade(self, student):
     try: 
@@ -148,6 +216,8 @@ class Grade(models.Model):
 
   objects = GradeManager()
   class Meta:
+    verbose_name = 'grade'
+    verbose_name_plural = 'grades'
     constraints = [
       models.UniqueConstraint(
         fields=['student', 'year'], name='unique_migration_grade_student_year'

@@ -7,14 +7,15 @@ import Modal from "../../Modal";
 import UserDataForm from "../../forms/UserDataForm";
 import { Role } from "../../../App";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import { getCurrentStudent, getStudentsAsync, revertCurrentStudent } from "../../../../features/user/admin/getStudentsSlice";
-import { getCurrentTeacher, getTeachersAsync, revertCurrentTeacher } from "../../../../features/user/admin/getTeachersSlice";
-import { revertVerifyUser, verifyUserShowModal, verifyUserStatus } from "../../../../features/user/admin/verifyUserSlice";
-import { revertUpdateStudentInfo, updateStudentInfoShowModal, updateStudentInfoStatus } from "../../../../features/user/admin/updateStudentInfoSlice";
-import { revertUpdateTeacherInfo, updateTeacherInfoShowModal, updateTeacherInfoStatus } from "../../../../features/user/admin/updateTeacherInfoSlice";
-import { getNotVerifiedUsersAsync } from "../../../../features/user/admin/getNotVerifiedUsersSlice";
+import { getCurrentStudent, getStudentsAsync, revertCurrentStudent } from "../../../../features/user/admin/user/getStudentsSlice";
+import { getCurrentTeacher, getTeachersAsync, revertCurrentTeacher } from "../../../../features/user/admin/user/getTeachersSlice";
+import { revertVerifyUser, verifyUserShowModal, verifyUserStatus } from "../../../../features/user/admin/user/verifyUserSlice";
+import { revertUpdateStudentInfo, updateStudentInfoShowModal, updateStudentInfoStatus } from "../../../../features/user/admin/user/updateStudentInfoSlice";
+import { revertUpdateTeacherInfo, updateTeacherInfoShowModal, updateTeacherInfoStatus } from "../../../../features/user/admin/user/updateTeacherInfoSlice";
+import { getNotVerifiedUsersAsync } from "../../../../features/user/admin/user/getNotVerifiedUsersSlice";
 import { ApiStatus } from "../../../../features/Utils";
 import { loginToken } from "../../../../features/auth/loginSlice";
+import Loader from "../../../atoms/Loader";
 
 const AccountsList = ({
   role,
@@ -29,6 +30,9 @@ const AccountsList = ({
   const showModalVerifyUser = useAppSelector(verifyUserShowModal);
   const showModalUpdateStudentInfo = useAppSelector(updateStudentInfoShowModal);
   const showModalUpdateTeacherInfo = useAppSelector(updateTeacherInfoShowModal);
+  const statusVerifyUser = useAppSelector(verifyUserStatus);
+  const statusUpdateStudentInfo = useAppSelector(updateStudentInfoStatus);
+  const statusUpdateTeacherInfo = useAppSelector(updateTeacherInfoStatus);
 
   const token = useAppSelector(loginToken);
   
@@ -50,6 +54,70 @@ const AccountsList = ({
     showModalUpdateStudentInfo, 
     setShowUserDataFormModal
   ])
+
+  let verifyUserModalComponent = null;
+  let updateStudentInfoModalComponent = null;
+  let updateTeacherInfoModalComponent = null;
+
+  switch(statusVerifyUser) {
+    case ApiStatus.loading:
+      verifyUserModalComponent = <Loader />;
+      break;
+    case ApiStatus.failed:
+      verifyUserModalComponent = (
+        <div>
+          The user's account couldn't be verified
+        </div>
+      )
+      break;
+    case ApiStatus.success:
+      verifyUserModalComponent = (
+        <div>
+          The user's account was verified successfully
+        </div>
+      )
+      break;
+  }
+
+  switch(statusUpdateStudentInfo) {
+    case ApiStatus.loading:
+      updateStudentInfoModalComponent = <Loader />;
+      break;
+    case ApiStatus.failed:
+      updateStudentInfoModalComponent = (
+        <div>
+          The student's info couldn't be updated
+        </div>
+      )
+      break;
+    case ApiStatus.success:
+      updateStudentInfoModalComponent = (
+        <div>
+          The student's info was updated successfully
+        </div>
+      )
+      break;
+  }
+
+  switch(statusUpdateTeacherInfo) {
+    case ApiStatus.loading:
+      updateTeacherInfoModalComponent = <Loader />;
+      break;
+    case ApiStatus.failed:
+      updateTeacherInfoModalComponent = (
+        <div>
+          The teacher's info couldn't be updated
+        </div>
+      )
+      break;
+    case ApiStatus.success:
+      updateTeacherInfoModalComponent = (
+        <div>
+          The teacher's info was updated successfully
+        </div>
+      )
+      break;
+  }
   
 
   return (
@@ -140,7 +208,7 @@ const AccountsList = ({
         }
       }}
     >
-      Not Verified TBA
+      {verifyUserModalComponent}
     </Modal>
     <Modal 
       show={showModalUpdateStudentInfo} 
@@ -156,7 +224,7 @@ const AccountsList = ({
         }
       }}
     >
-      Update Student TBA
+      {updateStudentInfoModalComponent}
     </Modal>
     <Modal 
       show={showModalUpdateTeacherInfo} 
@@ -172,7 +240,7 @@ const AccountsList = ({
         }
       }}
     >
-      Update Teacher TBA
+      {updateTeacherInfoModalComponent}
     </Modal>
     </>
   );

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { loginSelectionSessionOpen, loginToken } from "../../../../features/auth/loginSlice";
-import { getStudentsListsAsync, getStudentsListsLists, getStudentsListsStatus } from "../../../../features/user/admin/getStudentsListsSlice";
+import { getStudentsListsAsync, getStudentsListsLists, getStudentsListsStatus } from "../../../../features/user/admin/user/getStudentsListsSlice";
 import { updateSelectionSessionOpenAsync } from "../../../../features/user/admin/updateSelectionSessionOpenSlice";
 import { ApiStatus, SelectionSessionSettingValue } from "../../../../features/Utils";
 import * as FileSaver from "file-saver";

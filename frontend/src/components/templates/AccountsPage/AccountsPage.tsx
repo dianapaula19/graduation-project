@@ -10,16 +10,17 @@ import { IAccountsPageProps } from "./AccountsPage.types";
 import { useTranslation } from "react-i18next";
 import * as XLSX from "xlsx";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import registerBatchStudentsSlice, { IRegisterBatchStudentsRequest, IStudentData, registerBatchStudentsAsync, registerBatchStudentsShowModal, registerBatchStudentsStatus, revertRegisterBatchStudents } from "../../../features/user/admin/registerBatchStudentsSlice";
-import { ITeacherData, registerBatchTeachersAsync, registerBatchTeachersShowModal, registerBatchTeachersStatus, revertRegisterBatchTeachers } from "../../../features/user/admin/registerBatchTeachersSlice";
+import registerBatchStudentsSlice, { IRegisterBatchStudentsRequest, IStudentData, registerBatchStudentsAsync, registerBatchStudentsShowModal, registerBatchStudentsStatus, revertRegisterBatchStudents } from "../../../features/user/admin/user/registerBatchStudentsSlice";
+import { ITeacherData, registerBatchTeachersAsync, registerBatchTeachersShowModal, registerBatchTeachersStatus, revertRegisterBatchTeachers } from "../../../features/user/admin/user/registerBatchTeachersSlice";
 import { ApiStatus } from "../../../features/Utils";
 import Modal from "../../molecules/Modal";
-import { getStudentsAsync, getStudentsStatus, getStudentsStudents } from "../../../features/user/admin/getStudentsSlice";
-import { getTeachersAsync, getTeachersStatus, getTeachersTeachers } from "../../../features/user/admin/getTeachersSlice";
-import { getNotVerifiedUsersAsync, getNotVerifiedUsersStatus, getNotVerifiedUsersUsers } from "../../../features/user/admin/getNotVerifiedUsersSlice";
-import { revertVerifyUser, verifyUserShowModal } from "../../../features/user/admin/verifyUserSlice";
+import { getStudentsAsync, getStudentsStatus, getStudentsStudents } from "../../../features/user/admin/user/getStudentsSlice";
+import { getTeachersAsync, getTeachersStatus, getTeachersTeachers } from "../../../features/user/admin/user/getTeachersSlice";
+import { getNotVerifiedUsersAsync, getNotVerifiedUsersStatus, getNotVerifiedUsersUsers } from "../../../features/user/admin/user/getNotVerifiedUsersSlice";
+import { revertVerifyUser, verifyUserShowModal } from "../../../features/user/admin/user/verifyUserSlice";
 import { useNavigate } from "react-router-dom";
 import { loginToken } from "../../../features/auth/loginSlice";
+import LoadingPage from "../../pages/LoadingPage";
 
 const AccountsPage = ({
   role,
@@ -37,6 +38,8 @@ const AccountsPage = ({
   const users = useAppSelector(getNotVerifiedUsersUsers);
   const showModalRegisterBatchStudents = useAppSelector(registerBatchStudentsShowModal);
   const showModalRegisterBatchTeachers = useAppSelector(registerBatchTeachersShowModal);
+  const statusRegisterBatchStudents = useAppSelector(registerBatchStudentsStatus);
+  const statusRegisterBatchTeachers = useAppSelector(registerBatchTeachersStatus);
   const token = useAppSelector(loginToken);
 
   let navigate = useNavigate();
@@ -94,16 +97,16 @@ const AccountsPage = ({
   }, [role, statusGetStudents, statusGetTeachers, statusGetNotVerifiedUsers, token])  
 
   const switchType = (role: Role): string =>  {
-  switch (role) {
-    case Role.NONE:
-    return 'notVerified' 
-    case Role.STUDENT:
-    return 'students'
-    case Role.TEACHER:
-    return 'teachers'
-    default:
-    return ''
-  }
+    switch (role) {
+      case Role.NONE:
+      return 'notVerified' 
+      case Role.STUDENT:
+      return 'students'
+      case Role.TEACHER:
+      return 'teachers'
+      default:
+      return ''
+    }
   }
 
   const onFileUpload = (e: React.ChangeEvent<HTMLInputElement>): void =>  {
@@ -128,7 +131,14 @@ const AccountsPage = ({
     reader.readAsArrayBuffer(e.target.files[0]);
   }
   }
-  
+
+  if (
+    statusGetNotVerifiedUsers === ApiStatus.loading ||
+    statusRegisterBatchStudents === ApiStatus.loading ||
+    statusRegisterBatchTeachers === ApiStatus.loading
+    ) {
+      return <LoadingPage />
+  }
 
   return (
   <LoggedUserPage>

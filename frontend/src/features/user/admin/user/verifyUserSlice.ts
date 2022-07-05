@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { RootState } from "../../../app/store";
-import { ApiStatus, API_URL_COURSE, API_URL_USER } from "../../Utils";
+import { RootState } from "../../../../app/store";
+import { ApiStatus, API_URL_COURSE, API_URL_USER } from "../../../Utils";
 
 interface IVerifyUserState {
   status: ApiStatus;
@@ -62,6 +62,7 @@ export const verifyUserSlice = createSlice({
   extraReducers: (builder) => {
   builder
   .addCase(verifyUserAsync.pending, (state, action) => {
+    state.showModal = true;
     state.status = ApiStatus.loading;
   })
   .addCase(verifyUserAsync.fulfilled, (state, action) => {

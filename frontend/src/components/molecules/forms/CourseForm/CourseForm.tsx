@@ -7,11 +7,11 @@ import { ICourseFormProps } from "./CourseForm.types";
 import "./CourseForm.scss";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { getTeacherCoursesStatus } from "../../../../features/user/teacher/getTeacherCoursesSlice";
-import { getTeachersAsync, getTeachersTeachers } from "../../../../features/user/admin/getTeachersSlice";
+import { getTeachersAsync, getTeachersTeachers } from "../../../../features/user/admin/user/getTeachersSlice";
 import { ApiStatus } from "../../../../features/Utils";
-import { getCoursesCurrentCourse, getCurrentCourse } from "../../../../features/user/admin/getCoursesSlice";
-import { createCourseAsync } from "../../../../features/user/admin/createCourseSlice";
-import { updateCourseAsync } from "../../../../features/user/admin/updateCourseSlice";
+import { getCoursesCurrentCourse, getCurrentCourse } from "../../../../features/user/admin/course/getCoursesSlice";
+import { createCourseAsync } from "../../../../features/user/admin/course/createCourseSlice";
+import { updateCourseAsync } from "../../../../features/user/admin/course/updateCourseSlice";
 import { DropDownOptionsValue } from "../../../atoms/DropDown/DropDown.types";
 import { loginToken } from "../../../../features/auth/loginSlice";
 

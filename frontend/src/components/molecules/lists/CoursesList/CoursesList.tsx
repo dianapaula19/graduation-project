@@ -6,10 +6,12 @@ import "./CoursesList.scss";
 import Modal from "../../Modal";
 import CourseForm from "../../forms/CourseForm";
 import Button from "../../../atoms/Button";
-import { getCoursesAsync, getCurrentCourse, revertCurrentCourse } from "../../../../features/user/admin/getCoursesSlice";
-import { revertUpdateCourse, updateCourseShowModal, updateCourseStatus } from "../../../../features/user/admin/updateCourseSlice";
-import { createCourseShowModal, createCourseStatus, revertCreateCourse } from "../../../../features/user/admin/createCourseSlice";
+import { getCoursesAsync, getCurrentCourse, revertCurrentCourse } from "../../../../features/user/admin/course/getCoursesSlice";
+import { revertUpdateCourse, updateCourseShowModal, updateCourseStatus } from "../../../../features/user/admin/course/updateCourseSlice";
+import { createCourseShowModal, createCourseStatus, revertCreateCourse } from "../../../../features/user/admin/course/createCourseSlice";
 import { loginToken } from "../../../../features/auth/loginSlice";
+import { ApiStatus } from "../../../../features/Utils";
+import Loader from "../../../atoms/Loader";
 
 const CoursesList = ({
   courses
@@ -36,10 +38,58 @@ const CoursesList = ({
       setShowFormModal(false);
     }
   }, [
-    statusCreateCourse,
-    statusUpdateCourse,
+    showModalCreateCourse,
+    showModalUpdateCourse,
     setShowFormModal
-  ])
+  ]);
+
+  let createCourseModalComponent = null;
+
+  switch (statusCreateCourse) {
+    case ApiStatus.loading:
+      createCourseModalComponent = <Loader />
+      break;
+    case ApiStatus.success:
+      createCourseModalComponent = (
+        <div>
+          The course was created successfully
+        </div>
+      )
+      break;
+    case ApiStatus.failed:
+      createCourseModalComponent = (
+        <div>
+          There was an error creating the course
+        </div>
+      )
+      break;
+    default:
+      break;
+  }
+
+  let updateCourseModalComponent = null;
+
+  switch (statusUpdateCourse) {
+    case ApiStatus.loading:
+      updateCourseModalComponent = <Loader />
+      break;
+    case ApiStatus.success:
+      updateCourseModalComponent = (
+        <div>
+          The course was updated successfully
+        </div>
+      )
+      break;
+    case ApiStatus.failed:
+      updateCourseModalComponent = (
+        <div>
+          There was an error updating the course
+        </div>
+      )
+      break;
+    default:
+      break;
+  }
   
 
   return (
@@ -96,6 +146,8 @@ const CoursesList = ({
           </div>
         )
       })}
+      <br/>
+      <br/>
       <Button 
         label={t(`${buttonsTranslate}.create`)} 
         disabled={false}
@@ -127,7 +179,7 @@ const CoursesList = ({
         }
       }}
     >
-      Create TBA
+      {createCourseModalComponent}
     </Modal>
 
     <Modal 
@@ -141,7 +193,7 @@ const CoursesList = ({
         }
       }}
     >
-      Update TBA
+      {updateCourseModalComponent}
     </Modal>  
   
     </>

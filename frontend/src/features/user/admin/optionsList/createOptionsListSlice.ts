@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { RootState } from "../../../app/store";
-import { Degree, Domain, LearningMode, StudyProgram } from "../../../components/App";
-import { ApiStatus, API_URL_COURSE } from "../../Utils";
+import { RootState } from "../../../../app/store";
+import { Degree, Domain, LearningMode, StudyProgram } from "../../../../components/App";
+import { ApiStatus, API_URL_COURSE } from "../../../Utils";
 
 interface ICreateOptionsListState {
   status: ApiStatus;
@@ -67,6 +67,7 @@ export const createOptionsListSlice = createSlice({
   extraReducers: (builder) => {
   builder
   .addCase(createOptionsListAsync.pending, (state, action) => {
+    state.showModal = true;
     state.status = ApiStatus.loading;
   })
   .addCase(createOptionsListAsync.fulfilled, (state, action) => {
