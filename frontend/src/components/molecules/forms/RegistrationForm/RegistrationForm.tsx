@@ -12,6 +12,8 @@ import { registerAsync } from "../../../../features/auth/registerSlice";
 
 const RegistrationForm = () => {
 
+  const { t } = useTranslation('forms');
+
   const dispatch = useDispatch();
 
   const [data, setData] = useState<IRegistrationFormData>({
@@ -21,11 +23,9 @@ const RegistrationForm = () => {
   });
 
   const componentClassName = "registration-form";
-  const inputFieldsTranslate = "forms.registration.inputFields";
-  const submitButtonsTranslate = "forms.registration.submitButtons";
-  const alreadyAnUserTranslate = "forms.registration.alreadyAnUser";
-
-  const { t } = useTranslation();
+  const inputFieldsTranslate = "registration.inputFields";
+  const submitButtonsTranslate = "registration.buttons";
+  const alreadyAnUserTranslate = "registration.alreadyAnUser";
 
   const validation = {
     email: !regexRules.email.test(data.email),

@@ -12,6 +12,10 @@ import { recoverAccountAsync, recoverAccountShowModal } from "../../../../featur
 
 const RecoverAccountForm = () => {
 
+  const { t } = useTranslation('forms');
+
+  const dispatch = useAppDispatch();
+
   const [data, setData] = useState<IRecoverAccountFormData>({
     email: "",
   });
@@ -23,11 +27,8 @@ const RecoverAccountForm = () => {
   const componentClassName = "recover-account-form";
   const componentId = "recover-account-form";
 
-  const { t } = useTranslation();
-  const dispatch = useAppDispatch();
-
-  const inputFieldsTranslate = "forms.recoverAccount.inputFields";
-  const submitButtonsTranslate = "forms.recoverAccount.submitButtons";
+  const inputFieldsTranslate = "recoverAccount.inputFields";
+  const submitButtonsTranslate = "recoverAccount.buttons";
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const name = e.target.name;
@@ -54,7 +55,7 @@ const RecoverAccountForm = () => {
         className={`${componentClassName}__instructions`}
       
       >
-        {t("recoverAccount.form.instructions")}
+        {t("recoverAccount.instructions")}
       </p>
       <InputField 
         type={InputFieldType.email}

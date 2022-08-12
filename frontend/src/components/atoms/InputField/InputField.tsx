@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import classNames from "classnames";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLock, faEnvelope, faUser, faEye, faEyeSlash, faXmark, faFileArrowUp } from "@fortawesome/free-solid-svg-icons";
+import { faLock, faEnvelope, faUser, faEye, faEyeSlash, faXmark, faFileArrowUp, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { InputFieldModifier, InputFieldProps, InputFieldType } from "./InputField.types";
 import "./InputField.scss";
 
@@ -53,6 +53,11 @@ const InputField = ({
               icon={faFileArrowUp} 
               className={`${inputGroupClassName}__icon`}
             />
+      case InputFieldType.search:
+        return <FontAwesomeIcon 
+                icon={faMagnifyingGlass}
+                className={`${inputGroupClassName}__icon`} 
+              />
       default:
         return null;
     }
@@ -91,6 +96,8 @@ const InputField = ({
         return InputFieldType.number
       case InputFieldType.file:
         return InputFieldType.file
+      case InputFieldType.search:
+        return InputFieldType.search
       default:
         return InputFieldType.text
     }

@@ -5,8 +5,8 @@ import { loginSelectionSessionOpen, loginStatus, loginUserData, revertLogin, set
 import OptionsListsPage from '../pages/admin/OptionsListsPage';
 import AdminCoursesPage from '../pages/admin/CoursesPage';
 import LoginPage from '../pages/auth/LoginPage';
-import RegisterPage from '../pages/auth/RegisterPage';
-import PersonalDataPage from '../pages/PersonalDataPage';
+import RegisterPage from '../pages/auth/RegistrationPage';
+import PersonalDataPage from '../pages/ProfilePage';
 import AccountsPage from '../templates/AccountsPage';
 import CoursesSelectionPage from '../pages/student/CoursesSelectionPage';
 import StudentCoursesPage from "../pages/student/CoursesPage";
@@ -19,6 +19,23 @@ import { ApiStatus, SelectionSessionSettingValue } from '../../features/Utils';
 import { revertUpdateSelectionSessionOpen, updateSelectionSessionOpenStatus } from '../../features/user/admin/updateSelectionSessionOpenSlice';
 import NotFoundPage from '../pages/NotFoundPage';
 import LanguageSwitch from '../atoms/LanguagesSwitch/LanguageSwitch';
+import { updateCourseStatus } from '../../features/user/admin/course/updateCourseSlice';
+import { createCourseStatus } from '../../features/user/admin/course/createCourseSlice';
+import { createOptionsListStatus } from '../../features/user/admin/optionsList/createOptionsListSlice';
+import { updateOptionsListStatus } from '../../features/user/admin/optionsList/updateOptionsListSlice';
+import { verifyUserStatus } from '../../features/user/admin/user/verifyUserSlice';
+import { updateStudentInfoStatus } from '../../features/user/admin/user/updateStudentInfoSlice';
+import { updateTeacherInfoStatus } from '../../features/user/admin/user/updateTeacherInfoSlice';
+import { getCoursesStatus } from '../../features/user/admin/course/getCoursesSlice';
+import { getOptionsListsStatus } from '../../features/user/admin/optionsList/getOptionsListsSlice';
+import { getNotVerifiedUsersStatus } from '../../features/user/admin/user/getNotVerifiedUsersSlice';
+import { getStudentsStatus } from '../../features/user/admin/user/getStudentsSlice';
+import { getTeachersStatus } from '../../features/user/admin/user/getTeachersSlice';
+import { registerBatchStudentsStatus } from '../../features/user/admin/user/registerBatchStudentsSlice';
+import { registerBatchTeachersStatus } from '../../features/user/admin/user/registerBatchTeachersSlice';
+import LoadingPage from '../pages/LoadingPage';
+import { recoverAccountStatus } from '../../features/auth/recoverAccountSlice';
+import { resetPasswordStatus } from '../../features/auth/resetPasswordSlice';
 
 const App = () => {
 
@@ -28,6 +45,22 @@ const App = () => {
   const dispatch = useAppDispatch();
   const statusLogin = useAppSelector(loginStatus);
   const [role, setRole] = useState(Role.NONE);
+
+  const statusCreateCourse = useAppSelector(createCourseStatus);
+  const statusUpdateCourse = useAppSelector(updateCourseStatus);
+
+  const statusCreateOptionsList = useAppSelector(createOptionsListStatus);
+  const statusUpdateOptionsList = useAppSelector(updateOptionsListStatus);
+  
+  const statusVerifyUser = useAppSelector(verifyUserStatus);
+  const statusUpdateStudentInfo = useAppSelector(updateStudentInfoStatus);
+  const statusUpdateTeacherInfo = useAppSelector(updateTeacherInfoStatus);
+  
+  const statusRegisterBatchStudents = useAppSelector(registerBatchStudentsStatus);
+  const statusRegisterBatchTeachers = useAppSelector(registerBatchTeachersStatus);
+
+  const statusRecoverAccound = useAppSelector(recoverAccountStatus);
+  const statusResetPassword = useAppSelector(resetPasswordStatus);
 
   useEffect(() => {
 
@@ -68,6 +101,22 @@ const App = () => {
     }
   
   }, [userData, setRole, role, statusUpdateSelectionSessionOpen])
+
+  if (
+    statusCreateCourse === ApiStatus.loading ||
+    statusUpdateCourse === ApiStatus.loading ||
+    statusCreateOptionsList === ApiStatus.loading ||
+    statusUpdateOptionsList === ApiStatus.loading ||
+    statusVerifyUser === ApiStatus.loading ||
+    statusUpdateStudentInfo === ApiStatus.loading ||
+    statusUpdateTeacherInfo === ApiStatus.loading ||
+    statusRegisterBatchStudents === ApiStatus.loading ||
+    statusRegisterBatchTeachers === ApiStatus.loading ||
+    statusResetPassword === ApiStatus.loading ||
+    statusRecoverAccound === ApiStatus.loading
+  ) {
+    return <LoadingPage />
+  }
   
   return (
   <>

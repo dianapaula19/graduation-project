@@ -37,6 +37,9 @@ class ResponseCode(Enum):
   ALREADY_REGISTERED = 'ALREADY_REGISTERED'
   USER_NOT_FOUND = 'USER_NOT_FOUND'
   STUDENT_NOT_FOUND = 'STUDENT_NOT_FOUND'
+  COULD_NOT_DELETE_USER = 'COULD_NOT_DELETE_USER'
+  COULD_NOT_DELETE_STUDENT = 'COULD_NOT_DELETE_STUDENT'
+  COULD_NOT_DELETE_TEACHER = 'COULD_NOT_DELETE_TEACHER'
   COULD_NOT_SEND_EMAIL = 'COULD_NOT_SEND_EMAIL'
   ERROR = 'ERROR'
   SUCCESS = 'SUCCESS'
@@ -118,12 +121,16 @@ def register(request):
       status=HTTP_500_INTERNAL_SERVER_ERROR
     )
 
-  send_mail(
-    subject="Account created successfully",
-    message="Congrats. Your account was create successfully.",
-    from_email=settings.EMAIL_HOST_USER,
-    recipient_list=[email]
+  try:
+    send_mail(
+      subject="Account created successfully",
+      message="Congrats. Your account was create successfully.",
+      from_email=settings.EMAIL_HOST_USER,
+      recipient_list=[email],
+      fail_silently=False
     )
+  except:
+    pass
 
   return Response({
     'code': ResponseCode.SUCCESS.value
@@ -144,7 +151,7 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
   )
 
 @receiver(post_password_reset)
-def post_password_reset(sender,  user, *args, **kwargs):
+def post_password_reset(sender, user, *args, **kwargs):
   user.changed_password = True
   user.save()
 
@@ -187,7 +194,8 @@ def register_batch_students(request):
         subject="Account created successfully",
         message="Congrats. Your account was create successfully.",
         from_email=settings.EMAIL_HOST_USER,
-        recipient_list=[student['email']]
+        recipient_list=[student['email']],
+        fail_silently=False
       )
     except:
       error_messages.append("Row {}: Couldn't send email to the newly created user".format(idx))
@@ -277,7 +285,7 @@ def get_student_data(request):
     status=HTTP_200_OK
   )
 
-@api_view(["GET", "POST"])
+@api_view(["GET", "POST", "DELETE"])
 @permission_classes([IsAdmin])
 def not_verified_users(request):
   if request.method == "GET":
@@ -291,6 +299,22 @@ def not_verified_users(request):
     )
   
   email = request.data.get("email")
+
+  if request.method == "DELETE":
+    try:
+      User.objects.filter(email=email).delete()
+    except:
+      return Response({
+          'code': ResponseCode.COULD_NOT_DELETE_STUDENT.value
+        },
+        status=HTTP_500_INTERNAL_SERVER_ERROR
+      )
+    return Response({
+        'code': ResponseCode.SUCCESS.value
+      },
+      status=HTTP_200_OK
+    )
+
   first_name = request.data.get("first_name")
   last_name = request.data.get("last_name")
   role = request.data.get("role")
@@ -330,7 +354,7 @@ def not_verified_users(request):
   )
 
 
-@api_view(["GET", "POST"])
+@api_view(["GET", "POST", "DELETE"])
 @permission_classes([IsAdmin])
 def students(request):
   if request.method == "GET":
@@ -344,6 +368,22 @@ def students(request):
     )
   
   email = request.data.get("email")
+
+  if request.method == "DELETE":
+    try:
+      User.objects.filter(email=email).delete()
+    except:
+      return Response({
+          'code': ResponseCode.COULD_NOT_DELETE_STUDENT.value
+        },
+        status=HTTP_500_INTERNAL_SERVER_ERROR
+      )
+    return Response({
+        'code': ResponseCode.SUCCESS.value
+      },
+      status=HTTP_200_OK
+    )
+
   first_name = request.data.get("first_name")
   last_name = request.data.get("last_name")
   
@@ -408,7 +448,7 @@ def students(request):
     status=HTTP_200_OK
   )
 
-@api_view(["GET", "POST"])
+@api_view(["GET", "POST", "DELETE"])
 @permission_classes([IsAdmin])
 def teachers(request):
   if request.method == "GET":
@@ -422,6 +462,22 @@ def teachers(request):
     )
   
   email = request.data.get("email")
+
+  if request.method == "DELETE":
+    try:
+      User.objects.filter(email=email).delete()
+    except:
+      return Response({
+      'code': ResponseCode.COULD_NOT_DELETE_TEACHER.value
+      },
+      status=HTTP_500_INTERNAL_SERVER_ERROR
+    )
+    return Response({
+      'code': ResponseCode.SUCCESS.value
+      },
+      status=HTTP_200_OK
+    )
+
   first_name = request.data.get("first_name")
   last_name = request.data.get("last_name")
 
@@ -470,6 +526,7 @@ def send_announcement(request):
     },
     status=HTTP_200_OK
   )
+
 
 @api_view(["POST"])
 @permission_classes([IsAdmin])

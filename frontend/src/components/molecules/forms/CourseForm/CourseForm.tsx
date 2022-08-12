@@ -1,4 +1,3 @@
-import { t } from "i18next";
 import React, { useEffect, useState } from "react";
 import Button, { ButtonModifier } from "../../../atoms/Button";
 import DropDown from "../../../atoms/DropDown";
@@ -14,17 +13,20 @@ import { createCourseAsync } from "../../../../features/user/admin/course/create
 import { updateCourseAsync } from "../../../../features/user/admin/course/updateCourseSlice";
 import { DropDownOptionsValue } from "../../../atoms/DropDown/DropDown.types";
 import { loginToken } from "../../../../features/auth/loginSlice";
+import { useTranslation } from "react-i18next";
 
 const CourseForm = ({
   type,
   courseId
 }: ICourseFormProps) => {
+
+  const {t} = useTranslation('forms');
   
   const componentClassName = "course-form";
   const componentId = "course-id";
-  const dropDownFieldsTranslate = "forms.course.dropDownFields";
-  const inputFieldsTranslate = "forms.course.inputFields";
-  const submitButtonsTranslate = "forms.course.submitButtons";
+  const dropDownFieldsTranslate = "course.dropDownFields";
+  const inputFieldsTranslate = "course.inputFields";
+  const submitButtonsTranslate = "course.buttons";
 
   const teachers = useAppSelector(getTeachersTeachers);
   const currentCourse = useAppSelector(getCoursesCurrentCourse);
@@ -145,7 +147,7 @@ const CourseForm = ({
     })}
     </DropDown>
     <Button 
-    label={t(`forms.course.submitButtons.${type}`)}
+    label={t(`${submitButtonsTranslate}.${type}`)}
     modifier={disableSubmitButton ? ButtonModifier.disabled : ButtonModifier.save} 
     disabled={disableSubmitButton}
     onClick={() => {

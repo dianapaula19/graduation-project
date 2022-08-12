@@ -1,0 +1,20 @@
+.modal-api-status {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  
+  &__icon {
+    font-size: xx-large;
+    color: #4ea853;
+    
+  }
+  &__icon--error {
+    color: crimson;
+  }
+
+  &__text {
+    font-size: large;
+  }
+}

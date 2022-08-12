@@ -27,10 +27,12 @@ from users.views import get_students_lists, login, \
             update_selection_session_open, \
             get_students_lists
 from courses.views import create_or_update_student_choices, \
-              create_course, \
+              create_course, delete_course, delete_options_list, \
               update_course, \
+              delete_course, \
               create_options_list, \
               update_options_list, \
+              delete_options_list, \
               get_student_options_lists, \
               get_options_lists, \
               get_courses, \
@@ -70,9 +72,11 @@ urlpatterns = [
   path('api/course/admin/get_courses', get_courses),
   path('api/course/admin/create_course', create_course),
   path('api/course/admin/update_course', update_course),
+  path('api/course/admin/delete_course', delete_course),
   path('api/course/admin/get_options_lists', get_options_lists),
   path('api/course/admin/create_options_list', create_options_list),
   path('api/course/admin/update_options_list', update_options_list),
+  path('api/course/admin/delete_options_list', delete_options_list),
   
   # teacher
   path('api/course/teacher/get_teacher_courses', get_teacher_courses),

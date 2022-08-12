@@ -12,6 +12,7 @@ const OptionsListCard = ({
 IOptionsListCardProps) => {
   
   const componentClassName = "optionals-list-card";
+  
   const { t } = useTranslation();
   
   return (
@@ -27,7 +28,7 @@ IOptionsListCardProps) => {
     <span
     className={`${componentClassName}__sub-title`}
     >
-    {t('molecules.optionsListCard.year')} {data.year}, {t('molecules.optionsListCard.semester')} {data.semester}
+    {t('common:text.year')} {data.year}, {data.semester === 1 ? t('common:text.firstSemester') : t('common:text.secondSemester')}
     </span>
     <span
     className={`${componentClassName}__title`}

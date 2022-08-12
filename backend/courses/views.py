@@ -287,7 +287,7 @@ def update_options_list(request):
   options_list.year = year
   options_list.semester = semester
 
-  check_year = year - 1
+  check_year = int(year) - 1
 
   students = []
   courses = []
@@ -299,11 +299,14 @@ def update_options_list(request):
       and student.study_program == study_program \
       and student.current_year == check_year:
         students.append(student)
+    else:
+      student.options_lists.remove(options_list)
+    
+    student.save()
   
   for course_id in courses_ids:
     course = Course.objects.get(id=course_id)
     courses.append(course)
-  
 
   options_list.students.set(students)
   options_list.courses.set(courses)
@@ -311,6 +314,23 @@ def update_options_list(request):
 
   return Response({
     'code': ResponseCode.SUCCESS.value
+    },
+    status=HTTP_200_OK
+  )
+
+@api_view(["DELETE"])
+def delete_options_list(request):
+  id = request.data.get("id")
+  try:
+    OptionsList.objects.filter(id=id).delete()
+  except:
+    return Response({
+        'code': ResponseCode.ERROR.value
+      },
+      status=HTTP_500_INTERNAL_SERVER_ERROR
+    )
+  return Response({
+      'code': ResponseCode.SUCCESS.value
     },
     status=HTTP_200_OK
   )
@@ -424,6 +444,25 @@ def update_course(request):
     },
     status=HTTP_200_OK
   )
+
+@api_view(["DELETE"])
+@permission_classes([IsAdmin])
+def delete_course(request):
+  id = request.data.get("id")
+  try:
+    Course.objects.filter(id=id).delete()
+  except:
+    return Response({
+        'code': ResponseCode.ERROR.value
+      },
+      status=HTTP_500_INTERNAL_SERVER_ERROR
+    )
+  return Response({
+      'code': ResponseCode.SUCCESS.value
+    },
+    status=HTTP_200_OK
+  )
+
 
 # Teacher Views
 @api_view(["POST"])

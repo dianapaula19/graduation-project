@@ -8,7 +8,7 @@ import "./CoursesPage.scss";
 
 const CoursesPage = () => {
 
-  const componentClassName = "courses-page";
+  const componentClassName = "student-courses-page";
   
   const statusGetStudentCourses = useAppSelector(getStudentCoursesStatus);
   const userData = useAppSelector(loginUserData);

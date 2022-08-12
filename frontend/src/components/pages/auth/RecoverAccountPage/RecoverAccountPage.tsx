@@ -7,16 +7,12 @@ import AuthentificationPage, { AuthentificationAction } from "../../../templates
 import LoadingPage from "../../LoadingPage";
 
 const RecoverAccountPage = () => {
-  const status = useAppSelector(recoverAccountStatus);
+  
   const code = useAppSelector(recoverAccountCode);
   const errorMessages = useAppSelector(recoverAccountErrorMesssages);
   const showModal = useAppSelector(recoverAccountShowModal);
 
   const dispatch = useAppDispatch();
-
-  if (status === ApiStatus.loading) {
-  return <LoadingPage />;
-  }
 
   return (
   <>

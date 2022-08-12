@@ -112,7 +112,7 @@ const OptionalCoursesContainer = ({
         })}
       </div>
       <Button 
-        label={t("saveButton")} 
+        label={t("common:buttons.save")} 
         disabled={false} 
         modifier={ButtonModifier.save}
         onClick={saveChanges} 

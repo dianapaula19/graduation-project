@@ -9,7 +9,7 @@ const StudentsList = ({
 
   const componentClassName = "students-list";
   
-  const { t } = useTranslation();
+  const { t } = useTranslation('lists');
 
   return (
     <div 
@@ -26,12 +26,12 @@ const StudentsList = ({
         <span
           className={`${componentClassName}__name`}
         >
-          {t("studentsList.header.name")}
+          {t("students.header.name")}
         </span>
         <span
           className={`${componentClassName}__email`}
         >
-          {t("studentsList.header.email")}
+          {t("students.header.email")}
         </span>
         
       </div>

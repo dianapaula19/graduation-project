@@ -16,12 +16,19 @@ import { getNotVerifiedUsersAsync } from "../../../../features/user/admin/user/g
 import { ApiStatus } from "../../../../features/Utils";
 import { loginToken } from "../../../../features/auth/loginSlice";
 import Loader from "../../../atoms/Loader";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import ModalApiStatus from "../../ModalApiStatus";
 
 const AccountsList = ({
   role,
   emails,
   title
 }: IAccountsListProps) => {
+
+  const { t } = useTranslation('lists');
+
+  const dispatch = useAppDispatch();
 
   const componentClassName = "accounts-list";
   const [showUserDataFormModal, setShowUserDataFormModal] = useState<boolean>(false);
@@ -35,10 +42,6 @@ const AccountsList = ({
   const statusUpdateTeacherInfo = useAppSelector(updateTeacherInfoStatus);
 
   const token = useAppSelector(loginToken);
-  
-  const { t } = useTranslation();
-
-  const dispatch = useAppDispatch();
 
   useEffect(() => {
   if (
@@ -60,62 +63,47 @@ const AccountsList = ({
   let updateTeacherInfoModalComponent = null;
 
   switch(statusVerifyUser) {
-    case ApiStatus.loading:
-      verifyUserModalComponent = <Loader />;
-      break;
     case ApiStatus.failed:
-      verifyUserModalComponent = (
-        <div>
-          The user's account couldn't be verified
-        </div>
-      )
+      verifyUserModalComponent = <ModalApiStatus 
+        message={t("accounts.notVerified.error")} 
+        error={true} 
+      />
       break;
     case ApiStatus.success:
-      verifyUserModalComponent = (
-        <div>
-          The user's account was verified successfully
-        </div>
-      )
+      verifyUserModalComponent = <ModalApiStatus 
+        message={t("accounts.notVerified.success")} 
+        error={true} 
+      />
       break;
   }
 
   switch(statusUpdateStudentInfo) {
-    case ApiStatus.loading:
-      updateStudentInfoModalComponent = <Loader />;
-      break;
     case ApiStatus.failed:
-      updateStudentInfoModalComponent = (
-        <div>
-          The student's info couldn't be updated
-        </div>
-      )
+      updateStudentInfoModalComponent = <ModalApiStatus 
+        message={t("accounts.students.error")} 
+        error={true} 
+      />;
       break;
     case ApiStatus.success:
-      updateStudentInfoModalComponent = (
-        <div>
-          The student's info was updated successfully
-        </div>
-      )
+      updateStudentInfoModalComponent = <ModalApiStatus 
+        message={t("accounts.students.success")} 
+        error={false} 
+      />;
       break;
   }
 
   switch(statusUpdateTeacherInfo) {
-    case ApiStatus.loading:
-      updateTeacherInfoModalComponent = <Loader />;
-      break;
     case ApiStatus.failed:
-      updateTeacherInfoModalComponent = (
-        <div>
-          The teacher's info couldn't be updated
-        </div>
-      )
+      updateTeacherInfoModalComponent = <ModalApiStatus 
+        message={t("accounts.teachers.error")} 
+        error={true} 
+      />;
       break;
     case ApiStatus.success:
-      updateTeacherInfoModalComponent = (
-        <div>
-          The teacher's info was updated successfully
-        </div>
-      )
+      updateTeacherInfoModalComponent = <ModalApiStatus 
+        message={t("accounts.teachers.success")} 
+        error={false} 
+      />;
       break;
   }
   
@@ -141,7 +129,7 @@ const AccountsList = ({
         <span
           className={`${componentClassName}__email`}
         >
-          {t("lists.accounts.header.email")}
+          {t("accounts.header.email")}
         </span>
         
       </div>

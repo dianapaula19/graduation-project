@@ -1,0 +1,42 @@
+{
+  "accounts": {
+    "header": {
+      "email": "Email"
+    },
+    "notVerified": {
+      "error": "",
+      "succes": ""
+    },
+    "students": {
+      "error": "",
+      "succes": ""
+    },
+    "teachers": {
+      "error": "",
+      "succes": ""
+    }
+  },
+  "students": {
+    "header": {
+      "name": "Prenume și Nume",
+      "email": "Email"
+    }
+  },
+  "courses": {
+    "header": {
+      "title": "Denumire",
+      "teacher": "Profesor"
+    },
+    "buttons": {
+      "create": "Creează un curs nou"
+    },
+    "success": {
+      "create": "",
+      "update": ""
+    },
+    "error": {
+      "create": "",
+      "update": ""
+    }
+  }
+}

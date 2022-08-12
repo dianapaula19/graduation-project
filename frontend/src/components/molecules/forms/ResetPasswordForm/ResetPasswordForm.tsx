@@ -13,6 +13,10 @@ import { resetPasswordAsync } from "../../../../features/auth/resetPasswordSlice
 
 const ResetPasswordForm = () => {
 
+  const { t } = useTranslation('forms');
+
+  const dispatch = useAppDispatch();
+
   const [data, setData] = useState<IResetPasswordFormData>({
     password: "",
     confirmPassword: ""
@@ -21,11 +25,8 @@ const ResetPasswordForm = () => {
   const componentClassName = "reset-password-form";
   const componentId = "reset-password-form";
 
-  const inputFieldsTranslate = "forms.resetPassword.inputFields";
-  const submitButtonsTranslate = "forms.resetPassword.submitButtons";
-
-  const { t } = useTranslation();
-  const dispatch = useAppDispatch();
+  const inputFieldsTranslate = "resetPassword.inputFields";
+  const submitButtonsTranslate = "resetPassword.buttons";
 
   const queryParams = new URLSearchParams(window.location.search)
   const token = queryParams.get("token")
@@ -63,7 +64,7 @@ const ResetPasswordForm = () => {
       <p
         className={`${componentClassName}__instructions`}
       >
-        {t("resetPassword.form.instructions")}
+        {t("resetPassword.instructions")}
       </p>
       <InputField 
         type={InputFieldType.password}

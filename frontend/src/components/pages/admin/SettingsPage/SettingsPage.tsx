@@ -9,9 +9,13 @@ import * as XLSX from "xlsx";
 import Button, { ButtonModifier } from "../../../atoms/Button";
 import LoggedUserPage from "../../../templates/LoggedUserPage";
 import "./SettingsPage.scss";
+import { useTranslation } from "react-i18next";
 
 
 const SettingsPage = () => {
+
+  const { t } = useTranslation("pages");
+
   const componentClassName = "settings-page";
   const selectionSessionOpen = useAppSelector(loginSelectionSessionOpen);
   const token = useAppSelector(loginToken);
@@ -33,13 +37,11 @@ const SettingsPage = () => {
         token: token
       }))
     }
-  }, [
-
-  ])
+  });
 
   const exportLists = () => {
     if (lists) {
-      const header = ["Nume și Prenume", "Grupa Curentă"];
+      const header = [t("admin.settings.xlsx.header.fullName"), t("admin.settings.xlsx.header.currentGroup")];
       const wb = XLSX.utils.book_new();
       lists.map((list) => {
         const ws = XLSX.utils.book_new();
@@ -69,11 +71,11 @@ const SettingsPage = () => {
         <span
           className={`${componentClassName}__title`}
         >
-          Sesiunea de alegere a opționalelor este: {selectionSessionOpen === SelectionSessionSettingValue.TRUE ? 'activă' : 'inactivă' }
+          {t("admin.settings.text.message")} {selectionSessionOpen === SelectionSessionSettingValue.TRUE ? t("admin.settings.text.active") : t("admin.settings.text.inactive") }
         </span>
         {selectionSessionOpen === SelectionSessionSettingValue.FALSE && (
           <Button 
-            label={"Exportă repartizarea studenților la cursurile opționale"} 
+            label={t("admin.settings.buttons.exportLists")} 
             disabled={false}
             modifier={ButtonModifier.excel} 
             onClick={exportLists}

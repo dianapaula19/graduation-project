@@ -14,26 +14,47 @@ import { updateStudentInfoAsync } from "../../../../features/user/admin/user/upd
 import { updateTeacherInfoAsync } from "../../../../features/user/admin/user/updateTeacherInfoSlice";
 import { loginToken, loginUserData } from "../../../../features/auth/loginSlice";
 import { set } from "immer/dist/internal";
+import { Department } from "../../../App/App.types";
 
 const UserDataForm = ({
   role,
   email
 }: IUserDataFormProps) => {
 
+  const { t } = useTranslation('forms');
+
   const componentClassName = "user-data-form";
   const fieldsContainerClassName = `${componentClassName}__fields-container`;
   const componentId = "user-data-form";
-  const dropDownTranslate = "forms.userData.dropDownFields";
-  const inputTranslate = "forms.userData.inputFields";
-  const submitButtonsTranslate = "forms.userData.submitButtons";
+  const dropDownTranslate = "userData.dropDownFields";
+  const inputTranslate = "userData.inputFields";
+  const submitButtonsTranslate = "userData.buttons";
 
-  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   
   const student = useAppSelector(getStudentsCurrentStudent);
   const teacher = useAppSelector(getTeachersCurrentTeacher);
   const token = useAppSelector(loginToken);
   const user = useAppSelector(loginUserData);
+
+  const defaultGrades = [
+    {
+      year: 1,
+      grade: 0.0
+    },
+    {
+      year: 2,
+      grade: 0.0
+    },
+    {
+      year: 3,
+      grade: 0.0
+    },
+    {
+      year: 4,
+      grade: 0.0
+    },
+  ]
 
   const [userData, setUserData] = useState({
     firstName: '',
@@ -48,10 +69,7 @@ const UserDataForm = ({
     studyProgram: 'placeholder',
     currentGroup: '',
     currentYear: 1,
-    grades: [{
-      year: 1,
-      grade: 0.0
-    }],
+    grades: defaultGrades 
   });
 
   useEffect(() => {
@@ -69,7 +87,8 @@ const UserDataForm = ({
         degree: student.degree === null ? 'placeholder' : student.degree,
         studyProgram: student.study_program === null ? 'placeholder' : student.study_program,
         currentGroup: student.current_group === null ? '' : student.current_group,
-        currentYear: student.current_year === null ? 1 : student.current_year
+        currentYear: student.current_year === null ? 1 : student.current_year,
+        grades: student.grades === null ? defaultGrades : student.grades
       });
     } 
   }
@@ -108,29 +127,10 @@ const UserDataForm = ({
   }
 
   const handleChangeStudentData = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>): void => {
-    if (e.target.name === "currentYear") {
-      const newGrades = []
-      const currentYear = e.target.value as unknown as number;
-      if (currentYear > 0 && currentYear < 5) {
-        for (let index = 0; index < currentYear; index++) {
-        newGrades.push({
-          year: index,
-          grade: 0.0 
-        })
-        }
-      }
-      setStudentData({
-        ...studentData,
-        currentYear: currentYear,
-        grades: newGrades
-      })
-    } else {
-      setStudentData({
-        ...studentData,
-        [e.target.name]: e.target.value
-      });
-    }
-    
+    setStudentData({
+      ...studentData,
+      [e.target.name]: e.target.value
+    });
   } 
 
   const disableButtonUpdateStudentDataInfo = 
@@ -198,7 +198,7 @@ const UserDataForm = ({
               selected={userData.role === key ? true : false}
               value={key}
             >
-              {t(`roles.${key}`)}
+              {t(`common:roles.${key}`)}
             </option>
             )  
         }
@@ -208,176 +208,165 @@ const UserDataForm = ({
     )}
     {role === Role.STUDENT && (
       <>
-      <DropDown 
-        error={validationStudentData.domain}
-        id={`${componentId}-domain`}
-        name={"domain"} 
-        errorMessage={t(`${dropDownTranslate}.domain.errorMessage`)} 
-        label={t(`${dropDownTranslate}.domain.label`)}
-        placeholder={t(`${dropDownTranslate}.domain.placeholder`)}
-        defaultValue={studentData.domain}
-        value={studentData.domain}
-        onChange={handleChangeStudentData}
-      >
-      {Object.keys(Domain).map((key) => {
-        return (
-        <option
-          value={key}
-          selected={studentData.domain === key ? true : false}
+        <DropDown 
+          error={validationStudentData.degree}
+          id={`${componentId}-degree`}
+          name={"degree"} 
+          errorMessage={t(`${dropDownTranslate}.degree.errorMessage`)} 
+          label={t(`${dropDownTranslate}.degree.label`)}
+          placeholder={t(`${dropDownTranslate}.degree.placeholder`)}
+          defaultValue={studentData.degree}
+          value={studentData.degree}
+          onChange={handleChangeStudentData}
         >
-          {t(`domains.${key}`)}
-        </option>
-        )
-      })}
-      </DropDown>
-      <DropDown 
-        error={validationStudentData.learningMode}
-        id={`${componentId}-learning-mode`}
-        name={"learningMode"} 
-        errorMessage={t(`${dropDownTranslate}.learningMode.errorMessage`)} 
-        label={t(`${dropDownTranslate}.learningMode.label`)}
-        placeholder={t(`${dropDownTranslate}.learningMode.placeholder`)}
-        defaultValue={studentData.learningMode}
-        value={studentData.learningMode}
-        onChange={handleChangeStudentData}
-      >
-      {Object.keys(LearningMode).map((key) => {
-        return (
-        <option
-          value={key}
-          selected={studentData.learningMode === key ? true : false}
+          {Object.keys(Degree).map((key) => {
+            return (
+            <option
+              value={key}
+              selected={studentData.degree === key ? true : false}
+            >
+              {t(`common:degrees.${key}`)}
+            </option>
+            )
+          })}
+        </DropDown>
+        <DropDown 
+          error={validationStudentData.domain}
+          id={`${componentId}-domain`}
+          name={"domain"} 
+          errorMessage={t(`${dropDownTranslate}.domain.errorMessage`)} 
+          label={t(`${dropDownTranslate}.domain.label`)}
+          placeholder={t(`${dropDownTranslate}.domain.placeholder`)}
+          defaultValue={studentData.domain}
+          value={studentData.domain}
+          onChange={handleChangeStudentData}
         >
-          {t(`learningModes.${key}`)}
-        </option>
-        )
-      })}
-      </DropDown>
-      <DropDown 
-        error={validationStudentData.degree}
-        id={`${componentId}-degree`}
-        name={"degree"} 
-        errorMessage={t(`${dropDownTranslate}.degree.errorMessage`)} 
-        label={t(`${dropDownTranslate}.degree.label`)}
-        placeholder={t(`${dropDownTranslate}.degree.placeholder`)}
-        defaultValue={studentData.degree}
-        value={studentData.degree}
-        onChange={handleChangeStudentData}
-      >
-      {Object.keys(Degree).map((key) => {
-        return (
-        <option
-          value={key}
-          selected={studentData.degree === key ? true : false}
-        >
-          {t(`degrees.${key}`)}
-        </option>
-        )
-      })}
-      </DropDown>
-      <DropDown 
-        error={validationStudentData.studyProgram}
-        id={`${componentId}-study-program`}
-        name={"studyProgram"} 
-        errorMessage={t(`${dropDownTranslate}.studyProgram.errorMessage`)} 
-        label={t(`${dropDownTranslate}.studyProgram.label`)}
-        placeholder={t(`${dropDownTranslate}.studyProgram.placeholder`)}
-        defaultValue={studentData.studyProgram}
-        value={studentData.studyProgram}
-        onChange={handleChangeStudentData}
-      >
-      {Object.keys(StudyProgram).map((key) => {
-        return (
-        <option
-          value={key}
-          selected={studentData.studyProgram === key ? true : false}
-        >
-          {t(`studyPrograms.${key}`)}
-        </option>
-        )
-      })}
-      </DropDown>
-      <InputField 
-        type={InputFieldType.text}
-        id={`${componentId}-current-group`}
-        name={"currentGroup"} 
-        defaultValue={studentData.currentGroup}
-        value={studentData.currentGroup}
-        error={validationStudentData.currentGroup} 
-        errorMessage={t(`${inputTranslate}.currentGroup.errorMessage`)} 
-        label={t(`${inputTranslate}.currentGroup.label`)}
-        placeholder={t(`${inputTranslate}.currentGroup.placeholder`)}
-        onChange={handleChangeStudentData}
-      />
-      <InputField 
-        type={InputFieldType.number}
-        id={`${componentId}-current-year`}
-        name={"currentYear"} 
-        defaultValue={studentData.currentYear}
-        value={studentData.currentYear}
-        error={validationStudentData.currentYear} 
-        errorMessage={t(`${inputTranslate}.currentYear.errorMessage`)} 
-        label={t(`${inputTranslate}.currentYear.label`)}
-        placeholder={t(`${inputTranslate}.currentYear.placeholder`)}
-        onChange={handleChangeStudentData}
-        min={1}
-        max={4}
-      />
-      {studentData.grades.length > 0 && (
-        <div>
-          <span
-            style={{
-              "fontSize": "medium"
-            }}
+        {Object.keys(Domain).map((key) => {
+          return (
+          <option
+            value={key}
+            selected={studentData.domain === key ? true : false}
           >
-            Grades
-          </span>
+            {t(`common:domains.${key}`)}
+          </option>
+          )
+        })}
+        </DropDown>
+        <DropDown 
+          error={validationStudentData.learningMode}
+          id={`${componentId}-learning-mode`}
+          name={"learningMode"} 
+          errorMessage={t(`${dropDownTranslate}.learningMode.errorMessage`)} 
+          label={t(`${dropDownTranslate}.learningMode.label`)}
+          placeholder={t(`${dropDownTranslate}.learningMode.placeholder`)}
+          defaultValue={studentData.learningMode}
+          value={studentData.learningMode}
+          onChange={handleChangeStudentData}
+        >
+        {Object.keys(LearningMode).map((key) => {
+          return (
+          <option
+            value={key}
+            selected={studentData.learningMode === key ? true : false}
+          >
+            {t(`common:learningModes.${key}`)}
+          </option>
+          )
+        })}
+        </DropDown>
+        <DropDown 
+          error={validationStudentData.studyProgram}
+          id={`${componentId}-study-program`}
+          name={"studyProgram"} 
+          errorMessage={t(`${dropDownTranslate}.studyProgram.errorMessage`)} 
+          label={t(`${dropDownTranslate}.studyProgram.label`)}
+          placeholder={t(`${dropDownTranslate}.studyProgram.placeholder`)}
+          defaultValue={studentData.studyProgram}
+          value={studentData.studyProgram}
+          onChange={handleChangeStudentData}
+        >
+        {Object.keys(StudyProgram).map((key) => {
+          return (
+          <option
+            value={key}
+            selected={studentData.studyProgram === key ? true : false}
+          >
+            {t(`common:studyPrograms.${key}`)}
+          </option>
+          )
+        })}
+        </DropDown>
+        <InputField 
+          type={InputFieldType.text}
+          id={`${componentId}-current-group`}
+          name={"currentGroup"} 
+          defaultValue={studentData.currentGroup}
+          value={studentData.currentGroup}
+          error={validationStudentData.currentGroup} 
+          errorMessage={t(`${inputTranslate}.currentGroup.errorMessage`)} 
+          label={t(`${inputTranslate}.currentGroup.label`)}
+          placeholder={t(`${inputTranslate}.currentGroup.placeholder`)}
+          onChange={handleChangeStudentData}
+        />
+        <InputField 
+          type={InputFieldType.number}
+          id={`${componentId}-current-year`}
+          name={"currentYear"} 
+          defaultValue={studentData.currentYear}
+          value={studentData.currentYear}
+          error={validationStudentData.currentYear} 
+          errorMessage={t(`${inputTranslate}.currentYear.errorMessage`)} 
+          label={t(`${inputTranslate}.currentYear.label`)}
+          placeholder={t(`${inputTranslate}.currentYear.placeholder`)}
+          onChange={handleChangeStudentData}
+          min={1}
+          max={4}
+        />
+        {studentData.grades.length > 0 && (
           <div>
-          {[
-            studentData.grades.map((grade) => {
-              return (
-                <div
-                  style={{
-                    "display": "flex",
-                    "flexDirection": "row",
-                    "gap": "1rem"
-                  }}
-                >
-                  <InputField 
-                    type={InputFieldType.number} 
-                    defaultValue={grade.year + 1}
-                    error={false} 
-                    errorMessage={""} 
-                    label={"Year"} 
-                  />
-                  <InputField 
-                    type={InputFieldType.number}
-                    defaultValue={grade.grade} 
-                    error={false} 
-                    errorMessage={""} 
-                    label={"Grade"} 
-                  />
-                </div> 
-              )
-            })
-          ]}
+            <span
+              style={{
+                "fontSize": "medium"
+              }}
+            >
+              Grades
+            </span>
+            <div>
+            {[
+              studentData.grades.map((grade) => {
+                console.log(grade);
+                return (
+                  <div
+                    style={{
+                      "display": "flex",
+                      "flexDirection": "row",
+                      "gap": "1rem"
+                    }}
+                  >
+                    <InputField 
+                      type={InputFieldType.number} 
+                      defaultValue={grade.year}
+                      value={grade.year}
+                      error={false} 
+                      errorMessage={""} 
+                      label={"Year"} 
+                    />
+                    <InputField 
+                      type={InputFieldType.number}
+                      defaultValue={grade.grade}
+                      value={grade.grade} 
+                      error={false} 
+                      errorMessage={""} 
+                      label={"Grade"} 
+                    />
+                  </div> 
+                )
+              })
+            ]}
+            </div>
           </div>
-        </div>
-      )}
+        )}
       </>
-    )}
-    {role === Role.TEACHER && (
-      <InputField 
-        type={InputFieldType.text}
-        id={`${componentId}-department`}
-        name={"department"} 
-        defaultValue={studentData.currentYear}
-        value={studentData.currentYear}
-        error={validationStudentData.currentYear} 
-        errorMessage={t(`${inputTranslate}.currentYear.errorMessage`)} 
-        label={t(`${inputTranslate}.currentYear.label`)}
-        placeholder={t(`${inputTranslate}.currentYear.placeholder`)}
-        onChange={handleChangeStudentData} 
-      />
     )}
     <br/>
     {role === Role.NONE && (

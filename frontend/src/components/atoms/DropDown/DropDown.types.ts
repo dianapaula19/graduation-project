@@ -17,7 +17,7 @@ interface Option {
 interface IDropDownProps extends SelectHTMLAttributes<HTMLSelectElement>{
   modifier?: DropDownModifier;
   error: boolean;
-  errorMessage: string;
+  errorMessage?: string;
   label: string;
 }
 

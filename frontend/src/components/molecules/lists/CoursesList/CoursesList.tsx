@@ -11,27 +11,27 @@ import { revertUpdateCourse, updateCourseShowModal, updateCourseStatus } from ".
 import { createCourseShowModal, createCourseStatus, revertCreateCourse } from "../../../../features/user/admin/course/createCourseSlice";
 import { loginToken } from "../../../../features/auth/loginSlice";
 import { ApiStatus } from "../../../../features/Utils";
-import Loader from "../../../atoms/Loader";
+import ModalApiStatus from "../../ModalApiStatus";
 
 const CoursesList = ({
   courses
 }: ICoursesListProps) => {
 
+  const { t } = useTranslation('lists');
+
+  const dispatch = useAppDispatch();
+
   const componentClassName = "courses-list";
   const [showFormModal, setShowFormModal] = useState<boolean>(false);
   const [formType, setFormType] = useState<'create' | 'update'>('create');
 
-  const buttonsTranslate = "lists.courses.buttons";
+  const buttonsTranslate = "courses.buttons";
 
   const showModalCreateCourse = useAppSelector(createCourseShowModal);
   const showModalUpdateCourse = useAppSelector(updateCourseShowModal);
   const statusCreateCourse = useAppSelector(createCourseStatus);
   const statusUpdateCourse = useAppSelector(updateCourseStatus);
   const token = useAppSelector(loginToken);
-  
-  const { t } = useTranslation();
-
-  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (showModalCreateCourse || showModalUpdateCourse) {
@@ -46,22 +46,17 @@ const CoursesList = ({
   let createCourseModalComponent = null;
 
   switch (statusCreateCourse) {
-    case ApiStatus.loading:
-      createCourseModalComponent = <Loader />
-      break;
     case ApiStatus.success:
-      createCourseModalComponent = (
-        <div>
-          The course was created successfully
-        </div>
-      )
+      createCourseModalComponent = <ModalApiStatus 
+        message={t("courses.success.create")} 
+        error={false} 
+      />;
       break;
     case ApiStatus.failed:
-      createCourseModalComponent = (
-        <div>
-          There was an error creating the course
-        </div>
-      )
+      createCourseModalComponent = <ModalApiStatus 
+        message={t("courses.error.create")} 
+        error={true} 
+      />;
       break;
     default:
       break;
@@ -70,22 +65,17 @@ const CoursesList = ({
   let updateCourseModalComponent = null;
 
   switch (statusUpdateCourse) {
-    case ApiStatus.loading:
-      updateCourseModalComponent = <Loader />
-      break;
     case ApiStatus.success:
-      updateCourseModalComponent = (
-        <div>
-          The course was updated successfully
-        </div>
-      )
+      updateCourseModalComponent = <ModalApiStatus 
+        message={t("courses.success.update")} 
+        error={false} 
+      />;
       break;
     case ApiStatus.failed:
-      updateCourseModalComponent = (
-        <div>
-          There was an error updating the course
-        </div>
-      )
+      updateCourseModalComponent = <ModalApiStatus 
+        message={t("courses.error.update")} 
+        error={true} 
+      />;
       break;
     default:
       break;
@@ -108,12 +98,12 @@ const CoursesList = ({
         <span
           className={`${componentClassName}__title`}
         >
-          {t("lists.courses.header.title")}
+          {t("courses.header.title")}
         </span>
         <span
           className={`${componentClassName}__teacher`}
         >
-          {t("lists.courses.header.teacher")}
+          {t("courses.header.teacher")}
         </span>
       </div>
       {courses.map((course, idx) => {
@@ -124,7 +114,7 @@ const CoursesList = ({
               dispatch(getCurrentCourse({
                 id: course.id
               }));
-              setFormType('update');
+              setFormType("update");
               setShowFormModal(true);
             }}
           >
@@ -152,12 +142,11 @@ const CoursesList = ({
         label={t(`${buttonsTranslate}.create`)} 
         disabled={false}
         onClick={() => {
-        setFormType('create');
+        setFormType("create");
         setShowFormModal(true);
         }} 
       />
     </div>
-    
     <Modal 
       show={showFormModal} 
       closeModal={() => {
@@ -167,7 +156,6 @@ const CoursesList = ({
     >
       <CourseForm type={formType} />
     </Modal>
-
     <Modal 
       show={showModalCreateCourse} 
       closeModal={() => {
@@ -181,7 +169,6 @@ const CoursesList = ({
     >
       {createCourseModalComponent}
     </Modal>
-
     <Modal 
       show={showModalUpdateCourse} 
       closeModal={() => {
@@ -195,7 +182,6 @@ const CoursesList = ({
     >
       {updateCourseModalComponent}
     </Modal>  
-  
     </>
   );
 

@@ -5,10 +5,10 @@ import { registerCode, registerShowModal, registerStatus, revertRegister } from 
 import { ApiStatus } from "../../../../features/Utils";
 import Modal from "../../../molecules/Modal";
 import AuthentificationPage from "../../../templates/AuthentificationPage";
-import { AuthentificationAction } from '../../../templates/AuthentificationPage/';
+import { AuthentificationAction } from '../../../templates/AuthentificationPage';
 import LoadingPage from "../../LoadingPage";
 
-const RegisterPage = () => {
+const RegistrationPage = () => {
 
   const status = useAppSelector(registerStatus);
   const code = useAppSelector(registerCode);
@@ -55,4 +55,4 @@ const RegisterPage = () => {
 
 };
 
-export default RegisterPage;
+export default RegistrationPage;

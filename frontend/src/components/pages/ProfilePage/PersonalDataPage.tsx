@@ -59,11 +59,11 @@ const GradeRow = (
   )
 }
 
-const PersonalDataPage = () => {
+const ProfilePage = () => {
 
   const componentClassName = "personal-data-page";
 
-  const { t } = useTranslation();
+  const { t } = useTranslation("pages");
 
   const studentClassName = `${componentClassName}__student`;
   const studentGradesName = `${studentClassName}__grades`;
@@ -209,4 +209,4 @@ const PersonalDataPage = () => {
 
 }
 
-export default PersonalDataPage;
+export default ProfilePage;

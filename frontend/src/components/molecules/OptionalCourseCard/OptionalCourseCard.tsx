@@ -43,7 +43,7 @@ const OptionalCourseCard = ({
       </span>
       {linkDocument && (
         <LinkButton 
-          text={t("syllabusButton")}
+          text={t("common:buttons.syllabus")}
           modifier={LinkButtonModifier.syllabus} 
           href={linkDocument}     
           target="_blank"     

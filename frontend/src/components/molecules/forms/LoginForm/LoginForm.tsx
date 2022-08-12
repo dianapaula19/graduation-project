@@ -14,16 +14,17 @@ import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
 
+  const { t } = useTranslation('forms');
+  
   const dispatch = useDispatch();
+
+  const componentClassName = "login-form";
+  const inputFieldsTranslate = "login.inputFields";
 
   const [data, setData] = useState<ILoginFormData>({
     email: "",
     password: ""
   });
-
-  const componentClassName = "login-form";
-
-  const { t } = useTranslation();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const name = e.target.name;
@@ -48,9 +49,9 @@ const LoginForm = () => {
         type={InputFieldType.email}
         name={"email"}
         id={"login-form-email"}
-        placeholder={t("login.form.email.placeholder")} 
-        errorMessage={t("login.form.email.errorMessage")} 
-        label={t("login.form.email.label")}
+        placeholder={t(`${inputFieldsTranslate}.email.placeholder`)} 
+        errorMessage={t(`${inputFieldsTranslate}.email.errorMessage`)} 
+        label={t(`${inputFieldsTranslate}.email.label`)}
         required={true}
         error={false}
         onChange={handleChange}         
@@ -59,9 +60,9 @@ const LoginForm = () => {
         type={InputFieldType.password} 
         name={"password"} 
         id={"login-form-password"}
-        placeholder={t("login.form.password.placeholder")} 
-        errorMessage={t("login.form.password.errorMessage")} 
-        label={t("login.form.password.label")}  
+        placeholder={t(`${inputFieldsTranslate}.password.placeholder`)} 
+        errorMessage={t(`${inputFieldsTranslate}.password.errorMessage`)} 
+        label={t(`${inputFieldsTranslate}.password.label`)}  
         required={true} 
         error={false}  
         onChange={handleChange} 
@@ -70,19 +71,19 @@ const LoginForm = () => {
         className={`${componentClassName}__a`}
         href="/recoverAccount"
       >
-        {t("login.form.forgotPassword")}
+        {t("login.forgotPassword")}
       </a>
       <Button 
-        label={t("login.form.button.label")} 
+        label={t("login.buttons.signIn")} 
         disabled={false}
         onClick={onSubmit}
       />
       <p className={`${componentClassName}__p`}>
-        {t("login.form.newUser")}
+        {t("login.newUser.text")}
         <a
           href="/register" 
           className={`${componentClassName}__a`}>
-          {t("login.form.newUserLink")}
+          {t("login.newUser.link")}
         </a>
       </p>
     </div>

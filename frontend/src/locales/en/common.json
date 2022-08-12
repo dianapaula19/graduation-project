@@ -325,29 +325,6 @@
       }
     }
   },
-  "sidenav": {
-    "links": {
-      "signOut": "Sign Out",
-      "personalData": "Personal Data"
-    },
-    "studentLinks": {
-      "optionals": "Optional Courses"
-    },
-    "teacherLinks": {
-      "courses": "Courses"
-    },
-    "adminLinks": {
-      "optionsLists": "Optionals Lists",
-      "cursuri": "Courses",
-      "accounts": "Accounts"
-    },
-    "facultyName": "Faculty of Mathematics and Computer Science",
-    "displayMessage": {
-      "morning": "Good morning",
-      "afternoon": "Good afternoon",
-      "night": "Good evening"
-    }
-  },
   "teacher": {
     "courses": {
       "mailButton": "Send an announcement"

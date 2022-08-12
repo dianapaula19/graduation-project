@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Role } from "../../App";
+import { Degree, Domain, LearningMode, Role, StudyProgram } from "../../App";
 import Button, { ButtonModifier } from "../../atoms/Button";
 import InputField, { InputFieldType } from "../../atoms/InputField";
 import AccountsList from "../../molecules/lists/AccountsList";
 import LoggedUserPage from "../LoggedUserPage";
 import $ from "jquery";
 import "./AccountsPage.scss"
-import { IAccountsPageProps } from "./AccountsPage.types";
+import { IAccountsPageProps} from "./AccountsPage.types";
 import { useTranslation } from "react-i18next";
 import * as XLSX from "xlsx";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
@@ -21,14 +21,39 @@ import { revertVerifyUser, verifyUserShowModal } from "../../../features/user/ad
 import { useNavigate } from "react-router-dom";
 import { loginToken } from "../../../features/auth/loginSlice";
 import LoadingPage from "../../pages/LoadingPage";
+import DropDown from "../../atoms/DropDown";
+import { Department } from "../../App/App.types";
+import { degreeMap } from "../../Utils";
 
 const AccountsPage = ({
   role,
 }: IAccountsPageProps) => {
 
   const componentClassName = "accounts-page";
+  const studentFiltersClassName = `${componentClassName}__students-filters`;
+  const teacherFiltersClassName = `${componentClassName}__teachers-filters`;
+  const dropDownStudentFiltersTranslate = "accounts.students.filters.dropDownFields";
+  const inputStudentFiltersTranslate = "accounts.students.filters.inputFields";
+  const inputTeacherFiltersTranslate = "accounts.teachers.filters.inputFields";
 
-  const { t } = useTranslation(); 
+  const [studentFilters, setstudentFilters] = useState({
+    degree: 'placeholder',
+    domain: 'placeholder',
+    learningMode: 'placeholder',
+    studyProgram: 'placeholder',
+    year: 'placeholder'
+  });
+
+  const [studentSearch, setStudentSearch] = useState({
+    studentGroup: '',
+    studentLastName: ''
+  });
+
+  const [teacherSearch, setTeacherSearch] = useState({
+    teacherLastName: ''
+  })
+
+  const { t } = useTranslation('pages'); 
   const dispatch = useAppDispatch();
   const statusGetStudents = useAppSelector(getStudentsStatus);
   const statusGetTeachers = useAppSelector(getTeachersStatus);
@@ -38,8 +63,7 @@ const AccountsPage = ({
   const users = useAppSelector(getNotVerifiedUsersUsers);
   const showModalRegisterBatchStudents = useAppSelector(registerBatchStudentsShowModal);
   const showModalRegisterBatchTeachers = useAppSelector(registerBatchTeachersShowModal);
-  const statusRegisterBatchStudents = useAppSelector(registerBatchStudentsStatus);
-  const statusRegisterBatchTeachers = useAppSelector(registerBatchTeachersStatus);
+
   const token = useAppSelector(loginToken);
 
   let navigate = useNavigate();
@@ -47,18 +71,74 @@ const AccountsPage = ({
   let emails: string[] = [];
 
   if (users !== null && role === Role.NONE) {
-  emails = users;
+    emails = users;
   }
 
   if (students !== null && role === Role.STUDENT) {
-  students.forEach((student) => {
-    emails.push(student.email);
-  });
+    const filteredStudents = students.filter((student) => {
+      if (studentFilters.degree === 'placeholder') {
+        return student;
+      }
+      if (studentFilters.domain === 'placeholder') {
+        return student.degree === studentFilters.degree;
+      }
+      if (studentFilters.learningMode === 'placeholder') {
+        return student.degree === studentFilters.degree && 
+          student.domain === studentFilters.domain;
+      }
+      if (studentFilters.studyProgram === 'placeholder') {
+        return student.degree === studentFilters.degree && 
+          student.domain === studentFilters.domain &&
+          student.learning_mode === studentFilters.learningMode;
+      }
+      if (studentFilters.year === 'placeholder') {
+        return student.degree === studentFilters.degree && 
+          student.domain === studentFilters.domain &&
+          student.learning_mode === studentFilters.learningMode &&
+          student.study_program === studentFilters.studyProgram
+      }
+      return student.degree === studentFilters.degree && 
+          student.domain === studentFilters.domain &&
+          student.learning_mode === studentFilters.learningMode &&
+          student.study_program === studentFilters.studyProgram &&
+          student.current_year === Number(studentFilters.year)
+    });
+
+    const filteredByGroupStudents = filteredStudents.filter((student) => {
+      if (studentSearch.studentGroup === '') {
+        return student;
+      }
+      else {
+        return student.current_group.toLowerCase().startsWith(studentSearch.studentGroup.toLowerCase())
+      }
+    })
+
+    const filteredByLastNameStudents = filteredByGroupStudents.filter((student) => {
+      if (studentSearch.studentLastName === '') {
+        return student;
+      }
+      else {
+        return student.last_name.toLowerCase().startsWith(studentSearch.studentLastName.toLowerCase())
+      }
+    })
+
+    filteredByLastNameStudents.forEach((student) => {
+      emails.push(student.email);
+    });
   }
   if (teachers !== null && role === Role.TEACHER) {
-  teachers.forEach((teacher) => {
-    emails.push(teacher.email);
-  });
+    const filteredByLastNameTeachers = teachers.filter((teacher) => {
+      if (teacherSearch.teacherLastName === '') {
+        return teacher;
+      }
+      else {
+        return teacher.last_name.toLowerCase().startsWith(teacherSearch.teacherLastName.toLowerCase())
+      }
+    })
+
+    filteredByLastNameTeachers.forEach((teacher) => {
+      emails.push(teacher.email);
+    });
   }
 
   useEffect(() => {
@@ -110,34 +190,84 @@ const AccountsPage = ({
   }
 
   const onFileUpload = (e: React.ChangeEvent<HTMLInputElement>): void =>  {
-  e.preventDefault();
-  if (e.target.files) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-    const data = e.target?.result;
-    const workbook = XLSX.read(data, { type: "array" });
-    const sheetName = workbook.SheetNames[0];
-    const worksheet = workbook.Sheets[sheetName];
-    if (token) {
-      if (role === Role.STUDENT) {
-        const json: IStudentData[] = XLSX.utils.sheet_to_json(worksheet);
-        dispatch(registerBatchStudentsAsync({students: json, token: token}))
-      } else if (role === Role.TEACHER) {
-        const json: ITeacherData[] = XLSX.utils.sheet_to_json(worksheet);
-        dispatch(registerBatchTeachersAsync({teachers: json, token: token}))
+    e.preventDefault();
+    if (e.target.files) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+      const data = e.target?.result;
+      const workbook = XLSX.read(data, { type: "array" });
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+      if (token) {
+        if (role === Role.STUDENT) {
+          const json: IStudentData[] = XLSX.utils.sheet_to_json(worksheet);
+          dispatch(registerBatchStudentsAsync({students: json, token: token}))
+        } else if (role === Role.TEACHER) {
+          const json: ITeacherData[] = XLSX.utils.sheet_to_json(worksheet);
+          dispatch(registerBatchTeachersAsync({teachers: json, token: token}))
+        }
       }
+      }
+      reader.readAsArrayBuffer(e.target.files[0]);
     }
-    }
-    reader.readAsArrayBuffer(e.target.files[0]);
-  }
   }
 
-  if (
-    statusGetNotVerifiedUsers === ApiStatus.loading ||
-    statusRegisterBatchStudents === ApiStatus.loading ||
-    statusRegisterBatchTeachers === ApiStatus.loading
-    ) {
-      return <LoadingPage />
+  const handleChangeStudentsFilter = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>): void => {
+    if (e.target.name === 'degree') {
+      setstudentFilters({
+        degree: e.target.value,
+        domain: 'placeholder',
+        learningMode: 'placeholder',
+        studyProgram: 'placeholder',
+        year: 'placeholder'
+      })  
+      return;
+    }
+    if (e.target.name === 'domain') {
+      setstudentFilters({
+        ...studentFilters,
+        domain: e.target.value,
+        learningMode: 'placeholder',
+        studyProgram: 'placeholder',
+        year: 'placeholder'
+      })  
+      return;
+    }
+    if (e.target.name === 'learningMode') {
+      setstudentFilters({
+        ...studentFilters,
+        learningMode: e.target.value,
+        studyProgram: 'placeholder',
+        year: 'placeholder'
+      })  
+      return;
+    }
+    if (e.target.name === 'studyProgram') {
+      setstudentFilters({
+        ...studentFilters,
+        studyProgram: e.target.value,
+        year: 'placeholder'
+      })  
+      return;
+    }
+    setstudentFilters({
+      ...studentFilters, 
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleChangeStudentsSearch = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setStudentSearch({
+      ...studentSearch,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleChangeTeacherSearch = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setTeacherSearch({
+      ...teacherSearch,
+      [e.target.name]: e.target.value
+    })
   }
 
   return (
@@ -149,29 +279,29 @@ const AccountsPage = ({
       className={`${componentClassName}__buttons`}
     >
       <Button 
-      label={"Not Verified Accounts"}
-      modifier={role !== Role.NONE ? ButtonModifier.unselected : ButtonModifier.none}
-      onClick={() => {navigate('/admin/accounts/notVerified')}} 
-      disabled={false} 
+        label={t(`accounts.notVerified.buttonLabel`)}
+        modifier={role !== Role.NONE ? ButtonModifier.unselected : ButtonModifier.none}
+        onClick={() => {navigate('/admin/accounts/notVerified')}} 
+        disabled={false} 
       />
       <Button 
-      label={"Students"} 
-      modifier={role !== Role.STUDENT ? ButtonModifier.unselected : ButtonModifier.none}
-      onClick={() => {navigate('/admin/accounts/students')}}
-      disabled={false} 
+        label={t(`accounts.students.buttonLabel`)}
+        modifier={role !== Role.STUDENT ? ButtonModifier.unselected : ButtonModifier.none}
+        onClick={() => {navigate('/admin/accounts/students')}}
+        disabled={false} 
       />
       <Button 
-      label={"Teachers"}
-      modifier={role !== Role.TEACHER ? ButtonModifier.unselected : ButtonModifier.none} 
-      onClick={() => {navigate('/admin/accounts/teachers')}}
-      disabled={false} 
+        label={t(`accounts.teachers.buttonLabel`)}
+        modifier={role !== Role.TEACHER ? ButtonModifier.unselected : ButtonModifier.none} 
+        onClick={() => {navigate('/admin/accounts/teachers')}}
+        disabled={false} 
       />
     </div>
     {role !== Role.NONE && (
       <>
       <Button 
         id={"import-excel-file-button"}
-        label={t(`pages.accounts.${switchType(role)}.fileUploadLabel`)}
+        label={t(`accounts.${switchType(role)}.fileUploadLabel`)}
         modifier={ButtonModifier.excel} 
         disabled={false} 
       />
@@ -185,9 +315,164 @@ const AccountsPage = ({
       />
       </>
     )}
+    {role === Role.STUDENT && (
+      <div
+        className={`${studentFiltersClassName}`}
+      >
+        <div
+          className={`${studentFiltersClassName}__dropdown-fields`}
+        >
+          <DropDown 
+            name="degree"
+            onChange={handleChangeStudentsFilter}
+            label={t(`${dropDownStudentFiltersTranslate}.degree.label`)}
+            placeholder={t(`${dropDownStudentFiltersTranslate}.degree.placeholder`)}
+            defaultValue={studentFilters.degree}
+            value={studentFilters.degree} 
+            error={false}          
+          >
+            {Object.keys(Degree).map((key) => {
+            return (
+              <option
+                value={key}
+              >
+                {t(`common:degrees.${key}`)}
+              </option>
+            )
+            })}
+          </DropDown>
+          <DropDown
+            name="domain"
+            onChange={handleChangeStudentsFilter}
+            label={t(`${dropDownStudentFiltersTranslate}.domain.label`)}
+            placeholder={t(`${dropDownStudentFiltersTranslate}.domain.placeholder`)}
+            defaultValue={studentFilters.domain}
+            value={studentFilters.domain} 
+            error={false}
+          >
+            { studentFilters.degree !== 'placeholder' && 
+              Object.keys(degreeMap[studentFilters.degree]).map((key) => {
+                return (
+                  <option
+                    value={key}
+                  >
+                    {t(`common:domains.${key}`)}
+                  </option>
+                )
+              })
+            }
+          </DropDown>
+          <DropDown 
+            name="learningMode"
+            onChange={handleChangeStudentsFilter}
+            label={t(`${dropDownStudentFiltersTranslate}.learningMode.label`)}
+            placeholder={t(`${dropDownStudentFiltersTranslate}.learningMode.placeholder`)}
+            defaultValue={studentFilters.learningMode}
+            value={studentFilters.learningMode} 
+            error={false}
+          >
+            {
+              studentFilters.degree !== 'placeholder' && 
+              studentFilters.domain !== 'placeholder' && 
+              Object.keys(degreeMap[studentFilters.degree][studentFilters.domain]).map((key) => {
+              return (
+                <option
+                  value={key}
+                >
+                  {t(`common:learningModes.${key}`)}
+                </option>
+              )
+              })
+            }
+          </DropDown>
+          <DropDown 
+            name="studyProgram"
+            onChange={handleChangeStudentsFilter}
+            label={t(`${dropDownStudentFiltersTranslate}.studyProgram.label`)}
+            placeholder={t(`${dropDownStudentFiltersTranslate}.studyProgram.placeholder`)}
+            defaultValue={studentFilters.studyProgram}
+            value={studentFilters.studyProgram} 
+            error={false}
+          >
+            {
+              studentFilters.degree !== 'placeholder' && 
+              studentFilters.domain !== 'placeholder' &&
+              studentFilters.learningMode !== 'placeholder' && 
+              Object.keys(degreeMap[studentFilters.degree][studentFilters.domain][studentFilters.learningMode]).map((key) => {
+              return (
+                <option
+                  value={key}
+                >
+                  {t(`common:studyPrograms.${key}`)}
+                </option>
+              )
+              })
+            }
+          </DropDown>
+          <DropDown 
+            name="year"
+            onChange={handleChangeStudentsFilter}
+            label={t(`${dropDownStudentFiltersTranslate}.year.label`)}
+            placeholder={t(`${dropDownStudentFiltersTranslate}.year.placeholder`)}
+            defaultValue={studentFilters.year}
+            value={studentFilters.year} 
+            error={false}
+          >
+          {
+            studentFilters.degree !== 'placeholder' && 
+            studentFilters.domain !== 'placeholder' &&
+            studentFilters.learningMode !== 'placeholder' &&
+            studentFilters.studyProgram !== 'placeholder' &&  
+            degreeMap[studentFilters.degree][studentFilters.domain][studentFilters.learningMode][studentFilters.studyProgram].map((year: number) => {
+            return (
+              <option
+                value={year}
+              >
+                {year}
+              </option>
+            )
+            })
+          }
+          </DropDown>
+        </div>
+        <div
+          className={`${studentFiltersClassName}__input-fields`}
+        >
+          <InputField
+            name="studentGroup" 
+            onChange={handleChangeStudentsSearch}
+            type={InputFieldType.search} 
+            error={false} 
+            label={t(`${inputStudentFiltersTranslate}.group.label`)}
+          />
+          <InputField 
+            name="studentLastName"
+            onChange={handleChangeStudentsSearch}
+            type={InputFieldType.search} 
+            error={false} 
+            label={t(`${inputStudentFiltersTranslate}.lastName.label`)}
+          />  
+        </div>
+      </div>
+    )}
+    {
+      role === Role.TEACHER && (
+        <div
+          className={`${teacherFiltersClassName}__input-fields`}
+        >
+          <InputField 
+            name="teacherLastName"
+            onChange={handleChangeTeacherSearch}
+            type={InputFieldType.search} 
+            error={false} 
+            label={t(`${inputTeacherFiltersTranslate}.lastName.label`)} 
+          />
+        </div>
+      )
+    }
     <AccountsList
       role={role} 
-      title={t(`pages.accounts.${switchType(role)}.accountsListTitle`)}
+      title={t(`accounts.${switchType(role)}.title`)}
       emails={emails} 
     />
     {role === Role.STUDENT && (

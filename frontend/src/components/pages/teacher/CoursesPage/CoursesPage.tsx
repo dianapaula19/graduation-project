@@ -16,7 +16,7 @@ import "./CoursesPage.scss";
 
 const OptionalCoursesList = () => {
 
-  const componentClassName = "courses";
+  const componentClassName = "teacher-courses-page";
 
   const statusTeacherCourses = useAppSelector(getTeacherCoursesStatus);
   const courses = useAppSelector(getTeacherCoursesCourses);
@@ -29,7 +29,7 @@ const OptionalCoursesList = () => {
   const fileType =
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
 
-  const { t } = useTranslation();
+  const { t } = useTranslation('pages');
 
   const [showSendAnnouncementFormModal, setShowSendAnnouncementFormModal] = useState<boolean>(false);
 
@@ -75,11 +75,10 @@ const OptionalCoursesList = () => {
       >   
         <DropDown 
           error={false} 
-          errorMessage={""} 
           name={"course"}
           defaultValue="placeholder"
-          placeholder={"Choose an optional course"}
-          label={"Choose an optional course"}
+          placeholder={t("teacher.courses.dropDownFields.chooseCourse.placeholder")}
+          label={t("teacher.courses.dropDownFields.chooseCourse.label")}
           onChange={handleChange}
         >
           {courses && courses.map((course) => {
@@ -102,7 +101,7 @@ const OptionalCoursesList = () => {
               disabled={false} 
             />
             <Button 
-              label={t("excelButton")}
+              label={t("teacher.courses.excelButton")}
               modifier={ButtonModifier.excel} 
               onClick={exportToExcel}
               disabled={false} 

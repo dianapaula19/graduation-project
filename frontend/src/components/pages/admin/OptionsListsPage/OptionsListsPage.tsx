@@ -8,20 +8,19 @@ import { getCurrentOptionsList, getOptionsListsAsync, getOptionsListsOptionsList
 import { revertUpdateOptionsList, updateOptionsListShowModal, updateOptionsListStatus } from "../../../../features/user/admin/optionsList/updateOptionsListSlice";
 import { ApiStatus } from "../../../../features/Utils";
 import Button from "../../../atoms/Button";
-import Loader from "../../../atoms/Loader";
 import OptionsListForm from "../../../molecules/forms/OptionsListForm";
 import Modal from "../../../molecules/Modal";
 import OptionsListCard from "../../../molecules/OptionsListCard";
-
 import LoggedUserPage from "../../../templates/LoggedUserPage";
 import "./OptionsListsPage.scss";
+import ModalApiStatus from "../../../molecules/ModalApiStatus";
 
 const OptionsListsPage = () => {
 
   const componentClassName = "options-lists-page";
   const [showModalOptionsListForm, setShowModalOptionsListForm] = useState<boolean>(false);
   const [formType, setFormType] = useState<'create' | 'update'>('create');
-  const { t } = useTranslation();
+  const { t } = useTranslation("pages");
 
   const dispatch = useAppDispatch();
 
@@ -35,7 +34,7 @@ const OptionsListsPage = () => {
   const statusUpdateOptionsList = useAppSelector(updateOptionsListStatus);
   const token = useAppSelector(loginToken);
 
-  const domains: {[id: string]: string} = t("domains", {returnObjects: true}) as {[id: string]: string};
+  const domains: {[id: string]: string} = t("common:domains", {returnObjects: true}) as {[id: string]: string};
 
   useEffect(() => {
     if (
@@ -71,22 +70,17 @@ const OptionsListsPage = () => {
   let createOptionsListModalComponent = null;
 
   switch (statusCreateOptionsList) {
-    case ApiStatus.loading:
-      createOptionsListModalComponent = <Loader />
-      break;
     case ApiStatus.success:
-      createOptionsListModalComponent = (
-        <div>
-          The options list was created successfully
-        </div>
-      )
+      createOptionsListModalComponent = <ModalApiStatus 
+        message={t("admin.optionsLists.success.create")} 
+        error={false} 
+      />;
       break;
     case ApiStatus.failed:
-      createOptionsListModalComponent = (
-        <div>
-          There was an error creating the options list
-        </div>
-      )
+      createOptionsListModalComponent = <ModalApiStatus 
+        message={t("admin.optionsLists.error.create")} 
+        error={true} 
+      />;
       break;
     default:
       break;
@@ -95,22 +89,17 @@ const OptionsListsPage = () => {
   let updateOptionsListModalComponent = null;
 
   switch (statusUpdateOptionsList) {
-    case ApiStatus.loading:
-      updateOptionsListModalComponent = <Loader />
-      break;
     case ApiStatus.success:
-      updateOptionsListModalComponent = (
-        <div>
-          The options list was updated successfully
-        </div>
-      )
+      updateOptionsListModalComponent = <ModalApiStatus 
+        message={t("admin.optionsLists.success.update")} 
+        error={false} 
+      />;
       break;
     case ApiStatus.failed:
-      updateOptionsListModalComponent = (
-        <div>
-          There was an error updating the options list
-        </div>
-      )
+      updateOptionsListModalComponent = <ModalApiStatus 
+        message={t("admin.optionsLists.error.update")} 
+        error={true} 
+      />;
       break;
     default:
       break;
@@ -155,9 +144,10 @@ const OptionsListsPage = () => {
       )
       })}
     <Button 
-      label={t("pages.optionsLists.createButton")} 
+      label={t("admin.optionsLists.buttons.create")} 
       onClick={() => {
-      setShowModalOptionsListForm(true);
+        setFormType('create');
+        setShowModalOptionsListForm(true);
       }}
       disabled={false} 
     />

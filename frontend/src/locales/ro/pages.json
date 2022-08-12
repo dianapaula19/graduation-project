@@ -1,0 +1,192 @@
+{ 
+  "admin": {
+    "courses": {
+      "error": {
+        "fetch": "A apărut o eroare la preluarea cursurilor"
+      }
+    },
+    "optionsLists": {
+      "error": {
+        "create": "",
+        "update": ""
+      },
+      "success": {
+        "create": "",
+        "update": ""
+      }, 
+      "buttons": {
+        "create": "Creează o listă nouă de opțiuni"
+      }
+    },
+    "settings": {
+      "xlsx": {
+        "header": {
+          "fullName": "Nume și prenume",
+          "currentGroup": "Grupa Curentă"
+        }
+      },
+      "text": {
+        "message": "Sesiunea de alegere a opționalelor este:",
+        "active": "activă",
+        "inactive": "inactivă"
+      },
+      "buttons": {
+        "exportLists": "Exportă listele cu repartizarea studenților"
+      }
+    }
+
+  },
+  "auth": {
+    "login": {
+      "codes": {
+        "NO_PASSWORD_OR_EMAIL_PROVIDED": "Please provide both a password and an email",
+        "INVALID_CREDENTIALS": "The password or the email were wrong",
+        "ACCOUNT_NOT_VERIFIED": "Your account wasn`t verified yet. You will receive an email as soon as your account is verified.",
+        "PASSWORD_NOT_CHANGED": "Please reset your password before logging in for the first time",
+        "SUCCESS": "SUCCESS"
+      }
+    },
+    "recoverAccount": {
+
+    },
+    "resetPassword": {
+
+    },
+    "registration": {
+      "codes": {
+        "NO_PASSWORD_OR_EMAIL_PROVIDED": "Please provide both a password and an email",
+        "ALREADY_REGISTERED": "You are already registered",
+        "SUCCESS": "Your account was created succesfully. Once your account is verified, you will be notified by email"
+      }
+    }
+  },
+  "loading": {
+    "quotes": [
+      {
+        "text": "Education is the passport to the future, for tomorrow belongs to those who prepare for it today.",
+        "author": "Malcom X"
+      },
+      {
+        "text": "What would life be if we had no courage to attempt anything?",
+        "author": "Vincent Van Gogh"
+      }
+    ]
+  },
+  "notFound": {
+    "message": "Pagina căutată nu a fost găsită. Întoarce-te la pagina ",
+    "link": "principală"
+  },
+  "profile": {
+    "personalData": "Personal Data",
+    "profile": "Profile",
+    "profileDataFields": {
+      "email": "E-mail",
+      "name": "Full Name"
+    },
+    "studentDataFields": {
+      "domain": "Domain",
+      "learningMode": "Learning Mode",
+      "degree": "Degree",
+      "studyProgram": "Study Program",
+      "currentGroup": "Current Group",
+      "currentYear": "Current Year",
+      "currentSemester": "Current Semester"
+    },
+    "studentData": "Student Data",
+    "grade": "Grades",
+    "studentGradeFields": {
+      "yearHeader": "Year",
+      "gradeHeader": "Grade"
+    }
+  },
+  "student": {
+    "courses": {
+      "text": {
+        "message": "Ai fost repartizat/ă la opționalele de mai jos:",
+        "firstSemester": "Semestrul I",
+        "secondSemester": "Semestrul al-II-lea"
+      }
+    },
+    "coursesSelection": {
+      "success": {
+        "saveStudentChoices": "Alegerile tale au fost salvate cu succes!"
+      },
+      "error": {
+        "fetchStudentOptionsList": "There was a problem while fetching the options lists!",
+        "saveStudentChoices": "A apărut o problemă la salvarea alegerilor tale!"
+      },
+      "text": {
+        "firstSemester": "Semestrul I",
+        "secondSemester": "Semestrul al-II-lea"
+      }
+    }
+  },
+  "teacher": {
+    "courses": {
+      "dropDownFields": {
+        "chooseCourse": {
+          "label": "Choose an optional course",
+          "placeholder": "Choose an optional course"
+        }
+      },
+      "mailButton": "Send an announcement",
+      "excelButton": "Export the list of students as .xlsx"
+    }
+  },
+  "accounts": {
+    "notVerified": {
+      "title": "Conturi neverificate",
+      "buttonLabel": "Conturi neverificate",
+      "fileUploadLabel": ""
+    },
+    "students": {
+      "title": "Studenți",
+      "buttonLabel": "Studenți",
+      "fileUploadLabel": "Importă informațiile studenților în format .xlsx",
+      "filters": {
+        "dropDownFields": {
+          "degree": {
+            "label": "Degree",
+            "placeholder": "Degree"
+          },
+          "domain": {
+            "label": "Domain",
+            "placeholder": "Domain"
+          },
+          "learningMode": {
+            "label": "Learning Mode",
+            "placeholder": "Learning Mode"
+          },
+          "studyProgram": {
+            "label": "Study Program",
+            "placeholder": "Study Program"
+          },
+          "year": {
+            "label": "An",
+            "placeholder": "An"
+          }
+        },
+        "inputFields": {
+          "group": {
+            "label": "Caută după grupă"
+          },
+          "lastName": {
+            "label": "Caută după nume"
+          }
+        }
+      }
+    },
+    "teachers": {
+      "title": "Profesori",
+      "buttonLabel": "Profesori",
+      "fileUploadLabel": "Importă informațiile profesorilor în format .xlsx",
+      "filters": {
+        "inputFields": {
+          "lastName": {
+            "label": "Caută după nume"
+          }
+        }
+      }
+    }
+  }
+}

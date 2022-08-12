@@ -1,0 +1,238 @@
+{
+  "course": {
+    "inputFields": {
+      "title": {
+        "label": "Titlul",
+        "placeholder": "Titlul",
+        "errorMessage": "Please provide a title for the course"
+      },
+      "capacity": {
+        "label": "Capacitate",
+        "placeholder": "Capacitate",
+        "errorMessage": "Please provide the capacity for the course. It must be between 1 and 100"
+      },
+      "link": {
+        "label": "Link",
+        "placeholder": "Link",
+        "errorMessage": "Please provide a link for the course"
+      },
+      "semester": {
+        "label": "Semestru",
+        "placeholder": "Semestru",
+        "errorMessage": "Please provide the semester for the course. It must be either 1 or 2"
+      }  
+    },
+    "dropDownFields": {
+      "teacher": {
+        "label": "Profesor",
+        "placeholder": "Profesor",
+        "errorMessage": "Please choose a teacher for the course"
+      }
+    },
+    "buttons": {
+      "create": "Creează un curs nou",
+      "update": "Salvează modificările",
+      "delete": "Șterge cursul"
+    }
+  },
+  "login": {
+    "inputFields": {
+      "email": {
+        "placeholder": "Email",
+        "label": "Email"
+      },
+      "password": {
+        "placeholder": "Parolă",
+        "label": "Parolă"
+      }
+    },
+    "forgotPassword": "Ți-ai uitat parola?",
+    "newUser": {
+      "text": "Utilizator nou? Crează-ți cont ",
+      "link": "Aici" 
+    },       
+    "buttons": {
+      "signIn": "Loghează-te"
+    }
+  },
+  "optionsList": {
+    "dropDownFields": {
+      "domain": {
+        "label": "Domain",
+        "placeholder": "Domain",
+        "errorMessage": "Please select a domain"
+      },
+      "learningMode": {
+        "label": "Learning Mode",
+        "placeholder": "Learning Mode",
+        "errorMessage": "Please select a learning mode"
+      },
+      "degree": {
+        "label": "Degree",
+        "placeholder": "Degree",
+        "errorMessage": "Please select a degree"
+      },
+      "studyProgram": {
+        "label": "Study Program",
+        "placeholder": "Study Program",
+        "errorMessage": "Please select a study program"
+      }
+    },
+    "inputFields": {
+      "title": {
+        "label": "Title",
+        "placeholder": "Title",
+        "errorMessage": "Please provide a title for the options list"
+      },
+      "year": {
+        "label": "Year",
+        "placeholder": "Year",
+        "errorMessage": "Please provide a year for the options list"
+      },
+      "semester": {
+        "label": "Semester",
+        "placeholder": "Semester",
+        "errorMessage": "Please provide a semester for the options list"
+      }
+    },
+    "courses": {
+      "label": "Cursuri",
+      "validation": "Trebuie să selectați măcar un curs."
+    },
+    "buttons": {
+      "create": "Creează o listă nouă de opțiuni",
+      "update": "Salvează modificările",
+      "delete": "Șterge lista de opțiuni"   
+    }
+  },
+  "recoverAccount": {
+    "instructions": "TBA",
+    "inputFields": {
+      "email": {
+        "placeholder": "Email",
+        "errorMessage": "Introduceți o adresă validă de email",
+        "label": "Email"
+      }
+    },
+    "buttons": {
+      "sendInstructions": "Trimite Instrucțiuni"
+    }
+  },
+  "registration": {
+    "inputFields": {
+      "email": {
+        "placeholder": "Email",
+        "errorMessage": "Introduceți o adresă validă de email",
+        "label": "Email"
+      },
+      "password": {
+        "placeholder": "Parolă",
+        "errorMessage": "Parola trebuie să conțină măcar o literă mică, o literă mare, și o cifră",
+        "label": "Parolă"
+      },
+      "confirmPassword": {
+        "placeholder": "Confirmă Parola",
+        "errorMessage": "Parolele trebuie să fie identice",
+        "label": "Confirmă Parola"
+      }
+    },
+    "alreadyAnUser": {
+      "text": "Ai deja cont? Loghează-te ",
+      "link": "Aici"
+    },
+    "buttons": {
+      "signUp": "Crează-ți cont"
+    }
+  },
+  "resetPassword": {
+    "instructions": "TBA",
+    "inputFields": {
+      "password": {
+        "placeholder": "Parolă",
+        "errorMessage": "Parola trebuie să conțină măcar o literă mică, o literă mare, și o cifră",
+        "label": "Parolă"
+      },
+      "confirmPassword": {
+        "placeholder": "Confirmă Parola",
+        "errorMessage": "Parolele trebuie să fie identice",
+        "label": "Confirmă Parola"
+      }
+    },
+    "buttons": {
+      "resetPassword": "Resetează parola"
+    }
+  },
+  "sendAnnouncement": {
+    "inputFields": {
+      "subject": {
+        "label": "Subject",
+        "placeholder": "Subject",
+        "errorMessage": "Please provide a subject for the announcement"
+      }
+    },
+    "textAreaFields": {
+      "message": {
+        "label": "Message"
+      }
+    },
+    "buttons": {
+      "sendTheAnnouncement": "Send the announcement"
+    }
+  },
+  "userData": {
+    "dropDownFields": {
+      "role": {
+        "label": "Role",
+        "placeholder": "Role",
+        "errorMessage": "Please provide a role for the user"
+      },
+      "domain": {
+        "label": "Domain",
+        "placeholder": "Domain",
+        "errorMessage": "Please select a domain"
+      },
+      "learningMode": {
+        "label": "Learning Mode",
+        "placeholder": "Learning Mode",
+        "errorMessage": "Please select a learning mode"
+      },
+      "degree": {
+        "label": "Degree",
+        "placeholder": "Degree",
+        "errorMessage": "Please select a degree"
+      },
+      "studyProgram": {
+        "label": "Study Program",
+        "placeholder": "Study Program",
+        "errorMessage": "Please select a study program"
+      }
+    },
+    "inputFields": {
+      "firstName": {
+        "label": "First Name",
+        "placeholder": "First Name",
+        "errorMessage": "Please provide the user's first name"
+      },
+      "lastName": {
+        "label": "Last Name",
+        "placeholder": "Last Name",
+        "errorMessage": "Please provide the user's last name"
+      },
+      "currentGroup": {
+        "label": "Current Group",
+        "placeholder": "Current Group",
+        "errorMessage": "Please provide the student's group"
+      },
+      "currentYear": {
+        "label": "Current Year",
+        "placeholder": "Current Year",
+        "errorMessage": "Please provide the student's current year"
+      }
+    },
+    "buttons": {
+      "student": "Salvează datele studentului",
+      "teacher": "Salvează datele profesorului",
+      "delete": "Șterge contul"
+    }
+  }
+}

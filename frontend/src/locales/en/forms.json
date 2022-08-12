@@ -1,0 +1,137 @@
+{
+  "course": {
+    "inputFields": {
+      "title": {
+        "label": "Title",
+        "placeholder": "Title",
+        "errorMessage": "Please provide a title for the course"
+      },
+      "capacity": {
+        "label": "Capacity",
+        "placeholder": "Capacity",
+        "errorMessage": "Please provide the capacity for the course. It must be between 1 and 100"
+      },
+      "link": {
+        "label": "Link",
+        "placeholder": "Link",
+        "errorMessage": "Please provide a link for the course"
+      },
+      "semester": {
+        "label": "Semester",
+        "placeholder": "Semester",
+        "errorMessage": "Please provide the semester for the course. It must be either 1 or 2"
+      }  
+    },
+    "dropDownFields": {
+      "teacher": {
+        "label": "Teacher",
+        "placeholder": "Teacher",
+        "errorMessage": "Please choose a teacher for the course"
+      }
+    },
+    "submitButtons": {
+      "create": "Create a new course",
+      "update": "Update the course",
+      "delete": "Delete the course"
+    }
+  },
+  "login": {
+    "inputFields": {
+      "email": {
+        "placeholder": "Email",
+        "label": "Email"
+      },
+      "password": {
+        "placeholder": "Parolă",
+        "label": "Parolă"
+      }
+    },
+    "forgotPassword": "Ți-ai uitat parola?",
+    "newUser": {
+      "text": "Utilizator nou? Crează-ți cont ",
+      "link": "Aici" 
+    },       
+    "submitButtons": {
+      "signIn": "Loghează-te"
+    }
+  },
+  "optionsList": {
+
+  },
+  "recoverAccount": {
+
+  },
+  "registration": {
+    "inputFields": {
+      "email": {
+        "placeholder": "Email",
+        "errorMessage": "Introduceți o adresă validă de email",
+        "label": "Email"
+      },
+      "password": {
+        "placeholder": "Parolă",
+        "errorMessage": "Parola trebuie să conțină măcar o literă mică, o literă mare, și o cifră",
+        "label": "Parolă"
+      },
+      "confirmPassword": {
+        "placeholder": "Confirmă Parola",
+        "errorMessage": "Parolele trebuie să fie identice",
+        "label": "Confirmă Parola"
+      }
+    },
+    "alreadyAnUser": {
+      "text": "Ai deja cont? Loghează-te ",
+      "link": "Aici"
+    },
+    "submitButtons": {
+      "signUp": "Crează-ți cont"
+    }
+  },
+  "resetPassword": {
+
+  },
+  "sendAnnouncement": {
+
+  },
+  "userData": {
+    "dropDownFields": {
+      "role": {
+        "label": "Role",
+        "placeholder": "Role",
+        "errorMessage": "Please provide a role for the user"
+      },
+      "domain": {
+        "label": "Domain",
+        "placeholder": "Domain",
+        "errorMessage": "Please select a domain"
+      },
+      "learningMode": {
+        "label": "Learning Mode",
+        "placeholder": "Learning Mode",
+        "errorMessage": "Please select a learning mode"
+      },
+      "degree": {
+        "label": "Degree",
+        "placeholder": "Degree",
+        "errorMessage": "Please select a degree"
+      },
+      "studyProgram": {
+        "label": "Study Program",
+        "placeholder": "Study Program",
+        "errorMessage": "Please select a study program"
+      }
+    },
+    "inputFields": {
+      "firstName": {
+        "label": "First Name",
+        "placeholder": "First Name",
+        "errorMessage": "Please provide the user's first name"
+      },
+      "lastName": {
+        "label": "Last Name",
+        "placeholder": "Last Name",
+        "errorMessage": "Please provide the user's last name"
+      }
+    }
+  }
+}

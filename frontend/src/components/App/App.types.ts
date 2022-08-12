@@ -23,21 +23,29 @@ enum Degree {
 }
 
 enum StudyProgram {
+  // Master
   NLP = 'NLP',
   DS = 'DS',
-  SLA = 'SLA',
+  SAL = 'SAL',
   SD = 'SD',
-  IA = 'IA',
+  AI = 'AI',
   IS = 'IS',
   BDTS = 'BDTS',
   PSFS = 'PSFS',
   MD = 'MD',
   ASM = 'ASM',
+  AMA = 'AMA',
+  // Bachelor
   TI = 'TI',
   INFO = 'INFO',
   MATEINFO = 'MATEINFO',
   MATE = 'MATE',
   MA = 'MA'
+}
+
+enum Department {
+  MATH = 'MATH',
+  COMPUTER_SCIENCE = 'COMPUTER_SCIENCE'
 }
 
 enum Time {
@@ -52,6 +60,7 @@ export {
   LearningMode,
   Degree,
   StudyProgram,
+  Department,
   Role,
   Time
 }

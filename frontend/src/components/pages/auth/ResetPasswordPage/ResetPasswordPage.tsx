@@ -9,17 +9,11 @@ import LoadingPage from "../../LoadingPage";
 
 const ResetPasswordPage = () => {
   
-  const status = useAppSelector(resetPasswordStatus);
   const code = useAppSelector(resetPasswordCode);
   const errorMessage = useAppSelector(resetPasswordErrorMesssage);
   const showModal = useAppSelector(resetPasswordShowModal);
-  let navigate = useNavigate();
 
   const dispatch = useAppDispatch();
-
-  if (status === ApiStatus.loading) {
-  return <LoadingPage />;
-  }
 
   return (
   <>

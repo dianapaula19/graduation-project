@@ -5,7 +5,8 @@ enum InputFieldType {
   password = "password",
   text = "text",
   number = "number",
-  file = "file"
+  file = "file",
+  search = "search"
 }
 
 enum InputFieldModifier {
@@ -16,7 +17,7 @@ interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement>{
   modifier?: InputFieldModifier;
   type: InputFieldType;
   error: boolean;
-  errorMessage: string;
+  errorMessage?: string;
   label: string;
 }
 

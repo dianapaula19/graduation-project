@@ -1,15 +1,31 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
-import translationEN from "./locales/en/common.json";
-import translationRO from "./locales/ro/common.json";
+import commonEN from "./locales/en/common.json";
+import formsEN from "./locales/en/forms.json";
+import listsEN from "./locales/en/lists.json";
+import pagesEN from "./locales/en/pages.json";
+import sidenavEN from "./locales/en/sidenav.json";
+import commonRO from "./locales/ro/common.json";
+import formsRO from "./locales/ro/forms.json";
+import listsRO from "./locales/ro/lists.json";
+import pagesRO from "./locales/ro/pages.json";
+import sidenavRO from "./locales/ro/sidenav.json";
 
 const resources = {
   en: {
-    translation: translationEN
+    common: commonEN,
+    forms: formsEN,
+    lists: listsEN,
+    pages: pagesEN,
+    sidenav: sidenavEN
   },
   ro: {
-    translation: translationRO
+    common: commonRO,
+    forms: formsRO,
+    lists: listsRO,
+    pages: pagesRO,
+    sidenav: sidenavRO
   }
 }
 
@@ -19,6 +35,7 @@ i18n
   resources,
   debug: true,
   lng: localStorage.getItem('language') as string,
+  defaultNS: "common",
 
   interpolation: {
     escapeValue: false, // not needed for react!!

@@ -1,0 +1,24 @@
+{
+  "links": {
+    "signOut": "Deconectează-te",
+    "personalData": "Date personale"
+  },
+  "studentLinks": {
+    "courses": "Cursuri"
+  },
+  "teacherLinks": {
+    "courses": "Cursuri"
+  },
+  "adminLinks": {
+    "settings": "Setări",
+    "optionsLists": "Liste Opționale",
+    "courses": "Cursuri",
+    "accounts": "Conturi"
+  },
+  "facultyName": "Facultatea de Matematică și Informatică",
+  "displayMessage": {
+    "morning": "Neața",
+    "afternoon": "Zi faină",
+    "night": "Seară faină"
+  }
+}

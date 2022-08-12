@@ -11,4 +11,16 @@
     width: 50%;
     height: 50%;
   }
+
+  &__text {
+    font-size: x-large;
+    &__a {
+      all: unset;
+      color: #0366d6;
+      border-bottom: #0366d6 .1rem solid;
+      margin-bottom: .5rem;
+      align-self: flex-start;
+      cursor: pointer;
+    }
+  }
 }

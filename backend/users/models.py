@@ -64,10 +64,6 @@ class Category(models.Model):
     choices=Degree.choices,
     null=True
   )
-  study_program = models.TextField(
-    choices=StudyProgram.choices,
-    null=True
-  )
   year = models.IntegerField(
     validators=[
       MinValueValidator(1),
@@ -78,7 +74,11 @@ class Category(models.Model):
   class Meta:
     verbose_name = 'category'
     verbose_name_plural = "categories"
-
+    constraints = [
+      models.UniqueConstraint(
+        fields=['domain', 'learning_mode', 'degree', 'year'], name='unique_migration_category'
+      ),
+    ]
 class UserManager(BaseUserManager):
   def create_user(self, email, password, **extra_fields):
     if not email:
@@ -114,7 +114,7 @@ class StudentManager(models.Manager):
     categories = secretary.categories
     for category in categories:
       for student in students:
-        if student.category == category:
+        if student.degree == category.degree:
           secretary_students.append(student)
     return secretary_students
 
@@ -169,7 +169,6 @@ class Student(models.Model):
     ],
     default=1
   )
-  category = models.ForeignKey(Category, related_name='students', on_delete=models.SET_NULL, null=True)
   options_lists = models.ManyToManyField('courses.OptionsList', related_name='options_lists')
   courses = models.ManyToManyField('courses.Course', related_name='student_courses')
 

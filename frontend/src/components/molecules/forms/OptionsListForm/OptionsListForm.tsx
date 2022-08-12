@@ -22,23 +22,23 @@ const OptionsListForm = ({
 : IOptionsListFormProps
 ) => {
 
+  const { t } = useTranslation('forms');
+
   const componentClassName = "options-list-form";
   const fieldsContainerClassName = `${componentClassName}__fields-container`;
   const coursesContainerClassName = `${fieldsContainerClassName}__courses-container`;
   
   const componentId = "options-list-form";
 
-  const dropDownTranslate = "forms.optionsList.dropDownFields";
-  const inputTranslate = "forms.optionsList.inputFields";
-  const submitButtonsTranslate = "forms.optionsList.submitButtons";
+  const dropDownTranslate = "optionsList.dropDownFields";
+  const inputTranslate = "optionsList.inputFields";
+  const submitButtonsTranslate = "optionsList.buttons";
 
   const courses = useAppSelector(getCoursesCourses);
   const currentOptionsList = useAppSelector(getOptionsListsCurrentOptionsList);
   const token = useAppSelector(loginToken);
 
   const dispatch = useAppDispatch();
-
-  const { t } = useTranslation();
 
   const [data, setData] = useState<IOptionsListFormData>({
     title: '',
@@ -168,7 +168,7 @@ const OptionsListForm = ({
         <option
         value={key}
         >
-        {t(`domains.${key}`)}
+        {t(`common:domains.${key}`)}
         </option>
       )
       })}    
@@ -189,7 +189,7 @@ const OptionsListForm = ({
         <option
         value={key}
         >
-        {t(`learningModes.${key}`)}
+        {t(`common:learningModes.${key}`)}
         </option>
       )
       })}
@@ -210,7 +210,7 @@ const OptionsListForm = ({
         <option
         value={key}
         >
-        {t(`degrees.${key}`)}
+        {t(`common:degrees.${key}`)}
         </option>
       )
       })}
@@ -231,7 +231,7 @@ const OptionsListForm = ({
         <option
         value={key}
         >
-        {t(`studyPrograms.${key}`)}
+        {t(`common:studyPrograms.${key}`)}
         </option>
       )
       })}
@@ -277,7 +277,7 @@ const OptionsListForm = ({
       <span
       className={`${coursesContainerClassName}__title`}
       >
-      Courses
+      {t("optionsList.courses.label")}
       </span>
       <div
       className={`${coursesContainerClassName}__courses`}
@@ -292,7 +292,7 @@ const OptionsListForm = ({
             onChange={handleChange} 
           />
       })}
-      {validation.coursesIds && (<p>Please select at least one course</p>)}
+      {validation.coursesIds && (<p>{t("optionsList.courses.validation")}</p>)}
       </div>
     </div>
     </div>

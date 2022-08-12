@@ -1,24 +1,42 @@
 .side-nav {
   position: -webkit-sticky;
   position: sticky;
+  transition: left 0.3s ease-in-out;
   display: grid;
-  grid-template-rows: 1fr .5fr 2fr .5fr 3fr 1fr .5fr;
+  grid-template-rows: 1fr .5fr 2fr .5fr 3fr 1fr .5fr .5fr;
   row-gap: 1rem;
-  grid-template-areas: 
-    "languages"
+  grid-template-areas:
+    "languages" 
     "." 
     "logo"
     "welcome-message" 
     "links" 
     "copyright" 
-    ".";
+    "."
+    "collapse-button"
+    ;
   justify-content: center;
   align-items: center;
   background-color: white;
   border-right: #c4c4c4 solid .05rem;
   height: 100%;
-  width: 20vw;
   z-index: 5;
+
+  &__collapse-button {
+    grid-area: collapse-button;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    gap: 1rem;
+    color: #525252;
+    font-size: medium;
+    cursor: pointer;
+    &:hover {
+      background-color: #f1eff1;
+    }
+  }
 
   &__logo {
     grid-area: logo;
@@ -50,4 +68,19 @@
     text-align: center;
   }
 
+}
+
+.side-nav--collapsed {
+  width: 2.5vw;
+  grid-template-rows: .5fr 2fr .5fr 3fr 1fr .5fr .5fr;
+  row-gap: 1rem;
+  grid-template-areas: 
+    "." 
+    "."
+    "." 
+    "." 
+    "." 
+    "."
+    "collapse-button"
+    ;
 }

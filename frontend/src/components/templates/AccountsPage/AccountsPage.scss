@@ -4,15 +4,51 @@
   gap: 3rem;
 
   &__buttons {
-  display: flex;
-  flex-direction: row;
-  gap: 2rem;
-  margin-bottom: 1rem;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  &__students-filters {
+    &__dropdown-fields {
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+    }
+    &__input-fields {
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+    }
+  }
+
+  &__teachers-filters {
+    &__input-fields {
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+    }
   }
 
   &__lists {
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
   }
+
+  @media screen and (max-width: 80rem) {
+    &__buttons {
+      flex-direction: column;
+    }
+    &__students-filters {
+      &__dropdown-fields {
+        flex-direction: column;
+      }
+      &__input-fields {
+        flex-direction: column;
+      }
+    } 
+  }
+
 }
