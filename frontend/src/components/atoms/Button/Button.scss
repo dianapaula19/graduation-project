@@ -1,8 +1,10 @@
+@import '../../../styles/colors';
+
 .button {
   all: unset;
   text-transform: uppercase;
   font-size: small;
-  background-color: #0366d6;
+  background-color: $blue;
   color: white;
   border-radius: .5rem;
   margin: .5rem 0 1rem 0;
@@ -12,16 +14,16 @@
   vertical-align: middle;
   cursor: pointer;
   &:disabled {
-    background-color: #c4c4c4;
-    color: #525252;   
+    background-color: $medium-grey;
+    color: $dark-grey;   
     cursor: not-allowed; 
   }
 }
 
 .button--unselected {
-  background-color: rgba($color: #0366d6, $alpha: 0.75);
+  background-color: rgba($color: $blue, $alpha: 0.75);
   &:hover {
-    background-color: #0366d6;
+    background-color: $blue;
   }
 }
 
@@ -32,14 +34,14 @@
   gap: 1rem;
   align-items: center;
   justify-content: center;
-  color: #4ea853;
+  color: $success;
   background-color: transparent;
-  border: #4ea853 solid .2rem;
+  border: $success solid .2rem;
   grid-area: save-button;
   margin: 0;
   &:hover {
     color: white;
-    background-color: #4ea853;
+    background-color: $success;
   }
 }
 
@@ -50,14 +52,14 @@
   gap: 1rem;
   align-items: center;
   justify-content: center;
-  color: #0366d6;
+  color: $blue;
   background-color: transparent;
-  border: #0366d6 solid .2rem;
+  border: $blue solid .2rem;
   grid-area: excel-button;
   margin: 0;
   &:hover {
     color: white;
-    background-color: #0366d6;
+    background-color: $blue;
   }
 }
 
@@ -68,14 +70,14 @@
   gap: 1rem;
   align-items: center;
   justify-content: center;
-  color: #525252;
+  color: $dark-grey;
   background-color: transparent;
-  border: #525252 solid .2rem;
+  border: $dark-grey solid .2rem;
   grid-area: mail-button;
   margin: 0;
   &:hover {
-    color: white;
-    background-color: #525252;
+    color: $white;
+    background-color: $dark-grey;
   }   
 }
 
@@ -86,13 +88,13 @@
   gap: 1rem;
   align-items: center;
   justify-content: center;
-  color: crimson;
+  color: $error;
   background-color: transparent;
-  border: crimson solid .2rem;
+  border: $error solid .2rem;
   grid-area: delete-button;
   margin: 0;
   &:hover {
-    color: white;
-    background-color: crimson;
+    color: $white;
+    background-color: $error;
   }   
 }

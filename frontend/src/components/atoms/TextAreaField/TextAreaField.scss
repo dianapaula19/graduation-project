@@ -1,3 +1,5 @@
+@import '../../../styles/colors';
+
 .textarea-field {
   display: flex;
   flex-direction: column;
@@ -6,7 +8,7 @@
   margin: .5rem 0 1rem 0;
 
   &__label {
-  color: #525252;
+  color: $dark-grey;
   text-transform: uppercase;
   }
 
@@ -14,16 +16,16 @@
   all: unset;
   padding: 1rem;
   border-radius: .5rem;
-  border: .15rem solid #c4c4c4;
-  color: #525252;
+  border: .15rem solid $medium-grey;
+  color: $dark-grey;
   &:hover {
-    border-color: #0366d6;
+    border-color: $blue;
   }
   &:focus {
-    border-color: #0366d6;
+    border-color: $blue;
   }
   &:invalid {
-    border-color: crimson;
+    border-color: $error;
   }
   }
 }

@@ -4,7 +4,6 @@ import { Degree, Domain, LearningMode, Role, StudyProgram } from "../../../App";
 import DropDown from "../../../atoms/DropDown";
 import InputField, { InputFieldType } from "../../../atoms/InputField";
 import { IUserDataFormProps } from "./UserDataForm.types";
-import "./UserDataForm.scss";
 import Button, { ButtonModifier } from "../../../atoms/Button";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { verifyUserAsync } from "../../../../features/user/admin/user/verifyUserSlice";
@@ -13,8 +12,9 @@ import { getTeachersCurrentTeacher } from "../../../../features/user/admin/user/
 import { updateStudentInfoAsync } from "../../../../features/user/admin/user/updateStudentInfoSlice";
 import { updateTeacherInfoAsync } from "../../../../features/user/admin/user/updateTeacherInfoSlice";
 import { loginToken, loginUserData } from "../../../../features/auth/loginSlice";
-import { set } from "immer/dist/internal";
-import { Department } from "../../../App/App.types";
+import { deleteUserAsync } from "../../../../features/user/admin/user/deleteUserSlice";
+import "./UserDataForm.scss";
+import { degreeMap, PLACEHOLDER } from "../../../Utils";
 
 const UserDataForm = ({
   role,
@@ -25,9 +25,11 @@ const UserDataForm = ({
 
   const componentClassName = "user-data-form";
   const fieldsContainerClassName = `${componentClassName}__fields-container`;
+  const gradesContainerClassName = `${fieldsContainerClassName}__grades-container`;
   const componentId = "user-data-form";
   const dropDownTranslate = "userData.dropDownFields";
   const inputTranslate = "userData.inputFields";
+  const textTranslate = "userData.text";
   const submitButtonsTranslate = "userData.buttons";
 
   const dispatch = useAppDispatch();
@@ -35,101 +37,133 @@ const UserDataForm = ({
   const student = useAppSelector(getStudentsCurrentStudent);
   const teacher = useAppSelector(getTeachersCurrentTeacher);
   const token = useAppSelector(loginToken);
-  const user = useAppSelector(loginUserData);
-
-  const defaultGrades = [
-    {
-      year: 1,
-      grade: 0.0
-    },
-    {
-      year: 2,
-      grade: 0.0
-    },
-    {
-      year: 3,
-      grade: 0.0
-    },
-    {
-      year: 4,
-      grade: 0.0
-    },
-  ]
 
   const [userData, setUserData] = useState({
     firstName: '',
     lastName: '',
-    role: 'placeholder'
+    role: PLACEHOLDER
   });
 
   const [studentData, setStudentData] = useState({
-    domain: 'placeholder',
-    learningMode: 'placeholder',
-    degree: 'placeholder',
-    studyProgram: 'placeholder',
+    domain: PLACEHOLDER,
+    learningMode: PLACEHOLDER,
+    degree: PLACEHOLDER,
+    studyProgram: PLACEHOLDER,
     currentGroup: '',
     currentYear: 1,
-    grades: defaultGrades 
+    grades1: 0.0,
+    grades2: 0.0,
+    grades3: 0.0,
+    grades4: 0.0  
   });
 
   useEffect(() => {
-  if (role === Role.STUDENT) {
-    if (student) {
-      setUserData({
-        ...userData,
-        firstName: student.first_name,
-        lastName: student.last_name
-      })
-      setStudentData({
-        ...studentData,
-        domain: student.domain === null ? 'placeholder' : student.domain,
-        learningMode: student.learning_mode === null ? 'placeholder' : student.learning_mode,
-        degree: student.degree === null ? 'placeholder' : student.degree,
-        studyProgram: student.study_program === null ? 'placeholder' : student.study_program,
-        currentGroup: student.current_group === null ? '' : student.current_group,
-        currentYear: student.current_year === null ? 1 : student.current_year,
-        grades: student.grades === null ? defaultGrades : student.grades
-      });
-    } 
-  }
-  if (role === Role.TEACHER) {
-    if (teacher) {
-      setUserData({
-        ...userData,
-        firstName: teacher.first_name,
-        lastName: teacher.last_name
-      })
-    } 
-  }
+    if (role === Role.STUDENT) {
+      if (student) {
+        let grades = [0.0, 0.0, 0.0, 0.0];
+        student.grades.map((grade) => {
+          grades[grade.year - 1] = grade.grade;
+        })
+        setUserData({
+          ...userData,
+          firstName: student.first_name,
+          lastName: student.last_name
+        })
+        setStudentData({
+          ...studentData,
+          domain: student.domain === null ? PLACEHOLDER : student.domain,
+          learningMode: student.learning_mode === null ? PLACEHOLDER : student.learning_mode,
+          degree: student.degree === null ? PLACEHOLDER : student.degree,
+          studyProgram: student.study_program === null ? PLACEHOLDER : student.study_program,
+          currentGroup: student.current_group === null ? '' : student.current_group,
+          currentYear: student.current_year === null ? 1 : student.current_year,
+          grades1: grades[0],
+          grades2: grades[1],
+          grades3: grades[2],
+          grades4: grades[3]
+        });
+      } 
+    }
+    if (role === Role.TEACHER) {
+      if (teacher) {
+        setUserData({
+          ...userData,
+          firstName: teacher.first_name,
+          lastName: teacher.last_name
+        })
+      } 
+    }
 
   }, [student, teacher])
 
   const validationUserData = {
     firstName: userData.firstName.length < 1,
     lastName: userData.lastName.length < 1,
-    role: userData.role === 'placeholder'
+    role: userData.role === PLACEHOLDER
   }
 
   const validationStudentData = {
-    domain: studentData.domain === 'placeholder',
-    learningMode: studentData.learningMode === 'placeholder',
-    degree: studentData.degree === 'placeholder',
-    studyProgram: studentData.studyProgram === 'placeholder',
+    domain: studentData.domain === PLACEHOLDER,
+    learningMode: studentData.learningMode === PLACEHOLDER,
+    degree: studentData.degree === PLACEHOLDER,
+    studyProgram: studentData.studyProgram === PLACEHOLDER,
     currentGroup: studentData.currentGroup.length < 1,
-    currentYear: studentData.currentYear < 1 || studentData.currentYear > 4 
+    currentYear: studentData.currentYear < 1 || studentData.currentYear > 4, 
+    grade1: studentData.grades1 < 0.0 || studentData.grades1 > 10.0,
+    grade2: studentData.grades2 < 0.0 || studentData.grades2 > 10.0,
+    grade3: studentData.grades3 < 0.0 || studentData.grades3 > 10.0,
+    grade4: studentData.grades4 < 0.0 || studentData.grades4 > 10.0, 
   }
 
   const handleChangeUserData = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>): void => {
+    const name = e.target.name;
+    const value = e.target.value;
     setUserData({
       ...userData,
-      [e.target.name]: e.target.value
+      [name]: value
     });
   }
 
   const handleChangeStudentData = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>): void => {
+    const name = e.target.name;
+    const value = e.target.value;
+    if (name === 'degree') {
+      setStudentData({
+        ...studentData,
+        degree: value,
+        domain: PLACEHOLDER,
+        learningMode: PLACEHOLDER,
+        studyProgram: PLACEHOLDER,
+      })  
+      return;
+    }
+    if (name === 'domain') {
+      setStudentData({
+        ...studentData,
+        domain: value,
+        learningMode: PLACEHOLDER,
+        studyProgram: PLACEHOLDER
+      })  
+      return;
+    }
+    if (name === 'learningMode') {
+      setStudentData({
+        ...studentData,
+        learningMode: value,
+        studyProgram: PLACEHOLDER
+      })  
+      return;
+    }
+    if (name === 'studyProgram') {
+      setStudentData({
+        ...studentData,
+        studyProgram: value
+      })  
+      return;
+    }
     setStudentData({
       ...studentData,
-      [e.target.name]: e.target.value
+      [name]: value
     });
   } 
 
@@ -139,10 +173,16 @@ const UserDataForm = ({
     validationStudentData.degree || 
     validationStudentData.studyProgram ||
     validationStudentData.currentGroup ||
-    validationStudentData.currentYear;
+    validationStudentData.currentYear ||
+    validationStudentData.grade1 ||
+    validationStudentData.grade2 ||
+    validationStudentData.grade3 ||
+    validationStudentData.grade4;
+
   const disableButtonUpdateTeacherDataInfo = 
     validationUserData.firstName ||
     validationUserData.lastName;
+  
   const disableButtonVerifyUser = 
     validationUserData.firstName ||
     validationUserData.lastName || 
@@ -241,7 +281,8 @@ const UserDataForm = ({
           value={studentData.domain}
           onChange={handleChangeStudentData}
         >
-        {Object.keys(Domain).map((key) => {
+        {studentData.degree !== "placeholder" && 
+        Object.keys(degreeMap[studentData.degree]).map((key) => {
           return (
           <option
             value={key}
@@ -263,7 +304,9 @@ const UserDataForm = ({
           value={studentData.learningMode}
           onChange={handleChangeStudentData}
         >
-        {Object.keys(LearningMode).map((key) => {
+        { studentData.degree !== "placeholder" &&
+          studentData.domain !== "placeholder" && 
+          Object.keys(degreeMap[studentData.degree][studentData.domain]).map((key) => {
           return (
           <option
             value={key}
@@ -285,7 +328,10 @@ const UserDataForm = ({
           value={studentData.studyProgram}
           onChange={handleChangeStudentData}
         >
-        {Object.keys(StudyProgram).map((key) => {
+        { studentData.degree !== "placeholder" &&
+          studentData.domain !== "placeholder" &&
+          studentData.learningMode !== "placeholder" &&
+          Object.keys(degreeMap[studentData.degree][studentData.domain][studentData.learningMode]).map((key) => {
           return (
           <option
             value={key}
@@ -322,42 +368,69 @@ const UserDataForm = ({
           min={1}
           max={4}
         />
-        {studentData.grades.length > 0 && (
-          <div>
+          <div
+            className={gradesContainerClassName}
+          >
             <span
               style={{
                 "fontSize": "medium"
               }}
             >
-              Grades
+              {t(`${textTranslate}.gradesTitle`)}
             </span>
             <div>
             {[
-              studentData.grades.map((grade) => {
-                console.log(grade);
+              [1, 2, 3, 4].map((year: number) => {
+                let defaultValue = 0.0;
+                let value = 0.0;
+                let validation = false;
+                switch (year) {
+                  case 1:
+                    defaultValue = studentData.grades1;
+                    value = studentData.grades1;
+                    validation = validationStudentData.grade1;
+                    break;
+                  case 2:
+                    defaultValue = studentData.grades2;
+                    value = studentData.grades2;
+                    validation = validationStudentData.grade2;
+                    break;
+                  case 3:
+                    defaultValue = studentData.grades3;
+                    value = studentData.grades3;
+                    validation = validationStudentData.grade3;
+                    break;
+                  case 4:
+                    defaultValue = studentData.grades4;
+                    value = studentData.grades4;
+                    validation = validationStudentData.grade4;
+                    break;
+                  default:
+                    break;
+                }
                 return (
                   <div
-                    style={{
-                      "display": "flex",
-                      "flexDirection": "row",
-                      "gap": "1rem"
-                    }}
+                    className={`${gradesContainerClassName}__field`}
                   >
                     <InputField 
                       type={InputFieldType.number} 
-                      defaultValue={grade.year}
-                      value={grade.year}
+                      defaultValue={year}
+                      value={year}
                       error={false} 
-                      errorMessage={""} 
-                      label={"Year"} 
+                      label={t(`${inputTranslate}.year.label`)} 
+                      onChange={handleChangeStudentData}
+                      disabled
                     />
-                    <InputField 
+                    <InputField
+                      name={`grades${year}`}
                       type={InputFieldType.number}
-                      defaultValue={grade.grade}
-                      value={grade.grade} 
-                      error={false} 
-                      errorMessage={""} 
-                      label={"Grade"} 
+                      defaultValue={defaultValue}
+                      value={value} 
+                      error={validation} 
+                      errorMessage={t(`${inputTranslate}.grade.errorMessage`)} 
+                      label={t(`${inputTranslate}.grade.label`)}
+                      placeholder={t(`${inputTranslate}.grade.placeholder`)} 
+                      onChange={handleChangeStudentData}
                     />
                   </div> 
                 )
@@ -365,7 +438,6 @@ const UserDataForm = ({
             ]}
             </div>
           </div>
-        )}
       </>
     )}
     <br/>
@@ -394,6 +466,26 @@ const UserDataForm = ({
       disabled={disableButtonUpdateStudentDataInfo} 
       onClick={() => {
         if (token && student) {
+          const grades = [
+            {
+              year: 1,
+              grade: Number(studentData.grades1)
+            },
+            {
+              year: 2,
+              grade: Number(studentData.grades2)
+            },
+            {
+              year: 3,
+              grade: Number(studentData.grades3)
+            },
+            {
+              year: 4,
+              grade: Number(studentData.grades4)
+            }
+          ];
+          console.log(grades);
+          
           dispatch(updateStudentInfoAsync({
             email: student.email,
             first_name: userData.firstName,
@@ -404,7 +496,7 @@ const UserDataForm = ({
             study_program: studentData.studyProgram,
             current_group: studentData.currentGroup,
             current_year: studentData.currentYear,
-            grades: studentData.grades,
+            grades: grades,
             token: token
           }))  
         }
@@ -433,6 +525,14 @@ const UserDataForm = ({
       label={t(`${submitButtonsTranslate}.delete`)}
       modifier={ButtonModifier.delete} 
       disabled={false}
+      onClick={() => {
+        if (token) {
+          dispatch(deleteUserAsync({
+            email: email,
+            token: token
+          }))
+        }
+      }}
     />
     </div>
   </div>

@@ -1,3 +1,5 @@
+@import '../../../styles/colors';
+
 .loading-page {
   display: flex;
   flex-direction: column;
@@ -20,12 +22,12 @@
   &__text {
     font-size: large;
     font-weight: bold;
-    color: #525252;
+    color: $dark-grey;
   }
   
   &__author {
     font-size: medium;
-    color: #c4c4c4;
+    color: $medium-grey;
   }  
   }
 }

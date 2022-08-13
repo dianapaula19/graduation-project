@@ -1,1 +1,1 @@
-export { default } from "./PersonalDataPage";
+export { default } from "./ProfilePage";

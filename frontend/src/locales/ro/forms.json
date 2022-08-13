@@ -2,31 +2,31 @@
   "course": {
     "inputFields": {
       "title": {
-        "label": "Titlul",
-        "placeholder": "Titlul",
-        "errorMessage": "Please provide a title for the course"
+        "label": "Titlu",
+        "placeholder": "Titlu",
+        "errorMessage": "Câmp obligatoriu"
       },
       "capacity": {
         "label": "Capacitate",
         "placeholder": "Capacitate",
-        "errorMessage": "Please provide the capacity for the course. It must be between 1 and 100"
+        "errorMessage": "Acest câmp trebuie să aibă o valoare între 1 și 100"
       },
       "link": {
         "label": "Link",
         "placeholder": "Link",
-        "errorMessage": "Please provide a link for the course"
+        "errorMessage": "Câmp obligatoriu"
       },
       "semester": {
         "label": "Semestru",
         "placeholder": "Semestru",
-        "errorMessage": "Please provide the semester for the course. It must be either 1 or 2"
+        "errorMessage": "Acest câmp trebuie să aibă fie valoarea 1, fie 2"
       }  
     },
     "dropDownFields": {
       "teacher": {
         "label": "Profesor",
         "placeholder": "Profesor",
-        "errorMessage": "Please choose a teacher for the course"
+        "errorMessage": "Câmp obligatoriu"
       }
     },
     "buttons": {
@@ -58,41 +58,41 @@
   "optionsList": {
     "dropDownFields": {
       "domain": {
-        "label": "Domain",
-        "placeholder": "Domain",
-        "errorMessage": "Please select a domain"
+        "label": "Domeniu",
+        "placeholder": "Domeniu",
+        "errorMessage": "Câmp obligatoriu"
       },
       "learningMode": {
-        "label": "Learning Mode",
-        "placeholder": "Learning Mode",
-        "errorMessage": "Please select a learning mode"
+        "label": "Formă de învățământ",
+        "placeholder": "Formă de învățământ",
+        "errorMessage": "Câmp obligatoriu"
       },
       "degree": {
-        "label": "Degree",
-        "placeholder": "Degree",
-        "errorMessage": "Please select a degree"
+        "label": "Ciclu de studii",
+        "placeholder": "Ciclu de studii",
+        "errorMessage": "Câmp obligatoriu"
       },
       "studyProgram": {
-        "label": "Study Program",
-        "placeholder": "Study Program",
-        "errorMessage": "Please select a study program"
+        "label": "Program de studiu",
+        "placeholder": "Program de studiu",
+        "errorMessage": "Câmp obligatoriu"
       }
     },
     "inputFields": {
       "title": {
-        "label": "Title",
-        "placeholder": "Title",
-        "errorMessage": "Please provide a title for the options list"
+        "label": "Titlul",
+        "placeholder": "Titlul",
+        "errorMessage": "Câmp obligatoriu"
       },
       "year": {
-        "label": "Year",
-        "placeholder": "Year",
-        "errorMessage": "Please provide a year for the options list"
+        "label": "An",
+        "placeholder": "An",
+        "errorMessage": "Acest câmp trebuie să aibă o valoare între 1 și 4"
       },
       "semester": {
-        "label": "Semester",
-        "placeholder": "Semester",
-        "errorMessage": "Please provide a semester for the options list"
+        "label": "Semestru",
+        "placeholder": "Semestru",
+        "errorMessage": "Acest câmp trebuie să aibă fie valoarea 1, fie 2"
       }
     },
     "courses": {
@@ -106,11 +106,11 @@
     }
   },
   "recoverAccount": {
-    "instructions": "TBA",
+    "instructions": "Introduceți adresa de email corespunzătoare contului",
     "inputFields": {
       "email": {
         "placeholder": "Email",
-        "errorMessage": "Introduceți o adresă validă de email",
+        "errorMessage": "Introduceți o adresă de email validă",
         "label": "Email"
       }
     },
@@ -145,7 +145,7 @@
     }
   },
   "resetPassword": {
-    "instructions": "TBA",
+    "instructions": "Noua parola trebuie să fie diferită față de cea anterioară",
     "inputFields": {
       "password": {
         "placeholder": "Parolă",
@@ -165,69 +165,81 @@
   "sendAnnouncement": {
     "inputFields": {
       "subject": {
-        "label": "Subject",
-        "placeholder": "Subject",
-        "errorMessage": "Please provide a subject for the announcement"
+        "label": "Subiect",
+        "placeholder": "Subiect",
+        "errorMessage": "Câmp obligatoriu"
       }
     },
     "textAreaFields": {
       "message": {
-        "label": "Message"
+        "label": "Mesaj",
+        "placeholder": "Mesaj"
       }
     },
     "buttons": {
-      "sendTheAnnouncement": "Send the announcement"
+      "sendTheAnnouncement": "Trimite anunțul"
     }
   },
   "userData": {
     "dropDownFields": {
       "role": {
-        "label": "Role",
-        "placeholder": "Role",
-        "errorMessage": "Please provide a role for the user"
+        "label": "Rol",
+        "placeholder": "Rol",
+        "errorMessage": "Câmp obligatoriu"
       },
       "domain": {
-        "label": "Domain",
-        "placeholder": "Domain",
-        "errorMessage": "Please select a domain"
+        "label": "Domeniu",
+        "placeholder": "Domeniu",
+        "errorMessage": "Câmp obligatoriu"
       },
       "learningMode": {
-        "label": "Learning Mode",
-        "placeholder": "Learning Mode",
-        "errorMessage": "Please select a learning mode"
+        "label": "Formă de învățământ",
+        "placeholder": "Formă de învățământ",
+        "errorMessage": "Câmp obligatoriu"
       },
       "degree": {
-        "label": "Degree",
-        "placeholder": "Degree",
-        "errorMessage": "Please select a degree"
+        "label": "Ciclu de studii",
+        "placeholder": "Ciclu de studii",
+        "errorMessage": "Câmp obligatoriu"
       },
       "studyProgram": {
-        "label": "Study Program",
-        "placeholder": "Study Program",
-        "errorMessage": "Please select a study program"
+        "label": "Program de studiu",
+        "placeholder": "Programu de studiu",
+        "errorMessage": "Câmp obligatoriu"
       }
     },
     "inputFields": {
       "firstName": {
-        "label": "First Name",
-        "placeholder": "First Name",
-        "errorMessage": "Please provide the user's first name"
+        "label": "Prenume",
+        "placeholder": "Prenume",
+        "errorMessage": "Câmp obligatoriu"
       },
       "lastName": {
-        "label": "Last Name",
-        "placeholder": "Last Name",
-        "errorMessage": "Please provide the user's last name"
+        "label": "Nume",
+        "placeholder": "Nume",
+        "errorMessage": "Câmp obligatoriu"
       },
       "currentGroup": {
-        "label": "Current Group",
-        "placeholder": "Current Group",
-        "errorMessage": "Please provide the student's group"
+        "label": "Grupă curentă",
+        "placeholder": "Grupă curentă",
+        "errorMessage": "Câmp obligatoriu"
       },
       "currentYear": {
-        "label": "Current Year",
-        "placeholder": "Current Year",
-        "errorMessage": "Please provide the student's current year"
+        "label": "An curent",
+        "placeholder": "An curent",
+        "errorMessage": "Acest câmp trebuie să aibă o valoare între 1 și 4"
+      },
+      "year": {
+        "label": "An"
+      },
+      "grade": {
+        "label": "Notă",
+        "placeholder": "Notă",
+        "errorMessage": "Nota trebuie să fie 0.0 între 10.0"
       }
+    },
+    "text": {
+      "gradesTitle": "Note"
     },
     "buttons": {
       "student": "Salvează datele studentului",

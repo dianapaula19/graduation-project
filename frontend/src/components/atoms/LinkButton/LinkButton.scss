@@ -1,7 +1,9 @@
+@import '../../../styles/colors';
+
 .link-button {
   all: unset;
   text-transform: uppercase;
-  background-color: #0366d6;
+  background-color: $blue;
   color: white;
   border-radius: .5rem;
   margin: .5rem 0 1rem 0;
@@ -22,13 +24,13 @@
   height: 2.5rem;
   align-items: center;
   justify-content: center;
-  color: #525252;
+  color: $dark-grey;
   background-color: transparent;
-  border: #525252 solid .2rem;
+  border: $dark-grey solid .2rem;
   grid-area: syllabus-button;
   margin: 0;
   &:hover {
-    background-color: #525252;
+    background-color: $dark-grey;
     color: white;
   }
 }

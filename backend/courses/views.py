@@ -231,7 +231,7 @@ def create_options_list(request):
       status=HTTP_500_INTERNAL_SERVER_ERROR
     )
 
-  check_year = year - 1
+  check_year = int(year) - 1
   students = []
   courses = []
 
@@ -242,6 +242,10 @@ def create_options_list(request):
       and student.study_program == study_program \
       and student.current_year == check_year:
         students.append(student)
+        student.options_list.add(options_list)
+    else:
+      student.options_list.remove(options_list)
+    student.save()
   
   for course_id in courses_ids:
     course = Course.objects.get(id=course_id)
@@ -299,6 +303,7 @@ def update_options_list(request):
       and student.study_program == study_program \
       and student.current_year == check_year:
         students.append(student)
+        student.options_lists.add(options_list)
     else:
       student.options_lists.remove(options_list)
     
@@ -318,7 +323,8 @@ def update_options_list(request):
     status=HTTP_200_OK
   )
 
-@api_view(["DELETE"])
+@api_view(["POST"])
+@permission_classes([IsAdmin])
 def delete_options_list(request):
   id = request.data.get("id")
   try:
@@ -445,7 +451,7 @@ def update_course(request):
     status=HTTP_200_OK
   )
 
-@api_view(["DELETE"])
+@api_view(["POST"])
 @permission_classes([IsAdmin])
 def delete_course(request):
   id = request.data.get("id")

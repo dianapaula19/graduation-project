@@ -1,28 +1,28 @@
+@import '../../../styles/colors';
+
 .checkbox {
   display: flex;
   padding: .75rem;
   border-radius: .25rem;
-  color: #c4c4c4;
+  color: $medium-grey;
   gap: .5rem;
   font-size: large;
 
   &:hover {
-  background-color: #f1eff1;
-
+    background-color: $light-grey;
   }
 
   &__input {
-  background-color: #0366d6;
-  margin: 0;
-  width: 1.75rem;
-  height: 1.75rem;
-  border: 0.15rem solid #c4c4c4;
-  border-radius: 0.25rem;
-  transform: translateY(0.1rem);
-
+    background-color: $blue;
+    margin: 0;
+    width: 1.75rem;
+    height: 1.75rem;
+    border: 0.15rem solid $medium-grey;
+    border-radius: 0.25rem;
+    transform: translateY(0.1rem);
   }
 }
 
 .checkbox__input:checked + .checkbox__label {
-  color: #525252;
+  color: $dark-grey;
 }

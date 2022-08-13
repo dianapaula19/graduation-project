@@ -1,3 +1,5 @@
+@import '../../../styles/colors';
+
 .modal-api-status {
   display: flex;
   flex-direction: column;
@@ -7,11 +9,11 @@
   
   &__icon {
     font-size: xx-large;
-    color: #4ea853;
+    color: $success;
     
   }
   &__icon--error {
-    color: crimson;
+    color: $error;
   }
 
   &__text {

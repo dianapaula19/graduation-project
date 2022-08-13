@@ -47,4 +47,9 @@ const degreeMap: any = {
   }
 }
 
-export {degreeMap}
+const PLACEHOLDER = 'placeholder';
+
+export {
+  degreeMap,
+  PLACEHOLDER
+}

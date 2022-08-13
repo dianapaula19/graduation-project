@@ -46,7 +46,11 @@ interface IGetOptionsListsError {
   code: string; 
 }
 
-interface IGetCurrentCoursePayload {
+interface IGetCurrentOptionsListPayload {
+  id: number;
+}
+
+interface IRemoveDeletedOptionsListPayload {
   id: number;
 }
 
@@ -78,11 +82,11 @@ export const getOptionsListsSlice = createSlice({
   },
   getCurrentOptionsList: (
     state: IGetOptionsListsState, 
-    action: PayloadAction<IGetCurrentCoursePayload>
+    action: PayloadAction<IGetCurrentOptionsListPayload>
   ) => {
     const res = action.payload;
     if (state.optionsLists) {
-    state.currentOptionsList = state.optionsLists.filter((optionsList) => optionsList.id === res.id)[0];
+      state.currentOptionsList = state.optionsLists.filter((optionsList) => optionsList.id === res.id)[0];
     }
     return state;
   },
@@ -110,7 +114,11 @@ export const getOptionsListsSlice = createSlice({
   }
 });
 
-export const { revertGetOptionsLists, getCurrentOptionsList, revertCurrentOptionsList } = getOptionsListsSlice.actions;
+export const { 
+  revertGetOptionsLists, 
+  getCurrentOptionsList, 
+  revertCurrentOptionsList
+} = getOptionsListsSlice.actions;
 
 export const getOptionsListsStatus = (root: RootState) => root.getOptionsLists.status;
 export const getOptionsListsCode = (root: RootState) => root.getOptionsLists.code;

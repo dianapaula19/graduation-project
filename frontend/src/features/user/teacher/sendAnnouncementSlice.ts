@@ -19,6 +19,7 @@ interface ISendAnnouncementRequest {
   subject: string;
   message: string;
   token: string;
+  teacher_email: string;
   recipient_list: string[];
 }
 

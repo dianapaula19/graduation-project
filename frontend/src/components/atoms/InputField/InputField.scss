@@ -1,3 +1,5 @@
+@import '../../../styles/colors';
+
 .input-field {
 
   display: flex;
@@ -7,7 +9,7 @@
   margin: .5rem 0 1rem 0;
 
   &__label {
-    color: #525252;
+    color: $dark-grey;
     text-transform: uppercase;
   }
 
@@ -18,18 +20,18 @@
     align-items: center;
     padding: 0 1rem;
     border-radius: .5rem;
-    border: .15rem solid #c4c4c4;
+    border: .15rem solid $medium-grey;
     height: 3.5rem;
     background-color: white;
 
     &:hover {
-      border-color: #0366d6;
+      border-color: $blue;
     }
 
     gap: .75rem;
     
     &__icon {
-      color: #525252;
+      color: $dark-grey;
     }
 
     &__icon--password {
@@ -39,16 +41,16 @@
 
     &__input {
       all: unset;
-      color: #525252;
+      color: $dark-grey;
       flex: 1;
       &::placeholder {
-        color: #c4c4c4;
+        color: $medium-grey;
       }
     }
   }
 
   &__input-group--error {
-    border-color: crimson;
+    border-color: $error;
   }
 
 }
@@ -64,14 +66,14 @@ input[type="file"] {
   gap: 1rem;
   align-items: center;
   justify-content: center;
-  color: #0366d6;
+  color: $blue;
   background-color: transparent;
-  border: #0366d6 solid .2rem;
+  border: $blue solid .2rem;
   grid-area: excel-button;
   margin: 0;
   &:hover {
     color: white;
-    background-color: #0366d6;
+    background-color: $blue;
   }
 }
 
@@ -82,10 +84,10 @@ input[type="file"] {
     flex-wrap: wrap;
     gap: .2rem;
     &__icon {
-      color: crimson;
+      color: $error;
     }
     &__span {
-      color: crimson;
+      color: $error;
       white-space: pre-wrap;       
     }  
   }

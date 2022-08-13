@@ -6,7 +6,7 @@ import { studentDataAsync, studentDataData, studentDataStatus } from "../../../f
 import { ApiStatus } from "../../../features/Utils";
 import { Role } from "../../App";
 import LoggedUserPage from "../../templates/LoggedUserPage";
-import "./PersonalDataPage.scss";
+import "./ProfilePage.scss";
 
 
 const DataRow = (
@@ -61,7 +61,7 @@ const GradeRow = (
 
 const ProfilePage = () => {
 
-  const componentClassName = "personal-data-page";
+  const componentClassName = "profile-page";
 
   const { t } = useTranslation("pages");
 
@@ -112,19 +112,19 @@ const ProfilePage = () => {
     const studentDataFields = [
       {
         name: t('profile.studentDataFields.domain'),
-        data: t(`domains.${studentData.domain}`)
+        data: t(`common:domains.${studentData.domain}`)
       },
       {
         name: t('profile.studentDataFields.learningMode'),
-        data: t(`learningModes.${studentData.learning_mode}`)
+        data: t(`common:learningModes.${studentData.learning_mode}`)
       },
       {
         name: t('profile.studentDataFields.degree'),
-        data: t(`degrees.${studentData.degree}`)
+        data: t(`common:degrees.${studentData.degree}`)
       },
       {
         name: t('profile.studentDataFields.studyProgram'),
-        data: t(`studyPrograms.${studentData.study_program}`)
+        data: t(`common:studyPrograms.${studentData.study_program}`)
       },
       {
         name: t('profile.studentDataFields.currentGroup'),
@@ -188,14 +188,14 @@ const ProfilePage = () => {
         className={componentClassName}
       >   
         <h1
-          className={`${componentClassName}__personal-data`}
-        >
-          {t('profile.personalData')}
-        </h1>
-        <h3
           className={`${componentClassName}__profile`}
         >
           {t('profile.profile')}
+        </h1>
+        <h3
+          className={`${componentClassName}__personal-data`}
+        >
+          {t('profile.personalData')}
         </h3>
         {profileDataFields.map((profileDataField) => {
           return (

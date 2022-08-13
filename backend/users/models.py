@@ -9,7 +9,6 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 class Role(models.TextChoices):
   STUDENT = 'STUDENT',
   TEACHER = 'TEACHER',
-  SECRETARY = 'SECRETARY',
   ADMIN = 'ADMIN'
 
 class Domain(models.TextChoices):
@@ -29,9 +28,10 @@ class Degree(models.TextChoices):
 class StudyProgram(models.TextChoices):
   NLP = 'NLP',
   DS = 'DS',
-  SLA = 'SLA',
+  SAL = 'SAL',
+  AMA = 'AMA',
   SD = 'SD',
-  IA = 'IA',
+  AI = 'AI',
   IS = 'IS',
   BDTS = 'BDTS',
   PSFS = 'PSFS',
@@ -42,10 +42,6 @@ class StudyProgram(models.TextChoices):
   MATEINFO = 'MATEINFO',
   MATE = 'MATE',
   MA = 'MA'
-
-class Department(models.TextChoices):
-  MATH = 'MATH'
-  COMPUTER_SCIENCE = 'COMPUTER_SCIENCE'
 
 class SelectionSessionSettingValue(Enum):
   TRUE = 'TRUE'
@@ -123,10 +119,6 @@ class TeacherManager(models.Manager):
   def get_queryset(self):
     return super().get_queryset().filter(role=Role.TEACHER)
 
-class SecretaryManager(models.Manager):
-  def get_queryset(self):
-    return super().get_queryset().filter(role=Role.SECRETARY)
-
 class NotVerifiedUserManager(models.Manager):
   def get_queryset(self):
     return super().get_queryset().filter(verified=False)
@@ -178,17 +170,9 @@ class Student(models.Model):
 
 class Teacher(models.Model):
   user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-  department = models.TextField(choices=Department.choices, null=True)
   class Meta:
     verbose_name = 'teacher'
     verbose_name_plural = "teachers"
-
-class Secretary(models.Model):
-  user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-  categories = models.ManyToManyField('Category', related_name='responsible_for_categories')
-  class Meta:
-    verbose_name = 'secretary'
-    verbose_name_plural = "secretaries"
     
 class GradeManager(models.Manager):
   def get_student_current_grade(self, student):

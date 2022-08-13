@@ -14,6 +14,7 @@ import OptionsListCard from "../../../molecules/OptionsListCard";
 import LoggedUserPage from "../../../templates/LoggedUserPage";
 import "./OptionsListsPage.scss";
 import ModalApiStatus from "../../../molecules/ModalApiStatus";
+import { deleteOptionsListShowModal, deleteOptionsListStatus, revertDeleteOptionsList } from "../../../../features/user/admin/optionsList/deleteOptionsListSlice";
 
 const OptionsListsPage = () => {
 
@@ -28,10 +29,12 @@ const OptionsListsPage = () => {
 
   const showModalCreateOptionsList = useAppSelector(createOptionsListShowModal);
   const showModalUpdateOptionsList = useAppSelector(updateOptionsListShowModal);
+  const showModalDeleteOptionsList = useAppSelector(deleteOptionsListShowModal);
   const statusGetCourses = useAppSelector(getCoursesStatus);
   const statusGetOptionsLists = useAppSelector(getOptionsListsStatus);
   const statusCreateOptionsList = useAppSelector(createOptionsListStatus);
   const statusUpdateOptionsList = useAppSelector(updateOptionsListStatus);
+  const statusDeleteOptionsList = useAppSelector(deleteOptionsListStatus);
   const token = useAppSelector(loginToken);
 
   const domains: {[id: string]: string} = t("common:domains", {returnObjects: true}) as {[id: string]: string};
@@ -55,7 +58,8 @@ const OptionsListsPage = () => {
     }
     if (
       showModalCreateOptionsList || 
-      showModalUpdateOptionsList
+      showModalUpdateOptionsList ||
+      showModalDeleteOptionsList
     ) {
       setShowModalOptionsListForm(false);
     }
@@ -63,7 +67,9 @@ const OptionsListsPage = () => {
   }, [
     statusGetCourses, 
     statusGetOptionsLists,
-    showModalCreateOptionsList, 
+    showModalCreateOptionsList,
+    showModalUpdateOptionsList,
+    showModalDeleteOptionsList, 
     setShowModalOptionsListForm
   ])
 
@@ -104,6 +110,25 @@ const OptionsListsPage = () => {
     default:
       break;
   }
+
+  let deleteOptionsListModalComponent = null;
+
+  switch (statusDeleteOptionsList) {
+    case ApiStatus.success:
+      deleteOptionsListModalComponent = <ModalApiStatus 
+        message={t("admin.optionsLists.success.delete")} 
+        error={false} 
+      />;
+      break;
+    case ApiStatus.failed:
+      deleteOptionsListModalComponent = <ModalApiStatus 
+        message={t("admin.optionsLists.error.delete")} 
+        error={true} 
+      />;
+      break;
+    default:
+      break;
+  }
   
 
   return (
@@ -114,7 +139,7 @@ const OptionsListsPage = () => {
     <span
       className={`${componentClassName}__title`}
     >
-      Options Lists
+      {t("admin.optionsLists.title")}
     </span>
     {Object.keys(domains).map((key) => {
       return (
@@ -153,23 +178,23 @@ const OptionsListsPage = () => {
     />
     </div>
     <Modal 
-    show={showModalOptionsListForm} 
-    closeModal={() => {
-      dispatch(revertCurrentOptionsList());
-      setShowModalOptionsListForm(false);
-    }}
+      show={showModalOptionsListForm} 
+      closeModal={() => {
+        dispatch(revertCurrentOptionsList());
+        setShowModalOptionsListForm(false);
+      }}
     >
     <OptionsListForm type={formType} />
     </Modal>
     <Modal 
-    show={showModalCreateOptionsList} 
-    closeModal={() => {
-      setShowModalOptionsListForm(false);
-      dispatch(revertCreateOptionsList())
-      if (token) {
-        dispatch(getOptionsListsAsync({
-          token: token
-        }));
+      show={showModalCreateOptionsList} 
+      closeModal={() => {
+        setShowModalOptionsListForm(false);
+        dispatch(revertCreateOptionsList())
+        if (token) {
+          dispatch(getOptionsListsAsync({
+            token: token
+          }));
       }
     }}
     >
@@ -188,6 +213,20 @@ const OptionsListsPage = () => {
     }}
     >
     {updateOptionsListModalComponent}
+    </Modal>
+    <Modal 
+      show={showModalDeleteOptionsList} 
+      closeModal={() => {
+        setShowModalOptionsListForm(false);
+        dispatch(revertDeleteOptionsList())
+        if (token) {
+          dispatch(getOptionsListsAsync({
+            token: token
+          }));
+      }
+    }}
+    >
+    {deleteOptionsListModalComponent}
     </Modal>
   </LoggedUserPage>
   )

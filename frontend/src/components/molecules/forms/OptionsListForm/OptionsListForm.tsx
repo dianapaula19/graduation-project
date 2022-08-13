@@ -14,6 +14,8 @@ import { getOptionsListsCurrentOptionsList } from "../../../../features/user/adm
 import { updateOptionsListAsync } from "../../../../features/user/admin/optionsList/updateOptionsListSlice";
 import { loginToken } from "../../../../features/auth/loginSlice";
 import { currentLanguage } from "../../../../features/LanguageSwitchSlice";
+import { deleteOptionsListAsync, revertDeleteOptionsList } from "../../../../features/user/admin/optionsList/deleteOptionsListSlice";
+import { degreeMap, PLACEHOLDER } from "../../../Utils";
 
 
 const OptionsListForm = ({
@@ -44,22 +46,22 @@ const OptionsListForm = ({
     title: '',
     year: 2,
     semester: 1,
-    domain: 'placeholder',
-    learningMode: 'placeholder',
-    degree: 'placeholder',
-    studyProgram: 'placeholder',
+    domain: PLACEHOLDER,
+    learningMode: PLACEHOLDER,
+    degree: PLACEHOLDER,
+    studyProgram: PLACEHOLDER,
     coursesIds: []
   });
 
   const validation = {
-  title: data.title === "",
-  year: data.year < 2 || data.year > 4,
-  semester: data.semester < 1 || data.semester > 2,
-  domain: data.domain === 'placeholder',
-  learningMode: data.learningMode === 'placeholder',
-  degree: data.degree === 'placeholder',
-  studyProgram: data.studyProgram === 'placeholder',
-  coursesIds: data.coursesIds.length < 1
+    title: data.title === "",
+    year: data.year < 2 || data.year > 4,
+    semester: data.semester < 1 || data.semester > 2,
+    domain: data.domain === PLACEHOLDER,
+    learningMode: data.learningMode === PLACEHOLDER,
+    degree: data.degree === PLACEHOLDER,
+    studyProgram: data.studyProgram === PLACEHOLDER,
+    coursesIds: data.coursesIds.length < 1
   } 
   
   const disableSubmitButton = 
@@ -104,8 +106,42 @@ const OptionsListForm = ({
       ...data,
       coursesIds: copy
       })
-      return
+      return;
     } 
+    if (name === 'degree') {
+      setData({
+        ...data,
+        degree: value,
+        domain: PLACEHOLDER,
+        learningMode: PLACEHOLDER,
+        studyProgram: PLACEHOLDER,
+      })  
+      return;
+    }
+    if (name === 'domain') {
+      setData({
+        ...data,
+        domain: value,
+        learningMode: PLACEHOLDER,
+        studyProgram: PLACEHOLDER
+      })  
+      return;
+    }
+    if (name === 'learningMode') {
+      setData({
+        ...data,
+        learningMode: value,
+        studyProgram: PLACEHOLDER
+      })  
+      return;
+    }
+    if (name === 'studyProgram') {
+      setData({
+        ...data,
+        studyProgram: value
+      })  
+      return;
+    }
     setData({
     ...data,
     [name]: value
@@ -151,6 +187,28 @@ const OptionsListForm = ({
     <div
     className={fieldsContainerClassName}
     >
+      <DropDown
+      id={`${componentId}-degree`}
+      name="degree" 
+      error={validation.degree} 
+      errorMessage={t(`${dropDownTranslate}.degree.errorMessage`)} 
+      label={t(`${dropDownTranslate}.degree.label`)}
+      placeholder={t(`${dropDownTranslate}.degree.placeholder`)}
+      defaultValue={data.degree}
+      value={data.degree}
+      onChange={handleChange}
+    >
+      {
+      Object.keys(Degree).map((key) => {
+      return (
+        <option
+        value={key}
+        >
+        {t(`common:degrees.${key}`)}
+        </option>
+      )
+      })}
+      </DropDown>
     <DropDown 
       id={`${componentId}-domain`}
       name="domain"
@@ -162,8 +220,8 @@ const OptionsListForm = ({
       value={data.domain}
       onChange={handleChange}
     >
-      
-      {Object.keys(Domain).map((key) => {
+      { data.degree !== PLACEHOLDER &&
+        Object.keys(degreeMap[data.degree]).map((key) => {
       return (
         <option
         value={key}
@@ -184,33 +242,14 @@ const OptionsListForm = ({
       value={data.learningMode}
       onChange={handleChange}
     >
-      {Object.keys(LearningMode).map((key) => {
+      { data.degree !== PLACEHOLDER &&
+        data.domain !== PLACEHOLDER &&
+        Object.keys(degreeMap[data.degree][data.domain]).map((key) => {
       return (
         <option
-        value={key}
+          value={key}
         >
         {t(`common:learningModes.${key}`)}
-        </option>
-      )
-      })}
-    </DropDown>
-    <DropDown
-      id={`${componentId}-degree`}
-      name="degree" 
-      error={validation.degree} 
-      errorMessage={t(`${dropDownTranslate}.degree.errorMessage`)} 
-      label={t(`${dropDownTranslate}.degree.label`)}
-      placeholder={t(`${dropDownTranslate}.degree.placeholder`)}
-      defaultValue={data.degree}
-      value={data.degree}
-      onChange={handleChange}
-    >
-      {Object.keys(Degree).map((key) => {
-      return (
-        <option
-        value={key}
-        >
-        {t(`common:degrees.${key}`)}
         </option>
       )
       })}
@@ -226,7 +265,10 @@ const OptionsListForm = ({
       value={data.studyProgram}
       onChange={handleChange}
     >
-      {Object.keys(StudyProgram).map((key) => {
+      {data.degree !== PLACEHOLDER &&
+        data.domain !== PLACEHOLDER &&
+        data.learningMode !== PLACEHOLDER &&
+        Object.keys(degreeMap[data.degree][data.domain][data.learningMode]).map((key) => {
       return (
         <option
         value={key}
@@ -297,21 +339,29 @@ const OptionsListForm = ({
     </div>
     </div>
     <Button 
-    label={
-      type === "create" ? 
-      t(`${submitButtonsTranslate}.create`) : 
-      t(`${submitButtonsTranslate}.update`)
-    } 
-    disabled={disableSubmitButton} 
-    modifier={disableSubmitButton ? ButtonModifier.disabled : ButtonModifier.save}
-    onClick={onSubmit}
+      label={
+        type === "create" ? 
+        t(`${submitButtonsTranslate}.create`) : 
+        t(`${submitButtonsTranslate}.update`)
+      } 
+      disabled={disableSubmitButton} 
+      modifier={disableSubmitButton ? ButtonModifier.disabled : ButtonModifier.save}
+      onClick={onSubmit}
     />
     {type === 'update' && (
-    <Button 
-      label={t(`${submitButtonsTranslate}.delete`)}
-      modifier={ButtonModifier.delete}
-      disabled={false}
-    />  
+      <Button 
+        label={t(`${submitButtonsTranslate}.delete`)}
+        modifier={ButtonModifier.delete}
+        disabled={false}
+        onClick={() => {
+          if (currentOptionsList && token) {
+            dispatch(deleteOptionsListAsync({
+              id: currentOptionsList.id,
+              token: token
+            }));
+          }
+        }}
+      />  
     )} 
   </div>
   )  

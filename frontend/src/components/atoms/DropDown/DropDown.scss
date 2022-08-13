@@ -1,3 +1,4 @@
+@import '../../../styles/colors';
 $icon: "%3Csvg /%3E%3C/svg%3E";
 
 .dropdown {
@@ -9,7 +10,7 @@ $icon: "%3Csvg /%3E%3C/svg%3E";
   margin: .5rem 0 1rem 0;
 
   &__label {
-    color: #525252;
+    color: $dark-grey;
     text-transform: uppercase;
   }
 
@@ -19,16 +20,16 @@ $icon: "%3Csvg /%3E%3C/svg%3E";
     appearance: none;
     outline: none;
     &:focus {
-      border-color: #0366d6;
+      border-color: $blue;
       background-image: url('./angle-circle-arrow-down-focus.svg');
     }
     &:hover {
-      border-color: #0366d6;
+      border-color: $blue;
       background-image: url('./angle-circle-arrow-down-focus.svg');
     }
     padding: 0 1rem;
     border-radius: .5rem;
-    border: .15rem solid #c4c4c4;
+    border: .15rem solid $medium-grey;
     height: 3.5rem;
     background: url('./angle-circle-arrow-down.svg') no-repeat right center;
     background-size: 2rem;
@@ -46,10 +47,10 @@ $icon: "%3Csvg /%3E%3C/svg%3E";
     flex-wrap: wrap;
     gap: .2rem;
     &__icon {
-      color: crimson;
+      color: $error;
     }
     &__span {
-      color: crimson;
+      color: $error;
       white-space: pre-wrap;       
     }  
   }

@@ -23,7 +23,7 @@ import { loginToken } from "../../../features/auth/loginSlice";
 import LoadingPage from "../../pages/LoadingPage";
 import DropDown from "../../atoms/DropDown";
 import { Department } from "../../App/App.types";
-import { degreeMap } from "../../Utils";
+import { degreeMap, PLACEHOLDER } from "../../Utils";
 
 const AccountsPage = ({
   role,
@@ -37,11 +37,11 @@ const AccountsPage = ({
   const inputTeacherFiltersTranslate = "accounts.teachers.filters.inputFields";
 
   const [studentFilters, setstudentFilters] = useState({
-    degree: 'placeholder',
-    domain: 'placeholder',
-    learningMode: 'placeholder',
-    studyProgram: 'placeholder',
-    year: 'placeholder'
+    degree: PLACEHOLDER,
+    domain: PLACEHOLDER,
+    learningMode: PLACEHOLDER,
+    studyProgram: PLACEHOLDER,
+    year: PLACEHOLDER
   });
 
   const [studentSearch, setStudentSearch] = useState({
@@ -76,22 +76,22 @@ const AccountsPage = ({
 
   if (students !== null && role === Role.STUDENT) {
     const filteredStudents = students.filter((student) => {
-      if (studentFilters.degree === 'placeholder') {
+      if (studentFilters.degree === PLACEHOLDER) {
         return student;
       }
-      if (studentFilters.domain === 'placeholder') {
+      if (studentFilters.domain === PLACEHOLDER) {
         return student.degree === studentFilters.degree;
       }
-      if (studentFilters.learningMode === 'placeholder') {
+      if (studentFilters.learningMode === PLACEHOLDER) {
         return student.degree === studentFilters.degree && 
           student.domain === studentFilters.domain;
       }
-      if (studentFilters.studyProgram === 'placeholder') {
+      if (studentFilters.studyProgram === PLACEHOLDER) {
         return student.degree === studentFilters.degree && 
           student.domain === studentFilters.domain &&
           student.learning_mode === studentFilters.learningMode;
       }
-      if (studentFilters.year === 'placeholder') {
+      if (studentFilters.year === PLACEHOLDER) {
         return student.degree === studentFilters.degree && 
           student.domain === studentFilters.domain &&
           student.learning_mode === studentFilters.learningMode &&
@@ -216,10 +216,10 @@ const AccountsPage = ({
     if (e.target.name === 'degree') {
       setstudentFilters({
         degree: e.target.value,
-        domain: 'placeholder',
-        learningMode: 'placeholder',
-        studyProgram: 'placeholder',
-        year: 'placeholder'
+        domain: PLACEHOLDER,
+        learningMode: PLACEHOLDER,
+        studyProgram: PLACEHOLDER,
+        year: PLACEHOLDER
       })  
       return;
     }
@@ -227,9 +227,9 @@ const AccountsPage = ({
       setstudentFilters({
         ...studentFilters,
         domain: e.target.value,
-        learningMode: 'placeholder',
-        studyProgram: 'placeholder',
-        year: 'placeholder'
+        learningMode: PLACEHOLDER,
+        studyProgram: PLACEHOLDER,
+        year: PLACEHOLDER
       })  
       return;
     }
@@ -237,8 +237,8 @@ const AccountsPage = ({
       setstudentFilters({
         ...studentFilters,
         learningMode: e.target.value,
-        studyProgram: 'placeholder',
-        year: 'placeholder'
+        studyProgram: PLACEHOLDER,
+        year: PLACEHOLDER
       })  
       return;
     }
@@ -246,7 +246,7 @@ const AccountsPage = ({
       setstudentFilters({
         ...studentFilters,
         studyProgram: e.target.value,
-        year: 'placeholder'
+        year: PLACEHOLDER
       })  
       return;
     }
@@ -350,7 +350,7 @@ const AccountsPage = ({
             value={studentFilters.domain} 
             error={false}
           >
-            { studentFilters.degree !== 'placeholder' && 
+            { studentFilters.degree !== PLACEHOLDER && 
               Object.keys(degreeMap[studentFilters.degree]).map((key) => {
                 return (
                   <option
@@ -372,8 +372,8 @@ const AccountsPage = ({
             error={false}
           >
             {
-              studentFilters.degree !== 'placeholder' && 
-              studentFilters.domain !== 'placeholder' && 
+              studentFilters.degree !== PLACEHOLDER && 
+              studentFilters.domain !== PLACEHOLDER && 
               Object.keys(degreeMap[studentFilters.degree][studentFilters.domain]).map((key) => {
               return (
                 <option
@@ -395,9 +395,9 @@ const AccountsPage = ({
             error={false}
           >
             {
-              studentFilters.degree !== 'placeholder' && 
-              studentFilters.domain !== 'placeholder' &&
-              studentFilters.learningMode !== 'placeholder' && 
+              studentFilters.degree !== PLACEHOLDER && 
+              studentFilters.domain !== PLACEHOLDER &&
+              studentFilters.learningMode !== PLACEHOLDER && 
               Object.keys(degreeMap[studentFilters.degree][studentFilters.domain][studentFilters.learningMode]).map((key) => {
               return (
                 <option
@@ -419,10 +419,10 @@ const AccountsPage = ({
             error={false}
           >
           {
-            studentFilters.degree !== 'placeholder' && 
-            studentFilters.domain !== 'placeholder' &&
-            studentFilters.learningMode !== 'placeholder' &&
-            studentFilters.studyProgram !== 'placeholder' &&  
+            studentFilters.degree !== PLACEHOLDER && 
+            studentFilters.domain !== PLACEHOLDER &&
+            studentFilters.learningMode !== PLACEHOLDER &&
+            studentFilters.studyProgram !== PLACEHOLDER &&  
             degreeMap[studentFilters.degree][studentFilters.domain][studentFilters.learningMode][studentFilters.studyProgram].map((year: number) => {
             return (
               <option
@@ -477,16 +477,16 @@ const AccountsPage = ({
     />
     {role === Role.STUDENT && (
       <Modal 
-      show={showModalRegisterBatchStudents} 
-      closeModal={() => {dispatch(revertRegisterBatchStudents());}}
+        show={showModalRegisterBatchStudents} 
+        closeModal={() => {dispatch(revertRegisterBatchStudents());}}
       >
       
       </Modal>  
     )}
     {role === Role.TEACHER && (
       <Modal 
-      show={showModalRegisterBatchTeachers} 
-      closeModal={() => {dispatch(revertRegisterBatchTeachers());}}
+        show={showModalRegisterBatchTeachers} 
+        closeModal={() => {dispatch(revertRegisterBatchTeachers());}}
       >
     
       </Modal>

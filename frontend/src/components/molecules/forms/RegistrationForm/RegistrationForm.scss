@@ -1,3 +1,5 @@
+@import '../../../../styles/colors';
+
 .registration-form {
   
   display: flex;
@@ -15,14 +17,14 @@
   
   &__a {
     all: unset;
-    color: #0366d6;
+    color: $blue;
     text-transform: uppercase;
     margin-bottom: .5rem;
-    border-bottom: #0366d6 .1rem solid;
+    border-bottom: $blue .1rem solid;
     cursor: pointer;
   }
   &__p {
-    color: #525252;
+    color: $dark-grey;
     justify-self: center;
     text-transform: uppercase;
   }

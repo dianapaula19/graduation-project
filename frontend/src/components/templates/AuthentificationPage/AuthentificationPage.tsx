@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Languages from "../../atoms/LanguagesSwitch/LanguageSwitch";
 import LoginForm from "../../molecules/forms/LoginForm/LoginForm";
 import RegistrationForm from "../../molecules/forms/RegistrationForm/RegistrationForm";
@@ -10,6 +10,7 @@ import RegistrationSvg from "./assets/registration.svg";
 import RecoverAccountSvg from "./assets/recover-account.svg";
 import ResetPasswordSvg from "./assets/reset-password.svg";
 import "./AuthentificationPage.scss";
+import { useWindowDimensions } from "../../../app/hooks";
 
 const AuthentificationPage = ({
   action
@@ -20,6 +21,10 @@ const AuthentificationPage = ({
   const mainClassName = `${componentClassName}__main`;
   const imageClassName = `${mainClassName}__image-container`;
   const formClassName = `${mainClassName}__form-container`;
+
+  const { height, width } = useWindowDimensions();
+
+  const [resize, setResize] = useState(false);
 
   let form = null;
   let image = null;
@@ -43,9 +48,19 @@ const AuthentificationPage = ({
       break;
   }
 
+  useEffect(() => {
+    if (width < 750) {
+      setResize(true);
+    } else {
+      setResize(false);
+    }
+
+  }, [width, setResize])
+  
+
   return(
     <div className={componentClassName}>
-      <Languages/>
+      {resize === false && (<Languages/>)}
       <div className={mainClassName}>
         <div className={imageClassName}>
           <img

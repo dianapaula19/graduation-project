@@ -30,21 +30,21 @@ const SendAnnouncementForm = () => {
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
-    const name = e.target.name;
-    const value = e.target.value;
     setData({
       ...data,
-      [name]: value
+      [e.target.name]: e.target.value
     });
   }
 
   const handleSubmit = () => {
+    console.log(currentTeacherCourse);
     if (currentTeacherCourse && userData && token) {
-      const recipient_list = Array.from(currentTeacherCourse.students, student => student.email);
+      let recipient_list = Array.from(currentTeacherCourse.students, student => student.email);
       dispatch(sendAnnouncementAsync({
-        subject: `${data.subject} [${currentTeacherCourse.title}]`,
+        subject: `[FMI] [${currentTeacherCourse.title}] ${data.subject}`,
         message: data.message,
         token: token,
+        teacher_email: userData.email,
         recipient_list: recipient_list,
       }))
     }
@@ -66,12 +66,13 @@ const SendAnnouncementForm = () => {
         id={`${componentId}-message`}
         name={"message"}
         label={t(`${textAreaFieldsTranslate}.message.label`)}
+        placeholder={t(`${textAreaFieldsTranslate}.message.placeholder`)}
         onChange={handleChange}
       />
       <Button 
         label={t(`${submitButtonsTranslate}.sendTheAnnouncement`)} 
         disabled={data.subject.length < 1} 
-        onSubmit={handleSubmit}
+        onClick={handleSubmit}
       />
     </div>
   )

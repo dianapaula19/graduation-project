@@ -1,9 +1,11 @@
+@import '../../../styles/colors';
+
 .optionals-list-card {
   display: flex;
   flex-direction: column;
-  border: #c4c4c4 solid .05rem;
+  border: $medium-grey solid .05rem;
   background-color: #ffffff;
-  box-shadow: .1rem .1rem .05rem #c4c4c4;
+  box-shadow: .1rem .1rem .05rem $medium-grey;
   padding: .75rem 1.5rem;
   gap: 2.5rem;
 

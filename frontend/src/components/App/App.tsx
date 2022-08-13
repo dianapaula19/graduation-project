@@ -6,7 +6,7 @@ import OptionsListsPage from '../pages/admin/OptionsListsPage';
 import AdminCoursesPage from '../pages/admin/CoursesPage';
 import LoginPage from '../pages/auth/LoginPage';
 import RegisterPage from '../pages/auth/RegistrationPage';
-import PersonalDataPage from '../pages/ProfilePage';
+import ProfilePage from '../pages/ProfilePage';
 import AccountsPage from '../templates/AccountsPage';
 import CoursesSelectionPage from '../pages/student/CoursesSelectionPage';
 import StudentCoursesPage from "../pages/student/CoursesPage";
@@ -18,7 +18,6 @@ import SettingsPage from '../pages/admin/SettingsPage';
 import { ApiStatus, SelectionSessionSettingValue } from '../../features/Utils';
 import { revertUpdateSelectionSessionOpen, updateSelectionSessionOpenStatus } from '../../features/user/admin/updateSelectionSessionOpenSlice';
 import NotFoundPage from '../pages/NotFoundPage';
-import LanguageSwitch from '../atoms/LanguagesSwitch/LanguageSwitch';
 import { updateCourseStatus } from '../../features/user/admin/course/updateCourseSlice';
 import { createCourseStatus } from '../../features/user/admin/course/createCourseSlice';
 import { createOptionsListStatus } from '../../features/user/admin/optionsList/createOptionsListSlice';
@@ -26,11 +25,6 @@ import { updateOptionsListStatus } from '../../features/user/admin/optionsList/u
 import { verifyUserStatus } from '../../features/user/admin/user/verifyUserSlice';
 import { updateStudentInfoStatus } from '../../features/user/admin/user/updateStudentInfoSlice';
 import { updateTeacherInfoStatus } from '../../features/user/admin/user/updateTeacherInfoSlice';
-import { getCoursesStatus } from '../../features/user/admin/course/getCoursesSlice';
-import { getOptionsListsStatus } from '../../features/user/admin/optionsList/getOptionsListsSlice';
-import { getNotVerifiedUsersStatus } from '../../features/user/admin/user/getNotVerifiedUsersSlice';
-import { getStudentsStatus } from '../../features/user/admin/user/getStudentsSlice';
-import { getTeachersStatus } from '../../features/user/admin/user/getTeachersSlice';
 import { registerBatchStudentsStatus } from '../../features/user/admin/user/registerBatchStudentsSlice';
 import { registerBatchTeachersStatus } from '../../features/user/admin/user/registerBatchTeachersSlice';
 import LoadingPage from '../pages/LoadingPage';
@@ -141,7 +135,7 @@ const App = () => {
           />
           <Route 
             path="/"
-            element={<PersonalDataPage />}
+            element={<ProfilePage />}
           />
           {selectionSessionOpen && (
             <>

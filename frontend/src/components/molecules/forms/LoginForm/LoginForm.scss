@@ -1,3 +1,5 @@
+@import '../../../../styles/colors';
+
 .login-form {
 
   display: flex;
@@ -15,16 +17,16 @@
   
   &__a {
     all: unset;
-    color: #0366d6;
+    color: $blue;
     text-transform: uppercase;
-    border-bottom: #0366d6 .1rem solid;
+    border-bottom: $blue .1rem solid;
     margin-bottom: .5rem;
     align-self: flex-start;
     cursor: pointer;
   }
   
   &__p {
-    color: #525252;
+    color: $dark-grey;
     text-transform: uppercase;
     justify-self: center;
   }

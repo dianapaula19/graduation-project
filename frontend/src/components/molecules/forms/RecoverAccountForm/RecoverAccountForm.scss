@@ -1,3 +1,5 @@
+@import '../../../../styles/colors';
+
 .recover-account-form {
   
   display: flex;
@@ -13,7 +15,7 @@
   }
 
   &__instructions {
-    color: #525252;
+    color: $dark-grey;
     display: inline-block;
     align-self: flex-start;
     overflow-wrap: break-word;
@@ -21,13 +23,13 @@
   
   &__a {
     all: unset;
-    color: #0366d6;
+    color: $blue;
     text-transform: uppercase;
     margin-bottom: .5rem;
     cursor: pointer;
   }
   &__p {
-    color: #525252;
+    color: $dark-grey;
     justify-self: center;
     text-transform: uppercase;
   }

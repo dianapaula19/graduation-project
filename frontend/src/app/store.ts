@@ -12,9 +12,11 @@ import getStudentCoursesReducer from "../features/user/student/getStudentCourses
 import createOptionsListReducer from "../features/user/admin/optionsList/createOptionsListSlice";
 import createCourseReducer from "../features/user/admin/course/createCourseSlice";
 import updateCourseReducer from "../features/user/admin/course/updateCourseSlice";
+import deleteCourseReducer from "../features/user/admin/course/deleteCourseSlice";
 import registerBatchStudentsReducer from "../features/user/admin/user/registerBatchStudentsSlice";
 import registerBatchTeachersReducer from "../features/user/admin/user/registerBatchTeachersSlice";
 import getNotVerifiedUsersReducer from "../features/user/admin/user/getNotVerifiedUsersSlice";
+import deleteUserReducer from "../features/user/admin/user/deleteUserSlice";
 import verifyUserReducer from "../features/user/admin/user/verifyUserSlice";
 import updateStudentInfoReducer from "../features/user/admin/user/updateStudentInfoSlice";
 import updateTeacherInfoReducer from "../features/user/admin/user/updateTeacherInfoSlice";
@@ -23,6 +25,7 @@ import getTeachersReducer from "../features/user/admin/user/getTeachersSlice";
 import getCoursesReducer from "../features/user/admin/course/getCoursesSlice";
 import getOptionsListsReducer from "../features/user/admin/optionsList/getOptionsListsSlice";
 import updateOptionsListReducer from "../features/user/admin/optionsList/updateOptionsListSlice";
+import deleteOptionsListReducer from "../features/user/admin/optionsList/deleteOptionsListSlice";
 import getStudentsListsReducer from "../features/user/admin/user/getStudentsListsSlice";
 import updateSelectionSessionOpenReducer from "../features/user/admin/updateSelectionSessionOpenSlice";
 import getTeacherCoursesReducer from "../features/user/teacher/getTeacherCoursesSlice";
@@ -52,10 +55,12 @@ const reducers = combineReducers({
   getStudentCourses: getStudentCoursesReducer,
   // admin
   createOptionsList: createOptionsListReducer,
-  updateOptionsList: updateOptionsListReducer, 
+  updateOptionsList: updateOptionsListReducer,
+  deleteOptionsList: deleteOptionsListReducer, 
   getOptionsLists: getOptionsListsReducer,
   createCourse: createCourseReducer,
   updateCourse: updateCourseReducer,
+  deleteCourse: deleteCourseReducer,
   registerBatchStudents: registerBatchStudentsReducer,
   registerBatchTeachers: registerBatchTeachersReducer, 
   getStudents: getStudentsReducer,
@@ -67,6 +72,7 @@ const reducers = combineReducers({
   getCourses: getCoursesReducer,
   updateSelectionSessionOpen: updateSelectionSessionOpenReducer,
   getStudentsLists: getStudentsListsReducer,
+  deleteUser: deleteUserReducer,
 
   // teacher
   getTeacherCourses: getTeacherCoursesReducer,

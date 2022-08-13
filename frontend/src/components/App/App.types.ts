@@ -23,10 +23,10 @@ enum Degree {
 }
 
 enum StudyProgram {
-  // Master
   NLP = 'NLP',
   DS = 'DS',
   SAL = 'SAL',
+  AMA = 'AMA',
   SD = 'SD',
   AI = 'AI',
   IS = 'IS',
@@ -34,8 +34,6 @@ enum StudyProgram {
   PSFS = 'PSFS',
   MD = 'MD',
   ASM = 'ASM',
-  AMA = 'AMA',
-  // Bachelor
   TI = 'TI',
   INFO = 'INFO',
   MATEINFO = 'MATEINFO',

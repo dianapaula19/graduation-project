@@ -12,6 +12,7 @@ import { createCourseShowModal, createCourseStatus, revertCreateCourse } from ".
 import { loginToken } from "../../../../features/auth/loginSlice";
 import { ApiStatus } from "../../../../features/Utils";
 import ModalApiStatus from "../../ModalApiStatus";
+import { deleteCourseShowModal, revertDeleteCourse } from "../../../../features/user/admin/course/deleteCourseSlice";
 
 const CoursesList = ({
   courses
@@ -29,6 +30,7 @@ const CoursesList = ({
 
   const showModalCreateCourse = useAppSelector(createCourseShowModal);
   const showModalUpdateCourse = useAppSelector(updateCourseShowModal);
+  const showModalDeleteCourse = useAppSelector(deleteCourseShowModal);
   const statusCreateCourse = useAppSelector(createCourseStatus);
   const statusUpdateCourse = useAppSelector(updateCourseStatus);
   const token = useAppSelector(loginToken);
@@ -74,6 +76,25 @@ const CoursesList = ({
     case ApiStatus.failed:
       updateCourseModalComponent = <ModalApiStatus 
         message={t("courses.error.update")} 
+        error={true} 
+      />;
+      break;
+    default:
+      break;
+  }
+
+  let deleteCourseModalComponent = null;
+
+  switch (statusUpdateCourse) {
+    case ApiStatus.success:
+      deleteCourseModalComponent = <ModalApiStatus 
+        message={t("courses.success.delete")} 
+        error={false} 
+      />;
+      break;
+    case ApiStatus.failed:
+      deleteCourseModalComponent = <ModalApiStatus 
+        message={t("courses.error.delete")} 
         error={true} 
       />;
       break;
@@ -181,7 +202,20 @@ const CoursesList = ({
       }}
     >
       {updateCourseModalComponent}
-    </Modal>  
+    </Modal> 
+    <Modal 
+      show={showModalDeleteCourse} 
+      closeModal={() => {
+        if (token) {
+          dispatch(getCoursesAsync({
+            token: token
+          }));
+          dispatch(revertDeleteCourse());
+        }
+      }}
+    >
+      {deleteCourseModalComponent}
+    </Modal>   
     </>
   );
 

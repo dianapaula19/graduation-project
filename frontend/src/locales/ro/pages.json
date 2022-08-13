@@ -1,11 +1,13 @@
 { 
   "admin": {
     "courses": {
+      "title": "Cursuri",
       "error": {
         "fetch": "A apărut o eroare la preluarea cursurilor"
       }
     },
     "optionsLists": {
+      "title": "Liste de opțiuni",
       "error": {
         "create": "",
         "update": ""
@@ -77,34 +79,32 @@
     "link": "principală"
   },
   "profile": {
-    "personalData": "Personal Data",
-    "profile": "Profile",
+    "personalData": "Date Personale",
+    "profile": "Profil",
     "profileDataFields": {
       "email": "E-mail",
-      "name": "Full Name"
+      "name": "Nume și Prenume"
     },
     "studentDataFields": {
-      "domain": "Domain",
-      "learningMode": "Learning Mode",
-      "degree": "Degree",
-      "studyProgram": "Study Program",
-      "currentGroup": "Current Group",
-      "currentYear": "Current Year",
-      "currentSemester": "Current Semester"
+      "domain": "Domeniu",
+      "learningMode": "Formă de învățământ",
+      "degree": "Ciclu de studii",
+      "studyProgram": "Program de studiu",
+      "currentGroup": "Grupa Curentă",
+      "currentYear": "Anul Curent",
+      "currentSemester": "Semestrul Curent"
     },
-    "studentData": "Student Data",
-    "grade": "Grades",
+    "studentData": "Date Student",
+    "grade": "Note",
     "studentGradeFields": {
-      "yearHeader": "Year",
-      "gradeHeader": "Grade"
+      "yearHeader": "An",
+      "gradeHeader": "Notă"
     }
   },
   "student": {
     "courses": {
       "text": {
-        "message": "Ai fost repartizat/ă la opționalele de mai jos:",
-        "firstSemester": "Semestrul I",
-        "secondSemester": "Semestrul al-II-lea"
+        "message": "Ai fost repartizat/ă la opționalele de mai jos:"
       }
     },
     "coursesSelection": {
@@ -112,12 +112,8 @@
         "saveStudentChoices": "Alegerile tale au fost salvate cu succes!"
       },
       "error": {
-        "fetchStudentOptionsList": "There was a problem while fetching the options lists!",
+        "fetchStudentOptionsList": "A apărut o problemă la preluarea listelor cu opțiuni",
         "saveStudentChoices": "A apărut o problemă la salvarea alegerilor tale!"
-      },
-      "text": {
-        "firstSemester": "Semestrul I",
-        "secondSemester": "Semestrul al-II-lea"
       }
     }
   },
@@ -125,12 +121,12 @@
     "courses": {
       "dropDownFields": {
         "chooseCourse": {
-          "label": "Choose an optional course",
-          "placeholder": "Choose an optional course"
+          "label": "Alege un curs",
+          "placeholder": "Alege un curs"
         }
       },
-      "mailButton": "Send an announcement",
-      "excelButton": "Export the list of students as .xlsx"
+      "mailButton": "Trimite un anunț",
+      "excelButton": "Exportă lista de studenți ca .xlsx"
     }
   },
   "accounts": {
@@ -145,21 +141,21 @@
       "fileUploadLabel": "Importă informațiile studenților în format .xlsx",
       "filters": {
         "dropDownFields": {
-          "degree": {
-            "label": "Degree",
-            "placeholder": "Degree"
-          },
           "domain": {
-            "label": "Domain",
-            "placeholder": "Domain"
+            "label": "Domeniu",
+            "placeholder": "Domeniu"
           },
           "learningMode": {
-            "label": "Learning Mode",
-            "placeholder": "Learning Mode"
+            "label": "Formă de învățământ",
+            "placeholder": "Formă de învățământ"
+          },
+          "degree": {
+            "label": "Ciclu de studii",
+            "placeholder": "Ciclu de studii"
           },
           "studyProgram": {
-            "label": "Study Program",
-            "placeholder": "Study Program"
+            "label": "Program de studiu",
+            "placeholder": "Program de studiu"
           },
           "year": {
             "label": "An",

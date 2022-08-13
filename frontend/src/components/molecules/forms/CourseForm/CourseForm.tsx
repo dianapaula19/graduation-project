@@ -14,6 +14,8 @@ import { updateCourseAsync } from "../../../../features/user/admin/course/update
 import { DropDownOptionsValue } from "../../../atoms/DropDown/DropDown.types";
 import { loginToken } from "../../../../features/auth/loginSlice";
 import { useTranslation } from "react-i18next";
+import { deleteCourseAsync } from "../../../../features/user/admin/course/deleteCourseSlice";
+import { PLACEHOLDER } from "../../../Utils";
 
 const CourseForm = ({
   type,
@@ -39,7 +41,7 @@ const CourseForm = ({
   link: '',
   capacity: 1,
   semester: 1,
-  teacher: 'placeholder'
+  teacher: PLACEHOLDER
   });
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>): void => {
@@ -57,7 +59,7 @@ const CourseForm = ({
   link: courseData.link.length < 1,
   capacity: courseData.capacity < 1 || courseData.capacity > 100,
   semester: courseData.semester < 1 || courseData.semester > 2,
-  teacher: courseData.teacher === 'placeholder'
+  teacher: courseData.teacher === PLACEHOLDER
   }
 
   const disableSubmitButton = validation.title || validation.link || validation.capacity;
@@ -181,6 +183,14 @@ const CourseForm = ({
       label={t(`${submitButtonsTranslate}.delete`)}
       modifier={ButtonModifier.delete}
       disabled={false}
+      onClick={() => {
+        if (currentCourse && token) {
+          dispatch(deleteCourseAsync({
+            id: currentCourse.id,
+            token: token
+          }))
+        }
+      }}
     />  
     )} 
   </div>

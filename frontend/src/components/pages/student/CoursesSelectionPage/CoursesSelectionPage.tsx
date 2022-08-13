@@ -73,7 +73,7 @@ const CoursesSelectionPage = () => {
               fontSize: 'x-large'
             }}
           >
-            {t("student.coursesSelection.text.firstSemester")}
+            {t("common:text.firstSemester")}
           </span>
           <div>
           { studentOptionsLists !== null && studentOptionsLists.filter((optionsList) => optionsList.semester == 1).map((optionsList) => {
@@ -103,7 +103,7 @@ const CoursesSelectionPage = () => {
               fontSize: 'x-large'
             }}
           >
-            {t("student.coursesSelection.text.secondSemester")}
+            {t("common:text.secondSemester")}
           </span>
           <div>
           { studentOptionsLists !== null && studentOptionsLists.filter((optionsList) => optionsList.semester == 2).map((optionsList) => {

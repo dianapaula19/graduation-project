@@ -15,10 +15,8 @@ import { revertUpdateTeacherInfo, updateTeacherInfoShowModal, updateTeacherInfoS
 import { getNotVerifiedUsersAsync } from "../../../../features/user/admin/user/getNotVerifiedUsersSlice";
 import { ApiStatus } from "../../../../features/Utils";
 import { loginToken } from "../../../../features/auth/loginSlice";
-import Loader from "../../../atoms/Loader";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import ModalApiStatus from "../../ModalApiStatus";
+import { deleteUserShowModal, deleteUserStatus, revertDeleteUser } from "../../../../features/user/admin/user/deleteUserSlice";
 
 const AccountsList = ({
   role,
@@ -34,9 +32,11 @@ const AccountsList = ({
   const [showUserDataFormModal, setShowUserDataFormModal] = useState<boolean>(false);
   const [currentEmail, setCurrentEmail] = useState<string | null>(null);
 
+  const showModalDeleteUser = useAppSelector(deleteUserShowModal);
   const showModalVerifyUser = useAppSelector(verifyUserShowModal);
   const showModalUpdateStudentInfo = useAppSelector(updateStudentInfoShowModal);
   const showModalUpdateTeacherInfo = useAppSelector(updateTeacherInfoShowModal);
+  const statusDeleteUser = useAppSelector(deleteUserStatus);
   const statusVerifyUser = useAppSelector(verifyUserStatus);
   const statusUpdateStudentInfo = useAppSelector(updateStudentInfoStatus);
   const statusUpdateTeacherInfo = useAppSelector(updateTeacherInfoStatus);
@@ -47,7 +47,8 @@ const AccountsList = ({
   if (
     showModalVerifyUser || 
     showModalUpdateStudentInfo || 
-    showModalUpdateTeacherInfo
+    showModalUpdateTeacherInfo ||
+    showModalDeleteUser
   ) {
     setShowUserDataFormModal(false);
   }
@@ -55,9 +56,11 @@ const AccountsList = ({
     showModalVerifyUser, 
     showModalUpdateTeacherInfo, 
     showModalUpdateStudentInfo, 
+    showModalDeleteUser,
     setShowUserDataFormModal
   ])
 
+  let deleteUserModalComponent = null;
   let verifyUserModalComponent = null;
   let updateStudentInfoModalComponent = null;
   let updateTeacherInfoModalComponent = null;
@@ -106,7 +109,23 @@ const AccountsList = ({
       />;
       break;
   }
-  
+
+  switch (statusDeleteUser) {
+    case ApiStatus.failed:
+      deleteUserModalComponent = <ModalApiStatus 
+        message={t("accounts.error.deleteUser")} 
+        error={true} 
+      />;
+      break;
+    case ApiStatus.success:
+      deleteUserModalComponent = <ModalApiStatus 
+        message={t("accounts.success.deleteUser")} 
+        error={false} 
+      />;
+      break;
+    default:
+      break;
+  }
 
   return (
     <>
@@ -205,9 +224,7 @@ const AccountsList = ({
           dispatch(getStudentsAsync({
             token: token
           }));
-          if (role === Role.STUDENT) {
-            dispatch(revertCurrentStudent());
-          }
+          dispatch(revertCurrentStudent());
           dispatch(revertUpdateStudentInfo());
         }
       }}
@@ -221,14 +238,44 @@ const AccountsList = ({
           dispatch(getTeachersAsync({
             token: token
           }));
-        if (role === Role.TEACHER) {
           dispatch(revertCurrentTeacher());
-        }
-        dispatch(revertUpdateTeacherInfo());
+          dispatch(revertUpdateTeacherInfo());
         }
       }}
     >
       {updateTeacherInfoModalComponent}
+    </Modal>
+    <Modal 
+      show={showModalDeleteUser} 
+      closeModal={() => {
+        if (token) {
+          switch (role) {
+            case Role.NONE:
+              dispatch(getNotVerifiedUsersAsync({
+                token: token
+              }));
+              dispatch(revertVerifyUser());
+              break;
+            case Role.STUDENT:
+              dispatch(getStudentsAsync({
+                token: token
+              }));
+              dispatch(revertCurrentStudent());
+              break;
+            case Role.TEACHER:
+              dispatch(getTeachersAsync({
+                token: token
+              }));
+              dispatch(revertCurrentTeacher());  
+              break;
+            default:
+              break;
+          }
+          dispatch(revertDeleteUser());
+        }
+      }}
+    >
+      {deleteUserModalComponent}
     </Modal>
     </>
   );

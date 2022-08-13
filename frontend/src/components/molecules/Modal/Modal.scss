@@ -1,3 +1,5 @@
+@import '../../../styles/colors';
+
 .modal {
   position: fixed;
   display: flex;
@@ -20,7 +22,7 @@
     flex-direction: column;
     gap: 2.5rem;
     padding: 1rem;
-    border: solid #c4c4c4 .1rem;
+    border: solid $medium-grey .1rem;
     border-radius: .5rem;
     &__header {
       display: flex;
@@ -28,10 +30,10 @@
       width: 100%;
       gap: 20rem;
       padding-bottom: .5rem;
-      border-bottom: solid #c4c4c4 .1rem;
+      border-bottom: solid $medium-grey .1rem;
   
       &__icon {
-        color: #525252;
+        color: $dark-grey;
         width: 1.25rem;
         height: 1.25rem;
         line-height: 1.25rem;
@@ -41,7 +43,7 @@
         margin-left: auto;
         cursor: pointer;
         &:hover {
-          background-color: #c4c4c4;
+          background-color: $medium-grey;
         }
       }
     }

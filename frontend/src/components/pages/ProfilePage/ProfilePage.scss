@@ -1,0 +1,95 @@
+@import '../../../styles/colors';
+
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  
+  &__profile {
+    font-size: xx-large;
+    font-weight: bold;
+    color: $dark-grey;
+  }
+  
+  &__personal-data {
+    font-size: x-large;
+    font-weight: bold;
+    color: $dark-grey;
+  }
+
+  &__student {
+    &__data {
+      font-size: x-large;
+      font-weight: bold;
+      color: $dark-grey;
+    }
+    &__grade {
+      font-size: x-large;
+      font-weight: bold;
+      color: $dark-grey;
+    }
+    &__grades {
+      &__header {
+      color: $medium-grey;
+      font-size: large;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas: 
+        "grades-header-year grades-header-grade";
+      border-bottom: $medium-grey .1rem solid;
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+      &__year {
+        grid-area: grades-header-year;
+      }
+      &__grade {
+        grid-area: grades-header-grade;
+      }
+      }
+    }
+  }
+}
+
+.data-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: 
+  "data-row-name data-row-data";
+  border-bottom: $medium-grey .1rem solid;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+
+  font-size: large;
+
+  &__name {
+    grid-area: data-row-name;
+    color: $medium-grey;
+  }
+
+  &__data {
+    grid-area: data-row-data;
+    color: $dark-grey;
+  }
+}
+
+.grade-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: 
+  "grade-row-year grade-row-grade";
+  border-bottom: $medium-grey .1rem solid;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+
+  font-size: large;
+
+  &__year {
+    grid-area: grade-row-year;
+    color: $dark-grey;
+  }
+
+  &__grade {
+    grid-area: grade-row-grade;
+    color: $dark-grey;
+  }
+
+}

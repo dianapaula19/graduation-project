@@ -1,3 +1,5 @@
+@import '../../../styles/colors';
+
 .not-found-page {
   overflow: hidden;
   height: 100vh;
@@ -16,8 +18,8 @@
     font-size: x-large;
     &__a {
       all: unset;
-      color: #0366d6;
-      border-bottom: #0366d6 .1rem solid;
+      color: $blue;
+      border-bottom: $blue .1rem solid;
       margin-bottom: .5rem;
       align-self: flex-start;
       cursor: pointer;

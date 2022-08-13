@@ -19,6 +19,7 @@ from users.views import get_students_lists, login, \
             register, \
             register_batch_students, \
             register_batch_teachers, \
+            delete_user, \
             get_student_data, \
             not_verified_users, \
             students, \
@@ -53,6 +54,7 @@ urlpatterns = [
   # admin
   path('api/user/admin/register_batch_students', register_batch_students),
   path('api/user/admin/register_batch_teachers', register_batch_teachers),
+  path('api/user/admin/delete_user', delete_user),
   path('api/user/admin/not_verified_users', not_verified_users),
   path('api/user/admin/students', students),
   path('api/user/admin/teachers', teachers),

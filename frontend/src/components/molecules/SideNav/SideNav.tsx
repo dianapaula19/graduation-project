@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../atoms/Button";
 import { loginStatus, loginUserData, revertLogin } from "../../../features/auth/loginSlice";
 import { revertStudentData } from "../../../features/user/student/studentDataSlice";
-import { useAppSelector } from "../../../app/hooks";
+import { useAppSelector, useWindowDimensions } from "../../../app/hooks";
 import { adminLinks, studentLinks, teacherLinks } from "./Utils";
 import { Role } from "../../App";
 import { revertStudentOptionalsLists } from "../../../features/user/student/studentOptionalsListsSlice";
@@ -29,6 +29,7 @@ import classNames from "classnames";
 const SideNav = () => {
   
   const dispatch = useDispatch();
+  const { height, width } = useWindowDimensions();
   const userData = useAppSelector(loginUserData);
 
   const [collapsed, setCollapsed] = useState<boolean>(false);
@@ -94,6 +95,15 @@ const SideNav = () => {
     default:
       break;  
   }
+
+  useEffect(() => {
+    if (width < 750) {
+      setCollapsed(true);
+    } else {
+      setCollapsed(false);
+    }
+  }, [width, setCollapsed])
+  
 
   return(
     <div 
@@ -179,7 +189,7 @@ const SideNav = () => {
             <FontAwesomeIcon 
               icon={faAnglesLeft} 
             /> 
-            <p>Collapse Sidebar</p> 
+            <p>{t("collapseText")}</p> 
           </div>
         </>  
       )}

@@ -1,10 +1,10 @@
 @import '../../../styles/colors';
 
-.optional-course-card {
+.student-course-card {
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
   grid-template-areas: 
-    "drag-icon info syllabus-button";
+    ". info syllabus-button";
   
   column-gap: .5rem;
   border: $medium-grey solid .05rem;
@@ -15,22 +15,10 @@
 
   align-items: center;
 
-  &__drag-icon {
-    grid-area: drag-icon; 
-    color: $dark-grey;
-    justify-self: start;
-    height: 1.5rem;
-    cursor: pointer;
-  }
-
   &__info {
     grid-area: info;
     color: $dark-grey;
     justify-self: center;
     font-size: small;
-  }
-
-  &__a {
-    justify-self: end;
   }
 }

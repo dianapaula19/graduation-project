@@ -10,10 +10,13 @@ import { ApiStatus } from "../../../../features/Utils";
 import FetchStatus from "../../../molecules/FetchStatus";
 import CoursesList from "../../../molecules/lists/CoursesList/CoursesList";
 import LoggedUserPage from "../../../templates/LoggedUserPage";
+import "./CoursesPage.scss";
 
 const CoursesPage = () => {
 
   const { t } = useTranslation("pages");
+
+  const componentClassName = "admin-courses-page";
 
   const courses = useAppSelector(getCoursesCourses);
   const statusGetCourses = useAppSelector(getCoursesStatus);
@@ -69,7 +72,16 @@ const CoursesPage = () => {
   
   return (
   <LoggedUserPage>
-    <CoursesList courses={courses ? courses : []}/>
+    <div
+      className={componentClassName}
+    >
+      <span
+        className={`${componentClassName}__title`}
+      >
+        {t("admin.courses.title")}
+      </span>
+      <CoursesList courses={courses ? courses : []}/>
+    </div>
   </LoggedUserPage>
   )
 }

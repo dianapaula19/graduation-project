@@ -1,9 +1,12 @@
+
+@import '../../../../styles/colors';
+
 .accounts-list {
   width: 100%;   
   display: flex;
   flex-direction: column;
   font-size: medium;
-  color: #525252; 
+  color: $dark-grey; 
   grid-area: accounts-list;
 
   &__title {
@@ -14,7 +17,7 @@
 
   &__header {
     display: grid;
-    border-bottom: #525252 solid .1rem;
+    border-bottom: $dark-grey solid .1rem;
     padding-bottom: 1rem;
     margin-bottom: 2.5rem;
     text-transform: uppercase;
@@ -40,7 +43,7 @@
 
     cursor: pointer;
     &:hover {
-    background-color: #f1eff1;
+    background-color: $light-grey;
     }
     
     &__index {
