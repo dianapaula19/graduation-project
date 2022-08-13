@@ -46,6 +46,7 @@ def get_students_lists_fun():
   learning_modes = LearningMode.choices
   study_programs = StudyProgram.choices
   lists = []
+
   for course in courses:
     enrolled_students = course.students.all()
     for domain in domains:
@@ -61,7 +62,6 @@ def get_students_lists_fun():
                   student.study_program == study_program[0] and \
                   student.degree == degree[0] and \
                   student.current_year == year:
-                    print(year)
                     students.append({
                       'first_name': student.user.first_name,
                       'last_name': student.user.last_name,
@@ -78,6 +78,7 @@ def get_students_lists_fun():
                   'students': students
                 }
                 lists.append(list)
+  
   return lists
 
 

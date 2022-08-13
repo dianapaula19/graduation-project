@@ -242,6 +242,7 @@
       "gradesTitle": "Note"
     },
     "buttons": {
+      "verifyUser": "Verifică contul utilizatorului",
       "student": "Salvează datele studentului",
       "teacher": "Salvează datele profesorului",
       "delete": "Șterge contul"

@@ -40,22 +40,6 @@ const App = () => {
   const statusLogin = useAppSelector(loginStatus);
   const [role, setRole] = useState(Role.NONE);
 
-  const statusCreateCourse = useAppSelector(createCourseStatus);
-  const statusUpdateCourse = useAppSelector(updateCourseStatus);
-
-  const statusCreateOptionsList = useAppSelector(createOptionsListStatus);
-  const statusUpdateOptionsList = useAppSelector(updateOptionsListStatus);
-  
-  const statusVerifyUser = useAppSelector(verifyUserStatus);
-  const statusUpdateStudentInfo = useAppSelector(updateStudentInfoStatus);
-  const statusUpdateTeacherInfo = useAppSelector(updateTeacherInfoStatus);
-  
-  const statusRegisterBatchStudents = useAppSelector(registerBatchStudentsStatus);
-  const statusRegisterBatchTeachers = useAppSelector(registerBatchTeachersStatus);
-
-  const statusRecoverAccound = useAppSelector(recoverAccountStatus);
-  const statusResetPassword = useAppSelector(resetPasswordStatus);
-
   useEffect(() => {
 
     setTimeout(() => {
@@ -94,23 +78,12 @@ const App = () => {
       }
     }
   
-  }, [userData, setRole, role, statusUpdateSelectionSessionOpen])
-
-  if (
-    statusCreateCourse === ApiStatus.loading ||
-    statusUpdateCourse === ApiStatus.loading ||
-    statusCreateOptionsList === ApiStatus.loading ||
-    statusUpdateOptionsList === ApiStatus.loading ||
-    statusVerifyUser === ApiStatus.loading ||
-    statusUpdateStudentInfo === ApiStatus.loading ||
-    statusUpdateTeacherInfo === ApiStatus.loading ||
-    statusRegisterBatchStudents === ApiStatus.loading ||
-    statusRegisterBatchTeachers === ApiStatus.loading ||
-    statusResetPassword === ApiStatus.loading ||
-    statusRecoverAccound === ApiStatus.loading
-  ) {
-    return <LoadingPage />
-  }
+  }, [
+    userData, 
+    setRole, 
+    role, 
+    statusUpdateSelectionSessionOpen
+  ]);
   
   return (
   <>

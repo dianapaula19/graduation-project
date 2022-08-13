@@ -10,18 +10,18 @@ const LoadingPage = () => {
   const contentClassName = `${componentClassName}__content`;
 
   const [quote, setQuote] = useState<Quote>({
-  text: '',
-  author: ''
+    text: '',
+    author: ''
   });
 
-  const { t } = useTranslation();
+  const { t } = useTranslation("pages");
   
   useEffect(() => {
   if (quote.text === '' || quote.author === '') {
     const index = (Math.floor(Math.random() * 2)).toString();
     setQuote({
-    ['text']: t(`loadingPage.quotes.${index}.text`),
-    ['author']: t(`loadingPage.quotes.${index}.author`)
+      ['text']: t(`loading.quotes.${index}.text`),
+      ['author']: t(`loading.quotes.${index}.author`)
     });
   }
   }, [quote, setQuote, t])

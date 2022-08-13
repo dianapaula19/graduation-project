@@ -42,13 +42,12 @@ const SettingsPage = () => {
   const exportLists = () => {
     if (lists) {
       const header = [t("admin.settings.xlsx.header.fullName"), t("admin.settings.xlsx.header.currentGroup")];
-      const wb = XLSX.utils.book_new();
       lists.map((list) => {
         const ws = XLSX.utils.book_new();
         XLSX.utils.sheet_add_aoa(ws, [header]);
         list.students.map((student) => {
           XLSX.utils.sheet_add_aoa(ws, 
-            [[`${student.last_name} ${student.last_name}`, student.current_group]],
+            [[`${student.first_name} ${student.last_name}`, student.current_group]],
             {origin: -1}  
           )
         })

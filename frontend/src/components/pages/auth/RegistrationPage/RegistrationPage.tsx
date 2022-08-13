@@ -16,7 +16,7 @@ const RegistrationPage = () => {
 
   const dispatch = useAppDispatch();
 
-  const { t } = useTranslation();
+  const { t } = useTranslation("pages");
 
   switch (status) {
   case ApiStatus.loading:
@@ -32,7 +32,7 @@ const RegistrationPage = () => {
         dispatch(revertRegister());
         }}        
       >
-        <span>{code !== null ? t(`register.codes.${code}`) : 'Error'}</span>
+        <span>{code !== null ? t(`auth.registration.codes.${code}`) : 'Error'}</span>
       </Modal>
       </>;
   case ApiStatus.failed:
@@ -46,7 +46,7 @@ const RegistrationPage = () => {
         dispatch(revertRegister());
       }}        
       >
-      <span>{code !== null ? t(`register.codes.${code}`) : 'Error'}</span>
+        <span>{code !== null ? t(`auth.registration.codes.${code}`) : 'Error'}</span>
       </Modal>
     </>;  
   default:

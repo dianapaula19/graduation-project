@@ -9,12 +9,12 @@
     "optionsLists": {
       "title": "Liste de opțiuni",
       "error": {
-        "create": "",
-        "update": ""
+        "create": "A apărut o eroare la crearea listei de opțiuni",
+        "update": "A apărut o eroare la modificarea listei de opțiuni"
       },
       "success": {
-        "create": "",
-        "update": ""
+        "create": "Lista de opțiuni a fost creată cu success",
+        "update": "Lista de opțiuni a fost modificată cu success"
       }, 
       "buttons": {
         "create": "Creează o listă nouă de opțiuni"
@@ -113,7 +113,7 @@
       },
       "error": {
         "fetchStudentOptionsList": "A apărut o problemă la preluarea listelor cu opțiuni",
-        "saveStudentChoices": "A apărut o problemă la salvarea alegerilor tale!"
+        "saveStudentChoices": "A apărut o eroare la salvarea alegerilor tale!"
       }
     }
   },

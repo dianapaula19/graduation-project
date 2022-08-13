@@ -83,13 +83,13 @@ const AccountsList = ({
   switch(statusUpdateStudentInfo) {
     case ApiStatus.failed:
       updateStudentInfoModalComponent = <ModalApiStatus 
-        message={t("accounts.students.error")} 
+        message={t("accounts.students.error.update")} 
         error={true} 
       />;
       break;
     case ApiStatus.success:
       updateStudentInfoModalComponent = <ModalApiStatus 
-        message={t("accounts.students.success")} 
+        message={t("accounts.students.success.update")} 
         error={false} 
       />;
       break;
@@ -98,13 +98,13 @@ const AccountsList = ({
   switch(statusUpdateTeacherInfo) {
     case ApiStatus.failed:
       updateTeacherInfoModalComponent = <ModalApiStatus 
-        message={t("accounts.teachers.error")} 
+        message={t("accounts.teachers.error.update")} 
         error={true} 
       />;
       break;
     case ApiStatus.success:
       updateTeacherInfoModalComponent = <ModalApiStatus 
-        message={t("accounts.teachers.success")} 
+        message={t("accounts.teachers.success.update")} 
         error={false} 
       />;
       break;

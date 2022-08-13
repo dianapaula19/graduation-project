@@ -40,7 +40,7 @@ const LoginPage = () => {
         dispatch(revertLogin())
       }}        
       >
-      <span>{code !== null ? t(`login.codes.${code}`) : ''}</span>
+      <span>{code !== null ? t(`auth.login.codes.${code}`) : ''}</span>
       </Modal>
     </>
     )

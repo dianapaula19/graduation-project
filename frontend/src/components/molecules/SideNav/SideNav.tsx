@@ -139,7 +139,7 @@ const SideNav = () => {
             )  
           })}
           <Button 
-            label={t("links.personalData")} 
+            label={t("links.profile")} 
             onClick={() => {
               navigate('/')
             }}

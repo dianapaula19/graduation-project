@@ -1,7 +1,7 @@
 {
   "links": {
     "signOut": "Deconectează-te",
-    "personalData": "Date personale"
+    "profile": "Profil"
   },
   "studentLinks": {
     "courses": "Cursuri"

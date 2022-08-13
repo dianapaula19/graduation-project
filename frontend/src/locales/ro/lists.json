@@ -4,16 +4,22 @@
       "email": "Email"
     },
     "notVerified": {
-      "error": "",
-      "succes": ""
+      "error": "A apărut o eroare la verificare contului!",
+      "succes": "Contul a fost verificat cu succes!"
     },
     "students": {
-      "error": "",
-      "succes": ""
+      "error": "A apărut o eroare la modificarea datelor studentului!",
+      "success": "Datele studentului au fost modificate cu succes!"
     },
     "teachers": {
-      "error": "",
-      "succes": ""
+      "error": "A apărut o eroare la modificarea datelor profesorului!",
+      "success": "Datele profesorului au fost modificate cu succes!"
+    },
+    "success": {
+      "deleteUser": "Contul a fost șters cu succes!"
+    },
+    "error": {
+      "deleteUser": "A apărut o eroare la ștergerea contului"
     }
   },
   "students": {
