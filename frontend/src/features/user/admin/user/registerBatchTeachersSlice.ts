@@ -3,10 +3,15 @@ import axios from "axios";
 import { RootState } from "../../../../app/store";
 import { ApiStatus, API_URL_USER } from "../../../Utils";
 
+export interface IErrorMessage {
+  index: number;
+  code: string;
+}
+
 export interface IregisterBatchTeachersState {
   status: ApiStatus;
   showModal: boolean;
-  errorMessages: string[] | null;
+  errorMessages: IErrorMessage[] | null;
   code: string | null;
 }
 
@@ -29,9 +34,14 @@ export interface IRegisterBatchTeachersRequest {
 }
 
 export interface IRegisterBatchTeachersResponse {
-  error_messages: string[];
+  error_messages: IErrorMessage[];
   code: string;
 }
+
+export interface IRegisterBatchTeachersError {
+  code: string;
+}
+
 
 export const registerBatchTeachersAsync = createAsyncThunk(
   'user/admin/registerBatchTeachers',
@@ -63,7 +73,7 @@ export const registerBatchTeachersSlice = createSlice({
   },
   extraReducers: (builder) => {
   builder
-  .addCase(registerBatchTeachersAsync.pending, (state, action) => {
+  .addCase(registerBatchTeachersAsync.pending, (state) => {
     state.status = ApiStatus.loading;
   })
   .addCase(registerBatchTeachersAsync.fulfilled, (state, action) => {
@@ -72,6 +82,12 @@ export const registerBatchTeachersSlice = createSlice({
     state.errorMessages = res.error_messages;
     state.showModal = true;
     state.status = ApiStatus.success;
+  })
+  .addCase(registerBatchTeachersAsync.rejected, (state, action) => {
+    const res = action.payload as IRegisterBatchTeachersError;
+    state.code = res.code;
+    state.showModal = true;
+    state.status = ApiStatus.failed;
   })
   }
 });

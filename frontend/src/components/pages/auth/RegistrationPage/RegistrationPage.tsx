@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { registerCode, registerShowModal, registerStatus, revertRegister } from "../../../../features/auth/registerSlice";
 import { ApiStatus } from "../../../../features/Utils";
 import Modal from "../../../molecules/Modal";
+import ModalApiStatus from "../../../molecules/ModalApiStatus";
 import AuthentificationPage from "../../../templates/AuthentificationPage";
 import { AuthentificationAction } from '../../../templates/AuthentificationPage';
 import LoadingPage from "../../LoadingPage";
@@ -32,7 +33,10 @@ const RegistrationPage = () => {
         dispatch(revertRegister());
         }}        
       >
-        <span>{code !== null ? t(`auth.registration.codes.${code}`) : 'Error'}</span>
+        <ModalApiStatus 
+          message={t(`auth.registration.codes.${code}`)} 
+          error={false} 
+        />
       </Modal>
       </>;
   case ApiStatus.failed:
@@ -46,7 +50,10 @@ const RegistrationPage = () => {
         dispatch(revertRegister());
       }}        
       >
-        <span>{code !== null ? t(`auth.registration.codes.${code}`) : 'Error'}</span>
+        <ModalApiStatus 
+          message={t(`auth.registration.codes.${code}`)} 
+          error={true} 
+        />
       </Modal>
     </>;  
   default:

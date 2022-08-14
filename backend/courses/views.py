@@ -242,9 +242,9 @@ def create_options_list(request):
       and student.study_program == study_program \
       and student.current_year == check_year:
         students.append(student)
-        student.options_list.add(options_list)
+        student.options_lists.add(options_list)
     else:
-      student.options_list.remove(options_list)
+      student.options_lists.remove(options_list)
     student.save()
   
   for course_id in courses_ids:

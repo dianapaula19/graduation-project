@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import { loginSelectionSessionOpen, loginToken } from "../../../../features/auth/loginSlice";
+import { loginSelectionSessionOpen, loginToken, setSelectionSessionOpenSetting } from "../../../../features/auth/loginSlice";
 import { getStudentsListsAsync, getStudentsListsLists, getStudentsListsStatus } from "../../../../features/user/admin/user/getStudentsListsSlice";
-import { updateSelectionSessionOpenAsync } from "../../../../features/user/admin/updateSelectionSessionOpenSlice";
+import { revertUpdateSelectionSessionOpen, updateSelectionSessionOpenAsync, updateSelectionSessionOpenStatus } from "../../../../features/user/admin/updateSelectionSessionOpenSlice";
 import { ApiStatus, SelectionSessionSettingValue } from "../../../../features/Utils";
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
@@ -20,7 +20,8 @@ const SettingsPage = () => {
   const selectionSessionOpen = useAppSelector(loginSelectionSessionOpen);
   const token = useAppSelector(loginToken);
   const lists = useAppSelector(getStudentsListsLists)
-  const statusLists = useAppSelector(getStudentsListsStatus)
+  const statusLists = useAppSelector(getStudentsListsStatus);
+  const statusUpdateSelectionSessionOpen = useAppSelector(updateSelectionSessionOpenStatus);
   
   const dispatch = useAppDispatch();
 
@@ -37,7 +38,28 @@ const SettingsPage = () => {
         token: token
       }))
     }
-  });
+    if (statusUpdateSelectionSessionOpen === ApiStatus.success) {
+      let url = `ws://localhost:8000/ws/socket-server/`
+  
+      const socket = new WebSocket(url);
+      socket.onmessage = (e) => {
+      let data = JSON.parse(e.data);
+      if (data.type === 'set_selection_session_open') {
+          dispatch(setSelectionSessionOpenSetting({
+            value: data.SELECTION_SESSION_OPEN as SelectionSessionSettingValue
+          }))
+          dispatch(revertUpdateSelectionSessionOpen())
+        }
+      }
+      socket.onopen = () => {
+          socket.send(JSON.stringify({
+          'status': 'SUCCESS'
+        }))  
+      }
+    }
+  }, [
+    statusUpdateSelectionSessionOpen
+  ]);
 
   const exportLists = () => {
     if (lists) {

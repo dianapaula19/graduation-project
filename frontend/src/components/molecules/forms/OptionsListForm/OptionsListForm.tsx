@@ -53,6 +53,8 @@ const OptionsListForm = ({
     coursesIds: []
   });
 
+  const [filteredCourses, setFilteredCourses] = useState(courses !== null ? courses : []);
+
   const validation = {
     title: data.title === "",
     year: data.year < 2 || data.year > 4,
@@ -89,6 +91,17 @@ const OptionsListForm = ({
     }
   }, [currentOptionsList, setData])
   
+  useEffect(() => {
+    if (courses) {
+      console.log(data.degree)
+      setFilteredCourses(courses.filter(
+        course => 
+        course.semester === Number(data.semester) && 
+        course.degree === data.degree
+      ));
+      console.log(filteredCourses);
+    }
+  }, [data, setFilteredCourses, courses])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>): void => {
     const name = e.target.name;
@@ -325,7 +338,7 @@ const OptionsListForm = ({
       className={`${coursesContainerClassName}__courses`}
       >
       { 
-      courses && courses.filter((course) => {return course.degree === data.degree && course.semester === data.semester}).map((course) => {
+        filteredCourses.map((course) => {
         const idx = data.coursesIds.indexOf(course.id)
         return <CheckBox
             checked={idx === -1 ? false : true}

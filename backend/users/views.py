@@ -7,6 +7,7 @@ from django.db.models import ProtectedError
 
 # Create your views here.
 from django.contrib.auth import authenticate
+from courses.models import OptionsList
 from backend.permissions import IsAdmin, IsStudent, IsTeacher
 
 from courses.utils import students_courses_assignment
@@ -27,7 +28,6 @@ from rest_framework.status import (
 )
 from rest_framework.response import Response
 from django.dispatch import receiver
-from django.urls import reverse
 from django_rest_passwordreset.signals import reset_password_token_created, post_password_reset
 from django.core.mail import send_mail
 
@@ -121,21 +121,15 @@ def register(request):
       status=HTTP_500_INTERNAL_SERVER_ERROR
     )
 
-  try:
-    send_mail(
-      subject="Account created successfully",
-      message="Congrats. Your account was create successfully.",
-      from_email=settings.EMAIL_HOST_USER,
-      recipient_list=[email],
-      fail_silently=False
-    )
-  except:
-    return Response({
-      'code': ResponseCode.EMAIL_NOT_SENT.value
-    },
-    status=HTTP_500_INTERNAL_SERVER_ERROR
+  
+  send_mail(
+    subject="[FMI] Account created successfully",
+    message="Congrats. Your account was creates successfully.",
+    from_email=settings.EMAIL_HOST_USER,
+    to=settings.EMAIL_HOST_USER,
+    recipient_list=[email]
   )
-
+  
   return Response({
     'code': ResponseCode.SUCCESS.value
     }, 
@@ -168,7 +162,10 @@ def register_batch_students(request):
 
   for idx, student in enumerate(students):
     if not student['email']:
-      error_messages.append([idx, ResponseCode.NOT_EMAIL.value])
+      error_messages.append({
+        'index': idx,
+        'code': ResponseCode.NOT_EMAIL.value
+      })
       continue
     
     try:
@@ -177,11 +174,15 @@ def register_batch_students(request):
         password=settings.DEFAULT_PASSWORD,
         first_name=student['first_name'],
         last_name=student['last_name'],
+        role=Role.STUDENT,
         verified=True,
         changed_password=False
       )
     except IntegrityError:
-      error_messages.append([idx, ResponseCode.ACCOUNT_ALREADY_EXISTS.value])
+      error_messages.append({
+        'index': idx,
+        'code': ResponseCode.ACCOUNT_ALREADY_EXISTS.value
+      })
       continue
 
     user = User.objects.get(email=student['email'])
@@ -196,12 +197,10 @@ def register_batch_students(request):
       current_year=student['current_year']
     )
 
-
-
-    grade1 = int(student['grade1'])
-    grade2 = int(student['grade2'])
-    grade3 = int(student['grade3'])
-    grade4 = int(student['grade4'])
+    grade1 = float(student['grade1'])
+    grade2 = float(student['grade2'])
+    grade3 = float(student['grade3'])
+    grade4 = float(student['grade4'])
 
     if grade1 and grade1 != 0.0:
       obj, created = Grade.objects.update_or_create(
@@ -215,7 +214,7 @@ def register_batch_students(request):
     if grade2 and grade2 != 0.0:
       obj, created = Grade.objects.update_or_create(
         student=s,
-        year=1,
+        year=2,
         defaults=dict(
           grade=grade2
         )
@@ -239,17 +238,34 @@ def register_batch_students(request):
         )
       )
 
+    options_lists = OptionsList.objects.all()
+    for options_list in options_lists:
+      if s.domain == options_list.domain and \
+        s.learning_mode == options_list.learning_mode and \
+        s.study_program == options_list.study_program and \
+        s.degree == options_list.degree and \
+        s.current_year == (options_list.year - 1):
+        s.options_lists.add(options_list)
+    
+    s.save()
+
     recipient_list.append(student['email'])
 
-  email = EmailMultiAlternatives(
-    subject="[FMI] Account created successfully",
-    body="Congrats. Your account was created successfully. Please change your password before logging in",
-    from_email=settings.EMAIL_HOST_USER,
-    to=[settings.EMAIL_HOST_USER], 
-    bcc=recipient_list
-  )
-
-  email.send()
+  try:
+    email = EmailMultiAlternatives(
+      subject="[FMI] Account created successfully",
+      body="Congrats. Your account was created successfully. Please change your password before logging in",
+      from_email=settings.EMAIL_HOST_USER,
+      to=[settings.EMAIL_HOST_USER], 
+      bcc=recipient_list
+    )
+    email.send()
+  except:
+    return Response({
+      'code': ResponseCode.EMAIL_NOT_SENT.value,
+      },
+      status=HTTP_500_INTERNAL_SERVER_ERROR
+    )
 
   return Response(
     {
@@ -268,37 +284,49 @@ def register_batch_teachers(request):
 
   for idx, teacher in enumerate(teachers):
     if not teacher['email']:
-      error_messages.append([idx, ResponseCode.NOT_EMAIL.value])
+      error_messages.append({
+        'index': idx,
+        'code': ResponseCode.NOT_EMAIL.value
+      })
       continue
     try:
-      User.objects.create(
+      User.objects.create_user(
         email=teacher['email'],
         password=settings.DEFAULT_PASSWORD,
         first_name=teacher['first_name'],
         last_name=teacher['last_name'],
+        role=Role.TEACHER,
         verified=True,
         changed_password=False
       )
     except IntegrityError:
-      error_messages.append([email, ResponseCode.ACCOUNT_ALREADY_EXISTS.value])
+      error_messages.append({
+        'index': idx,
+        'code': ResponseCode.ACCOUNT_ALREADY_EXISTS.value
+      })
       continue
     
     user = User.objects.get(email=teacher['email'])
     Teacher.objects.create(user=user)
     recipient_list.append(teacher['email'])
 
-  email = EmailMultiAlternatives(
-    subject="[FMI] Account created successfully",
-    body="Congrats. Your account was created successfully. Please change your password before logging in",
-    from_email=settings.EMAIL_HOST_USER,
-    to=[settings.EMAIL_HOST_USER], 
-    bcc=recipient_list
-  )
+  try:
+    email = EmailMultiAlternatives(
+      subject="[FMI] Account created successfully",
+      body="Congrats. Your account was created successfully. Please change your password before logging in",
+      from_email=settings.EMAIL_HOST_USER,
+      to=[settings.EMAIL_HOST_USER], 
+      bcc=recipient_list
+    )
+    email.send()
+  except:
+    return Response({
+        'code': ResponseCode.EMAIL_NOT_SENT.value,
+      },
+      status=HTTP_500_INTERNAL_SERVER_ERROR
+    )
 
-  email.send()
-
-  return Response(
-    {
+  return Response({
       'code': ResponseCode.SUCCESS.value,
       'error_messages': error_messages
     },
@@ -434,21 +462,6 @@ def students(request):
   
   email = request.data.get("email")
 
-  if request.method == "DELETE":
-    try:
-      User.objects.filter(email=email).delete()
-    except:
-      return Response({
-          'code': ResponseCode.COULD_NOT_DELETE_STUDENT.value
-        },
-        status=HTTP_500_INTERNAL_SERVER_ERROR
-      )
-    return Response({
-        'code': ResponseCode.SUCCESS.value
-      },
-      status=HTTP_200_OK
-    )
-
   first_name = request.data.get("first_name")
   last_name = request.data.get("last_name")
   
@@ -504,6 +517,15 @@ def students(request):
         },
         status=HTTP_200_OK
       )
+
+  options_lists = OptionsList.objects.all()
+  for options_list in options_lists:
+    if student.domain == options_list.domain and \
+      student.learning_mode == options_list.learning_mode and \
+      student.study_program == options_list.study_program and \
+      student.degree == options_list.degree and \
+      student.current_year == (options_list.year - 1):
+      student.options_lists.add(options_list)
       
   user.save()
   student.save()
@@ -532,17 +554,10 @@ def teachers(request):
   first_name = request.data.get("first_name")
   last_name = request.data.get("last_name")
 
-  try:
-    User.objects.filter(email=email).update(
-      first_name=first_name,
-      last_name=last_name
-    )
-  except:
-    return Response({
-      'code': ResponseCode.ERROR.value
-      },
-      status=HTTP_500_INTERNAL_SERVER_ERROR
-    )
+  User.objects.filter(email=email).update(
+    first_name=first_name,
+    last_name=last_name
+  )
   
   return Response({
       'code': ResponseCode.SUCCESS.value

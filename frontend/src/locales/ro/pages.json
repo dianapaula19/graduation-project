@@ -41,11 +41,10 @@
   "auth": {
     "login": {
       "codes": {
-        "NO_PASSWORD_OR_EMAIL_PROVIDED": "Please provide both a password and an email",
-        "INVALID_CREDENTIALS": "The password or the email were wrong",
-        "ACCOUNT_NOT_VERIFIED": "Your account wasn`t verified yet. You will receive an email as soon as your account is verified.",
-        "PASSWORD_NOT_CHANGED": "Please reset your password before logging in for the first time",
-        "SUCCESS": "SUCCESS"
+        "NO_PASSWORD_OR_EMAIL_PROVIDED": "E nevoie de atât o parolă, cât și un email pentru autentificare",
+        "INVALID_CREDENTIALS": "Parola sau email-ul au fost greșite",
+        "ACCOUNT_NOT_VERIFIED": "Contul tău nu a fost verificat încă. O să primești un email imediat ce contul tău va fi verificat.",
+        "PASSWORD_NOT_CHANGED": "Trebuie să-ți resetezi parola înainte de a te loga"
       }
     },
     "recoverAccount": {
@@ -56,9 +55,9 @@
     },
     "registration": {
       "codes": {
-        "NO_PASSWORD_OR_EMAIL_PROVIDED": "Please provide both a password and an email",
-        "ALREADY_REGISTERED": "You are already registered",
-        "SUCCESS": "Your account was created succesfully. Once your account is verified, you will be notified by email"
+        "NO_PASSWORD_OR_EMAIL_PROVIDED": "E nevoie de atât o parolă, cât și un email pentru înregistre",
+        "ALREADY_REGISTERED": "Există deja un utilizator înregistrat cu acest email",
+        "SUCCESS": "Contul tău a fost creat cu succes. O să primești un email imediat ce contul tău va fi verificat."
       }
     }
   },
@@ -125,11 +124,20 @@
           "placeholder": "Alege un curs"
         }
       },
+      "xlsx": {
+        "title": "Listă studenți",
+        "fullName": "Prenume și nume",
+        "email": "E-mail"
+      },
       "mailButton": "Trimite un anunț",
       "excelButton": "Exportă lista de studenți ca .xlsx"
     }
   },
   "accounts": {
+    "codes": {
+      "NOT_EMAIL": "Nu a fost specificat un email",
+      "ACCOUNT_ALREADY_EXISTS": "Contul a fost deja creat"
+    },
     "notVerified": {
       "title": "Conturi neverificate",
       "buttonLabel": "Conturi neverificate",
@@ -170,6 +178,12 @@
             "label": "Caută după nume"
           }
         }
+      },
+      "success": {
+        "register": "Datele studenților au fost importate cu succes!"
+      },
+      "error": {
+        "EMAIL_NOT_SENT": "Nu s-a putut transmite email-ul către studenți"
       }
     },
     "teachers": {
@@ -182,6 +196,12 @@
             "label": "Caută după nume"
           }
         }
+      },
+      "success": {
+        "register": "Datele profesorilor au fost importate cu succes!"
+      },
+      "error": {
+        "EMAIL_NOT_SENT": "Nu s-a putut transmite email-ul către profesori"
       }
     }
   }

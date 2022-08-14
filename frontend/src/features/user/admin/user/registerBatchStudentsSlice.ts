@@ -6,7 +6,7 @@ import { ApiStatus, API_URL_USER } from "../../../Utils";
 export interface IRegisterBatchStudentsState {
   status: ApiStatus;
   showModal: boolean;
-  errorMessages: string[] | null;
+  errorMessages: IErrorMessage[] | null;
   code: string | null;
 }
 
@@ -43,9 +43,18 @@ export interface IRegisterBatchStudentsRequest {
   token: string;
 }
 
-export interface IRegisterBatchStudentsResponse {
-  error_messages: string[];
+export interface IErrorMessage {
+  index: number;
   code: string;
+}
+
+export interface IRegisterBatchStudentsResponse {
+  error_messages: IErrorMessage[];
+  code: string;
+}
+
+interface IRegisterBatchStudentsError {
+  code: string; 
 }
 
 export const registerBatchStudentsAsync = createAsyncThunk(
@@ -87,6 +96,12 @@ export const registerBatchStudentsSlice = createSlice({
     state.errorMessages = res.error_messages;
     state.showModal = true;
     state.status = ApiStatus.success;
+  })
+  .addCase(registerBatchStudentsAsync.rejected, (state, action) => {
+    const res = action.payload as IRegisterBatchStudentsError;
+    state.code = res.code;
+    state.showModal = true;
+    state.status = ApiStatus.failed;
   })
   }
 });

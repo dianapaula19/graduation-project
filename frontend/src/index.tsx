@@ -8,16 +8,17 @@ import './i18n';
 import './index.css';
 import { PersistGate } from 'redux-persist/integration/react';
 import persistStore from 'redux-persist/es/persistStore';
+import LoadingPage from './components/pages/LoadingPage';
 
 let persistor = persistStore(store);
 
 ReactDOM.render(
   <React.StrictMode>
-  <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-    <App />
-    </PersistGate>
-  </Provider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

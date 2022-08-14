@@ -37,7 +37,6 @@ const SendAnnouncementForm = () => {
   }
 
   const handleSubmit = () => {
-    console.log(currentTeacherCourse);
     if (currentTeacherCourse && userData && token) {
       let recipient_list = Array.from(currentTeacherCourse.students, student => student.email);
       dispatch(sendAnnouncementAsync({

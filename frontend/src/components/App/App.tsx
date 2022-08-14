@@ -18,18 +18,12 @@ import SettingsPage from '../pages/admin/SettingsPage';
 import { ApiStatus, SelectionSessionSettingValue } from '../../features/Utils';
 import { revertUpdateSelectionSessionOpen, updateSelectionSessionOpenStatus } from '../../features/user/admin/updateSelectionSessionOpenSlice';
 import NotFoundPage from '../pages/NotFoundPage';
-import { updateCourseStatus } from '../../features/user/admin/course/updateCourseSlice';
-import { createCourseStatus } from '../../features/user/admin/course/createCourseSlice';
-import { createOptionsListStatus } from '../../features/user/admin/optionsList/createOptionsListSlice';
-import { updateOptionsListStatus } from '../../features/user/admin/optionsList/updateOptionsListSlice';
-import { verifyUserStatus } from '../../features/user/admin/user/verifyUserSlice';
-import { updateStudentInfoStatus } from '../../features/user/admin/user/updateStudentInfoSlice';
-import { updateTeacherInfoStatus } from '../../features/user/admin/user/updateTeacherInfoSlice';
-import { registerBatchStudentsStatus } from '../../features/user/admin/user/registerBatchStudentsSlice';
-import { registerBatchTeachersStatus } from '../../features/user/admin/user/registerBatchTeachersSlice';
+import { registerBatchStudentsStatus, revertRegisterBatchStudents } from '../../features/user/admin/user/registerBatchStudentsSlice';
+import { registerBatchTeachersStatus, revertRegisterBatchTeachers } from '../../features/user/admin/user/registerBatchTeachersSlice';
 import LoadingPage from '../pages/LoadingPage';
-import { recoverAccountStatus } from '../../features/auth/recoverAccountSlice';
-import { resetPasswordStatus } from '../../features/auth/resetPasswordSlice';
+import { revertVerifyUser, verifyUserStatus } from '../../features/user/admin/user/verifyUserSlice';
+import { revertSendAnnouncement, sendAnnouncementStatus } from '../../features/user/teacher/sendAnnouncementSlice';
+import { getStudentsListsStatus, revertGetStudentsLists } from '../../features/user/admin/user/getStudentsListsSlice';
 
 const App = () => {
 
@@ -38,15 +32,13 @@ const App = () => {
   const statusUpdateSelectionSessionOpen = useAppSelector(updateSelectionSessionOpenStatus);
   const dispatch = useAppDispatch();
   const statusLogin = useAppSelector(loginStatus);
+  const statusRegisterBatchStudents = useAppSelector(registerBatchStudentsStatus);
+  const statusRegisterBatchTeachers = useAppSelector(registerBatchTeachersStatus);
+  const statusVerifyUser = useAppSelector(verifyUserStatus);
+  const statusSendAnnouncement = useAppSelector(sendAnnouncementStatus);
   const [role, setRole] = useState(Role.NONE);
 
   useEffect(() => {
-
-    setTimeout(() => {
-      if (statusLogin === ApiStatus.loading) {
-        dispatch(revertLogin());
-      }
-    }, Time.SECOND * 5);
 
     if (statusLogin === ApiStatus.success) {
       setTimeout(() => {
@@ -57,40 +49,20 @@ const App = () => {
     if (userData && role === Role.NONE) {
       setRole(userData.role)
     }
-
-    if (statusUpdateSelectionSessionOpen === ApiStatus.success) {
-      let url = `ws://localhost:8000/ws/socket-server/`
-  
-      const socket = new WebSocket(url);
-      socket.onmessage = (e) => {
-      let data = JSON.parse(e.data);
-      if (data.type === 'set_selection_session_open') {
-          dispatch(setSelectionSessionOpenSetting({
-            value: data.SELECTION_SESSION_OPEN as SelectionSessionSettingValue
-          }))
-          dispatch(revertUpdateSelectionSessionOpen())
-        }
-      }
-      socket.onopen = () => {
-          socket.send(JSON.stringify({
-          'status': 'SUCCESS'
-        }))  
-      }
-    }
   
   }, [
     userData, 
     setRole, 
-    role, 
-    statusUpdateSelectionSessionOpen
+    role
   ]);
 
-  const statusRegisterBatchStudents = useAppSelector(registerBatchStudentsStatus);
-  const statusRegisterBatchTeachers = useAppSelector(registerBatchTeachersStatus);
-
   if (
+    statusLogin === ApiStatus.loading ||
     statusRegisterBatchStudents === ApiStatus.loading ||
-    statusRegisterBatchTeachers === ApiStatus.loading
+    statusRegisterBatchTeachers === ApiStatus.loading ||
+    statusVerifyUser === ApiStatus.loading ||
+    statusSendAnnouncement === ApiStatus.loading ||
+    statusUpdateSelectionSessionOpen === ApiStatus.loading
   ) {
     return (
       <LoadingPage />

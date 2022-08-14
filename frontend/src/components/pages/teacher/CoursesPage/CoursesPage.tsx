@@ -42,7 +42,7 @@ const OptionalCoursesList = () => {
   }
 
   const exportToExcel = () => {
-    const header = [t("studentsList.header.name"), t("studentsList.header.email")];
+    const header = [t("teacher.courses.xlsx.fullName"), t("teacher.courses.xlsx.email")];
     const ws = XLSX.utils.book_new();
     XLSX.utils.sheet_add_aoa(ws, [header]);
     currentCourse?.students.forEach((student) => {
@@ -55,7 +55,7 @@ const OptionalCoursesList = () => {
     const wb = { Sheets: {"data": ws}, SheetNames: ["data"]}
     const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array"});
     const data = new Blob([excelBuffer], { type: fileType})
-    FileSaver.saveAs(data, "List.xlsx");
+    FileSaver.saveAs(data, currentCourse?.title + " - " + t("teacher.courses.xlsx.title") + ".xlsx");
   }
 
   useEffect(() => {

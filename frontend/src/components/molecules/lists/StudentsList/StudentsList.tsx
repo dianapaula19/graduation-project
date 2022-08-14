@@ -8,6 +8,7 @@ const StudentsList = ({
 }: IStudentsListProps) => {
 
   const componentClassName = "students-list";
+  const componentId = "students-list";
   
   const { t } = useTranslation('lists');
 
@@ -39,6 +40,7 @@ const StudentsList = ({
         return (
           <div 
             className={`${componentClassName}__item`}
+            key={`${componentId}-${idx}`}
           >
             <span
               className={`${componentClassName}__index`}

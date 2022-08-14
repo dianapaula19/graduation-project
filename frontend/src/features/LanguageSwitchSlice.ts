@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { RootState, store } from "../app/store";
+import { RootState } from "../app/store";
 
 export enum Language {
   ro = "ro",

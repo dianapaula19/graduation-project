@@ -10,12 +10,12 @@ import { IAccountsPageProps} from "./AccountsPage.types";
 import { useTranslation } from "react-i18next";
 import * as XLSX from "xlsx";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import registerBatchStudentsSlice, { IRegisterBatchStudentsRequest, IStudentData, registerBatchStudentsAsync, registerBatchStudentsShowModal, registerBatchStudentsStatus, revertRegisterBatchStudents } from "../../../features/user/admin/user/registerBatchStudentsSlice";
-import { ITeacherData, registerBatchTeachersAsync, registerBatchTeachersShowModal, registerBatchTeachersStatus, revertRegisterBatchTeachers } from "../../../features/user/admin/user/registerBatchTeachersSlice";
+import registerBatchStudentsSlice, { IErrorMessage, IRegisterBatchStudentsRequest, IStudentData, registerBatchStudentsAsync, registerBatchStudentsCode, registerBatchStudentsShowModal, registerBatchStudentsStatus, revertRegisterBatchStudents } from "../../../features/user/admin/user/registerBatchStudentsSlice";
+import { ITeacherData, registerBatchTeachersAsync, registerBatchTeachersCode, registerBatchTeachersErrorMessages, registerBatchTeachersShowModal, registerBatchTeachersStatus, revertRegisterBatchTeachers } from "../../../features/user/admin/user/registerBatchTeachersSlice";
 import { ApiStatus } from "../../../features/Utils";
 import Modal from "../../molecules/Modal";
-import { getStudentsAsync, getStudentsStatus, getStudentsStudents } from "../../../features/user/admin/user/getStudentsSlice";
-import { getTeachersAsync, getTeachersStatus, getTeachersTeachers } from "../../../features/user/admin/user/getTeachersSlice";
+import { getStudentsAsync, getStudentsStatus, getStudentsStudents, revertGetStudents } from "../../../features/user/admin/user/getStudentsSlice";
+import { getTeachersAsync, getTeachersStatus, getTeachersTeachers, revertGetTeachers } from "../../../features/user/admin/user/getTeachersSlice";
 import { getNotVerifiedUsersAsync, getNotVerifiedUsersStatus, getNotVerifiedUsersUsers } from "../../../features/user/admin/user/getNotVerifiedUsersSlice";
 import { revertVerifyUser, verifyUserShowModal } from "../../../features/user/admin/user/verifyUserSlice";
 import { useNavigate } from "react-router-dom";
@@ -67,6 +67,32 @@ const AccountsPage = ({
   const users = useAppSelector(getNotVerifiedUsersUsers);
   const showModalRegisterBatchStudents = useAppSelector(registerBatchStudentsShowModal);
   const showModalRegisterBatchTeachers = useAppSelector(registerBatchTeachersShowModal);
+  const errorMessagesRegisterBatchStudents = useAppSelector(registerBatchTeachersErrorMessages);
+  const errorMessagesRegisterBatchTeachers = useAppSelector(registerBatchTeachersErrorMessages);
+  const codeRegisterBatchStudents = useAppSelector(registerBatchStudentsCode);
+  const codeRegisterBatchTeachers = useAppSelector(registerBatchTeachersCode);
+
+
+  let errorMessageRegisterBatchStudents = "";
+  
+  if (errorMessagesRegisterBatchStudents) {
+    errorMessagesRegisterBatchStudents.map((message) => {
+      errorMessageRegisterBatchStudents.concat(
+        message.index + ": " + t(`accounts.codes.${message.code}`) + "\n");
+    })
+  } else {
+    errorMessageRegisterBatchStudents = t("accounts.students.success.register");
+  }
+
+  let errorMessageRegisterBatchTeachers = "";
+  if (errorMessagesRegisterBatchTeachers) {
+    errorMessagesRegisterBatchTeachers.map((message) => {
+      errorMessageRegisterBatchTeachers.concat(
+        message.index + ": " + t(`accounts.codes.${message.code}`) + "\n");
+    })
+  } else {
+    errorMessageRegisterBatchTeachers = t("accounts.teachers.success.register");
+  }
 
   const token = useAppSelector(loginToken);
 
@@ -146,57 +172,38 @@ const AccountsPage = ({
   }
 
   useEffect(() => {
-  $('#import-excel-file-button').on('click', () => {
-    $('#import-excel-file-input').trigger('click')
-  });
-  if (
-    role === Role.STUDENT && 
-    statusGetStudents === ApiStatus.idle &&
-    token) 
-  {
-    dispatch(getStudentsAsync({
-      token: token
-    }))
-  }
-  if (
-    role === Role.TEACHER && 
-    statusGetTeachers === ApiStatus.idle &&
-    token
-    ) 
-  {
-    dispatch(getTeachersAsync({
-      token: token
-    }))
-  }
-  if (
-    role === Role.NONE && 
-    statusGetNotVerifiedUsers === ApiStatus.idle &&
-    token
-    ) 
-  {
-    dispatch(getNotVerifiedUsersAsync({
-      token: token
-    }))
-  }
-
-  if (
-    statusRegisterBatchStudents === ApiStatus.success &&
-    token
-  ) {
-    dispatch(getStudentsAsync({
-      token: token
-    }))
-  }
-
-  if (
-    statusRegisterBatchTeachers === ApiStatus.success &&
-    token
-  ) {
-    dispatch(getTeachersAsync({
-      token: token
-    }))
-  }
-
+    $('#import-excel-file-button').on('click', () => {
+      $('#import-excel-file-input').trigger('click')
+    });
+    if (
+      role === Role.STUDENT && 
+      statusGetStudents === ApiStatus.idle &&
+      token) 
+    {
+      dispatch(getStudentsAsync({
+        token: token
+      }))
+    }
+    if (
+      role === Role.TEACHER && 
+      statusGetTeachers === ApiStatus.idle &&
+      token
+      ) 
+    {
+      dispatch(getTeachersAsync({
+        token: token
+      }))
+    }
+    if (
+      role === Role.NONE && 
+      statusGetNotVerifiedUsers === ApiStatus.idle &&
+      token
+      ) 
+    {
+      dispatch(getNotVerifiedUsersAsync({
+        token: token
+      }))
+    }
 
   }, [
     role, 
@@ -300,41 +307,71 @@ const AccountsPage = ({
     })
   }
 
+  useEffect(() => {
+    
+    if (statusRegisterBatchStudents === ApiStatus.success) {
+      if (errorMessagesRegisterBatchStudents) {
+        errorMessagesRegisterBatchStudents.map((message) => {
+          errorMessageRegisterBatchStudents.concat(
+            message.index + ": " + t(`accounts.codes.${message.code}`) + "\n");
+        })
+      } else {
+        errorMessageRegisterBatchStudents = t("accounts.students.success.register");
+      }
+    }
+    
+    if (statusRegisterBatchTeachers === ApiStatus.success) {
+      if (errorMessagesRegisterBatchTeachers) {
+        errorMessagesRegisterBatchTeachers.map((message) => {
+          errorMessageRegisterBatchTeachers.concat(
+            message.index + ": " + t(`accounts.codes.${message.code}`) + "\n");
+        })
+      } else {
+        errorMessageRegisterBatchTeachers = t("accounts.teachers.success.register");
+      }
+    }    
+
+  }, [
+    statusRegisterBatchStudents, 
+    statusRegisterBatchTeachers, 
+    errorMessagesRegisterBatchStudents,
+    errorMessagesRegisterBatchTeachers
+  ])
+
   let modalRegisterBatchStudentComponent = null;
 
   switch(statusRegisterBatchStudents) {
     case ApiStatus.failed:
       modalRegisterBatchStudentComponent = <ModalApiStatus 
-        message={t("accounts.notVerified.error")} 
+        message={t(`accounts.students.error.${codeRegisterBatchStudents}`)} 
         error={true} 
       />
       break;
     case ApiStatus.success:
       modalRegisterBatchStudentComponent = <ModalApiStatus 
-        message={t("accounts.notVerified.success")} 
+        message={errorMessageRegisterBatchStudents} 
         error={false} 
       />
       break;
   }
-
 
   let modalRegisterBatchTeacherComponent = null;
 
   switch(statusRegisterBatchTeachers) {
     case ApiStatus.failed:
       modalRegisterBatchTeacherComponent = <ModalApiStatus 
-        message={t("accounts.notVerified.error")} 
+        message={t(`accounts.teachers.error.${codeRegisterBatchTeachers}`)} 
         error={true} 
       />
       break;
     case ApiStatus.success:
       modalRegisterBatchTeacherComponent = <ModalApiStatus 
-        message={t("accounts.notVerified.success")} 
+        message={errorMessageRegisterBatchTeachers} 
         error={false} 
       />
       break;
   }
-
+  
   return (
   <LoggedUserPage>
     <div
@@ -543,7 +580,10 @@ const AccountsPage = ({
     {role === Role.STUDENT && (
       <Modal 
         show={showModalRegisterBatchStudents} 
-        closeModal={() => {dispatch(revertRegisterBatchStudents());}}
+        closeModal={() => {
+          dispatch(revertRegisterBatchStudents());
+          dispatch(revertGetStudents());
+        }}
       >
         {modalRegisterBatchStudentComponent}
       </Modal>  
@@ -551,7 +591,11 @@ const AccountsPage = ({
     {role === Role.TEACHER && (
       <Modal 
         show={showModalRegisterBatchTeachers} 
-        closeModal={() => {dispatch(revertRegisterBatchTeachers());}}
+        closeModal={() => {
+          
+          dispatch(revertRegisterBatchTeachers());
+          dispatch(revertGetTeachers());
+        }}
       >
         {modalRegisterBatchTeacherComponent}
       </Modal>
