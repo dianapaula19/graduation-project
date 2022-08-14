@@ -21,7 +21,7 @@ class CourseSerializer(serializers.ModelSerializer):
 	teacher_email = serializers.CharField(source='teacher.user.email')
 	class Meta:
 		model = Course
-		fields = ['id', 'title', 'link', 'capacity', 'semester', 'teacher_first_name', 'teacher_last_name', 'teacher_email']
+		fields = ['id', 'title', 'link', 'capacity', 'degree', 'semester', 'teacher_first_name', 'teacher_last_name', 'teacher_email']
 
 class StudentSerializer(serializers.ModelSerializer):
 

@@ -3,6 +3,7 @@ from django.core.mail import EmailMultiAlternatives
 from enum import Enum
 from django.conf import settings
 from django.db import IntegrityError
+from django.db.models import ProtectedError
 
 # Create your views here.
 from django.contrib.auth import authenticate
@@ -36,10 +37,11 @@ class ResponseCode(Enum):
   ACCOUNT_NOT_VERIFIED = 'ACCOUNT_NOT_VERIFIED'
   PASSWORD_NOT_CHANGED = 'PASSWORD_NOT_CHANGED'
   ACCOUNT_ALREADY_EXISTS = 'ACCOUNT_ALREADY_EXISTS'
+  NOT_EMAIL = 'NOT_EMAIL'
   USER_NOT_FOUND = 'USER_NOT_FOUND'
   STUDENT_NOT_FOUND = 'STUDENT_NOT_FOUND'
   EMAIL_NOT_SENT = 'EMAIL_NOT_SENT'
-  ERROR = 'ERROR'
+  TEACHER_HAS_COURSE = 'TEACHER_HAS_COURSE'
   SUCCESS = 'SUCCESS'
 
 @api_view(["POST"])
@@ -162,9 +164,11 @@ def post_password_reset(sender, user, *args, **kwargs):
 def register_batch_students(request):
   students = request.data.get("students")
   error_messages = []
+  recipient_list = []
 
-  for student in enumerate(students):
+  for idx, student in enumerate(students):
     if not student['email']:
+      error_messages.append([idx, ResponseCode.NOT_EMAIL.value])
       continue
     
     try:
@@ -177,12 +181,12 @@ def register_batch_students(request):
         changed_password=False
       )
     except IntegrityError:
-      error_messages.append([email, ResponseCode.ACCOUNT_ALREADY_EXISTS.value])
+      error_messages.append([idx, ResponseCode.ACCOUNT_ALREADY_EXISTS.value])
       continue
 
     user = User.objects.get(email=student['email'])
         
-    Student.objects.create(
+    s = Student.objects.create(
       user=user,
       domain=student['domain'],
       learning_mode=student['learning_mode'],
@@ -191,6 +195,61 @@ def register_batch_students(request):
       current_group=student['current_group'],
       current_year=student['current_year']
     )
+
+
+
+    grade1 = int(student['grade1'])
+    grade2 = int(student['grade2'])
+    grade3 = int(student['grade3'])
+    grade4 = int(student['grade4'])
+
+    if grade1 and grade1 != 0.0:
+      obj, created = Grade.objects.update_or_create(
+        student=s,
+        year=1,
+        defaults=dict(
+          grade=grade1
+        )
+      )
+
+    if grade2 and grade2 != 0.0:
+      obj, created = Grade.objects.update_or_create(
+        student=s,
+        year=1,
+        defaults=dict(
+          grade=grade2
+        )
+      )
+
+    if grade3 and grade3 != 0.0:
+      obj, created = Grade.objects.update_or_create(
+        student=s,
+        year=3,
+        defaults=dict(
+          grade=grade3
+        )
+      )
+
+    if grade4 and grade4 != 0.0:
+      obj, created = Grade.objects.update_or_create(
+        student=s,
+        year=4,
+        defaults=dict(
+          grade=grade4
+        )
+      )
+
+    recipient_list.append(student['email'])
+
+  email = EmailMultiAlternatives(
+    subject="[FMI] Account created successfully",
+    body="Congrats. Your account was created successfully. Please change your password before logging in",
+    from_email=settings.EMAIL_HOST_USER,
+    to=[settings.EMAIL_HOST_USER], 
+    bcc=recipient_list
+  )
+
+  email.send()
 
   return Response(
     {
@@ -205,10 +264,11 @@ def register_batch_students(request):
 def register_batch_teachers(request):
   teachers = request.data.get("teachers")
   error_messages = []
+  recipient_list = []
 
   for idx, teacher in enumerate(teachers):
     if not teacher['email']:
-      error_messages.append("Row {}: The email wasn't provided".format(idx))
+      error_messages.append([idx, ResponseCode.NOT_EMAIL.value])
       continue
     try:
       User.objects.create(
@@ -225,6 +285,17 @@ def register_batch_teachers(request):
     
     user = User.objects.get(email=teacher['email'])
     Teacher.objects.create(user=user)
+    recipient_list.append(teacher['email'])
+
+  email = EmailMultiAlternatives(
+    subject="[FMI] Account created successfully",
+    body="Congrats. Your account was created successfully. Please change your password before logging in",
+    from_email=settings.EMAIL_HOST_USER,
+    to=[settings.EMAIL_HOST_USER], 
+    bcc=recipient_list
+  )
+
+  email.send()
 
   return Response(
     {
@@ -273,12 +344,12 @@ def get_student_data(request):
 def delete_user(request):
   
   email = request.data.get("email")
-
+  
   try:
     User.objects.filter(email=email).delete()
   except:
     return Response({
-        'code': ResponseCode.ERROR.value
+      'code': ResponseCode.TEACHER_HAS_COURSE.value
       },
       status=HTTP_500_INTERNAL_SERVER_ERROR
     )
@@ -335,7 +406,11 @@ def not_verified_users(request):
       fail_silently=False
     )
   except:
-    pass  
+    return Response({
+      'code': ResponseCode.EMAIL_NOT_SENT.value
+      },
+      status=HTTP_500_INTERNAL_SERVER_ERROR
+    )  
 
   return Response({
     'code': ResponseCode.SUCCESS.value
@@ -415,13 +490,14 @@ def students(request):
   if grades:   
     try:
       for grade in grades:
-        obj, created = Grade.objects.update_or_create(
-          student=student,
-          year=grade['year'],
-          defaults=dict(
-            grade=grade['grade']
+        if grade != 0.0:
+          obj, created = Grade.objects.update_or_create(
+            student=student,
+            year=grade['year'],
+            defaults=dict(
+              grade=grade['grade']
+            )
           )
-        )
     except:
       return Response({
         'code': ResponseCode.ERROR.value
@@ -452,21 +528,6 @@ def teachers(request):
     )
   
   email = request.data.get("email")
-
-  if request.method == "DELETE":
-    try:
-      User.objects.filter(email=email).delete()
-    except:
-      return Response({
-      'code': ResponseCode.COULD_NOT_DELETE_TEACHER.value
-      },
-      status=HTTP_500_INTERNAL_SERVER_ERROR
-    )
-    return Response({
-      'code': ResponseCode.SUCCESS.value
-      },
-      status=HTTP_200_OK
-    )
 
   first_name = request.data.get("first_name")
   last_name = request.data.get("last_name")

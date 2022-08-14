@@ -24,6 +24,7 @@ import LoadingPage from "../../pages/LoadingPage";
 import DropDown from "../../atoms/DropDown";
 import { Department } from "../../App/App.types";
 import { degreeMap, PLACEHOLDER } from "../../Utils";
+import ModalApiStatus from "../../molecules/ModalApiStatus";
 
 const AccountsPage = ({
   role,
@@ -35,6 +36,9 @@ const AccountsPage = ({
   const dropDownStudentFiltersTranslate = "accounts.students.filters.dropDownFields";
   const inputStudentFiltersTranslate = "accounts.students.filters.inputFields";
   const inputTeacherFiltersTranslate = "accounts.teachers.filters.inputFields";
+
+  const statusRegisterBatchStudents = useAppSelector(registerBatchStudentsStatus);
+  const statusRegisterBatchTeachers = useAppSelector(registerBatchTeachersStatus);
 
   const [studentFilters, setstudentFilters] = useState({
     degree: PLACEHOLDER,
@@ -174,7 +178,33 @@ const AccountsPage = ({
       token: token
     }))
   }
-  }, [role, statusGetStudents, statusGetTeachers, statusGetNotVerifiedUsers, token])  
+
+  if (
+    statusRegisterBatchStudents === ApiStatus.success &&
+    token
+  ) {
+    dispatch(getStudentsAsync({
+      token: token
+    }))
+  }
+
+  if (
+    statusRegisterBatchTeachers === ApiStatus.success &&
+    token
+  ) {
+    dispatch(getTeachersAsync({
+      token: token
+    }))
+  }
+
+
+  }, [
+    role, 
+    statusGetStudents, 
+    statusGetTeachers, 
+    statusGetNotVerifiedUsers, 
+    token
+  ])  
 
   const switchType = (role: Role): string =>  {
     switch (role) {
@@ -268,6 +298,41 @@ const AccountsPage = ({
       ...teacherSearch,
       [e.target.name]: e.target.value
     })
+  }
+
+  let modalRegisterBatchStudentComponent = null;
+
+  switch(statusRegisterBatchStudents) {
+    case ApiStatus.failed:
+      modalRegisterBatchStudentComponent = <ModalApiStatus 
+        message={t("accounts.notVerified.error")} 
+        error={true} 
+      />
+      break;
+    case ApiStatus.success:
+      modalRegisterBatchStudentComponent = <ModalApiStatus 
+        message={t("accounts.notVerified.success")} 
+        error={false} 
+      />
+      break;
+  }
+
+
+  let modalRegisterBatchTeacherComponent = null;
+
+  switch(statusRegisterBatchTeachers) {
+    case ApiStatus.failed:
+      modalRegisterBatchTeacherComponent = <ModalApiStatus 
+        message={t("accounts.notVerified.error")} 
+        error={true} 
+      />
+      break;
+    case ApiStatus.success:
+      modalRegisterBatchTeacherComponent = <ModalApiStatus 
+        message={t("accounts.notVerified.success")} 
+        error={false} 
+      />
+      break;
   }
 
   return (
@@ -480,7 +545,7 @@ const AccountsPage = ({
         show={showModalRegisterBatchStudents} 
         closeModal={() => {dispatch(revertRegisterBatchStudents());}}
       >
-      
+        {modalRegisterBatchStudentComponent}
       </Modal>  
     )}
     {role === Role.TEACHER && (
@@ -488,7 +553,7 @@ const AccountsPage = ({
         show={showModalRegisterBatchTeachers} 
         closeModal={() => {dispatch(revertRegisterBatchTeachers());}}
       >
-    
+        {modalRegisterBatchTeacherComponent}
       </Modal>
     )}
     </div>

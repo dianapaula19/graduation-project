@@ -23,6 +23,11 @@
       }  
     },
     "dropDownFields": {
+      "degree": {
+        "label": "Ciclu de studii",
+        "placeholder": "Ciclu de studii",
+        "errorMessage": "Câmp obligatoriu"
+      },
       "teacher": {
         "label": "Profesor",
         "placeholder": "Profesor",

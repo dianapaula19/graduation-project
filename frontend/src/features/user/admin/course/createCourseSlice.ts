@@ -20,6 +20,7 @@ interface ICreateCourseRequest {
   title: string;
   link: string;
   capacity: number;
+  degree: string | Degree;
   semester: number;
   teacher_email: string;
   token: string;

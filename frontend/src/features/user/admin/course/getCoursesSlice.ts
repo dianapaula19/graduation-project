@@ -7,6 +7,7 @@ interface ICourse {
   id: number;
   title: string;
   capacity: number;
+  degree: string;
   semester: number;
   link: string;
   teacher_email: string;

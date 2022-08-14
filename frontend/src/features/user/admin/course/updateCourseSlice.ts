@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../../../../app/store";
+import { Degree } from "../../../../components/App";
 import { ApiStatus, API_URL_COURSE } from "../../../Utils";
 
 interface IUpdateCourseState {
@@ -20,6 +21,7 @@ interface IUpdateCourseRequest {
   title: string;
   link: string;
   capacity: number;
+  degree: string | Degree;
   semester: number;
   teacher_email: string;
   token: string;

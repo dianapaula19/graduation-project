@@ -84,6 +84,18 @@ const App = () => {
     role, 
     statusUpdateSelectionSessionOpen
   ]);
+
+  const statusRegisterBatchStudents = useAppSelector(registerBatchStudentsStatus);
+  const statusRegisterBatchTeachers = useAppSelector(registerBatchTeachersStatus);
+
+  if (
+    statusRegisterBatchStudents === ApiStatus.loading ||
+    statusRegisterBatchTeachers === ApiStatus.loading
+  ) {
+    return (
+      <LoadingPage />
+    )
+  }
   
   return (
   <>

@@ -37,12 +37,12 @@
       "create": "Creează un curs nou"
     },
     "success": {
-      "create": "",
-      "update": ""
+      "create": "Cursul a fost creat cu succes!",
+      "update": "Modificările s-au făcut cu succes!"
     },
     "error": {
-      "create": "",
-      "update": ""
+      "create": "A apărut o eroare la creare cursului",
+      "update": "A apărut o erorare la modificarea cursului"
     }
   }
 }

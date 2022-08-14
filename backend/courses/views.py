@@ -360,6 +360,7 @@ def create_course(request):
   link = request.data.get("link")
   capacity = request.data.get("capacity")
   semester = request.data.get("semester")
+  degree = request.data.get("degree")
   teacher_email = request.data.get("teacher_email")
 
   try: 
@@ -385,6 +386,7 @@ def create_course(request):
       title=title,
       link=link,
       capacity=capacity,
+      degree=degree,
       semester=semester,
       teacher=teacher
     )
@@ -409,6 +411,7 @@ def update_course(request):
   title = request.data.get("title")
   link = request.data.get("link")
   capacity = request.data.get("capacity")
+  degree = request.data.get("degree")
   semester = request.data.get("semester")
   teacher_email = request.data.get("teacher_email")
 
@@ -435,6 +438,7 @@ def update_course(request):
       title=title,
       link=link,
       capacity=capacity,
+      degree=degree,
       semester=semester,
       teacher=teacher
     )

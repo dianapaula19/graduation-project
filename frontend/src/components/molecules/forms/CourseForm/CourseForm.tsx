@@ -16,6 +16,7 @@ import { loginToken } from "../../../../features/auth/loginSlice";
 import { useTranslation } from "react-i18next";
 import { deleteCourseAsync } from "../../../../features/user/admin/course/deleteCourseSlice";
 import { PLACEHOLDER } from "../../../Utils";
+import { Degree } from "../../../App";
 
 const CourseForm = ({
   type,
@@ -40,6 +41,7 @@ const CourseForm = ({
   title: '',
   link: '',
   capacity: 1,
+  degree: PLACEHOLDER,
   semester: 1,
   teacher: PLACEHOLDER
   });
@@ -58,11 +60,12 @@ const CourseForm = ({
   title: courseData.title.length < 1,
   link: courseData.link.length < 1,
   capacity: courseData.capacity < 1 || courseData.capacity > 100,
+  degree: courseData.degree === PLACEHOLDER,
   semester: courseData.semester < 1 || courseData.semester > 2,
   teacher: courseData.teacher === PLACEHOLDER
   }
 
-  const disableSubmitButton = validation.title || validation.link || validation.capacity;
+  const disableSubmitButton = validation.title || validation.link || validation.capacity || validation.degree;
 
   useEffect(() => {
     if (currentCourse) {
@@ -70,6 +73,7 @@ const CourseForm = ({
       title: currentCourse.title,
       link: currentCourse.link,
       capacity: currentCourse.capacity,
+      degree: currentCourse.degree,
       semester: currentCourse.semester,
       teacher: currentCourse.teacher_email
       })
@@ -115,6 +119,28 @@ const CourseForm = ({
     onChange={handleChange}
     min={1} max={100}
     />
+    <DropDown
+      id={`${componentId}-degree`}
+      name="degree" 
+      error={validation.degree} 
+      errorMessage={t(`${dropDownFieldsTranslate}.degree.errorMessage`)} 
+      label={t(`${dropDownFieldsTranslate}.degree.label`)}
+      placeholder={t(`${dropDownFieldsTranslate}.degree.placeholder`)}
+      defaultValue={courseData.degree}
+      value={courseData.degree}
+      onChange={handleChange}
+    >
+      {
+      Object.keys(Degree).map((key) => {
+      return (
+        <option
+        value={key}
+        >
+        {t(`common:degrees.${key}`)}
+        </option>
+      )
+      })}
+    </DropDown>
     <InputField 
     type={InputFieldType.number}
     id={`${componentId}-semester`}
@@ -160,6 +186,7 @@ const CourseForm = ({
             link: courseData.link,
             capacity: courseData.capacity,
             semester: courseData.semester,
+            degree: courseData.degree,
             teacher_email: courseData.teacher,
             token: token
           }))
@@ -171,6 +198,7 @@ const CourseForm = ({
             link: courseData.link,
             capacity: courseData.capacity,
             semester: courseData.semester,
+            degree: courseData.degree,
             teacher_email: courseData.teacher,
             token: token
           }))

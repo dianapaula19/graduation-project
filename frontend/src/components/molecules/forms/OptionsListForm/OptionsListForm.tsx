@@ -145,7 +145,7 @@ const OptionsListForm = ({
     setData({
     ...data,
     [name]: value
-    });    
+    });   
   }
 
   const onSubmit = () => {
@@ -324,7 +324,8 @@ const OptionsListForm = ({
       <div
       className={`${coursesContainerClassName}__courses`}
       >
-      {courses && courses.map((course) => {
+      { 
+      courses && courses.filter((course) => {return course.degree === data.degree && course.semester === data.semester}).map((course) => {
         const idx = data.coursesIds.indexOf(course.id)
         return <CheckBox
             checked={idx === -1 ? false : true}

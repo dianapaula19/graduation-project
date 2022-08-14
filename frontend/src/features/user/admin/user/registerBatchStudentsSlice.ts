@@ -17,6 +17,11 @@ const initialState: IRegisterBatchStudentsState = {
   code: null,
 }
 
+export interface IGrade {
+  year: number;
+  grade: number;
+}
+
 export interface IStudentData {
   first_name: string;
   last_name: string;
@@ -27,6 +32,10 @@ export interface IStudentData {
   study_program: string;
   current_group: string;
   current_year: number;
+  grade1: number;
+  grade2: number;
+  grade3: number;
+  grade4: number;
 }
 
 export interface IRegisterBatchStudentsRequest {
@@ -69,7 +78,7 @@ export const registerBatchStudentsSlice = createSlice({
   },
   extraReducers: (builder) => {
   builder
-  .addCase(registerBatchStudentsAsync.pending, (state, action) => {
+  .addCase(registerBatchStudentsAsync.pending, (state) => {
     state.status = ApiStatus.loading;
   })
   .addCase(registerBatchStudentsAsync.fulfilled, (state, action) => {
