@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { CheckBoxProps } from "./CheckBox.types";
 import "./CheckBox.scss";
 

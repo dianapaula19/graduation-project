@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";  
-import Loader from "../../atoms/Loader";
-import { Quote } from "./LoadingPage.types";
+import Loader from "components/atoms/Loader";
+import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import "./LoadingPage.scss";
+import { Quote } from "./LoadingPage.types";
 
 const LoadingPage = () => {
   
@@ -20,8 +20,8 @@ const LoadingPage = () => {
   if (quote.text === '' || quote.author === '') {
     const index = (Math.floor(Math.random() * 2)).toString();
     setQuote({
-      ['text']: t(`loading.quotes.${index}.text`),
-      ['author']: t(`loading.quotes.${index}.author`)
+      'text': t(`loading.quotes.${index}.text`),
+      'author': t(`loading.quotes.${index}.author`)
     });
   }
   }, [quote, setQuote, t])

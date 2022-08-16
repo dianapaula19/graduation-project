@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../app/store";
+import { RootState } from "app/store";
 
 export enum Language {
   ro = "ro",
@@ -11,7 +11,7 @@ interface ILanguageState {
 }
 
 const initialState: ILanguageState = {
-  language: localStorage.getItem('language') == 'en' ? Language.en : Language.ro
+  language: localStorage.getItem('language') === 'en' ? Language.en : Language.ro
 };
 
 export const languagesSlice = createSlice({

@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "app/store";
 import axios from "axios";
-import { RootState } from "../../../../app/store";
-import { Degree } from "../../../../components/App";
-import { ApiStatus, API_URL_COURSE } from "../../../Utils";
+import { Degree } from "components/App";
+import { ApiStatus, API_URL_COURSE } from "features/Utils";
 
 interface IUpdateCourseState {
   status: ApiStatus;

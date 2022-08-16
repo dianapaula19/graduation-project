@@ -8,7 +8,6 @@ import './i18n';
 import './index.css';
 import { PersistGate } from 'redux-persist/integration/react';
 import persistStore from 'redux-persist/es/persistStore';
-import LoadingPage from './components/pages/LoadingPage';
 
 let persistor = persistStore(store);
 

@@ -1,41 +1,29 @@
-import React, { Suspense, useEffect, useState } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { loginSelectionSessionOpen, loginStatus, loginUserData, revertLogin, setSelectionSessionOpenSetting } from '../../features/auth/loginSlice';
-import OptionsListsPage from '../pages/admin/OptionsListsPage';
-import AdminCoursesPage from '../pages/admin/CoursesPage';
-import LoginPage from '../pages/auth/LoginPage';
-import RegisterPage from '../pages/auth/RegistrationPage';
-import ProfilePage from '../pages/ProfilePage';
-import AccountsPage from '../templates/AccountsPage';
-import CoursesSelectionPage from '../pages/student/CoursesSelectionPage';
-import StudentCoursesPage from "../pages/student/CoursesPage";
-import TeacherCoursesPage from '../pages/teacher/CoursesPage';
-import { Role, Time } from './App.types';
-import RecoverAccountPage from '../pages/auth/RecoverAccountPage';
-import ResetPasswordPage from '../pages/auth/ResetPasswordPage';
-import SettingsPage from '../pages/admin/SettingsPage';
-import { ApiStatus, SelectionSessionSettingValue } from '../../features/Utils';
-import { revertUpdateSelectionSessionOpen, updateSelectionSessionOpenStatus } from '../../features/user/admin/updateSelectionSessionOpenSlice';
-import NotFoundPage from '../pages/NotFoundPage';
-import { registerBatchStudentsStatus, revertRegisterBatchStudents } from '../../features/user/admin/user/registerBatchStudentsSlice';
-import { registerBatchTeachersStatus, revertRegisterBatchTeachers } from '../../features/user/admin/user/registerBatchTeachersSlice';
-import LoadingPage from '../pages/LoadingPage';
-import { revertVerifyUser, verifyUserStatus } from '../../features/user/admin/user/verifyUserSlice';
-import { revertSendAnnouncement, sendAnnouncementStatus } from '../../features/user/teacher/sendAnnouncementSlice';
-import { getStudentsListsStatus, revertGetStudentsLists } from '../../features/user/admin/user/getStudentsListsSlice';
+import { useAppSelector, useAppDispatch } from "app/hooks";
+import LoginPage from "components/pages/account/LoginPage";
+import RecoverAccountPage from "components/pages/account/RecoverAccountPage";
+import RegistrationPage from "components/pages/account/RegistrationPage";
+import ResetPasswordPage from "components/pages/account/ResetPasswordPage";
+import AccountsPage from "components/pages/admin/AccountsPage";
+import AdminCoursesPage from "components/pages/admin/CoursesPage";
+import OptionsListsPage from "components/pages/admin/OptionsListsPage";
+import SettingsPage from "components/pages/admin/SettingsPage";
+import NotFoundPage from "components/pages/NotFoundPage";
+import ProfilePage from "components/pages/ProfilePage";
+import StudentCoursesPage from "components/pages/student/CoursesPage";
+import CoursesSelectionPage from "components/pages/student/CoursesSelectionPage";
+import TeacherCoursesPage from "components/pages/teacher/CoursesPage";
+import { loginUserData, loginSelectionSessionOpen, loginStatus, revertLogin } from "features/account/loginSlice";
+import { ApiStatus, SelectionSessionSettingValue } from "features/Utils";
+import { useState, useEffect, Suspense } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Role, Time } from "./App.types";
 
 const App = () => {
 
   const userData = useAppSelector(loginUserData);
   const selectionSessionOpen = useAppSelector(loginSelectionSessionOpen);
-  const statusUpdateSelectionSessionOpen = useAppSelector(updateSelectionSessionOpenStatus);
   const dispatch = useAppDispatch();
   const statusLogin = useAppSelector(loginStatus);
-  const statusRegisterBatchStudents = useAppSelector(registerBatchStudentsStatus);
-  const statusRegisterBatchTeachers = useAppSelector(registerBatchTeachersStatus);
-  const statusVerifyUser = useAppSelector(verifyUserStatus);
-  const statusSendAnnouncement = useAppSelector(sendAnnouncementStatus);
   const [role, setRole] = useState(Role.NONE);
 
   useEffect(() => {
@@ -46,28 +34,20 @@ const App = () => {
       }, Time.DAY)
     }
 
-    if (userData && role === Role.NONE) {
+    if (
+      userData && 
+      role === Role.NONE
+    ) {
       setRole(userData.role)
     }
   
   }, [
     userData, 
     setRole, 
-    role
+    role,
+    dispatch,
+    statusLogin
   ]);
-
-  if (
-    statusLogin === ApiStatus.loading ||
-    statusRegisterBatchStudents === ApiStatus.loading ||
-    statusRegisterBatchTeachers === ApiStatus.loading ||
-    statusVerifyUser === ApiStatus.loading ||
-    statusSendAnnouncement === ApiStatus.loading ||
-    statusUpdateSelectionSessionOpen === ApiStatus.loading
-  ) {
-    return (
-      <LoadingPage />
-    )
-  }
   
   return (
   <>
@@ -80,7 +60,7 @@ const App = () => {
           />
           <Route 
             path="register" 
-            element={<RegisterPage />} 
+            element={<RegistrationPage />} 
           />
           <Route 
             path="recoverAccount"

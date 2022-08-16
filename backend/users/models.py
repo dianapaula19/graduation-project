@@ -47,34 +47,6 @@ class SelectionSessionSettingValue(Enum):
   TRUE = 'TRUE'
   FALSE = 'FALSE'
 
-class Category(models.Model):
-  domain = models.TextField(
-    choices=Domain.choices,
-    null=True
-  )
-  learning_mode = models.TextField(
-    choices=LearningMode.choices,
-    null=True
-  )
-  degree = models.TextField(
-    choices=Degree.choices,
-    null=True
-  )
-  year = models.IntegerField(
-    validators=[
-      MinValueValidator(1),
-      MaxValueValidator(4)
-    ],
-    default=1
-  )
-  class Meta:
-    verbose_name = 'category'
-    verbose_name_plural = "categories"
-    constraints = [
-      models.UniqueConstraint(
-        fields=['domain', 'learning_mode', 'degree', 'year'], name='unique_migration_category'
-      ),
-    ]
 class UserManager(BaseUserManager):
   def create_user(self, email, password, **extra_fields):
     if not email:
@@ -103,17 +75,6 @@ class UserManager(BaseUserManager):
 class StudentManager(models.Manager):
   def get_queryset(self):
     return super().get_queryset().filter(role=Role.STUDENT)
-  
-  def get_secretary_students(self, secretary):
-    students = super().get_queryset()
-    secretary_students = []
-    categories = secretary.categories
-    for category in categories:
-      for student in students:
-        if student.degree == category.degree:
-          secretary_students.append(student)
-    return secretary_students
-
 
 class TeacherManager(models.Manager):
   def get_queryset(self):

@@ -121,15 +121,21 @@ def register(request):
       status=HTTP_500_INTERNAL_SERVER_ERROR
     )
 
-  
-  send_mail(
-    subject="[FMI] Account created successfully",
-    message="Congrats. Your account was creates successfully.",
-    from_email=settings.EMAIL_HOST_USER,
-    to=settings.EMAIL_HOST_USER,
-    recipient_list=[email]
-  )
-  
+  try:
+    send_mail(
+      subject="[FMI] Account created successfully",
+      message="Congrats. Your account was creates successfully.",
+      from_email=settings.EMAIL_HOST_USER,
+      to=settings.EMAIL_HOST_USER,
+      recipient_list=[email],
+      fail_silently=False
+    )
+  except:
+    return Response({
+      'code': ResponseCode.EMAIL_NOT_SENT.value
+      },
+      status=HTTP_500_INTERNAL_SERVER_ERROR
+    )  
   return Response({
     'code': ResponseCode.SUCCESS.value
     }, 
@@ -322,6 +328,7 @@ def register_batch_teachers(request):
   except:
     return Response({
         'code': ResponseCode.EMAIL_NOT_SENT.value,
+        'error_messages': error_messages
       },
       status=HTTP_500_INTERNAL_SERVER_ERROR
     )
@@ -447,7 +454,7 @@ def not_verified_users(request):
   )
 
 
-@api_view(["GET", "POST", "DELETE"])
+@api_view(["GET", "POST"])
 @permission_classes([IsAdmin])
 def students(request):
   if request.method == "GET":
@@ -573,17 +580,23 @@ def send_announcement(request):
   teacher_email = request.data.get("teacher_email")
   recipient_list = request.data.get("recipient_list")
 
-  email = EmailMultiAlternatives(
-    subject="[FMI] " + subject,
-    body=message,
-    from_email=settings.EMAIL_HOST_USER,
-    to=[teacher_email], 
-    bcc=recipient_list,
-    reply_to=[teacher_email]
-  )
+  try:
+    email = EmailMultiAlternatives(
+      subject="[FMI] " + subject,
+      body=message,
+      from_email=settings.EMAIL_HOST_USER,
+      to=[teacher_email], 
+      bcc=recipient_list,
+      reply_to=[teacher_email]
+    )
+    email.send()
+  except:
+    return Response({
+      'code': ResponseCode.EMAIL_NOT_SENT.value
+      },
+      status=HTTP_500_INTERNAL_SERVER_ERROR
+    )  
 
-  email.send()
-    
   return Response({
       'code': ResponseCode.SUCCESS.value
     },

@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from users.views import get_students_lists, login, \
+from users.views import login, \
             register, \
             register_batch_students, \
             register_batch_teachers, \

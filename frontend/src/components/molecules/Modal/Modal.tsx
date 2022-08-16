@@ -1,8 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import React, { useState } from "react";
-import { IModalProps } from "./Modal.types";
 import "./Modal.scss";
+import { IModalProps } from "./Modal.types";
 
 const Modal = ({
   show,

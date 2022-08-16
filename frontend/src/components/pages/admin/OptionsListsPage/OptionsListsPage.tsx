@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import Button from "components/atoms/Button";
+import Modal from "components/molecules/Modal";
+import ModalApiStatus from "components/molecules/ModalApiStatus";
+import OptionsListCard from "components/molecules/OptionsListCard";
+import OptionsListForm from "components/organisms/forms/OptionsListForm";
+import LoggedUserPage from "components/templates/LoggedUserPage";
+import { loginToken } from "features/account/loginSlice";
+import { getCoursesStatus, getCoursesAsync } from "features/user/admin/course/getCoursesSlice";
+import { createOptionsListShowModal, createOptionsListStatus, revertCreateOptionsList } from "features/user/admin/optionsList/createOptionsListSlice";
+import { deleteOptionsListShowModal, deleteOptionsListStatus, revertDeleteOptionsList } from "features/user/admin/optionsList/deleteOptionsListSlice";
+import { getOptionsListsOptionsLists, getOptionsListsStatus, getOptionsListsAsync, getCurrentOptionsList, revertCurrentOptionsList } from "features/user/admin/optionsList/getOptionsListsSlice";
+import { updateOptionsListShowModal, updateOptionsListStatus, revertUpdateOptionsList } from "features/user/admin/optionsList/updateOptionsListSlice";
+import { ApiStatus } from "features/Utils";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import { loginToken } from "../../../../features/auth/loginSlice";
-import { createOptionsListCode, createOptionsListShowModal, createOptionsListStatus, revertCreateOptionsList } from "../../../../features/user/admin/optionsList/createOptionsListSlice";
-import { getCoursesAsync, getCoursesCourses, getCoursesStatus } from "../../../../features/user/admin/course/getCoursesSlice";
-import { getCurrentOptionsList, getOptionsListsAsync, getOptionsListsOptionsLists, getOptionsListsStatus, revertCurrentOptionsList } from "../../../../features/user/admin/optionsList/getOptionsListsSlice";
-import { revertUpdateOptionsList, updateOptionsListShowModal, updateOptionsListStatus } from "../../../../features/user/admin/optionsList/updateOptionsListSlice";
-import { ApiStatus } from "../../../../features/Utils";
-import Button from "../../../atoms/Button";
-import OptionsListForm from "../../../molecules/forms/OptionsListForm";
-import Modal from "../../../molecules/Modal";
-import OptionsListCard from "../../../molecules/OptionsListCard";
-import LoggedUserPage from "../../../templates/LoggedUserPage";
 import "./OptionsListsPage.scss";
-import ModalApiStatus from "../../../molecules/ModalApiStatus";
-import { deleteOptionsListShowModal, deleteOptionsListStatus, revertDeleteOptionsList } from "../../../../features/user/admin/optionsList/deleteOptionsListSlice";
 
 const OptionsListsPage = () => {
 
@@ -70,7 +70,9 @@ const OptionsListsPage = () => {
     showModalCreateOptionsList,
     showModalUpdateOptionsList,
     showModalDeleteOptionsList, 
-    setShowModalOptionsListForm
+    setShowModalOptionsListForm,
+    dispatch,
+    token
   ])
 
   let createOptionsListModalComponent = null;

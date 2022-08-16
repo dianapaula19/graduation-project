@@ -1,7 +1,7 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "app/store";
 import axios from "axios";
-import { RootState } from "../../../../app/store";
-import { ApiStatus, API_URL_COURSE, API_URL_USER } from "../../../Utils";
+import { ApiStatus, API_URL_USER } from "features/Utils";
 
 interface IStudent {
   first_name: string;
@@ -44,10 +44,6 @@ interface IGetStudentsListsError {
   code: string; 
 }
 
-interface IGetCurrentCoursePayload {
-  id: number;
-}
-
 export const getStudentsListsAsync = createAsyncThunk(
   'user/admin/getStudentsLists',
   async (request: IGetStudentsListsRequest, {rejectWithValue}) => await axios
@@ -77,7 +73,7 @@ export const getStudentsListsSlice = createSlice({
   },
   extraReducers: (builder) => {
   builder
-  .addCase(getStudentsListsAsync.pending, (state, action) => {
+  .addCase(getStudentsListsAsync.pending, (state) => {
     state.status = ApiStatus.loading;
   })
   .addCase(getStudentsListsAsync.fulfilled, (state, action) => {

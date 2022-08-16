@@ -1,5 +1,4 @@
 import classNames from "classnames";
-import React from "react";
 import { ButtonModifier, IButtonProps } from "./Button.types";
 import "./Button.scss"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,8 +9,7 @@ const Button = ({
   disabled,
   modifier,
   ...rest
-}
-:IButtonProps
+}: IButtonProps
 ) => {
   const componentClassName = "button";
   const componentClassNames = classNames(

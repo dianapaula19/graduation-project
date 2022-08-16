@@ -1,15 +1,14 @@
-import { t } from "i18next";
-import React, { useEffect } from "react";
+import { useAppSelector, useAppDispatch } from "app/hooks";
+import FetchStatus from "components/molecules/ModalFetchStatus";
+import CoursesList from "components/organisms/lists/CoursesList";
+import LoggedUserPage from "components/templates/LoggedUserPage";
+import { loginToken } from "features/account/loginSlice";
+import { getCoursesCourses, getCoursesStatus, getCoursesAsync } from "features/user/admin/course/getCoursesSlice";
+import { getTeachersAsync } from "features/user/admin/user/getTeachersSlice";
+import { getTeacherCoursesStatus } from "features/user/teacher/getTeacherCoursesSlice";
+import { ApiStatus } from "features/Utils";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import { loginToken } from "../../../../features/auth/loginSlice";
-import { getCoursesAsync, getCoursesCourses, getCoursesStatus } from "../../../../features/user/admin/course/getCoursesSlice";
-import { getTeachersAsync, getTeachersStatus } from "../../../../features/user/admin/user/getTeachersSlice";
-import { getTeacherCoursesStatus } from "../../../../features/user/teacher/getTeacherCoursesSlice";
-import { ApiStatus } from "../../../../features/Utils";
-import FetchStatus from "../../../molecules/FetchStatus";
-import CoursesList from "../../../molecules/lists/CoursesList/CoursesList";
-import LoggedUserPage from "../../../templates/LoggedUserPage";
 import "./CoursesPage.scss";
 
 const CoursesPage = () => {
@@ -41,7 +40,12 @@ const CoursesPage = () => {
       token: token
     }));
   }
-  }, [statusGetCourses, statusGetTeachers, token]);
+  }, [
+    statusGetCourses, 
+    statusGetTeachers, 
+    token,
+    dispatch
+  ]);
   
   if (
     statusGetCourses === ApiStatus.loading || 

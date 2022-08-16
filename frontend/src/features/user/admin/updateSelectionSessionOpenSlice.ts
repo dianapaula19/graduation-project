@@ -1,7 +1,7 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "app/store";
 import axios from "axios";
-import { RootState } from "../../../app/store";
-import { ApiStatus, API_URL_COURSE, API_URL_USER, SelectionSessionSettingValue } from "../../Utils";
+import { ApiStatus, SelectionSessionSettingValue, API_URL_USER } from "features/Utils";
 
 interface IUpdateSelectionSessionOpenState {
   status: ApiStatus;

@@ -1,7 +1,5 @@
-import { t } from "i18next";
-import React from "react";
+import NotFoundSVG from "assets/not-found.svg";
 import { useTranslation } from "react-i18next";
-import NotFoundSvg from "./assets/not-found.svg";
 import "./NotFoundPage.scss";
 
 const NotFoundPage = () => {
@@ -14,8 +12,9 @@ const NotFoundPage = () => {
       className={componentClassName}
     >
       <img
-        src={NotFoundSvg}
+        src={NotFoundSVG}
         className={`${componentClassName}__img`}
+        alt={t("common:img.notFound")}
         tabIndex={1}
       />
       <p

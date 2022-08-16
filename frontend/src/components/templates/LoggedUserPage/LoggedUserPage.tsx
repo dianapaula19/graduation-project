@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
-import { useAppSelector } from "../../../app/hooks";
-import { loginStatus } from "../../../features/auth/loginSlice";
-import { ApiStatus } from "../../../features/Utils";
-import SideNav from "../../molecules/SideNav/SideNav";
+import { useAppSelector } from "app/hooks";
+import SideNav from "components/organisms/SideNav";
+import { loginStatus } from "features/account/loginSlice";
+import { ApiStatus } from "features/Utils";
+import { Navigate } from "react-router-dom";
 import "./LoggedUserPage.scss";
 import { ILoggedUserPageProps } from "./LoggedUserPage.types";
 

@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "app/store";
 import axios from "axios";
-import { RootState } from "../../../app/store";
-import { Domain, LearningMode, StudyProgram, Degree } from "../../../components/App"
-import { loginToken } from "../../auth/loginSlice";
-import { ApiStatus, API_URL_USER } from "../../Utils";
+import { LearningMode, Degree, StudyProgram } from "components/App";
+import { Domain } from "domain";
+import { ApiStatus, API_URL_USER } from "features/Utils";
 
 export interface Grade {
   grade: number;

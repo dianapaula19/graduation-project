@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import classNames from "classnames";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLock, faEnvelope, faUser, faEye, faEyeSlash, faXmark, faFileArrowUp, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faLock, faEnvelope, faEye, faEyeSlash, faXmark, faFileArrowUp, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { InputFieldModifier, InputFieldProps, InputFieldType } from "./InputField.types";
 import "./InputField.scss";
 

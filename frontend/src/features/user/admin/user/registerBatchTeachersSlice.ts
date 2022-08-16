@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "app/store";
 import axios from "axios";
-import { RootState } from "../../../../app/store";
-import { ApiStatus, API_URL_USER } from "../../../Utils";
+import { ApiStatus, API_URL_USER } from "features/Utils";
 
 export interface IErrorMessage {
   index: number;
@@ -39,6 +39,7 @@ export interface IRegisterBatchTeachersResponse {
 }
 
 export interface IRegisterBatchTeachersError {
+  error_messages: IErrorMessage[];
   code: string;
 }
 
@@ -86,6 +87,7 @@ export const registerBatchTeachersSlice = createSlice({
   .addCase(registerBatchTeachersAsync.rejected, (state, action) => {
     const res = action.payload as IRegisterBatchTeachersError;
     state.code = res.code;
+    state.errorMessages = res.error_messages;
     state.showModal = true;
     state.status = ApiStatus.failed;
   })

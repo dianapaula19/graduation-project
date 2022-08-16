@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import Modal from "components/molecules/Modal";
+import ModalApiStatus from "components/molecules/ModalApiStatus";
+import FetchStatus from "components/molecules/ModalFetchStatus";
+import OptionsCoursesContainer from "components/molecules/OptionsCoursesContainer";
+import { IOptionalCourseCard } from "components/molecules/OptionsCoursesContainer/OptionsCoursesContainer.types";
+import LoggedUserPage from "components/templates/LoggedUserPage";
+import { loginUserData, loginToken } from "features/account/loginSlice";
+import { saveStudentChoicesShowModal, saveStudentChoicesStatus, revertSaveStudentChoices } from "features/user/student/saveStudentChoicesSlice";
+import { studentOptionalsListsStatus, studentOptionalsLists, studentOptionalsListsAsync } from "features/user/student/studentOptionalsListsSlice";
+import { ApiStatus } from "features/Utils";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import { loginToken, loginUserData } from "../../../../features/auth/loginSlice";
-import { revertSaveStudentChoices, saveStudentChoicesShowModal, saveStudentChoicesStatus } from "../../../../features/user/student/saveStudentChoicesSlice";
-import { studentOptionalsListsAsync, studentOptionalsListsStatus, studentOptionalsLists, revertStudentOptionalsLists } from "../../../../features/user/student/studentOptionalsListsSlice";
-import { ApiStatus } from "../../../../features/Utils";
-import FetchStatus from "../../../molecules/FetchStatus";
-import Modal from "../../../molecules/Modal";
-import ModalApiStatus from "../../../molecules/ModalApiStatus";
-import OptionalCoursesContainer from "../../../molecules/OptionalCoursesContainer";
-import { IOptionalCourseCard } from "../../../molecules/OptionalCoursesContainer/OptionalCoursesContainer.types";
-import LoggedUserPage from "../../../templates/LoggedUserPage";
 
 const CoursesSelectionPage = () => {
 
@@ -26,13 +26,22 @@ const CoursesSelectionPage = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (statusStudentOptionsLists === ApiStatus.idle && userData && token) {
+    if (
+      statusStudentOptionsLists === ApiStatus.idle && 
+      userData && 
+      token
+    ) {
       dispatch(studentOptionalsListsAsync({
         email: userData.email,
         token: token
       }))
     }
-  }, [])
+  }, [
+    dispatch,
+    statusStudentOptionsLists,
+    token,
+    userData
+  ])
 
   let modal = null;
   
@@ -76,7 +85,7 @@ const CoursesSelectionPage = () => {
             {t("common:text.firstSemester")}
           </span>
           <div>
-          { studentOptionsLists !== null && studentOptionsLists.filter((optionsList) => optionsList.semester == 1).map((optionsList) => {
+          { studentOptionsLists !== null && studentOptionsLists.filter((optionsList) => optionsList.semester === 1).map((optionsList) => {
             let courses: IOptionalCourseCard[] = []
             optionsList.courses.forEach(course => {
               courses.push({
@@ -88,7 +97,7 @@ const CoursesSelectionPage = () => {
               })
             });
             return (
-              <OptionalCoursesContainer 
+              <OptionsCoursesContainer 
                 optionalsListId={optionsList.id} 
                 title={optionsList.title} 
                 courses={courses} 
@@ -106,7 +115,7 @@ const CoursesSelectionPage = () => {
             {t("common:text.secondSemester")}
           </span>
           <div>
-          { studentOptionsLists !== null && studentOptionsLists.filter((optionsList) => optionsList.semester == 2).map((optionsList) => {
+          { studentOptionsLists !== null && studentOptionsLists.filter((optionsList) => optionsList.semester === 2).map((optionsList) => {
             let courses: IOptionalCourseCard[] = []
             optionsList.courses.forEach(course => {
               courses.push({
@@ -118,7 +127,7 @@ const CoursesSelectionPage = () => {
               })
             });
             return (
-              <OptionalCoursesContainer 
+              <OptionsCoursesContainer 
                 optionalsListId={optionsList.id} 
                 title={optionsList.title} 
                 courses={courses} 

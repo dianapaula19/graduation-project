@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import { useAppSelector, useAppDispatch } from "app/hooks";
+import CourseCard from "components/molecules/CourseCard";
+import LoggedUserPage from "components/templates/LoggedUserPage";
+import { loginUserData, loginToken } from "features/account/loginSlice";
+import { getStudentCoursesStatus, getStudentCoursesCourses, getStudentCoursesAsync } from "features/user/student/getStudentCoursesSlice";
+import { ApiStatus } from "features/Utils";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import { loginToken, loginUserData } from "../../../../features/auth/loginSlice";
-import { getStudentCoursesAsync, getStudentCoursesCode, getStudentCoursesCourses, getStudentCoursesStatus } from "../../../../features/user/student/getStudentCoursesSlice";
-import { ApiStatus } from "../../../../features/Utils";
-import CourseCard from "../../../molecules/CourseCard";
-import LoggedUserPage from "../../../templates/LoggedUserPage";
 import "./CoursesPage.scss";
 
 const CoursesPage = () => {
@@ -33,7 +33,12 @@ const CoursesPage = () => {
         token: token
       }));
     }
-  }, [statusGetStudentCourses])
+  }, [
+    statusGetStudentCourses,
+    dispatch,
+    token,
+    userData
+  ])
   
   
   return (

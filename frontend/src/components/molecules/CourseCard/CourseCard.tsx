@@ -1,6 +1,6 @@
 import React from "react"
 import { useTranslation } from "react-i18next";
-import LinkButton, { LinkButtonModifier } from "../../atoms/LinkButton";
+import LinkButton, { LinkButtonModifier } from "components/atoms/LinkButton";
 import { ICourseCardProps } from "./CourseCard.types";
 import "./CourseCard.scss";
 

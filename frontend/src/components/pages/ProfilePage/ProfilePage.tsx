@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import { Role } from "components/App";
+import LoggedUserPage from "components/templates/LoggedUserPage";
+import { loginUserData, loginToken } from "features/account/loginSlice";
+import { studentDataStatus, studentDataData, studentDataAsync } from "features/user/student/studentDataSlice";
+import { ApiStatus } from "features/Utils";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { loginToken, loginUserData } from "../../../features/auth/loginSlice";
-import { studentDataAsync, studentDataData, studentDataStatus } from "../../../features/user/student/studentDataSlice";
-import { ApiStatus } from "../../../features/Utils";
-import { Role } from "../../App";
-import LoggedUserPage from "../../templates/LoggedUserPage";
 import "./ProfilePage.scss";
 
 
@@ -100,7 +100,13 @@ const ProfilePage = () => {
         }))
       }
     }
-  }, [studentStatus, email, token]);
+  }, [
+    studentStatus, 
+    email, 
+    token,
+    dispatch,
+    role
+  ]);
 
   let component = null;
 

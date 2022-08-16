@@ -2,8 +2,8 @@
   "en": "Engleză",
   "ro": "Română",
   "roles": {
-    "STUDENT": "student",
-    "TEACHER": "profesor"
+    "STUDENT": "Student",
+    "TEACHER": "Profesor"
   },
   "domains": {
     "INFO": "Informatică",
@@ -41,6 +41,14 @@
     "syllabus": "Vezi fișa disciplinei",
     "save": "Salvează modificările",
     "excel": "Exportă ca .xlsx"
+  },
+  "img": {
+    "logo": "",
+    "login": "",
+    "recoverAccount": "",
+    "registration": "",
+    "resetPassword": "",
+    "notFound": ""
   },
   "text": {
     "firstSemester": "Semestrul I",

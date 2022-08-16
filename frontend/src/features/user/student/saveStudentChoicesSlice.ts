@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "app/store";
 import axios from "axios";
-import { RootState } from "../../../app/store";
-import { ApiStatus, API_URL_COURSE } from "../../Utils";
-
+import { ApiStatus, API_URL_COURSE } from "features/Utils";
 
 export interface Choice {
   course_id: number;

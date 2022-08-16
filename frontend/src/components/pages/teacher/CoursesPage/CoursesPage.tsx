@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import Button, { ButtonModifier } from "../../../atoms/Button";
-import StudentsList from "../../../molecules/lists/StudentsList";
-import LoggedUserPage from "../../../templates/LoggedUserPage";
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
-import DropDown from "../../../atoms/DropDown";
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import Modal from "../../../molecules/Modal";
-import { getCurrentTeacherCourse, getTeacherCoursesAsync, getTeacherCoursesCode, getTeacherCoursesCourses, getTeacherCoursesCurrentCourse, getTeacherCoursesStatus } from "../../../../features/user/teacher/getTeacherCoursesSlice";
-import { loginToken, loginUserData } from "../../../../features/auth/loginSlice";
-import { ApiStatus } from "../../../../features/Utils";
-import SendAnnouncementForm from "../../../molecules/forms/SendAnnouncementForm";
+import { useAppSelector, useAppDispatch } from "app/hooks";
+import Button, { ButtonModifier } from "components/atoms/Button";
+import DropDown from "components/atoms/DropDown";
+import Modal from "components/molecules/Modal";
+import SendAnnouncementForm from "components/organisms/forms/SendAnnouncementForm";
+import StudentsList from "components/organisms/lists/StudentsList";
+import LoggedUserPage from "components/templates/LoggedUserPage";
+import { loginUserData, loginToken } from "features/account/loginSlice";
+import { getTeacherCoursesStatus, getTeacherCoursesCourses, getTeacherCoursesCurrentCourse, getCurrentTeacherCourse, getTeacherCoursesAsync } from "features/user/teacher/getTeacherCoursesSlice";
+import { ApiStatus } from "features/Utils";
+import { useTranslation } from "react-i18next";
 import "./CoursesPage.scss";
 
 const OptionalCoursesList = () => {
@@ -60,12 +60,18 @@ const OptionalCoursesList = () => {
 
   useEffect(() => {
     if (userData && token && statusTeacherCourses === ApiStatus.idle) {
-    dispatch(getTeacherCoursesAsync({
-      email: userData.email,
-      token: token
-    }));
+      dispatch(getTeacherCoursesAsync({
+        email: userData.email,
+        token: token
+      }));
     }
-  }, [courses])
+  }, [
+    courses,
+    dispatch,
+    statusTeacherCourses,
+    token,
+    userData
+  ])
   
 
   return (

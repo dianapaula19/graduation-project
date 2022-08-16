@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "app/store";
 import axios from "axios";
-import { RootState } from "../../../../app/store";
-import { Degree, Domain, LearningMode, StudyProgram } from "../../../../components/App";
-import { ApiStatus, API_URL_COURSE } from "../../../Utils";
+import { LearningMode, Degree, StudyProgram } from "components/App";
+import { Domain } from "domain";
+import { ApiStatus, API_URL_COURSE } from "features/Utils";
 
 interface ICreateOptionsListState {
   status: ApiStatus;

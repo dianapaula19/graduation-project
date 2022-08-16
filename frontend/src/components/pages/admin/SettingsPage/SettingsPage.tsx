@@ -1,15 +1,16 @@
-import React, { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import { loginSelectionSessionOpen, loginToken, setSelectionSessionOpenSetting } from "../../../../features/auth/loginSlice";
-import { getStudentsListsAsync, getStudentsListsLists, getStudentsListsStatus } from "../../../../features/user/admin/user/getStudentsListsSlice";
-import { revertUpdateSelectionSessionOpen, updateSelectionSessionOpenAsync, updateSelectionSessionOpenStatus } from "../../../../features/user/admin/updateSelectionSessionOpenSlice";
-import { ApiStatus, SelectionSessionSettingValue } from "../../../../features/Utils";
+import { useAppSelector, useAppDispatch } from "app/hooks";
+import Button, { ButtonModifier } from "components/atoms/Button";
+import LoadingPage from "components/pages/LoadingPage";
+import LoggedUserPage from "components/templates/LoggedUserPage";
+import { loginSelectionSessionOpen, loginToken, setSelectionSessionOpenSetting } from "features/account/loginSlice";
+import { updateSelectionSessionOpenStatus, revertUpdateSelectionSessionOpen, updateSelectionSessionOpenAsync } from "features/user/admin/updateSelectionSessionOpenSlice";
+import { getStudentsListsLists, getStudentsListsStatus, getStudentsListsAsync } from "features/user/admin/user/getStudentsListsSlice";
+import { SelectionSessionSettingValue, ApiStatus } from "features/Utils";
 import * as FileSaver from "file-saver";
-import * as XLSX from "xlsx";
-import Button, { ButtonModifier } from "../../../atoms/Button";
-import LoggedUserPage from "../../../templates/LoggedUserPage";
-import "./SettingsPage.scss";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import * as XLSX from "xlsx";
+import "./SettingsPage.scss";
 
 
 const SettingsPage = () => {
@@ -58,26 +59,36 @@ const SettingsPage = () => {
       }
     }
   }, [
-    statusUpdateSelectionSessionOpen
+    statusUpdateSelectionSessionOpen,
+    dispatch,
+    selectionSessionOpen,
+    statusLists,
+    token
   ]);
+
+  if (statusUpdateSelectionSessionOpen === ApiStatus.loading) {
+    return <LoadingPage />
+  }
 
   const exportLists = () => {
     if (lists) {
       const header = [t("admin.settings.xlsx.header.fullName"), t("admin.settings.xlsx.header.currentGroup")];
       lists.map((list) => {
+
         const ws = XLSX.utils.book_new();
         XLSX.utils.sheet_add_aoa(ws, [header]);
         list.students.map((student) => {
           XLSX.utils.sheet_add_aoa(ws, 
             [[`${student.first_name} ${student.last_name}`, student.current_group]],
             {origin: -1}  
-          )
+          );
+          return;
         })
-        
         const wb = { Sheets: {"data": ws}, SheetNames: ["data"]}
         const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array"});
         const data = new Blob([excelBuffer], { type: fileType})
-        FileSaver.saveAs(data, `${list.course} ${list.domain} ${list.degree} ${list.learning_mode} ${list.study_program} ${list.year}.xlsx`); 
+        FileSaver.saveAs(data, `${list.course} ${list.domain} ${list.degree} ${list.learning_mode} ${list.study_program} ${list.year}.xlsx`);
+        return; 
       }) 
     }
   }

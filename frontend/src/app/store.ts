@@ -1,10 +1,10 @@
 import { configureStore, ThunkAction, Action, combineReducers } from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage';
 import languagesReducer from "../features/LanguageSwitchSlice";
-import loginReducer from "../features/auth/loginSlice";
-import registerReducer from "../features/auth/registerSlice";
-import recoverAccountReducer from "../features/auth/recoverAccountSlice";
-import resetPasswordReducer from "../features/auth/resetPasswordSlice";
+import loginReducer from "../features/account/loginSlice";
+import registerReducer from "../features/account/registerSlice";
+import recoverAccountReducer from "../features/account/recoverAccountSlice";
+import resetPasswordReducer from "../features/account/resetPasswordSlice";
 import studentDataReducer from "../features/user/student/studentDataSlice";
 import studentOptionalsListsReducer from '../features/user/student/studentOptionalsListsSlice';
 import saveStudentChoicesReducer from "../features/user/student/saveStudentChoicesSlice";

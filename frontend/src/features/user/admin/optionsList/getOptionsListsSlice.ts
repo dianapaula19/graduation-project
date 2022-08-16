@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "app/store";
 import axios from "axios";
-import { RootState } from "../../../../app/store";
-import { ApiStatus, API_URL_COURSE } from "../../../Utils";
+import { ApiStatus, API_URL_COURSE } from "features/Utils";
 
 interface ICourse {
   id: number;
@@ -50,10 +50,6 @@ interface IGetCurrentOptionsListPayload {
   id: number;
 }
 
-interface IRemoveDeletedOptionsListPayload {
-  id: number;
-}
-
 export const getOptionsListsAsync = createAsyncThunk(
   'user/admin/getOptionsLists',
   async (request: IGetOptionsListsRequest, {rejectWithValue}) => await axios
@@ -97,7 +93,7 @@ export const getOptionsListsSlice = createSlice({
   },
   extraReducers: (builder) => {
   builder
-  .addCase(getOptionsListsAsync.pending, (state, action) => {
+  .addCase(getOptionsListsAsync.pending, (state) => {
     state.status = ApiStatus.loading;
   })
   .addCase(getOptionsListsAsync.fulfilled, (state, action) => {

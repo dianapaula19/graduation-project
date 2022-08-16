@@ -1,15 +1,13 @@
-import React from "react";
+
 import { useTranslation } from "react-i18next";
-import { IOptionalCourseCardProps } from "../OptionalCourseCard/OptionalCourseCard.types";
-import { IOptionsListCardProps } from "./OptionsListCard.types";
 import "./OptionsListCard.scss";
+import { IOptionsListCardProps } from "./OptionsListCard.types";
 
 const OptionsListCard = ({
   data,
   onClick   
-}
-: 
-IOptionsListCardProps) => {
+}: IOptionsListCardProps
+) => {
   
   const componentClassName = "optionals-list-card";
   
