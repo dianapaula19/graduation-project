@@ -1,5 +1,77 @@
 { 
   "admin": {
+    "accounts": {
+      "codes": {
+        "NOT_EMAIL": "Nu a fost specificat un email",
+        "ACCOUNT_ALREADY_EXISTS": "Contul a fost deja creat"
+      },
+      "notVerified": {
+        "title": "Conturi neverificate",
+        "buttonLabel": "Conturi neverificate",
+        "fileUploadLabel": ""
+      },
+      "students": {
+        "title": "Studenți",
+        "buttonLabel": "Studenți",
+        "fileUploadLabel": "Importă informațiile studenților în format .xlsx",
+        "filters": {
+          "dropDownFields": {
+            "domain": {
+              "label": "Domeniu",
+              "placeholder": "Domeniu"
+            },
+            "learningMode": {
+              "label": "Formă de învățământ",
+              "placeholder": "Formă de învățământ"
+            },
+            "degree": {
+              "label": "Ciclu de studii",
+              "placeholder": "Ciclu de studii"
+            },
+            "studyProgram": {
+              "label": "Program de studiu",
+              "placeholder": "Program de studiu"
+            },
+            "year": {
+              "label": "An",
+              "placeholder": "An"
+            }
+          },
+          "inputFields": {
+            "group": {
+              "label": "Caută după grupă"
+            },
+            "lastName": {
+              "label": "Caută după nume"
+            }
+          }
+        },
+        "success": {
+          "SUCCESS": "Datele studenților au fost importate cu succes!"
+        },
+        "error": {
+          "EMAIL_NOT_SENT": "Nu s-a putut transmite email-ul către studenți"
+        }
+      },
+      "teachers": {
+        "title": "Profesori",
+        "buttonLabel": "Profesori",
+        "fileUploadLabel": "Importă informațiile profesorilor în format .xlsx",
+        "filters": {
+          "inputFields": {
+            "lastName": {
+              "label": "Caută după nume"
+            }
+          }
+        },
+        "success": {
+          "SUCCESS": "Datele profesorilor au fost importate cu succes!"
+        },
+        "error": {
+          "EMAIL_NOT_SENT": "Nu s-a putut transmite email-ul către profesori"
+        }
+      }
+    },
     "courses": {
       "title": "Cursuri",
       "error": {
@@ -133,78 +205,6 @@
       },
       "mailButton": "Trimite un anunț",
       "excelButton": "Exportă lista de studenți ca .xlsx"
-    }
-  },
-  "accounts": {
-    "codes": {
-      "NOT_EMAIL": "Nu a fost specificat un email",
-      "ACCOUNT_ALREADY_EXISTS": "Contul a fost deja creat"
-    },
-    "notVerified": {
-      "title": "Conturi neverificate",
-      "buttonLabel": "Conturi neverificate",
-      "fileUploadLabel": ""
-    },
-    "students": {
-      "title": "Studenți",
-      "buttonLabel": "Studenți",
-      "fileUploadLabel": "Importă informațiile studenților în format .xlsx",
-      "filters": {
-        "dropDownFields": {
-          "domain": {
-            "label": "Domeniu",
-            "placeholder": "Domeniu"
-          },
-          "learningMode": {
-            "label": "Formă de învățământ",
-            "placeholder": "Formă de învățământ"
-          },
-          "degree": {
-            "label": "Ciclu de studii",
-            "placeholder": "Ciclu de studii"
-          },
-          "studyProgram": {
-            "label": "Program de studiu",
-            "placeholder": "Program de studiu"
-          },
-          "year": {
-            "label": "An",
-            "placeholder": "An"
-          }
-        },
-        "inputFields": {
-          "group": {
-            "label": "Caută după grupă"
-          },
-          "lastName": {
-            "label": "Caută după nume"
-          }
-        }
-      },
-      "success": {
-        "register": "Datele studenților au fost importate cu succes!"
-      },
-      "error": {
-        "EMAIL_NOT_SENT": "Nu s-a putut transmite email-ul către studenți"
-      }
-    },
-    "teachers": {
-      "title": "Profesori",
-      "buttonLabel": "Profesori",
-      "fileUploadLabel": "Importă informațiile profesorilor în format .xlsx",
-      "filters": {
-        "inputFields": {
-          "lastName": {
-            "label": "Caută după nume"
-          }
-        }
-      },
-      "success": {
-        "register": "Datele profesorilor au fost importate cu succes!"
-      },
-      "error": {
-        "EMAIL_NOT_SENT": "Nu s-a putut transmite email-ul către profesori"
-      }
     }
   }
 }

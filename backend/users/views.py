@@ -569,7 +569,7 @@ def teachers(request):
   return Response({
       'code': ResponseCode.SUCCESS.value
       },
-      status=HTTP_500_INTERNAL_SERVER_ERROR
+      status=HTTP_200_OK
   )
 
 @api_view(["POST"])

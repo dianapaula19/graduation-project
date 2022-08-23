@@ -16,10 +16,11 @@
       "success": "Datele profesorului au fost modificate cu succes!"
     },
     "success": {
-      "deleteUser": "Contul a fost șters cu succes!"
+      "SUCCESS": "Contul a fost șters cu succes!"
     },
     "error": {
-      "deleteUser": "A apărut o eroare la ștergerea contului"
+      "TEACHER_HAS_COURSE": "Contul profesorului nu a putut fi șters deoarece profesorul predă unul dintre cursuri",
+      "ERROR": "A apărut o eroare la ștergerea contului!"
     }
   },
   "students": {

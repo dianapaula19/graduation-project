@@ -9,9 +9,19 @@ class Course(models.Model):
   students = models.ManyToManyField('users.Student', related_name='enrolled_students')
   title = models.CharField(max_length=255)
   link = models.URLField(max_length=200, null=True)
-  capacity = models.IntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(100)])
+  capacity = models.IntegerField(
+    default=1, 
+    validators=[
+      MinValueValidator(1), 
+      MaxValueValidator(100)]
+  )
   degree = models.TextField(choices=Degree.choices, null=True)
-  semester = models.IntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(2)])
+  semester = models.IntegerField(
+    default=1, 
+    validators=[
+      MinValueValidator(1), 
+      MaxValueValidator(2)]
+  )
   class Meta:
     verbose_name = 'course'
     verbose_name_plural = "courses"

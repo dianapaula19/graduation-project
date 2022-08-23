@@ -4,6 +4,7 @@ import Modal from "components/molecules/Modal";
 import ModalApiStatus from "components/molecules/ModalApiStatus";
 import UserDataForm from "components/organisms/forms/UserDataForm";
 import { loginToken } from "features/account/loginSlice";
+import { deleteCourseCode } from "features/user/admin/course/deleteCourseSlice";
 import { deleteUserShowModal, deleteUserStatus, revertDeleteUser } from "features/user/admin/user/deleteUserSlice";
 import { getNotVerifiedUsersAsync } from "features/user/admin/user/getNotVerifiedUsersSlice";
 import { getCurrentStudent, revertCurrentStudent, getStudentsAsync } from "features/user/admin/user/getStudentsSlice";
@@ -36,6 +37,7 @@ const AccountsList = ({
   const showModalUpdateStudentInfo = useAppSelector(updateStudentInfoShowModal);
   const showModalUpdateTeacherInfo = useAppSelector(updateTeacherInfoShowModal);
   const statusDeleteUser = useAppSelector(deleteUserStatus);
+  const codeDeleteUser = useAppSelector(deleteCourseCode);
   const statusVerifyUser = useAppSelector(verifyUserStatus);
   const statusUpdateStudentInfo = useAppSelector(updateStudentInfoStatus);
   const statusUpdateTeacherInfo = useAppSelector(updateTeacherInfoStatus);
@@ -59,7 +61,6 @@ const AccountsList = ({
     setShowUserDataFormModal
   ])
 
-  let deleteUserModalComponent = null;
   let verifyUserModalComponent = null;
   let updateStudentInfoModalComponent = null;
   let updateTeacherInfoModalComponent = null;
@@ -106,23 +107,6 @@ const AccountsList = ({
         message={t("accounts.teachers.success.update")} 
         error={false} 
       />;
-      break;
-  }
-
-  switch (statusDeleteUser) {
-    case ApiStatus.failed:
-      deleteUserModalComponent = <ModalApiStatus 
-        message={t("accounts.error.deleteUser")} 
-        error={true} 
-      />;
-      break;
-    case ApiStatus.success:
-      deleteUserModalComponent = <ModalApiStatus 
-        message={t("accounts.success.deleteUser")} 
-        error={false} 
-      />;
-      break;
-    default:
       break;
   }
 
@@ -274,7 +258,18 @@ const AccountsList = ({
         }
       }}
     >
-      {deleteUserModalComponent}
+      {statusDeleteUser === ApiStatus.failed && (
+        <ModalApiStatus 
+          message={codeDeleteUser ? t(`accounts.error.${codeDeleteUser}`) : t(`accounts.error.ERROR`)} 
+          error={true} 
+        />
+      )}
+      {statusDeleteUser === ApiStatus.success && (
+        <ModalApiStatus 
+          message={t(`accounts.success.SUCCESS`)} 
+          error={false} 
+        />
+      )}
     </Modal>
     </>
   );

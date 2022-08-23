@@ -5,7 +5,7 @@
   text-transform: uppercase;
   font-size: small;
   background-color: $blue;
-  color: white;
+  color: $white;
   border-radius: .5rem;
   margin: .5rem 0 1rem 0;
   height: 3.5rem;
@@ -58,7 +58,7 @@
   grid-area: excel-button;
   margin: 0;
   &:hover {
-    color: white;
+    color: $white;
     background-color: $blue;
   }
 }

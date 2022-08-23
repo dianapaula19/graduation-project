@@ -1,7 +1,7 @@
 import { useState } from "react";
 import classNames from "classnames";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLock, faEnvelope, faEye, faEyeSlash, faXmark, faFileArrowUp, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faLock, faEnvelope, faEye, faEyeSlash, faXmark, faMagnifyingGlass, faFileExcel } from "@fortawesome/free-solid-svg-icons";
 import { InputFieldModifier, InputFieldProps, InputFieldType } from "./InputField.types";
 import "./InputField.scss";
 
@@ -50,8 +50,7 @@ const InputField = ({
             />
       case InputFieldType.file:
         return <FontAwesomeIcon 
-              icon={faFileArrowUp} 
-              className={`${inputGroupClassName}__icon`}
+              icon={faFileExcel} 
             />
       case InputFieldType.search:
         return <FontAwesomeIcon 
@@ -105,20 +104,20 @@ const InputField = ({
 
   if (type === InputFieldType.file) {
     return (
-      <div
+      
+      <label 
+        htmlFor={id} 
         className={fileUploadClassName}
       >
         {iconSwitch(InputFieldType.file)}
-        <label 
-          htmlFor={id} 
-        >
-          {label}
-        </label>
+        {label}
         <input 
           id={id} 
           type={InputFieldType.file}
+        {...rest}
         />
-      </div>
+      </label>
+        
     )
   }
 

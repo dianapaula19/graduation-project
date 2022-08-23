@@ -7,6 +7,7 @@ import "./ModalApiStatus.scss";
 
 const ModalApiStatus = ({
   message,
+  additionalMessages,
   error
 }: IModalApiStatusProps) => {
 
@@ -33,6 +34,13 @@ const ModalApiStatus = ({
       >
         {error === false ? message + " :D" : message + " :("}
       </p>
+      <div>
+        {additionalMessages && additionalMessages.map((additionalMessage) => {
+          return <div>
+            {additionalMessage}
+          </div>
+        })}
+      </div>
     </div>
   )
 }

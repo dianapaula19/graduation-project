@@ -16,7 +16,7 @@ import { loginToken } from "features/account/loginSlice";
 import { getNotVerifiedUsersStatus, getNotVerifiedUsersUsers, getNotVerifiedUsersAsync } from "features/user/admin/user/getNotVerifiedUsersSlice";
 import { getStudentsStatus, getStudentsStudents, getStudentsAsync, revertGetStudents } from "features/user/admin/user/getStudentsSlice";
 import { getTeachersStatus, getTeachersTeachers, getTeachersAsync, revertGetTeachers } from "features/user/admin/user/getTeachersSlice";
-import { registerBatchStudentsStatus, registerBatchStudentsShowModal, registerBatchStudentsCode, IStudentData, registerBatchStudentsAsync, revertRegisterBatchStudents } from "features/user/admin/user/registerBatchStudentsSlice";
+import { registerBatchStudentsStatus, registerBatchStudentsShowModal, registerBatchStudentsCode, IStudentData, registerBatchStudentsAsync, revertRegisterBatchStudents, registerBatchStudentsErrorMessages } from "features/user/admin/user/registerBatchStudentsSlice";
 import { registerBatchTeachersStatus, registerBatchTeachersShowModal, registerBatchTeachersErrorMessages, registerBatchTeachersCode, ITeacherData, registerBatchTeachersAsync, revertRegisterBatchTeachers } from "features/user/admin/user/registerBatchTeachersSlice";
 import { verifyUserStatus } from "features/user/admin/user/verifyUserSlice";
 import { ApiStatus } from "features/Utils";
@@ -32,9 +32,9 @@ const AccountsPage = ({
   const componentClassName = "accounts-page";
   const studentFiltersClassName = `${componentClassName}__students-filters`;
   const teacherFiltersClassName = `${componentClassName}__teachers-filters`;
-  const dropDownStudentFiltersTranslate = "accounts.students.filters.dropDownFields";
-  const inputStudentFiltersTranslate = "accounts.students.filters.inputFields";
-  const inputTeacherFiltersTranslate = "accounts.teachers.filters.inputFields";
+  const dropDownStudentFiltersTranslate = "admin.accounts.students.filters.dropDownFields";
+  const inputStudentFiltersTranslate = "admin.accounts.students.filters.inputFields";
+  const inputTeacherFiltersTranslate = "admin.accounts.teachers.filters.inputFields";
 
   const statusRegisterBatchStudents = useAppSelector(registerBatchStudentsStatus);
   const statusRegisterBatchTeachers = useAppSelector(registerBatchTeachersStatus);
@@ -57,9 +57,6 @@ const AccountsPage = ({
     teacherLastName: ''
   });
 
-  const [errorMessageRegisterBatchStudents, setErrorMessageRegisterBatchStudents] = useState("");
-  const [errorMessageRegisterBatchTeachers, setErrorMessageRegisterBatchTeachers] = useState("");
-
   const { t } = useTranslation('pages'); 
   const dispatch = useAppDispatch();
   const statusGetStudents = useAppSelector(getStudentsStatus);
@@ -70,7 +67,7 @@ const AccountsPage = ({
   const users = useAppSelector(getNotVerifiedUsersUsers);
   const showModalRegisterBatchStudents = useAppSelector(registerBatchStudentsShowModal);
   const showModalRegisterBatchTeachers = useAppSelector(registerBatchTeachersShowModal);
-  const errorMessagesRegisterBatchStudents = useAppSelector(registerBatchTeachersErrorMessages);
+  const errorMessagesRegisterBatchStudents = useAppSelector(registerBatchStudentsErrorMessages);
   const errorMessagesRegisterBatchTeachers = useAppSelector(registerBatchTeachersErrorMessages);
   const codeRegisterBatchStudents = useAppSelector(registerBatchStudentsCode);
   const codeRegisterBatchTeachers = useAppSelector(registerBatchTeachersCode);
@@ -153,9 +150,9 @@ const AccountsPage = ({
   }
 
   useEffect(() => {
-    $('#import-excel-file-button').on('click', () => {
-      $('#import-excel-file-input').trigger('click')
-    });
+    // $('#import-excel-file-button').on('click', () => {
+    //   $('#import-excel-file-input').trigger('click')
+    // });
     if (
       role === Role.STUDENT && 
       statusGetStudents === ApiStatus.idle &&
@@ -209,7 +206,6 @@ const AccountsPage = ({
   }
 
   const onFileUpload = (e: React.ChangeEvent<HTMLInputElement>): void =>  {
-    e.preventDefault();
     if (e.target.files) {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -289,78 +285,6 @@ const AccountsPage = ({
     })
   }
 
-  useEffect(() => {
-    
-    if (statusRegisterBatchStudents === ApiStatus.failed) {
-      let string = ""
-      if (errorMessagesRegisterBatchStudents) {
-        errorMessagesRegisterBatchStudents.map((message) => {
-          string.concat(
-            message.index + ": " + t(`accounts.codes.${message.code}`) + "\n");
-        })
-      } else {
-        string = t("accounts.students.success.register");
-      }
-      setErrorMessageRegisterBatchStudents(string);
-    }
-    
-    if (statusRegisterBatchTeachers === ApiStatus.success) {
-      let string = ""
-      if (errorMessagesRegisterBatchTeachers) {
-        errorMessagesRegisterBatchTeachers.map((message) => {
-          string.concat(
-            message.index + ": " + t(`accounts.codes.${message.code}`) + "\n");
-        })
-      } else {
-        string = t("accounts.teachers.success.register");
-      }
-      setErrorMessageRegisterBatchTeachers(string);
-    }    
-
-  }, [
-    statusRegisterBatchStudents, 
-    statusRegisterBatchTeachers, 
-    errorMessagesRegisterBatchStudents,
-    errorMessagesRegisterBatchTeachers,
-    setErrorMessageRegisterBatchStudents,
-    setErrorMessageRegisterBatchTeachers,
-    t
-  ])
-
-  let modalRegisterBatchStudentComponent = null;
-
-  switch(statusRegisterBatchStudents) {
-    case ApiStatus.failed:
-      modalRegisterBatchStudentComponent = <ModalApiStatus 
-        message={t(`accounts.students.error.${codeRegisterBatchStudents}`)} 
-        error={true} 
-      />
-      break;
-    case ApiStatus.success:
-      modalRegisterBatchStudentComponent = <ModalApiStatus 
-        message={errorMessageRegisterBatchStudents} 
-        error={false} 
-      />
-      break;
-  }
-
-  let modalRegisterBatchTeacherComponent = null;
-
-  switch(statusRegisterBatchTeachers) {
-    case ApiStatus.failed:
-      modalRegisterBatchTeacherComponent = <ModalApiStatus 
-        message={errorMessageRegisterBatchTeachers} 
-        error={true} 
-      />
-      break;
-    case ApiStatus.success:
-      modalRegisterBatchTeacherComponent = <ModalApiStatus 
-        message={errorMessageRegisterBatchTeachers} 
-        error={false} 
-      />
-      break;
-  }
-
   if (
     statusRegisterBatchStudents === ApiStatus.loading ||
     statusRegisterBatchTeachers === ApiStatus.loading ||
@@ -378,19 +302,19 @@ const AccountsPage = ({
       className={`${componentClassName}__buttons`}
     >
       <Button 
-        label={t(`accounts.notVerified.buttonLabel`)}
+        label={t(`admin.accounts.notVerified.buttonLabel`)}
         modifier={role !== Role.NONE ? ButtonModifier.unselected : ButtonModifier.none}
         onClick={() => {navigate('/admin/accounts/notVerified')}} 
         disabled={false} 
       />
       <Button 
-        label={t(`accounts.students.buttonLabel`)}
+        label={t(`admin.accounts.students.buttonLabel`)}
         modifier={role !== Role.STUDENT ? ButtonModifier.unselected : ButtonModifier.none}
         onClick={() => {navigate('/admin/accounts/students')}}
         disabled={false} 
       />
       <Button 
-        label={t(`accounts.teachers.buttonLabel`)}
+        label={t(`admin.accounts.teachers.buttonLabel`)}
         modifier={role !== Role.TEACHER ? ButtonModifier.unselected : ButtonModifier.none} 
         onClick={() => {navigate('/admin/accounts/teachers')}}
         disabled={false} 
@@ -398,20 +322,14 @@ const AccountsPage = ({
     </div>
     {role !== Role.NONE && (
       <>
-      <Button 
-        id={"import-excel-file-button"}
-        label={t(`accounts.${switchType(role)}.fileUploadLabel`)}
-        modifier={ButtonModifier.excel} 
-        disabled={false} 
-      />
-      <input 
-        type="file"
-        onChange={onFileUpload}
-        style={{
-        display: "none"
-        }}
-        id={"import-excel-file-input"}
-      />
+        <InputField
+          id={"import-excel-file-input"} 
+          type={InputFieldType.file} 
+          error={false} 
+          label={t(`admin.accounts.${switchType(role)}.fileUploadLabel`)}
+          accept={"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}
+          onChange={onFileUpload}
+        />        
       </>
     )}
     {role === Role.STUDENT && (
@@ -571,7 +489,7 @@ const AccountsPage = ({
     }
     <AccountsList
       role={role} 
-      title={t(`accounts.${switchType(role)}.title`)}
+      title={t(`admin.accounts.${switchType(role)}.title`)}
       emails={emails} 
     />
     {role === Role.STUDENT && (
@@ -582,7 +500,20 @@ const AccountsPage = ({
           dispatch(revertGetStudents());
         }}
       >
-        {modalRegisterBatchStudentComponent}
+        {statusRegisterBatchStudents === ApiStatus.failed && (
+          <ModalApiStatus 
+            message={t(`admin.accounts.students.error.${codeRegisterBatchStudents}`)} 
+            error={true} 
+          />
+        )}
+        {statusRegisterBatchStudents === ApiStatus.success 
+        && errorMessagesRegisterBatchStudents && (
+          <ModalApiStatus 
+            message={t(`admin.accounts.students.success.${codeRegisterBatchStudents}`)}
+            additionalMessages={Array.from(errorMessagesRegisterBatchStudents, x => x.index + ": " + t(`admin.accounts.codes.${x.code}`))} 
+            error={false} 
+          />
+        )}
       </Modal>  
     )}
     {role === Role.TEACHER && (
@@ -594,7 +525,20 @@ const AccountsPage = ({
           dispatch(revertGetTeachers());
         }}
       >
-        {modalRegisterBatchTeacherComponent}
+        {statusRegisterBatchTeachers === ApiStatus.failed && (
+          <ModalApiStatus 
+            message={t(`admin.accounts.teachers.error.${codeRegisterBatchTeachers}`)} 
+            error={true} 
+          />
+        )}
+        {statusRegisterBatchTeachers === ApiStatus.success 
+          && errorMessagesRegisterBatchTeachers && (
+          <ModalApiStatus 
+            message={t(`admin.accounts.teachers.success.${codeRegisterBatchTeachers}`)} 
+            additionalMessages={Array.from(errorMessagesRegisterBatchTeachers, x => (x.index + 1) + ": " + t(`admin.accounts.codes.${x.code}`))}  
+            error={false} 
+          />
+        )}
       </Modal>
     )}
     </div>

@@ -32,15 +32,10 @@ const resources = {
 i18n
   .use(initReactI18next) // bind react-i18next to the instance
   .init({
-  resources,
-  debug: true,
-  lng: localStorage.getItem('language') as string,
-  defaultNS: "common",
-
-  interpolation: {
-    escapeValue: false, // not needed for react!!
-  },
-
+    resources,
+    debug: true,
+    lng: localStorage.getItem('language') ? localStorage.getItem('language') as string : window.navigator.language,
+    defaultNS: "common",
 });
 
 export default i18n;

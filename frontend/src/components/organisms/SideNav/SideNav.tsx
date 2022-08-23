@@ -148,6 +148,7 @@ const SideNav = () => {
           <Button 
             label={t("links.signOut")} 
             onClick={() => {
+              localStorage.clear();
               dispatch(revertLogin());
               if (role === Role.STUDENT) {
                 dispatch(revertStudentData());
