@@ -3,9 +3,11 @@ import Modal from "components/molecules/Modal";
 import ModalApiStatus from "components/molecules/ModalApiStatus";
 import LoadingPage from "components/pages/LoadingPage";
 import AuthentificationPage, { AccountAction } from "components/templates/AccountPage";
+import { loginStatus } from "features/account/loginSlice";
 import { resetPasswordShowModal, resetPasswordStatus, revertResetPassword } from "features/account/resetPasswordSlice";
 import { ApiStatus } from "features/Utils";
 import { useTranslation } from "react-i18next";
+import { Navigate } from "react-router-dom";
 
 const ResetPasswordPage = () => {
 
@@ -14,6 +16,11 @@ const ResetPasswordPage = () => {
   
   const showModalResetPassword = useAppSelector(resetPasswordShowModal);
   const statusResetPassword = useAppSelector(resetPasswordStatus);
+  const statusLogin = useAppSelector(loginStatus);
+
+  if (statusLogin === ApiStatus.success) {
+    return <Navigate to="/" />
+  }
 
   switch (statusResetPassword) {
     case ApiStatus.loading:

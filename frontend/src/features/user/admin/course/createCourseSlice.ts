@@ -64,7 +64,7 @@ export const createCourseSlice = createSlice({
   },
   extraReducers: (builder) => {
   builder
-  .addCase(createCourseAsync.pending, (state, action) => {
+  .addCase(createCourseAsync.pending, (state) => {
     state.showModal = true;
     state.status = ApiStatus.loading;
   })

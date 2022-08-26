@@ -3,9 +3,11 @@ import Modal from "components/molecules/Modal";
 import ModalApiStatus from "components/molecules/ModalApiStatus";
 import LoadingPage from "components/pages/LoadingPage";
 import AuthentificationPage, { AccountAction } from "components/templates/AccountPage";
+import { loginStatus } from "features/account/loginSlice";
 import { recoverAccountShowModal, recoverAccountStatus, revertRecoverAccount } from "features/account/recoverAccountSlice";
 import { ApiStatus } from "features/Utils";
 import { useTranslation } from "react-i18next";
+import { Navigate } from "react-router-dom";
 
 const RecoverAccountPage = () => {
 
@@ -14,6 +16,12 @@ const RecoverAccountPage = () => {
   
   const showModalRecoverAccount = useAppSelector(recoverAccountShowModal);
   const statusRecoverAccount = useAppSelector(recoverAccountStatus);
+
+  const statusLogin = useAppSelector(loginStatus);
+
+  if (statusLogin === ApiStatus.success) {
+    return <Navigate to="/" />
+  }
 
   switch (statusRecoverAccount) {
     case ApiStatus.loading:

@@ -1,10 +1,13 @@
 import { useAppDispatch, useAppSelector } from "app/hooks";
+import { Degree, Domain } from "components/App";
 import Button from "components/atoms/Button";
+import DropDown from "components/atoms/DropDown";
 import Modal from "components/molecules/Modal";
 import ModalApiStatus from "components/molecules/ModalApiStatus";
 import OptionsListCard from "components/molecules/OptionsListCard";
 import OptionsListForm from "components/organisms/forms/OptionsListForm";
 import LoggedUserPage from "components/templates/LoggedUserPage";
+import { PLACEHOLDER } from "components/Utils";
 import { loginToken } from "features/account/loginSlice";
 import { getCoursesStatus, getCoursesAsync } from "features/user/admin/course/getCoursesSlice";
 import { createOptionsListShowModal, createOptionsListStatus, revertCreateOptionsList } from "features/user/admin/optionsList/createOptionsListSlice";
@@ -21,6 +24,7 @@ const OptionsListsPage = () => {
   const componentClassName = "options-lists-page";
   const [showModalOptionsListForm, setShowModalOptionsListForm] = useState<boolean>(false);
   const [formType, setFormType] = useState<'create' | 'update'>('create');
+  const [domain, setDomain] = useState(PLACEHOLDER);
   const { t } = useTranslation("pages");
 
   const dispatch = useAppDispatch();
@@ -37,8 +41,11 @@ const OptionsListsPage = () => {
   const statusDeleteOptionsList = useAppSelector(deleteOptionsListStatus);
   const token = useAppSelector(loginToken);
 
-  const domains: {[id: string]: string} = t("common:domains", {returnObjects: true}) as {[id: string]: string};
-
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
+    if (e.target.name === "domain") {
+      setDomain(e.target.value);
+    }
+  }
   useEffect(() => {
     if (
       statusGetCourses === ApiStatus.idle &&
@@ -143,17 +150,37 @@ const OptionsListsPage = () => {
     >
       {t("admin.optionsLists.title")}
     </span>
-    {Object.keys(domains).map((key) => {
+    
+    <DropDown 
+      name="domain"
+      onChange={handleChange}
+      label={t(`admin.optionsLists.filters.domain.label`)}
+      placeholder={t(`admin.optionsLists.filters.domain.placeholder`)}
+      value={domain} 
+      error={false}   
+    >
+      {Object.keys(Domain).map((key) => {
+        return (
+          <option
+            value={key}
+          >
+            {t(`common:domains.${key}`)}
+          </option>
+        )
+      })}
+    </DropDown>
+    {Object.keys(Degree).map((key) => {
+      if (key === Degree.MASTER && domain === Domain.CTI) {
+        return;
+      }
       return (
         <>
         <span
-          style={{
-          fontSize: 'x-large'
-          }}
+          className={`${componentClassName}__degree-title`}
         >
-          {domains[key]}
+          {t(`common:degrees.${key}`)}
         </span>
-        {optionsLists && optionsLists.filter(optionsList => optionsList.domain === key).map((optionsList) => {
+        {optionsLists && optionsLists.filter(optionsList => optionsList.degree === key && optionsList.domain === domain).map((optionsList) => {
           return (
           <OptionsListCard 
             data={optionsList}

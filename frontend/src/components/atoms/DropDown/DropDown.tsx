@@ -1,6 +1,7 @@
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
+import { PLACEHOLDER } from "components/Utils";
 import "./DropDown.scss";
 import { DropDownModifier, IDropDownProps } from "./DropDown.types";
 
@@ -40,12 +41,12 @@ const DropDown = ({
         )}
         {...rest}
       >   
-        {rest.defaultValue === "placeholder" && (
+        {rest.value === PLACEHOLDER && (
           <option 
             hidden 
             disabled 
             selected 
-            value={"placeholder"}
+            value={PLACEHOLDER}
           >
             {placeholder}
           </option>

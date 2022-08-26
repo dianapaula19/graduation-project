@@ -1,4 +1,3 @@
-import $ from "jquery";
 import "./AccountsPage.scss"
 import * as XLSX from "xlsx";
 import { useAppSelector, useAppDispatch } from "app/hooks";
@@ -150,9 +149,6 @@ const AccountsPage = ({
   }
 
   useEffect(() => {
-    // $('#import-excel-file-button').on('click', () => {
-    //   $('#import-excel-file-input').trigger('click')
-    // });
     if (
       role === Role.STUDENT && 
       statusGetStudents === ApiStatus.idle &&
@@ -344,7 +340,6 @@ const AccountsPage = ({
             onChange={handleChangeStudentsFilter}
             label={t(`${dropDownStudentFiltersTranslate}.degree.label`)}
             placeholder={t(`${dropDownStudentFiltersTranslate}.degree.placeholder`)}
-            defaultValue={studentFilters.degree}
             value={studentFilters.degree} 
             error={false}          
           >
@@ -363,7 +358,6 @@ const AccountsPage = ({
             onChange={handleChangeStudentsFilter}
             label={t(`${dropDownStudentFiltersTranslate}.domain.label`)}
             placeholder={t(`${dropDownStudentFiltersTranslate}.domain.placeholder`)}
-            defaultValue={studentFilters.domain}
             value={studentFilters.domain} 
             error={false}
           >
@@ -384,7 +378,6 @@ const AccountsPage = ({
             onChange={handleChangeStudentsFilter}
             label={t(`${dropDownStudentFiltersTranslate}.learningMode.label`)}
             placeholder={t(`${dropDownStudentFiltersTranslate}.learningMode.placeholder`)}
-            defaultValue={studentFilters.learningMode}
             value={studentFilters.learningMode} 
             error={false}
           >
@@ -407,7 +400,6 @@ const AccountsPage = ({
             onChange={handleChangeStudentsFilter}
             label={t(`${dropDownStudentFiltersTranslate}.studyProgram.label`)}
             placeholder={t(`${dropDownStudentFiltersTranslate}.studyProgram.placeholder`)}
-            defaultValue={studentFilters.studyProgram}
             value={studentFilters.studyProgram} 
             error={false}
           >
@@ -431,7 +423,6 @@ const AccountsPage = ({
             onChange={handleChangeStudentsFilter}
             label={t(`${dropDownStudentFiltersTranslate}.year.label`)}
             placeholder={t(`${dropDownStudentFiltersTranslate}.year.placeholder`)}
-            defaultValue={studentFilters.year}
             value={studentFilters.year} 
             error={false}
           >

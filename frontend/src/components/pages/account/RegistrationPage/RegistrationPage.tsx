@@ -3,9 +3,11 @@ import Modal from "components/molecules/Modal";
 import ModalApiStatus from "components/molecules/ModalApiStatus";
 import LoadingPage from "components/pages/LoadingPage";
 import AuthentificationPage, { AccountAction } from "components/templates/AccountPage";
+import { loginStatus } from "features/account/loginSlice";
 import { registerStatus, registerCode, registerShowModal, revertRegister } from "features/account/registerSlice";
 import { ApiStatus } from "features/Utils";
 import { useTranslation } from "react-i18next";
+import { Navigate } from "react-router-dom";
 
 const RegistrationPage = () => {
 
@@ -16,6 +18,12 @@ const RegistrationPage = () => {
   const dispatch = useAppDispatch();
 
   const { t } = useTranslation("pages");
+
+  const statusLogin = useAppSelector(loginStatus);
+
+  if (statusLogin === ApiStatus.success) {
+    return <Navigate to="/" />
+  }
 
   switch (status) {
   case ApiStatus.loading:

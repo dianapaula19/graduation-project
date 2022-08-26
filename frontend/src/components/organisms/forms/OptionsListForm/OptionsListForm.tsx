@@ -50,9 +50,7 @@ const OptionsListForm = ({
     studyProgram: PLACEHOLDER,
     coursesIds: []
   });
-
-  const [filteredCourses, setFilteredCourses] = useState(courses !== null ? courses : []);
-
+  
   const validation = {
     title: data.title === "",
     year: data.year < 2 || data.year > 4,
@@ -88,24 +86,8 @@ const OptionsListForm = ({
       })
     }
   }, [
-    currentOptionsList, 
-    setData
+    currentOptionsList
   ]);
-  
-  useEffect(() => {
-    if (courses) {
-      setFilteredCourses(courses.filter(
-        course => 
-        course.semester === Number(data.semester) && 
-        course.degree === data.degree
-      ));
-    }
-  }, [
-    data, 
-    setFilteredCourses,
-    filteredCourses, 
-    courses
-  ])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>): void => {
     const name = e.target.name;
@@ -211,7 +193,6 @@ const OptionsListForm = ({
       errorMessage={t(`${dropDownTranslate}.degree.errorMessage`)} 
       label={t(`${dropDownTranslate}.degree.label`)}
       placeholder={t(`${dropDownTranslate}.degree.placeholder`)}
-      defaultValue={data.degree}
       value={data.degree}
       onChange={handleChange}
     >
@@ -233,7 +214,6 @@ const OptionsListForm = ({
       errorMessage={t(`${dropDownTranslate}.domain.errorMessage`)} 
       label={t(`${dropDownTranslate}.domain.label`)} 
       placeholder={t(`${dropDownTranslate}.domain.placeholder`)}
-      defaultValue={data.domain}
       value={data.domain}
       onChange={handleChange}
     >
@@ -255,7 +235,6 @@ const OptionsListForm = ({
       errorMessage={t(`${dropDownTranslate}.learningMode.errorMessage`)} 
       label={t(`${dropDownTranslate}.learningMode.label`)}
       placeholder={t(`${dropDownTranslate}.learningMode.placeholder`)}
-      defaultValue={data.learningMode}
       value={data.learningMode}
       onChange={handleChange}
     >
@@ -278,7 +257,6 @@ const OptionsListForm = ({
       errorMessage={t(`${dropDownTranslate}.studyProgram.errorMessage`)} 
       label={t(`${dropDownTranslate}.studyProgram.label`)}
       placeholder={t(`${dropDownTranslate}.studyProgram.placeholder`)}
-      defaultValue={data.studyProgram}
       value={data.studyProgram}
       onChange={handleChange}
     >
@@ -342,7 +320,11 @@ const OptionsListForm = ({
       className={`${coursesContainerClassName}__courses`}
       >
       { 
-        filteredCourses.map((course) => {
+        courses && courses.filter(
+          course => 
+          course.semester === Number(data.semester) && 
+          course.degree === data.degree
+        ).map((course) => {
         const idx = data.coursesIds.indexOf(course.id)
         return <CheckBox
             checked={idx === -1 ? false : true}

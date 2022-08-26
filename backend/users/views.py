@@ -1,3 +1,4 @@
+from distutils.log import error
 import email
 from django.core.mail import EmailMultiAlternatives
 from enum import Enum
@@ -122,14 +123,13 @@ def register(request):
     )
 
   try:
-    send_mail(
+    email = EmailMultiAlternatives(
       subject="[FMI] Account created successfully",
-      message="Congrats. Your account was creates successfully.",
+      body="Congrats. Your account was created successfully.",
       from_email=settings.EMAIL_HOST_USER,
-      to=settings.EMAIL_HOST_USER,
-      recipient_list=[email],
-      fail_silently=False
+      to=[settings.EMAIL_HOST_USER, email],
     )
+    email.send()
   except:
     return Response({
       'code': ResponseCode.EMAIL_NOT_SENT.value

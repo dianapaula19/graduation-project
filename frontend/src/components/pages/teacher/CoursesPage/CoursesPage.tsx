@@ -13,6 +13,7 @@ import { getTeacherCoursesStatus, getTeacherCoursesCourses, getTeacherCoursesCur
 import { ApiStatus } from "features/Utils";
 import { useTranslation } from "react-i18next";
 import "./CoursesPage.scss";
+import { PLACEHOLDER } from "components/Utils";
 
 const OptionalCoursesList = () => {
 
@@ -32,12 +33,14 @@ const OptionalCoursesList = () => {
   const { t } = useTranslation('pages');
 
   const [showSendAnnouncementFormModal, setShowSendAnnouncementFormModal] = useState<boolean>(false);
+  const [courseId, setCourseId] = useState<string | number>(PLACEHOLDER);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     const value = e.target.value;  
     dispatch(getCurrentTeacherCourse({
       id: parseInt(value)
     }));
+    setCourseId(parseInt(value));
 
   }
 
@@ -82,7 +85,7 @@ const OptionalCoursesList = () => {
         <DropDown 
           error={false} 
           name={"course"}
-          defaultValue="placeholder"
+          value={courseId}
           placeholder={t("teacher.courses.dropDownFields.chooseCourse.placeholder")}
           label={t("teacher.courses.dropDownFields.chooseCourse.label")}
           onChange={handleChange}

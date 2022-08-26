@@ -86,8 +86,8 @@ const CourseForm = ({
     <InputField 
       type={InputFieldType.text}
       id={`${componentId}-title`}
-      name={"title"}
-      defaultValue={courseData.title} 
+      name={"title"} 
+      value={courseData.title}
       error={validation.title} 
       errorMessage={t(`${inputFieldsTranslate}.title.errorMessage`)} 
       label={t(`${inputFieldsTranslate}.title.label`)} 
@@ -98,7 +98,7 @@ const CourseForm = ({
       type={InputFieldType.text} 
       id={`${componentId}-link`}
       name={"link"}
-      defaultValue={courseData.link}
+      value={courseData.link}
       error={validation.link} 
       errorMessage={t(`${inputFieldsTranslate}.link.errorMessage`)} 
       label={t(`${inputFieldsTranslate}.link.label`)} 
@@ -124,7 +124,6 @@ const CourseForm = ({
       errorMessage={t(`${dropDownFieldsTranslate}.degree.errorMessage`)} 
       label={t(`${dropDownFieldsTranslate}.degree.label`)}
       placeholder={t(`${dropDownFieldsTranslate}.degree.placeholder`)}
-      defaultValue={courseData.degree}
       value={courseData.degree}
       onChange={handleChange}
     >

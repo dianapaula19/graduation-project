@@ -34,7 +34,7 @@ i18n
   .init({
     resources,
     debug: true,
-    lng: localStorage.getItem('language') ? localStorage.getItem('language') as string : window.navigator.language,
+    lng: localStorage.getItem('language') ? localStorage.getItem('language') as string : 'ro',
     defaultNS: "common",
 });
 

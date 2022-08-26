@@ -97,9 +97,7 @@ const UserDataForm = ({
   }, [
     student, 
     teacher,
-    role,
-    studentData, 
-    userData
+    role
   ])
 
   const validationUserData = {
@@ -205,7 +203,6 @@ const UserDataForm = ({
       type={InputFieldType.text} 
       name={"firstName"}
       id={`${componentId}-first-name`}
-      defaultValue={userData.firstName}
       value={userData.firstName}
       error={validationUserData.firstName} 
       errorMessage={t(`${inputTranslate}.firstName.errorMessage`)} 
@@ -217,7 +214,6 @@ const UserDataForm = ({
       type={InputFieldType.text}
       id={`${componentId}-last-name`}
       name={"lastName"} 
-      defaultValue={userData.lastName}
       value={userData.lastName}
       error={validationUserData.lastName} 
       errorMessage={t(`${inputTranslate}.lastName.errorMessage`)} 
@@ -231,10 +227,10 @@ const UserDataForm = ({
         error={validationUserData.role}
         id={`${componentId}-role`}
         name={"role"} 
-        defaultValue={userData.role}
         value={userData.role}
         errorMessage={t(`${dropDownTranslate}.role.errorMessage`)} 
         label={t(`${dropDownTranslate}.role.label`)}
+        placeholder={t(`${dropDownTranslate}.role.placeholder`)}
         onChange={handleChangeUserData}
       >
       {Object.keys(Role).map((key) => {
@@ -261,7 +257,6 @@ const UserDataForm = ({
           errorMessage={t(`${dropDownTranslate}.degree.errorMessage`)} 
           label={t(`${dropDownTranslate}.degree.label`)}
           placeholder={t(`${dropDownTranslate}.degree.placeholder`)}
-          defaultValue={studentData.degree}
           value={studentData.degree}
           onChange={handleChangeStudentData}
         >
@@ -283,7 +278,6 @@ const UserDataForm = ({
           errorMessage={t(`${dropDownTranslate}.domain.errorMessage`)} 
           label={t(`${dropDownTranslate}.domain.label`)}
           placeholder={t(`${dropDownTranslate}.domain.placeholder`)}
-          defaultValue={studentData.domain}
           value={studentData.domain}
           onChange={handleChangeStudentData}
         >
@@ -306,7 +300,6 @@ const UserDataForm = ({
           errorMessage={t(`${dropDownTranslate}.learningMode.errorMessage`)} 
           label={t(`${dropDownTranslate}.learningMode.label`)}
           placeholder={t(`${dropDownTranslate}.learningMode.placeholder`)}
-          defaultValue={studentData.learningMode}
           value={studentData.learningMode}
           onChange={handleChangeStudentData}
         >
@@ -330,7 +323,6 @@ const UserDataForm = ({
           errorMessage={t(`${dropDownTranslate}.studyProgram.errorMessage`)} 
           label={t(`${dropDownTranslate}.studyProgram.label`)}
           placeholder={t(`${dropDownTranslate}.studyProgram.placeholder`)}
-          defaultValue={studentData.studyProgram}
           value={studentData.studyProgram}
           onChange={handleChangeStudentData}
         >
@@ -352,7 +344,6 @@ const UserDataForm = ({
           type={InputFieldType.text}
           id={`${componentId}-current-group`}
           name={"currentGroup"} 
-          defaultValue={studentData.currentGroup}
           value={studentData.currentGroup}
           error={validationStudentData.currentGroup} 
           errorMessage={t(`${inputTranslate}.currentGroup.errorMessage`)} 
@@ -364,7 +355,6 @@ const UserDataForm = ({
           type={InputFieldType.number}
           id={`${componentId}-current-year`}
           name={"currentYear"} 
-          defaultValue={studentData.currentYear}
           value={studentData.currentYear}
           error={validationStudentData.currentYear} 
           errorMessage={t(`${inputTranslate}.currentYear.errorMessage`)} 
@@ -420,7 +410,6 @@ const UserDataForm = ({
                   >
                     <InputField 
                       type={InputFieldType.number} 
-                      defaultValue={year}
                       value={year}
                       error={false} 
                       label={t(`${inputTranslate}.year.label`)} 
@@ -430,7 +419,6 @@ const UserDataForm = ({
                     <InputField
                       name={`grades${year}`}
                       type={InputFieldType.number}
-                      defaultValue={defaultValue}
                       value={value} 
                       error={validation} 
                       errorMessage={t(`${inputTranslate}.grade.errorMessage`)} 
