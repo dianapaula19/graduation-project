@@ -61,7 +61,7 @@ export const deleteUserSlice = createSlice({
   },
   extraReducers: (builder) => {
   builder
-  .addCase(deleteUserAsync.pending, (state, action) => {
+  .addCase(deleteUserAsync.pending, (state) => {
     state.showModal = true;
     state.status = ApiStatus.loading;
   })

@@ -40,7 +40,7 @@ const RecoverAccountPage = () => {
           >
             <ModalApiStatus 
               message={t("account.recoverAccount.error")} 
-              error={true} 
+              status={statusRecoverAccount} 
             />
           </Modal>
         </>
@@ -59,7 +59,7 @@ const RecoverAccountPage = () => {
             >
               <ModalApiStatus 
                 message={t("account.recoverAccount.success")} 
-                error={false} 
+                status={statusRecoverAccount} 
               />
             </Modal>
           </>

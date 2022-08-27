@@ -14,12 +14,16 @@ import { ApiStatus } from "features/Utils";
 import { useTranslation } from "react-i18next";
 import "./CoursesPage.scss";
 import { PLACEHOLDER } from "components/Utils";
+import { revertSendAnnouncement, sendAnnouncementShowModal, sendAnnouncementStatus } from "features/user/teacher/sendAnnouncementSlice";
+import ModalApiStatus from "components/molecules/ModalApiStatus";
 
 const OptionalCoursesList = () => {
 
   const componentClassName = "teacher-courses-page";
 
   const statusTeacherCourses = useAppSelector(getTeacherCoursesStatus);
+  const statusSendAnnouncement = useAppSelector(sendAnnouncementStatus);
+  const showModalSendAnnouncement = useAppSelector(sendAnnouncementShowModal);
   const courses = useAppSelector(getTeacherCoursesCourses);
   const currentCourse = useAppSelector(getTeacherCoursesCurrentCourse);
   const userData = useAppSelector(loginUserData);
@@ -68,10 +72,14 @@ const OptionalCoursesList = () => {
         token: token
       }));
     }
+    if (statusSendAnnouncement !== ApiStatus.idle) {
+      setShowSendAnnouncementFormModal(false);
+    }
   }, [
     courses,
     dispatch,
     statusTeacherCourses,
+    statusSendAnnouncement,
     token,
     userData
   ])
@@ -114,16 +122,30 @@ const OptionalCoursesList = () => {
               modifier={ButtonModifier.excel} 
               onClick={exportToExcel}
               disabled={false} 
-            />
-            <Modal
-              show={showSendAnnouncementFormModal}
-              closeModal={() => {setShowSendAnnouncementFormModal(false)}}        
-            >
-              <SendAnnouncementForm />
-            </Modal>  
+            />  
           </>  
         ) }
+        <Modal
+          show={showSendAnnouncementFormModal}
+          closeModal={() => {
+            setShowSendAnnouncementFormModal(false)
+          }}        
+        >
+          <SendAnnouncementForm />
+        </Modal>
+        <Modal
+          show={showModalSendAnnouncement}
+          closeModal={() => {
+            dispatch(revertSendAnnouncement());
+          }}        
+        >  
+          <ModalApiStatus 
+            message={""} 
+            status={statusSendAnnouncement} 
+          /> 
+        </Modal>
       </div>
+
     </LoggedUserPage>
   )
 

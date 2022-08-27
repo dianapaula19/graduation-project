@@ -131,7 +131,7 @@
     },
     "resetPassword": {
       "error": "S-a produs o eroare!",
-      "succes": "Parola a fost schimbată cu succes"
+      "success": "Parola a fost resetată cu succes"
     },
     "registration": {
       "codes": {

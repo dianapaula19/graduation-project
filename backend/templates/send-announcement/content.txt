@@ -1,0 +1,14 @@
+Bună!
+
+
+Ai primit următorul mesaj de la profesorul {{ teacher_first_name }} {{ teacher_last_name }}:
+
+
+{{ message }}
+
+
+Pentru a răspunde, dă reply la acest email.
+
+
+Facultatea de Matematică și Informatică
+Universitea din București

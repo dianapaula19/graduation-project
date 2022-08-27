@@ -88,13 +88,13 @@ const OptionsListsPage = () => {
     case ApiStatus.success:
       createOptionsListModalComponent = <ModalApiStatus 
         message={t("admin.optionsLists.success.create")} 
-        error={false} 
+        status={statusCreateOptionsList} 
       />;
       break;
     case ApiStatus.failed:
       createOptionsListModalComponent = <ModalApiStatus 
         message={t("admin.optionsLists.error.create")} 
-        error={true} 
+        status={statusCreateOptionsList} 
       />;
       break;
     default:
@@ -107,13 +107,13 @@ const OptionsListsPage = () => {
     case ApiStatus.success:
       updateOptionsListModalComponent = <ModalApiStatus 
         message={t("admin.optionsLists.success.update")} 
-        error={false} 
+        status={statusUpdateOptionsList}
       />;
       break;
     case ApiStatus.failed:
       updateOptionsListModalComponent = <ModalApiStatus 
         message={t("admin.optionsLists.error.update")} 
-        error={true} 
+        status={statusUpdateOptionsList} 
       />;
       break;
     default:
@@ -126,13 +126,13 @@ const OptionsListsPage = () => {
     case ApiStatus.success:
       deleteOptionsListModalComponent = <ModalApiStatus 
         message={t("admin.optionsLists.success.delete")} 
-        error={false} 
+        status={statusDeleteOptionsList}
       />;
       break;
     case ApiStatus.failed:
       deleteOptionsListModalComponent = <ModalApiStatus 
         message={t("admin.optionsLists.error.delete")} 
-        error={true} 
+        status={statusDeleteOptionsList}
       />;
       break;
     default:

@@ -41,7 +41,7 @@ const RegistrationPage = () => {
       >
         <ModalApiStatus 
           message={t(`account.registration.codes.${code}`)} 
-          error={false} 
+          status={status}  
         />
       </Modal>
       </>;
@@ -58,7 +58,7 @@ const RegistrationPage = () => {
       >
         <ModalApiStatus 
           message={t(`account.registration.codes.${code}`)} 
-          error={true} 
+          status={status} 
         />
       </Modal>
     </>;  

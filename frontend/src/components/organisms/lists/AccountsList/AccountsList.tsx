@@ -15,6 +15,7 @@ import { verifyUserShowModal, verifyUserStatus, revertVerifyUser } from "feature
 import { ApiStatus } from "features/Utils";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { shallowEqual } from "react-redux";
 import "./AccountsList.scss";
 import { IAccountsListProps } from "./AccountsList.types";
 
@@ -37,22 +38,22 @@ const AccountsList = ({
   const showModalUpdateStudentInfo = useAppSelector(updateStudentInfoShowModal);
   const showModalUpdateTeacherInfo = useAppSelector(updateTeacherInfoShowModal);
   const statusDeleteUser = useAppSelector(deleteUserStatus);
-  const codeDeleteUser = useAppSelector(deleteCourseCode);
   const statusVerifyUser = useAppSelector(verifyUserStatus);
   const statusUpdateStudentInfo = useAppSelector(updateStudentInfoStatus);
   const statusUpdateTeacherInfo = useAppSelector(updateTeacherInfoStatus);
+  const codeDeleteUser = useAppSelector(deleteCourseCode);
 
   const token = useAppSelector(loginToken);
 
   useEffect(() => {
-  if (
-    showModalVerifyUser || 
-    showModalUpdateStudentInfo || 
-    showModalUpdateTeacherInfo ||
-    showModalDeleteUser
-  ) {
-    setShowUserDataFormModal(false);
-  }
+    if (
+      showModalVerifyUser || 
+      showModalUpdateStudentInfo || 
+      showModalUpdateTeacherInfo ||
+      showModalDeleteUser
+    ) {
+      setShowUserDataFormModal(false);
+    }
   }, [
     showModalVerifyUser, 
     showModalUpdateTeacherInfo, 
@@ -69,13 +70,13 @@ const AccountsList = ({
     case ApiStatus.failed:
       verifyUserModalComponent = <ModalApiStatus 
         message={t("accounts.notVerified.error")} 
-        error={true} 
+        status={statusVerifyUser}
       />
       break;
     case ApiStatus.success:
       verifyUserModalComponent = <ModalApiStatus 
         message={t("accounts.notVerified.success")} 
-        error={true} 
+        status={statusVerifyUser} 
       />
       break;
   }
@@ -84,13 +85,13 @@ const AccountsList = ({
     case ApiStatus.failed:
       updateStudentInfoModalComponent = <ModalApiStatus 
         message={t("accounts.students.error.update")} 
-        error={true} 
+        status={statusUpdateStudentInfo} 
       />;
       break;
     case ApiStatus.success:
       updateStudentInfoModalComponent = <ModalApiStatus 
         message={t("accounts.students.success.update")} 
-        error={false} 
+        status={statusUpdateStudentInfo}  
       />;
       break;
   }
@@ -99,13 +100,13 @@ const AccountsList = ({
     case ApiStatus.failed:
       updateTeacherInfoModalComponent = <ModalApiStatus 
         message={t("accounts.teachers.error.update")} 
-        error={true} 
+        status={statusUpdateTeacherInfo} 
       />;
       break;
     case ApiStatus.success:
       updateTeacherInfoModalComponent = <ModalApiStatus 
         message={t("accounts.teachers.success.update")} 
-        error={false} 
+        status={statusUpdateTeacherInfo} 
       />;
       break;
   }
@@ -231,6 +232,7 @@ const AccountsList = ({
     <Modal 
       show={showModalDeleteUser} 
       closeModal={() => {
+        console.log(codeDeleteUser);
         if (token) {
           switch (role) {
             case Role.NONE:
@@ -261,13 +263,13 @@ const AccountsList = ({
       {statusDeleteUser === ApiStatus.failed && (
         <ModalApiStatus 
           message={codeDeleteUser ? t(`accounts.error.${codeDeleteUser}`) : t(`accounts.error.ERROR`)} 
-          error={true} 
+          status={statusDeleteUser} 
         />
       )}
       {statusDeleteUser === ApiStatus.success && (
         <ModalApiStatus 
           message={t(`accounts.success.SUCCESS`)} 
-          error={false} 
+          status={statusDeleteUser} 
         />
       )}
     </Modal>

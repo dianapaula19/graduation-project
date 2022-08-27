@@ -20,6 +20,8 @@ interface ISendAnnouncementRequest {
   message: string;
   token: string;
   teacher_email: string;
+  teacher_first_name: string;
+  teacher_last_name: string;
   recipient_list: string[];
 }
 

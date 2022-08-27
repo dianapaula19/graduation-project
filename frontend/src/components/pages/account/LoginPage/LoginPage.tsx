@@ -39,7 +39,7 @@ const LoginPage = () => {
         >
           <ModalApiStatus 
             message={t(`account.login.codes.${code}`)} 
-            error={true} 
+            status={status} 
           />
         </Modal>
       </>

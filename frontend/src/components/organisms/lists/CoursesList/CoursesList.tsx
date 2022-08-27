@@ -5,7 +5,7 @@ import ModalApiStatus from "components/molecules/ModalApiStatus";
 import CourseForm from "components/organisms/forms/CourseForm";
 import { loginToken } from "features/account/loginSlice";
 import { createCourseShowModal, createCourseStatus, revertCreateCourse } from "features/user/admin/course/createCourseSlice";
-import { deleteCourseShowModal, revertDeleteCourse } from "features/user/admin/course/deleteCourseSlice";
+import { deleteCourseShowModal, deleteCourseStatus, revertDeleteCourse } from "features/user/admin/course/deleteCourseSlice";
 import { getCurrentCourse, revertCurrentCourse, getCoursesAsync } from "features/user/admin/course/getCoursesSlice";
 import { updateCourseShowModal, updateCourseStatus, revertUpdateCourse } from "features/user/admin/course/updateCourseSlice";
 import { ApiStatus } from "features/Utils";
@@ -34,6 +34,7 @@ const CoursesList = ({
   const showModalDeleteCourse = useAppSelector(deleteCourseShowModal);
   const statusCreateCourse = useAppSelector(createCourseStatus);
   const statusUpdateCourse = useAppSelector(updateCourseStatus);
+  const statusDeleteCourse = useAppSelector(deleteCourseStatus);
   const token = useAppSelector(loginToken);
 
   useEffect(() => {
@@ -52,13 +53,13 @@ const CoursesList = ({
     case ApiStatus.success:
       createCourseModalComponent = <ModalApiStatus 
         message={t("courses.success.create")} 
-        error={false} 
+        status={statusCreateCourse}
       />;
       break;
     case ApiStatus.failed:
       createCourseModalComponent = <ModalApiStatus 
         message={t("courses.error.create")} 
-        error={true} 
+        status={statusCreateCourse}
       />;
       break;
     default:
@@ -71,13 +72,13 @@ const CoursesList = ({
     case ApiStatus.success:
       updateCourseModalComponent = <ModalApiStatus 
         message={t("courses.success.update")} 
-        error={false} 
+        status={statusUpdateCourse}
       />;
       break;
     case ApiStatus.failed:
       updateCourseModalComponent = <ModalApiStatus 
         message={t("courses.error.update")} 
-        error={true} 
+        status={statusUpdateCourse}
       />;
       break;
     default:
@@ -86,17 +87,17 @@ const CoursesList = ({
 
   let deleteCourseModalComponent = null;
 
-  switch (statusUpdateCourse) {
+  switch (statusDeleteCourse) {
     case ApiStatus.success:
       deleteCourseModalComponent = <ModalApiStatus 
         message={t("courses.success.delete")} 
-        error={false} 
+        status={statusUpdateCourse}
       />;
       break;
     case ApiStatus.failed:
       deleteCourseModalComponent = <ModalApiStatus 
         message={t("courses.error.delete")} 
-        error={true} 
+        status={statusUpdateCourse}
       />;
       break;
     default:

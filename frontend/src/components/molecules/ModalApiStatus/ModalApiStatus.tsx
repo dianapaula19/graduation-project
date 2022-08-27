@@ -3,36 +3,55 @@ import { faCircleCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IModalApiStatusProps } from "./ModalApiStatus.types";
 import "./ModalApiStatus.scss";
+import { ApiStatus } from "features/Utils";
+import Loader from "components/atoms/Loader";
 
 
 const ModalApiStatus = ({
   message,
   additionalMessages,
-  error
+  status
 }: IModalApiStatusProps) => {
 
   const componentClassName = "modal-api-status";
   const iconClassName = `${componentClassName}__icon`
+
+  if (status === ApiStatus.loading) {
+    return (
+      <div
+        className={componentClassName}
+      >
+        <Loader />
+      </div>  
+    )
+  }
 
   return (
     <div
       className={componentClassName}
     >
       {
-        error === false ? 
-        <FontAwesomeIcon
-          className={`${iconClassName}`} 
-          icon={faCircleCheck} 
-        /> : 
-        <FontAwesomeIcon
-          className={`${iconClassName} ${iconClassName}--error`}
-          icon={faCircleXmark} 
-        />
+        status === ApiStatus.success && (
+          <FontAwesomeIcon
+            className={`${iconClassName}`} 
+            icon={faCircleCheck} 
+          />  
+        ) 
       }
+      {
+        status === ApiStatus.failed && (
+          <FontAwesomeIcon
+            className={`${iconClassName} ${iconClassName}--error`}
+            icon={faCircleXmark} 
+          />  
+        )
+      }
+      
       <p
         className={`${componentClassName}__text`}
       >
-        {error === false ? message + " :D" : message + " :("}
+        {status === ApiStatus.success && message + " :D"}
+        {status === ApiStatus.failed && message + " :("}
       </p>
       <div>
         {additionalMessages && additionalMessages.map((additionalMessage) => {

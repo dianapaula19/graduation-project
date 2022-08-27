@@ -45,6 +45,8 @@ const SendAnnouncementForm = () => {
         message: data.message,
         token: token,
         teacher_email: userData.email,
+        teacher_first_name: userData.first_name,
+        teacher_last_name: userData.last_name,
         recipient_list: recipient_list,
       }))
     }

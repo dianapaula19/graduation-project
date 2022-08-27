@@ -1,10 +1,8 @@
-from distutils.log import error
-import email
 from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
 from enum import Enum
 from django.conf import settings
 from django.db import IntegrityError
-from django.db.models import ProtectedError
 
 # Create your views here.
 from django.contrib.auth import authenticate
@@ -123,13 +121,20 @@ def register(request):
     )
 
   try:
+
+    subject = "[FMI] Contul tău a fost creat cu succes"
+
+    text_content = render_to_string('created-account/content.txt')
+
     email = EmailMultiAlternatives(
-      subject="[FMI] Account created successfully",
-      body="Congrats. Your account was created successfully.",
+      subject,
+      text_content,
       from_email=settings.EMAIL_HOST_USER,
       to=[settings.EMAIL_HOST_USER, email],
     )
+
     email.send()
+
   except:
     return Response({
       'code': ResponseCode.EMAIL_NOT_SENT.value
@@ -145,14 +150,24 @@ def register(request):
 @receiver(reset_password_token_created)
 def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
 
-  email_plaintext_message = "http://localhost:3000/resetPassword/?token={}".format(reset_password_token.key)
+  subject = "[FMI] Cerere pentru recuperarea contului"
   
-  send_mail(
-    subject="Password Reset",
-    message=email_plaintext_message,
+  params = {
+    'first_name': reset_password_token.user.first_name,
+    'link': settings.CLIENT_APP_LINK,
+    'token': reset_password_token.key
+  }
+
+  text_content = render_to_string('recover-account/content.txt', params)
+  
+  email = EmailMultiAlternatives(
+    subject,
+    text_content,
     from_email=settings.EMAIL_HOST_USER,
-    recipient_list=[reset_password_token.user.email]
+    to=[reset_password_token.user.email]
   )
+
+  email.send()
 
 @receiver(post_password_reset)
 def post_password_reset(sender, user, *args, **kwargs):
@@ -258,14 +273,25 @@ def register_batch_students(request):
     recipient_list.append(student['email'])
 
   try:
+
+    subject = "[FMI] Contul tău pentru aplicația de alegere a opționalelor"
+
+    params = {
+      'link': settings.CLIENT_APP_LINK
+    }
+
+    text_content = render_to_string('created-account-batch/content.txt', params)
+
     email = EmailMultiAlternatives(
-      subject="[FMI] Account created successfully",
-      body="Congrats. Your account was created successfully. Please change your password before logging in",
+      subject,
+      text_content,
       from_email=settings.EMAIL_HOST_USER,
       to=[settings.EMAIL_HOST_USER], 
       bcc=recipient_list
     )
+
     email.send()
+
   except:
     return Response({
       'code': ResponseCode.EMAIL_NOT_SENT.value,
@@ -317,14 +343,24 @@ def register_batch_teachers(request):
     recipient_list.append(teacher['email'])
 
   try:
+    subject = "[FMI] Contul tău pentru aplicația de alegere a opționalelor"
+
+    params = {
+      'link': settings.CLIENT_APP_LINK
+    }
+
+    text_content = render_to_string('created-account-batch/content.txt', params)
+
     email = EmailMultiAlternatives(
-      subject="[FMI] Account created successfully",
-      body="Congrats. Your account was created successfully. Please change your password before logging in",
+      subject,
+      text_content,
       from_email=settings.EMAIL_HOST_USER,
       to=[settings.EMAIL_HOST_USER], 
       bcc=recipient_list
     )
+
     email.send()
+    
   except:
     return Response({
         'code': ResponseCode.EMAIL_NOT_SENT.value,
@@ -433,13 +469,23 @@ def not_verified_users(request):
       status=HTTP_200_OK
     )  
   try:
-    send_mail(
-      subject="Account Verified",
-      message="Congrats. Your account was verfied successfully",
+    subject = "[FMI] Contul tău a fost verificat"
+
+    params = {
+      'first_name': first_name,
+      'link': settings.CLIENT_APP_LINK
+    }
+
+    text_content = render_to_string('verified-account/content.txt', params)
+
+    email = EmailMultiAlternatives(
+      subject,
+      text_content,
       from_email=settings.EMAIL_HOST_USER,
-      recipient_list=[email],
-      fail_silently=False
+      to=[email], 
     )
+
+    email.send()
   except:
     return Response({
       'code': ResponseCode.EMAIL_NOT_SENT.value
@@ -578,24 +624,37 @@ def send_announcement(request):
   subject = request.data.get("subject")
   message = request.data.get("message")
   teacher_email = request.data.get("teacher_email")
+  teacher_first_name = request.data.get("teacher_first_name")
+  teacher_last_name = request.data.get("teacher_last_name")
   recipient_list = request.data.get("recipient_list")
 
-  try:
-    email = EmailMultiAlternatives(
-      subject="[FMI] " + subject,
-      body=message,
-      from_email=settings.EMAIL_HOST_USER,
-      to=[teacher_email], 
-      bcc=recipient_list,
-      reply_to=[teacher_email]
-    )
-    email.send()
-  except:
-    return Response({
-      'code': ResponseCode.EMAIL_NOT_SENT.value
-      },
-      status=HTTP_500_INTERNAL_SERVER_ERROR
-    )  
+  # try:
+
+  params = {
+    'teacher_first_name': teacher_first_name,
+    'teacher_last_name': teacher_last_name,
+    'message': message
+  }
+
+  text_content = render_to_string('send-announcement/content.txt', params)
+
+  email = EmailMultiAlternatives(
+    subject,
+    text_content,
+    from_email=settings.EMAIL_HOST_USER,
+    to=[teacher_email], 
+    bcc=recipient_list,
+    reply_to=[teacher_email]
+  )
+
+  email.send()
+
+  # except:
+  #   return Response({
+  #     'code': ResponseCode.EMAIL_NOT_SENT.value
+  #     },
+  #     status=HTTP_500_INTERNAL_SERVER_ERROR
+  #   )  
 
   return Response({
       'code': ResponseCode.SUCCESS.value

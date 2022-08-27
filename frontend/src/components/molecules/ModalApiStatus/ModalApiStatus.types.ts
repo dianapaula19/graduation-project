@@ -1,6 +1,8 @@
+import { ApiStatus } from "features/Utils";
+
 interface IModalApiStatusProps {
   message: string;
-  error: boolean;
+  status: ApiStatus;
   additionalMessages?: string[];
 }
 

@@ -49,13 +49,13 @@ const CoursesSelectionPage = () => {
     case ApiStatus.success:
       modal = <ModalApiStatus 
         message={t("student.coursesSelection.success.saveStudentChoices")} 
-        error={false} 
+        status={statusSaveStudentChoices} 
       />
       break;
     case ApiStatus.failed:
       modal = <ModalApiStatus 
         message={t("student.coursesSelection.error.saveStudentChoices")} 
-        error={true} 
+        status={statusSaveStudentChoices}
       />
       break;
     default:

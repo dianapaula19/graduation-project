@@ -1,0 +1,8 @@
+Bună, {{ first_name }}!
+
+
+Contul tău a fost verificat. Pentru a te autentifica, accesează următorul link: {{ link }}/login.
+
+
+Facultatea de Matematică și Informatică
+Universitea din București

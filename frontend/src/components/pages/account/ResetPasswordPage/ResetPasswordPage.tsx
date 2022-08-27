@@ -7,11 +7,12 @@ import { loginStatus } from "features/account/loginSlice";
 import { resetPasswordShowModal, resetPasswordStatus, revertResetPassword } from "features/account/resetPasswordSlice";
 import { ApiStatus } from "features/Utils";
 import { useTranslation } from "react-i18next";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const ResetPasswordPage = () => {
 
   const { t } = useTranslation("pages");
+  const navigation = useNavigate();
   const dispatch = useAppDispatch();
   
   const showModalResetPassword = useAppSelector(resetPasswordShowModal);
@@ -39,7 +40,7 @@ const ResetPasswordPage = () => {
           >
             <ModalApiStatus 
               message={t("account.resetPassword.error")} 
-              error={true} 
+              status={statusResetPassword} 
             />
           </Modal>
         </>
@@ -48,17 +49,18 @@ const ResetPasswordPage = () => {
       return (
         <>
           <AuthentificationPage 
-          action={AccountAction.recoverAccount} 
+          action={AccountAction.resetPassword} 
           />
           <Modal
             show={showModalResetPassword}
             closeModal={() => {
               dispatch(revertResetPassword());
+              navigation('/login');
             }}        
           >
             <ModalApiStatus 
               message={t("account.resetPassword.success")} 
-              error={false} 
+              status={statusResetPassword} 
             />
           </Modal>
         </>

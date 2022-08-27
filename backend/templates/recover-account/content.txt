@@ -1,0 +1,9 @@
+Bună, {{ first_name }}!
+
+
+Am primit cererea ta de schimbare a parolei.
+Pentru a-ți schimba parola, te rog accesează următorul link: {{ link }}/resetPassword/?token={{ token }}
+
+
+Facultatea de Matematică și Informatică
+Universitea din București

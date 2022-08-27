@@ -1,0 +1,9 @@
+Bună!
+
+
+Contul tău a fost creat în mod automat de către un administrator. 
+Pentru a te loga trebuie mai întâi să-ți schimbi parola la adresa: {{ link }}/recoverAccount.
+
+
+Facultatea de Matematică și Informatică
+Universitea din București

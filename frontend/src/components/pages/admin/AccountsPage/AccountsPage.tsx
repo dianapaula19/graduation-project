@@ -494,7 +494,7 @@ const AccountsPage = ({
         {statusRegisterBatchStudents === ApiStatus.failed && (
           <ModalApiStatus 
             message={t(`admin.accounts.students.error.${codeRegisterBatchStudents}`)} 
-            error={true} 
+            status={statusRegisterBatchStudents}  
           />
         )}
         {statusRegisterBatchStudents === ApiStatus.success 
@@ -502,7 +502,7 @@ const AccountsPage = ({
           <ModalApiStatus 
             message={t(`admin.accounts.students.success.${codeRegisterBatchStudents}`)}
             additionalMessages={Array.from(errorMessagesRegisterBatchStudents, x => x.index + ": " + t(`admin.accounts.codes.${x.code}`))} 
-            error={false} 
+            status={statusRegisterBatchStudents} 
           />
         )}
       </Modal>  
@@ -519,7 +519,7 @@ const AccountsPage = ({
         {statusRegisterBatchTeachers === ApiStatus.failed && (
           <ModalApiStatus 
             message={t(`admin.accounts.teachers.error.${codeRegisterBatchTeachers}`)} 
-            error={true} 
+            status={statusRegisterBatchTeachers} 
           />
         )}
         {statusRegisterBatchTeachers === ApiStatus.success 
@@ -527,7 +527,7 @@ const AccountsPage = ({
           <ModalApiStatus 
             message={t(`admin.accounts.teachers.success.${codeRegisterBatchTeachers}`)} 
             additionalMessages={Array.from(errorMessagesRegisterBatchTeachers, x => (x.index + 1) + ": " + t(`admin.accounts.codes.${x.code}`))}  
-            error={false} 
+            status={statusRegisterBatchTeachers} 
           />
         )}
       </Modal>

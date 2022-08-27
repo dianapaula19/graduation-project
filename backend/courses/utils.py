@@ -3,6 +3,7 @@ from collections import deque
 
 def students_courses_assignment():
   options_lists = OptionsList.objects.all()
+  
   for options_list in options_lists:
     courses = list(options_list.courses.all())
     students = OptionsList.objects.get_students_sorted_by_grade(options_list)
