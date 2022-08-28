@@ -1,3 +1,49 @@
 {
-  
+  "accounts": {
+    "header": {
+      "email": "Email"
+    },
+    "notVerified": {
+      "error": "An error occured while verifying the account!",
+      "succes": "The account was verified successfully!"
+    },
+    "students": {
+      "error": "An error occured while modifying the student's data!",
+      "success": "The student's data was saved successfully!"
+    },
+    "teachers": {
+      "error": "An error occured while modifying the teacher's data!",
+      "success": "The teacher's data was saved successfully!"
+    },
+    "success": {
+      "SUCCESS": "The account was deleted successfully!"
+    },
+    "error": {
+      "TEACHER_HAS_COURSE": "The teacher's account couldn't be deleted because he is currently teaching one of the courses!",
+      "ERROR": "An error occured while deleting the account!"
+    }
+  },
+  "students": {
+    "header": {
+      "name": "First Name and Last Name",
+      "email": "Email"
+    }
+  },
+  "courses": {
+    "header": {
+      "title": "Title",
+      "teacher": "Teacher"
+    },
+    "buttons": {
+      "create": "Create a new course"
+    },
+    "success": {
+      "create": "The course was created successfully!",
+      "update": "The changes were saved successfully!"
+    },
+    "error": {
+      "create": "An error occured while creating the course!",
+      "update": "An error occured while modifying the course!"
+    }
+  }
 }

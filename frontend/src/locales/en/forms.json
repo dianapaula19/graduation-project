@@ -4,34 +4,39 @@
       "title": {
         "label": "Title",
         "placeholder": "Title",
-        "errorMessage": "Please provide a title for the course"
+        "errorMessage": "Required"
       },
       "capacity": {
         "label": "Capacity",
         "placeholder": "Capacity",
-        "errorMessage": "Please provide the capacity for the course. It must be between 1 and 100"
+        "errorMessage": "This field must have a value between 1 and 100"
       },
       "link": {
         "label": "Link",
         "placeholder": "Link",
-        "errorMessage": "Please provide a link for the course"
+        "errorMessage": "Required"
       },
       "semester": {
         "label": "Semester",
         "placeholder": "Semester",
-        "errorMessage": "Please provide the semester for the course. It must be either 1 or 2"
+        "errorMessage": "This field must be either 1 or 2"
       }  
     },
     "dropDownFields": {
+      "degree": {
+        "label": "Degree",
+        "placeholder": "Degree",
+        "errorMessage": "Required"
+      },
       "teacher": {
         "label": "Teacher",
         "placeholder": "Teacher",
-        "errorMessage": "Please choose a teacher for the course"
+        "errorMessage": "Required"
       }
     },
-    "submitButtons": {
+    "buttons": {
       "create": "Create a new course",
-      "update": "Update the course",
+      "update": "Save the changes",
       "delete": "Delete the course"
     }
   },
@@ -42,96 +47,210 @@
         "label": "Email"
       },
       "password": {
-        "placeholder": "Parolă",
-        "label": "Parolă"
+        "placeholder": "Password",
+        "label": "Password"
       }
     },
-    "forgotPassword": "Ți-ai uitat parola?",
+    "forgotPassword": "Forgot your password?",
     "newUser": {
-      "text": "Utilizator nou? Crează-ți cont ",
-      "link": "Aici" 
+      "text": "New user? Create a new account ",
+      "link": "Here" 
     },       
-    "submitButtons": {
-      "signIn": "Loghează-te"
+    "buttons": {
+      "signIn": "Sign In"
     }
   },
   "optionsList": {
-
+    "dropDownFields": {
+      "domain": {
+        "label": "Domain",
+        "placeholder": "Domain",
+        "errorMessage": "Required"
+      },
+      "learningMode": {
+        "label": "Learning Mode",
+        "placeholder": "Learning Mode",
+        "errorMessage": "Required"
+      },
+      "degree": {
+        "label": "Degree",
+        "placeholder": "Degree",
+        "errorMessage": "Required"
+      },
+      "studyProgram": {
+        "label": "Study Program",
+        "placeholder": "Study Program",
+        "errorMessage": "Required"
+      }
+    },
+    "inputFields": {
+      "title": {
+        "label": "Title",
+        "placeholder": "Title",
+        "errorMessage": "Required"
+      },
+      "year": {
+        "label": "Year",
+        "placeholder": "Year",
+        "errorMessage": "This field must have a value between 1 and 4"
+      },
+      "semester": {
+        "label": "Semester",
+        "placeholder": "Semester",
+        "errorMessage": "This field must be either 1 or 2"
+      }
+    },
+    "courses": {
+      "label": "Courses",
+      "validation": "Select at least one course"
+    },
+    "buttons": {
+      "create": "Create a new list of options",
+      "update": "Save the changes",
+      "delete": "Delete the list of options"   
+    }
   },
   "recoverAccount": {
-
+    "instructions": "Enter the email address associated with the account",
+    "inputFields": {
+      "email": {
+        "placeholder": "Email",
+        "errorMessage": "Enter a valid email address",
+        "label": "Email"
+      }
+    },
+    "buttons": {
+      "sendInstructions": "Send instructions"
+    }
   },
   "registration": {
     "inputFields": {
       "email": {
         "placeholder": "Email",
-        "errorMessage": "Introduceți o adresă validă de email",
+        "errorMessage": "Enter a valid email address",
         "label": "Email"
       },
       "password": {
-        "placeholder": "Parolă",
-        "errorMessage": "Parola trebuie să conțină măcar o literă mică, o literă mare, și o cifră",
-        "label": "Parolă"
+        "placeholder": "Password",
+        "errorMessage": "The password must contain at least one uppercase character, at least one lowercase character and at least one digit",
+        "label": "Password"
       },
       "confirmPassword": {
-        "placeholder": "Confirmă Parola",
-        "errorMessage": "Parolele trebuie să fie identice",
-        "label": "Confirmă Parola"
+        "placeholder": "Confirm Password",
+        "errorMessage": "The passwords must be identical",
+        "label": "Confirm Password"
       }
     },
     "alreadyAnUser": {
-      "text": "Ai deja cont? Loghează-te ",
-      "link": "Aici"
+      "text": "Already an user? Sign in ",
+      "link": "Here"
     },
-    "submitButtons": {
-      "signUp": "Crează-ți cont"
+    "buttons": {
+      "signUp": "Sign Up"
     }
   },
   "resetPassword": {
-
+    "instructions": "The new password must be different than the previous one",
+    "inputFields": {
+      "password": {
+        "placeholder": "Password",
+        "errorMessage": "The password must contain at least one uppercase character, at least one lowercase character and at least one digit",
+        "label": "Password"
+      },
+      "confirmPassword": {
+        "placeholder": "Confirm Password",
+        "errorMessage": "The passwords must be identical",
+        "label": "Confirm Password"
+      }
+    },
+    "buttons": {
+      "resetPassword": "Reset your password"
+    }
   },
   "sendAnnouncement": {
-
+    "inputFields": {
+      "subject": {
+        "label": "Subject",
+        "placeholder": "Subject",
+        "errorMessage": "Required"
+      }
+    },
+    "textAreaFields": {
+      "message": {
+        "label": "Message",
+        "placeholder": "Message"
+      }
+    },
+    "buttons": {
+      "sendTheAnnouncement": "Send the announcement"
+    }
   },
   "userData": {
     "dropDownFields": {
       "role": {
         "label": "Role",
         "placeholder": "Role",
-        "errorMessage": "Please provide a role for the user"
+        "errorMessage": "Required"
       },
       "domain": {
         "label": "Domain",
         "placeholder": "Domain",
-        "errorMessage": "Please select a domain"
+        "errorMessage": "Required"
       },
       "learningMode": {
         "label": "Learning Mode",
         "placeholder": "Learning Mode",
-        "errorMessage": "Please select a learning mode"
+        "errorMessage": "Required"
       },
       "degree": {
         "label": "Degree",
         "placeholder": "Degree",
-        "errorMessage": "Please select a degree"
+        "errorMessage": "Required"
       },
       "studyProgram": {
         "label": "Study Program",
         "placeholder": "Study Program",
-        "errorMessage": "Please select a study program"
+        "errorMessage": "Required"
       }
     },
     "inputFields": {
       "firstName": {
         "label": "First Name",
         "placeholder": "First Name",
-        "errorMessage": "Please provide the user's first name"
+        "errorMessage": "Required"
       },
       "lastName": {
         "label": "Last Name",
         "placeholder": "Last Name",
-        "errorMessage": "Please provide the user's last name"
+        "errorMessage": "Required"
+      },
+      "currentGroup": {
+        "label": "Current Group",
+        "placeholder": "Current Group",
+        "errorMessage": "Required"
+      },
+      "currentYear": {
+        "label": "Current Year",
+        "placeholder": "Current Year",
+        "errorMessage": "This field must have a value between 1 and 4"
+      },
+      "year": {
+        "label": "Year"
+      },
+      "grade": {
+        "label": "Grade",
+        "placeholder": "Grade",
+        "errorMessage": "The grade must be between 0.0 and 10.0"
       }
+    },
+    "text": {
+      "gradesTitle": "Grades"
+    },
+    "buttons": {
+      "verifyUser": "Verify the user's account",
+      "student": "Save the student's data",
+      "teacher": "Save the teacher's data",
+      "delete": "Delete the account"
     }
   }
 }

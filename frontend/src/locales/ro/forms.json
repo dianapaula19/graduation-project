@@ -23,14 +23,14 @@
       }  
     },
     "dropDownFields": {
-      "degree": {
+      "Ciclu de studiu": {
         "label": "Ciclu de studii",
         "placeholder": "Ciclu de studii",
         "errorMessage": "Câmp obligatoriu"
       },
       "teacher": {
-        "label": "Profesor",
-        "placeholder": "Profesor",
+        "label": "Teacher",
+        "placeholder": "Teacher",
         "errorMessage": "Câmp obligatoriu"
       }
     },
@@ -46,7 +46,7 @@
         "placeholder": "Email",
         "label": "Email"
       },
-      "password": {
+      "Parolă": {
         "placeholder": "Parolă",
         "label": "Parolă"
       }
@@ -68,13 +68,13 @@
         "errorMessage": "Câmp obligatoriu"
       },
       "learningMode": {
-        "label": "Formă de învățământ",
-        "placeholder": "Formă de învățământ",
+        "label": "Formă învățământ",
+        "placeholder": "Formă învățământ",
         "errorMessage": "Câmp obligatoriu"
       },
-      "degree": {
-        "label": "Ciclu de studii",
-        "placeholder": "Ciclu de studii",
+      "Ciclu de studiu": {
+        "label": "Ciclu de studiu",
+        "placeholder": "Ciclu de studiu",
         "errorMessage": "Câmp obligatoriu"
       },
       "studyProgram": {
@@ -130,7 +130,7 @@
         "errorMessage": "Introduceți o adresă validă de email",
         "label": "Email"
       },
-      "password": {
+      "Parolă": {
         "placeholder": "Parolă",
         "errorMessage": "Parola trebuie să conțină măcar o literă mică, o literă mare, și o cifră",
         "label": "Parolă"
@@ -193,18 +193,18 @@
         "errorMessage": "Câmp obligatoriu"
       },
       "domain": {
-        "label": "Domeniu",
-        "placeholder": "Domeniu",
+        "label": "Domain",
+        "placeholder": "Domain",
         "errorMessage": "Câmp obligatoriu"
       },
       "learningMode": {
-        "label": "Formă de învățământ",
-        "placeholder": "Formă de învățământ",
+        "label": "Formă învățământ",
+        "placeholder": "Formă învățământ",
         "errorMessage": "Câmp obligatoriu"
       },
-      "degree": {
-        "label": "Ciclu de studii",
-        "placeholder": "Ciclu de studii",
+      "Ciclu de studiu": {
+        "label": "Ciclu de studiu",
+        "placeholder": "Ciclu de studiu",
         "errorMessage": "Câmp obligatoriu"
       },
       "studyProgram": {

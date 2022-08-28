@@ -1,3 +1,216 @@
-{
-  
+{ 
+  "admin": {
+    "accounts": {
+      "codes": {
+        "NOT_EMAIL": "The email wasn't specified",
+        "ACCOUNT_ALREADY_EXISTS": "The account already exists"
+      },
+      "notVerified": {
+        "title": "Unverified Accounts",
+        "buttonLabel": "Unverified Accounts",
+        "fileUploadLabel": ""
+      },
+      "students": {
+        "title": "Students",
+        "buttonLabel": "Students",
+        "fileUploadLabel": "Import the students' info in a .xlsx format",
+        "filters": {
+          "dropDownFields": {
+            "domain": {
+              "label": "Domain",
+              "placeholder": "Domain"
+            },
+            "learningMode": {
+              "label": "Learning Mode",
+              "placeholder": "Learning Mode"
+            },
+            "degree": {
+              "label": "Degree",
+              "placeholder": "Degree"
+            },
+            "studyProgram": {
+              "label": "Study Program",
+              "placeholder": "Study Program"
+            },
+            "year": {
+              "label": "Year",
+              "placeholder": "Year"
+            }
+          },
+          "inputFields": {
+            "group": {
+              "label": "Search by group"
+            },
+            "lastName": {
+              "label": "Search by the last name"
+            }
+          }
+        },
+        "success": {
+          "SUCCESS": "The students' data was imported successfully!"
+        },
+        "error": {
+          "EMAIL_NOT_SENT": "The email couldn't be send"
+        }
+      },
+      "teachers": {
+        "title": "Teachers",
+        "buttonLabel": "Teachers",
+        "fileUploadLabel": "Import the teachers' info in a .xlsx format",
+        "filters": {
+          "inputFields": {
+            "lastName": {
+              "label": "Search by the last name"
+            }
+          }
+        },
+        "success": {
+          "SUCCESS": "The teachers' data was imported successfully!"
+        },
+        "error": {
+          "EMAIL_NOT_SENT": "The email couldn't be send"
+        }
+      }
+    },
+    "courses": {
+      "title": "Courses",
+      "error": {
+        "fetch": "An error occured while fetching the courses"
+      }
+    },
+    "optionsLists": {
+      "title": "Options Lists",
+      "filters": {
+        "domain": {
+          "label": "Domain",
+          "placeholder": "Domain"
+        }
+      },
+      "error": {
+        "create": "An error occured while created the list of options!",
+        "update": "An error occured while modifying the list of options!"
+      },
+      "success": {
+        "create": "The list of options was created successfully!",
+        "update": "The list of options was modfied successfully!"
+      }, 
+      "buttons": {
+        "create": "Create a new list of options"
+      }
+    },
+    "settings": {
+      "xlsx": {
+        "header": {
+          "fullName": "Last Name and First Name",
+          "currentGroup": "Current Group"
+        }
+      },
+      "text": {
+        "message": "The selection session is:",
+        "active": "active",
+        "inactive": "inactive"
+      },
+      "buttons": {
+        "exportLists": "Export the lists with the students' repartions"
+      }
+    }
+
+  },
+  "account": {
+    "login": {
+      "codes": {
+        "NO_PASSWORD_OR_EMAIL_PROVIDED": "The email or the password weren't provided",
+        "INVALID_CREDENTIALS": "The email or password were wrong",
+        "ACCOUNT_NOT_VERIFIED": "Your email wasn't verified yet. You will receive an email as soon as it gets verified",
+        "PASSWORD_NOT_CHANGED": "You need to reset your password before logging in"
+      }
+    },
+    "recoverAccount": {
+      "error": "An error occured!",
+      "success": "The email with the instructions for recovering your account was sent successfully!"
+    },
+    "resetPassword": {
+      "error": "An error occured!",
+      "success": "Your password was succesfully reset!"
+    },
+    "registration": {
+      "codes": {
+        "NO_PASSWORD_OR_EMAIL_PROVIDED": "The email or the password weren't provided",
+        "ACCOUNT_ALREADY_EXISTS": "The account already exists",
+        "SUCCESS": "Your account was created succesfully. You will receive an email as soon as your account is verified."
+      }
+    }
+  },
+  "loading": {
+    "quotes": [
+      {
+        "text": "Education is the passport to the future, for tomorrow belongs to those who prepare for it today.",
+        "author": "Malcom X"
+      },
+      {
+        "text": "What would life be if we had no courage to attempt anything?",
+        "author": "Vincent Van Gogh"
+      }
+    ]
+  },
+  "notFound": {
+    "message": "The page you searched for doesn't exist. Return to the ",
+    "link": "main page"
+  },
+  "profile": {
+    "personalData": "Personal Data",
+    "profile": "Profile",
+    "profileDataFields": {
+      "email": "E-mail",
+      "name": "Last Name and First Name"
+    },
+    "studentDataFields": {
+      "domain": "Domain",
+      "learningMode": "Learning Mode",
+      "degree": "Degree",
+      "studyProgram": "Study Program",
+      "currentGroup": "Current Group",
+      "currentYear": "Current Year",
+      "currentSemester": "Current Semester"
+    },
+    "studentData": "Student Data",
+    "grade": "Grades",
+    "studentGradeFields": {
+      "yearHeader": "Year",
+      "gradeHeader": "Grade"
+    }
+  },
+  "student": {
+    "courses": {
+      "text": {
+        "message": "You were enrolled in the following courses:"
+      }
+    },
+    "coursesSelection": {
+      "success": {
+        "saveStudentChoices": "Your choices were saved successfully!"
+      },
+      "error": {
+        "fetchStudentOptionsList": "An error occured while fetching the options lists",
+        "saveStudentChoices": "An error occured while saving your choices!"
+      }
+    }
+  },
+  "teacher": {
+    "courses": {
+      "dropDownFields": {
+        "chooseCourse": {
+          "label": "Select a course",
+          "placeholder": "Select a course"
+        }
+      },
+      "xlsx": {
+        "title": "List of students",
+        "fullName": "First Name and Last Name",
+        "email": "E-mail"
+      },
+      "mailButton": "Send an announcement",
+      "excelButton": "Export the list of students as .xlsx"
+    }
+  }
 }

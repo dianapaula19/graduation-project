@@ -15,7 +15,6 @@ import { verifyUserShowModal, verifyUserStatus, revertVerifyUser } from "feature
 import { ApiStatus } from "features/Utils";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { shallowEqual } from "react-redux";
 import "./AccountsList.scss";
 import { IAccountsListProps } from "./AccountsList.types";
 

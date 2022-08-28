@@ -1,24 +1,25 @@
 {
   "links": {
-    "signOut": "Deconectează-te",
-    "personalData": "Date personale"
+    "signOut": "Sign out",
+    "profile": "Profile"
   },
   "studentLinks": {
-    "courses": "Cursuri"
+    "courses": "Courses"
   },
   "teacherLinks": {
-    "courses": "Cursuri"
+    "courses": "Courses"
   },
   "adminLinks": {
-    "settings": "Setări",
-    "optionsLists": "Liste Opționale",
-    "courses": "Cursuri",
-    "accounts": "Conturi"
+    "settings": "Settings",
+    "optionsLists": "Options Lists",
+    "courses": "Courses",
+    "accounts": "Accounts"
   },
-  "facultyName": "Facultatea de Matematică și Informatică",
+  "facultyName": "Faculty of Mathematics and Computer Science",
   "displayMessage": {
-    "morning": "Neața",
-    "afternoon": "Zi faină",
-    "night": "Seară faină"
-  }
+    "morning": "Good morning",
+    "afternoon": "Good afternoon",
+    "night": "Good evening"
+  },
+  "collapseText": "Collapse the menu"
 }

@@ -32,7 +32,7 @@
   "courses": {
     "header": {
       "title": "Denumire",
-      "teacher": "Profesor"
+      "teacher": "Teacher"
     },
     "buttons": {
       "create": "Creează un curs nou"

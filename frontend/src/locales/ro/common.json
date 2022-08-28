@@ -3,7 +3,7 @@
   "ro": "Română",
   "roles": {
     "STUDENT": "Student",
-    "TEACHER": "Profesor"
+    "TEACHER": "Teacher"
   },
   "domains": {
     "INFO": "Informatică",
@@ -30,7 +30,7 @@
     "PSFS": "Probabilități și Statistică în Finanțe și Științe",
     "MD": "Matematică Didactică",
     "ASM": "Advanced Studies in Mathematics",
-    "AMA": "AMA",
+    "AMA": "Analiză Matematică și Aplicații",
     "TI": "Tehnologia Informației",
     "INFO": "Informatică",
     "MATEINFO": "Matematică-Informatică",

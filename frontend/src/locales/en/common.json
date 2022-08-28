@@ -2,423 +2,57 @@
   "en": "English",
   "ro": "Romanian",
   "roles": {
-    "STUDENT": "student",
-    "TEACHER": "teacher"
+    "STUDENT": "Student",
+    "TEACHER": "Teacher"
   },
   "domains": {
     "INFO": "Computer Science",
-    "CTI": "Computers and Information Technology",
+    "CTI": "Computer Engineering",
     "MATE": "Mathematics"
   },
   "learningModes": {
-    "IF": "IF",
-    "IFR": "IFR",
-    "ID": "ID"
+    "IF": "Full-Time Learning",
+    "IFR": "Part-Time Learning",
+    "ID": "Distance Learning"
   },
   "degrees": {
     "BACHELOR": "Bachelor's Degree",
     "MASTER": "Master's Degree"
   },
   "studyPrograms": {
-    "NLP": "NLP",
-    "DS": "DS",
-    "SLA": "SLA",
-    "SD": "SD",
-    "IA": "IA",
-    "IS": "IS",
-    "BDTS": "BDTS",
-    "PSFS": "PSFS",
-    "MD": "MD",
-    "ASM": "ASM",
+    "NLP": "Natural Language Processing",
+    "DS": "Data Science",
+    "SAL": "Security and Applied Logic",
+    "SD": "Distributed Systems",
+    "AI": "Artificial Intelligence",
+    "IS": "Software Engineering",
+    "BDTS": "Databases and Software Technologies",
+    "PSFS": "Probabilities and Statistics in Finance and Sciences",
+    "MD": "Teaching Mathematics",
+    "ASM": "Advanced Studies in Mathematics",
+    "AMA": "Mathematical Analysis and Aplications",
     "TI": "Information Technology",
-    "INFO": "INFO",
-    "MATEINFO": "MATEINFO",
-    "MATE": "MATE",
-    "MA": "MA"
+    "INFO": "Computer Science",
+    "MATEINFO": "Mathematics-Computer Science",
+    "MATE": "Mathematics",
+    "MA": "Applied Mathematics"
   },
-  "forms": {
-    "createOptionsList": {
-      "dropDownFields": {
-        "domain": {
-          "label": "Domain",
-          "placeholder": "Domain",
-          "errorMessage": "Please select a domain"
-        },
-        "learningMode": {
-          "label": "Learning Mode",
-          "placeholder": "Learning Mode",
-          "errorMessage": "Please select a learning mode"
-        },
-        "degree": {
-          "label": "Degree",
-          "placeholder": "Degree",
-          "errorMessage": "Please select a degree"
-        },
-        "studyProgram": {
-          "label": "Study Program",
-          "placeholder": "Study Program",
-          "errorMessage": "Please select a study program"
-        }
-      },
-      "inputFields": {
-        "title": {
-          "label": "Title",
-          "placeholder": "Title",
-          "errorMessage": "Please provide a title for the options list"
-        },
-        "year": {
-          "label": "Year",
-          "placeholder": "Year",
-          "errorMessage": "Please select a value between 2 and 4"
-        },
-        "semester": {
-          "label": "Semester",
-          "placeholder": "Semester",
-          "errorMessage": "Please select a value between 1 and 2"
-        }
-      },
-      "createButton": "Create the options list",
-      "update": "Update the options list"
-    },
-    "userData": {
-      "dropDownFields": {
-        "role": {
-          "label": "Role",
-          "placeholder": "Role",
-          "errorMessage": "Please provide a role for the user"
-        },
-        "domain": {
-          "label": "Domain",
-          "placeholder": "Domain",
-          "errorMessage": "Please select a domain"
-        },
-        "learningMode": {
-          "label": "Learning Mode",
-          "placeholder": "Learning Mode",
-          "errorMessage": "Please select a learning mode"
-        },
-        "degree": {
-          "label": "Degree",
-          "placeholder": "Degree",
-          "errorMessage": "Please select a degree"
-        },
-        "studyProgram": {
-          "label": "Study Program",
-          "placeholder": "Study Program",
-          "errorMessage": "Please select a study program"
-        }
-      },
-      "inputFields": {
-        "firstName": {
-          "label": "First Name",
-          "placeholder": "First Name",
-          "errorMessage": "Please provide the user's first name"
-        },
-        "lastName": {
-          "label": "Last Name",
-          "placeholder": "Last Name",
-          "errorMessage": "Please provide the user's last name"
-        }
-      }
-    },
-    "course": {
-      "inputFields": {
-        "title": {
-          "label": "Title",
-          "placeholder": "Title",
-          "errorMessage": "Please provide a title for the course"
-        },
-        "capacity": {
-          "label": "Capacity",
-          "placeholder": "Capacity",
-          "errorMessage": "Please provide the capacity for the course. It must be between 1 and 100"
-        },
-        "link": {
-          "label": "Link",
-          "placeholder": "Link",
-          "errorMessage": "Please provide a link for the course"
-        }  
-      },
-      "dropDownFields": {
-        "teacher": {
-          "label": "Teacher",
-          "placeholder": "Teacher",
-          "errorMessage": "Please choose a teacher for the course"
-        }
-      }
-    },
-    "registration": {
-      "inputFields": {
-        "email": {
-          "placeholder": "Email",
-          "errorMessage": "Please provide an email",
-          "label": "Email"
-        },
-        "password": {
-          "placeholder": "Password",
-          "errorMessage": "Please provide a password",
-          "label": "Password"
-        },
-        "confirmPassword": {
-          "placeholder": "Confirm Password",
-          "errorMessage": "The passwords must match",
-          "label": "Confirm Password"
-        }  
-      },
-      "signUpbutton": {
-        "label": "Sign Up"
-      },
-      "alreadyAnUser": {
-        "text": "Already an user? ",
-        "link": "Sign In"
-      }
-    },
-    "login": {
-      "inputFields": {
-        "email": {
-          "placeholder": "Email",
-          "label": "Email"
-        },
-        "password": {
-          "placeholder": "Password",
-          "label": "Password"
-        }
-      },
-      "signInButton": {
-        "label": "Sign In"
-      },
-      "forgotPassword": {
-        "text": ""
-      },
-      "newUser": {
-        "text": "New user? ",
-        "link": "Sign Up"
-      }
-    }
+  "buttons": {
+    "syllabus": "See the syllabus",
+    "save": "Save the changes",
+    "excel": "Export as .xlsx"
   },
-  "lists": {
-    "accounts": {
-      "header": {
-        "email": "Email",
-        "action": "Action"
-      }  
-    },
-    "students": {
-      "header": {
-        "name": "Last Name and First Name",
-        "email": "Email"  
-      },
-      "sheetName": "Enrolled Students"  
-    },
-    "courses": {
-      "header": {
-        "title": "Title",
-        "teacher": "Teacher"
-      }
-    }
+  "img": {
+    "logo": "",
+    "login": "",
+    "recoverAccount": "",
+    "registration": "",
+    "resetPassword": "",
+    "notFound": ""
   },
-  "registration": {
-    "codes": {
-      "NO_PASSWORD_OR_EMAIL_PROVIDED": "Please provide both a password and an email",
-      "ALREADY_REGISTERED": "You are already registered",
-      "SUCCESS": "Your account was created succesfully. Once your account is verified, you will be notified by email"
-    },
-    "form": {
-      "email": {
-        "placeholder": "Email",
-        "errorMessage": "Text",
-        "label": "Email"
-      },
-      "password": {
-        "placeholder": "Password",
-        "errorMessage": "Text",
-        "label": "Password"
-      },
-      "confirmPassword": {
-        "placeholder": "Confirm Password",
-        "errorMessage": "Text",
-        "label": "Confirm Password"
-      },
-      "button": {
-        "label": "Sign Up"
-      },
-      "alreadyAnUser": "Already an user? ",
-      "alreadyAnUserLink": "Sign In"
-    }
-  },
-  "login": {
-    "codes": {
-      "NO_PASSWORD_OR_EMAIL_PROVIDED": "Please provide both a password and an email",
-      "INVALID_CREDENTIALS": "The password or the email were wrong",
-      "ACCOUNT_NOT_VERIFIED": "Your account wasn`t verified yet. You will receive an email as soon as your account is verified.",
-      "PASSWORD_NOT_CHANGED": "Please reset your password before logging in for the first time",
-      "SUCCESS": "SUCCESS"
-    },
-    "form": {
-      "email": {
-        "placeholder": "Email",
-        "label": "Email"
-      },
-      "password": {
-        "placeholder": "Password",
-        "label": "Password"
-      },
-      "forgotPassword": "Forgot your password?",
-      "button": {
-        "label": "Sign In"
-      },
-      "newUser": "New user? ",
-      "newUserLink": "Sign Up"
-    }
-  },
-  "profile": {
-    "personalData": "Personal Data",
-    "profile": "Profile",
-    "profileDataFields": {
-      "email": "E-mail",
-      "name": "Full Name"
-    },
-    "studentDataFields": {
-      "domain": "Domain",
-      "learningMode": "Learning Mode",
-      "degree": "Degree",
-      "studyProgram": "Study Program",
-      "currentGroup": "Current Group",
-      "currentYear": "Current Year",
-      "currentSemester": "Current Semester"
-    },
-    "studentData": "Student Data",
-    "grade": "Grades",
-    "studentGradeFields": {
-      "yearHeader": "Year",
-      "gradeHeader": "Grade"
-    }
-  },
-  "resetPassword.form": {
-    "form": {
-      "instructions": "Your new password must be different from previous used password.",
-      "password": {
-        "placeholder": "Password",
-        "errorMessage": "Text",
-        "label": "Password"
-      },
-      "confirmPassword": {
-        "placeholder": "Confirm Password",
-        "errorMessage": "Text",
-        "label": "Confirm Password"
-      },
-      "button": {
-        "label": "Reset Password"
-      }
-    }
-  },
-  "recoverAccount.form": {
-    "form": {
-      "instructions": "Enter the email associated with your account and we'll send an email with instructions to reset your password.",
-      "email": {
-        "placeholder": "Email",
-        "errorMessage": "Text",
-        "label": "Email"
-      },
-      "button": {
-        "label": "Send Instructions"
-      }
-    }
-  },
-  "teacher": {
-    "courses": {
-      "mailButton": "Send an announcement"
-    }
-  },
-  "loadingPage": {
-    "quotes": [
-      {
-        "text": "Education is the passport to the future, for tomorrow belongs to those who prepare for it today.",
-        "author": "Malcom X"
-      },
-      {
-        "text": "What would life be if we had no courage to attempt anything?",
-        "author": "Vincent Van Gogh"
-      }
-    ]
-  },
-  "pages": {
-    "registration": {
-      "codes": {
-        "NO_PASSWORD_OR_EMAIL_PROVIDED": "Please provide both a password and an email",
-        "ALREADY_REGISTERED": "You are already registered",
-        "SUCCESS": "Your account was created succesfully. Once your account is verified, you will be notified by email"
-      }
-    },
-    "login": {
-      "codes": {
-        "NO_PASSWORD_OR_EMAIL_PROVIDED": "Please provide both a password and an email",
-        "INVALID_CREDENTIALS": "The password or the email were wrong",
-        "ACCOUNT_NOT_VERIFIED": "Your account wasn`t verified yet. You will receive an email as soon as your account is verified.",
-        "PASSWORD_NOT_CHANGED": "Please reset your password before logging in for the first time",
-        "SUCCESS": "SUCCESS"
-      }
-    },
-    "loading": {
-      "quotes": [
-        {
-          "text": "Education is the passport to the future, for tomorrow belongs to those who prepare for it today.",
-          "author": "Malcom X"
-        },
-        {
-          "text": "What would life be if we had no courage to attempt anything?",
-          "author": "Vincent Van Gogh"
-        }
-      ]
-    },
-    "profile": {
-      "personalData": "Personal Data",
-      "profile": "Profile",
-      "profileDataFields": {
-        "email": "E-mail",
-        "name": "Full Name"
-      },
-      "studentDataFields": {
-        "domain": "Domain",
-        "learningMode": "Learning Mode",
-        "degree": "Degree",
-        "studyProgram": "Study Program",
-        "currentGroup": "Current Group",
-        "currentYear": "Current Year",
-        "currentSemester": "Current Semester"
-      },
-      "studentData": "Student Data",
-      "grade": "Grades",
-      "studentGradeFields": {
-        "yearHeader": "Year",
-        "gradeHeader": "Grade"
-      }
-    },
-    "optionsLists": {
-      "createButton": "Create a new options list"
-    },
-    "accounts": {
-      "notVerified": {
-        "accountsListTitle": "Not Verified",
-        "fileUploadLabel": ""
-      },
-      "students": {
-        "accountsListTitle": "Students",
-        "fileUploadLabel": "Upload students' info excel file"
-      },
-      "teachers": {
-        "accountsListTitle": "Teachers",
-        "fileUploadLabel": "Upload teachers' info excel file"
-      }
-    }
-  },
-  "molecules": {
-    "optionsListCard": {
-      "year": "Year",
-      "semester": "Semester"
-    }
-  },
-  "saveButton": "Save changes",
-  "excelButton": "Export as .xlsx",
-  "syllabusButton": "View the syllabus"
+  "text": {
+    "firstSemester": "1st Semester",
+    "secondSemester": "2nd Semester",
+    "year": "Year"
+  }
 }
