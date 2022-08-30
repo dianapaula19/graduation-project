@@ -122,7 +122,8 @@
         "NO_PASSWORD_OR_EMAIL_PROVIDED": "The email or the password weren't provided",
         "INVALID_CREDENTIALS": "The email or password were wrong",
         "ACCOUNT_NOT_VERIFIED": "Your email wasn't verified yet. You will receive an email as soon as it gets verified",
-        "PASSWORD_NOT_CHANGED": "You need to reset your password before logging in"
+        "PASSWORD_NOT_CHANGED": "You need to reset your password before logging in",
+        "ERR_NETWORK": "Couldn't connect to the server"
       }
     },
     "recoverAccount": {

@@ -130,7 +130,7 @@
         "errorMessage": "Introduceți o adresă validă de email",
         "label": "Email"
       },
-      "Parolă": {
+      "password": {
         "placeholder": "Parolă",
         "errorMessage": "Parola trebuie să conțină măcar o literă mică, o literă mare, și o cifră",
         "label": "Parolă"

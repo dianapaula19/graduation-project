@@ -10,5 +10,5 @@ export enum SelectionSessionSettingValue {
   FALSE = 'FALSE'
 }
 
-export const API_URL_USER = "http://localhost:8000/api/user";
-export const API_URL_COURSE = "http://localhost:8000/api/course";
+export const API_URL_USER = process.env.REACT_APP_SERVER_APP_LINK + "/api/user";
+export const API_URL_COURSE = process.env.REACT_APP_SERVER_APP_LINK + "/api/course";

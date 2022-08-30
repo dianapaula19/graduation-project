@@ -122,7 +122,8 @@
         "NO_PASSWORD_OR_EMAIL_PROVIDED": "E nevoie de atât o parolă, cât și un email pentru autentificare",
         "INVALID_CREDENTIALS": "Parola sau email-ul au fost greșite",
         "ACCOUNT_NOT_VERIFIED": "Contul tău nu a fost verificat încă. O să primești un email imediat ce contul tău va fi verificat.",
-        "PASSWORD_NOT_CHANGED": "Trebuie să-ți resetezi parola înainte de a te loga"
+        "PASSWORD_NOT_CHANGED": "Trebuie să-ți resetezi parola înainte de a te loga",
+        "ERR_NETWORK": "Nu s-a putut face conexiunea la server"
       }
     },
     "recoverAccount": {
