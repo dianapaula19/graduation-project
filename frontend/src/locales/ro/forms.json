@@ -46,7 +46,7 @@
         "placeholder": "Email",
         "label": "Email"
       },
-      "Parolă": {
+      "password": {
         "placeholder": "Parolă",
         "label": "Parolă"
       }

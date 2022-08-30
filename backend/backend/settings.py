@@ -28,7 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
+
+SESSION_COOKIE_SECURE = env('SESSION_COOKIE_SECURE')
 
 # Application definition
 
@@ -152,6 +154,12 @@ AUTH_USER_MODEL = 'users.User'
 CORS_ORIGIN_WHITELIST = [
     env('CLIENT_APP_LINK')
 ]
+
+ALLOWED_HOSTS = [
+    'localhost'
+]
+
+CSRF_COOKIE_SECURE = env('CSRF_COOKIE_SECURE')
 
 EMAIL_BACKEND = env('EMAIL_BACKEND')
 EMAIL_HOST = env('EMAIL_HOST')

@@ -377,27 +377,22 @@ const UserDataForm = ({
             <div>
             {[
               [1, 2, 3, 4].map((year: number) => {
-                let defaultValue = 0.0;
                 let value = 0.0;
                 let validation = false;
                 switch (year) {
                   case 1:
-                    defaultValue = studentData.grades1;
                     value = studentData.grades1;
                     validation = validationStudentData.grade1;
                     break;
                   case 2:
-                    defaultValue = studentData.grades2;
                     value = studentData.grades2;
                     validation = validationStudentData.grade2;
                     break;
                   case 3:
-                    defaultValue = studentData.grades3;
                     value = studentData.grades3;
                     validation = validationStudentData.grade3;
                     break;
                   case 4:
-                    defaultValue = studentData.grades4;
                     value = studentData.grades4;
                     validation = validationStudentData.grade4;
                     break;
