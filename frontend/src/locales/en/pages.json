@@ -128,17 +128,20 @@
     },
     "recoverAccount": {
       "error": "An error occured!",
-      "success": "The email with the instructions for recovering your account was sent successfully!"
+      "success": "The email with the instructions for recovering your account was sent successfully!",
+      "ERR_NETWORK": "Couldn't connect to the server"
     },
     "resetPassword": {
       "error": "An error occured!",
-      "success": "Your password was succesfully reset!"
+      "success": "Your password was succesfully reset!",
+      "ERR_NETWORK": "Couldn't connect to the server"
     },
     "registration": {
       "codes": {
         "NO_PASSWORD_OR_EMAIL_PROVIDED": "The email or the password weren't provided",
         "ACCOUNT_ALREADY_EXISTS": "The account already exists",
-        "SUCCESS": "Your account was created succesfully. You will receive an email as soon as your account is verified."
+        "SUCCESS": "Your account was created succesfully. You will receive an email as soon as your account is verified.",
+        "ERR_NETWORK": "Couldn't connect to the server"
       }
     }
   },

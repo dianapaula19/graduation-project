@@ -65,6 +65,11 @@ export const getOptionsListsAsync = createAsyncThunk(
     return response.data;
   })
   .catch((error) => {
+    if(error.code === 'ERR_NETWORK'){
+      return rejectWithValue({
+        'code': 'ERR_NETWORK'
+      })
+    }
     return rejectWithValue(error.response.data);
   })
 )

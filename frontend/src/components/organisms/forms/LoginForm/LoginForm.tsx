@@ -54,7 +54,6 @@ const LoginForm = () => {
         name={"email"}
         id={"login-form-email"}
         placeholder={t(`${inputFieldsTranslate}.email.placeholder`)} 
-        errorMessage={t(`${inputFieldsTranslate}.email.errorMessage`)} 
         label={t(`${inputFieldsTranslate}.email.label`)}
         required={true}
         error={false}
@@ -65,7 +64,6 @@ const LoginForm = () => {
         name={"password"} 
         id={"login-form-password"}
         placeholder={t(`${inputFieldsTranslate}.password.placeholder`)} 
-        errorMessage={t(`${inputFieldsTranslate}.password.errorMessage`)} 
         label={t(`${inputFieldsTranslate}.password.label`)}  
         required={true} 
         error={false}  

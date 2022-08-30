@@ -128,17 +128,20 @@
     },
     "recoverAccount": {
       "error": "S-a produs o eroare!",
-      "success": "Email-ul cu token-ul pentru schimbarea parolei a fost trimis cu succes!"
+      "success": "Email-ul cu token-ul pentru schimbarea parolei a fost trimis cu succes!",
+      "ERR_NETWORK": "Nu s-a putut face conexiunea la server"
     },
     "resetPassword": {
       "error": "S-a produs o eroare!",
-      "success": "Parola a fost resetată cu succes"
+      "success": "Parola a fost resetată cu succes",
+      "ERR_NETWORK": "Nu s-a putut face conexiunea la server"
     },
     "registration": {
       "codes": {
         "NO_PASSWORD_OR_EMAIL_PROVIDED": "E nevoie de atât o parolă, cât și un email pentru înregistre",
         "ACCOUNT_ALREADY_EXISTS": "Există deja un utilizator înregistrat cu acest email",
-        "SUCCESS": "Contul tău a fost creat cu succes. O să primești un email imediat ce contul tău va fi verificat."
+        "SUCCESS": "Contul tău a fost creat cu succes. O să primești un email imediat ce contul tău va fi verificat.",
+        "ERR_NETWORK": "Nu s-a putut face conexiunea la server"
       }
     }
   },

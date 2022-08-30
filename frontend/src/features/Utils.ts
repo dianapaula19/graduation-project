@@ -10,5 +10,10 @@ export enum SelectionSessionSettingValue {
   FALSE = 'FALSE'
 }
 
-export const API_URL_USER = process.env.REACT_APP_SERVER_APP_LINK + "/api/user";
-export const API_URL_COURSE = process.env.REACT_APP_SERVER_APP_LINK + "/api/course";
+const SERVER_APP_LINK = 
+  "http://" + 
+  (process.env.NODE_ENV === 'production' ? 
+  process.env.REACT_APP_SERVER_APP_LINK_PROD : 
+  process.env.REACT_APP_SERVER_APP_LINK_DEV);
+export const API_URL_USER = SERVER_APP_LINK + "/api/user";
+export const API_URL_COURSE = SERVER_APP_LINK + "/api/course";

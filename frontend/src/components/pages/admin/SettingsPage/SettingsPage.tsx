@@ -40,7 +40,8 @@ const SettingsPage = () => {
       }))
     }
     if (statusUpdateSelectionSessionOpen === ApiStatus.success) {
-      let url = `ws://localhost:8000/ws/socket-server/`
+      const serverAppLink = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_SERVER_APP_LINK_PROD : process.env.REACT_APP_SERVER_APP_LINK_DEV;
+      let url = `ws://${serverAppLink}/ws/socket-server/`;
   
       const socket = new WebSocket(url);
       socket.onmessage = (e) => {
