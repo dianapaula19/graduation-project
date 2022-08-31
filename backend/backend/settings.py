@@ -28,9 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
-
-SESSION_COOKIE_SECURE = env('SESSION_COOKIE_SECURE')
+DEBUG = True
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE=False
 
 # Application definition
 
