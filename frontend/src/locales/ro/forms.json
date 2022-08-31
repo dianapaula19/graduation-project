@@ -23,7 +23,7 @@
       }  
     },
     "dropDownFields": {
-      "Ciclu de studiu": {
+      "degree": {
         "label": "Ciclu de studii",
         "placeholder": "Ciclu de studii",
         "errorMessage": "Câmp obligatoriu"
@@ -72,7 +72,7 @@
         "placeholder": "Formă învățământ",
         "errorMessage": "Câmp obligatoriu"
       },
-      "Ciclu de studiu": {
+      "degree": {
         "label": "Ciclu de studiu",
         "placeholder": "Ciclu de studiu",
         "errorMessage": "Câmp obligatoriu"
