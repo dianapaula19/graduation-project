@@ -156,10 +156,9 @@ CORS_ORIGIN_WHITELIST = [
 ]
 
 ALLOWED_HOSTS = [
-    'localhost'
+    'localhost',
+    env('CLIENT_APP_LINK')
 ]
-
-CSRF_COOKIE_SECURE = env('CSRF_COOKIE_SECURE')
 
 EMAIL_BACKEND = env('EMAIL_BACKEND')
 EMAIL_HOST = env('EMAIL_HOST')
