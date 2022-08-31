@@ -156,7 +156,7 @@ CORS_ORIGIN_WHITELIST = [
 ]
 
 ALLOWED_HOSTS = [
-    'localhost',
+    env('SERVER_APP_LINK'),
     env('CLIENT_APP_LINK')
 ]
 
