@@ -30,7 +30,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 SESSION_COOKIE_SECURE = False
-CSRF_COOKIE_SECURE=False
+CSRF_COOKIE_SECURE=True
 
 # Application definition
 
