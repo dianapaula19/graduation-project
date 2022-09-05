@@ -88,9 +88,36 @@ const SettingsPage = () => {
         const wb = { Sheets: {"data": ws}, SheetNames: ["data"]}
         const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array"});
         const data = new Blob([excelBuffer], { type: fileType})
-        FileSaver.saveAs(data, `${list.course} ${list.domain} ${list.degree} ${list.learning_mode} ${list.study_program} ${list.year}.xlsx`);
+        FileSaver.saveAs(data, `${list.course} - ${t(`common:domains.${list.domain}`)}, ${t(`common:degree.${list.degree}`)}, ${t(`common:learningModes.${list.learning_mode}`)}, ${t(`common:studyPrograms.${list.study_program}`)}, ${list.year}.xlsx`);
         return; 
       }) 
+    }
+  }
+
+  const exportFullList = () => {
+
+    if (lists) {
+      const header = [
+        t("admin.settings.xlsx.header.course"),
+        t("admin.settings.xlsx.header.fullName"), 
+        t("admin.settings.xlsx.header.currentGroup")
+      ];
+      const ws = XLSX.utils.book_new();
+      XLSX.utils.sheet_add_aoa(ws, [header]);
+      lists.map((list) => {
+        list.students.map((student) => {
+          XLSX.utils.sheet_add_aoa(ws, 
+            [[list.course,`${student.first_name} ${student.last_name}`, student.current_group]],
+            {origin: -1}  
+          );
+          return;
+        })
+      })
+      const wb = { Sheets: {"data": ws}, SheetNames: ["data"]}
+      const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array"});
+      const data = new Blob([excelBuffer], { type: fileType});
+      FileSaver.saveAs(data, `${t("admin.settings.xlsx.fullListFileName")}.xlsx`);
+      return;
     }
   }
   
@@ -111,7 +138,10 @@ const SettingsPage = () => {
             label={t("admin.settings.buttons.exportLists")} 
             disabled={false}
             modifier={ButtonModifier.excel} 
-            onClick={exportLists}
+            onClick={() => {
+              exportLists();
+              exportFullList();
+            }}
           />
         )}
         <div

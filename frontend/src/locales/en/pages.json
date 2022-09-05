@@ -101,9 +101,11 @@
     "settings": {
       "xlsx": {
         "header": {
+          "course": "Curs",
           "fullName": "Last Name and First Name",
           "currentGroup": "Current Group"
-        }
+        },
+        "fullListFileName": "General Repartition"
       },
       "text": {
         "message": "The selection session is:",

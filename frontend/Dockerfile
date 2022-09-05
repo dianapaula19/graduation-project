@@ -8,3 +8,5 @@ COPY package-lock.json ./
 COPY . ./
 
 RUN npm install
+
+COPY node_modules ./

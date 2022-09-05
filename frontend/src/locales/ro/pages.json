@@ -101,9 +101,11 @@
     "settings": {
       "xlsx": {
         "header": {
+          "course": "Curs",
           "fullName": "Nume și prenume",
           "currentGroup": "Grupa Curentă"
-        }
+        },
+        "fullListFileName": "Repartizare Generală"
       },
       "text": {
         "message": "Sesiunea de alegere a opționalelor este:",

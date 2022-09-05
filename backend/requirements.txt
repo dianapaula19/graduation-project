@@ -4,4 +4,3 @@ django-cors-headers
 django-rest-passwordreset
 django-environ
 channels
-gunicorn

@@ -5,7 +5,7 @@
     },
     "notVerified": {
       "error": "A apărut o eroare la verificare contului!",
-      "succes": "Contul a fost verificat cu succes!"
+      "success": "Contul a fost verificat cu succes!"
     },
     "students": {
       "error": "A apărut o eroare la modificarea datelor studentului!",
@@ -32,7 +32,7 @@
   "courses": {
     "header": {
       "title": "Denumire",
-      "teacher": "Teacher"
+      "teacher": "Profesor"
     },
     "buttons": {
       "create": "Creează un curs nou"
