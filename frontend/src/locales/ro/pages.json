@@ -216,7 +216,9 @@
         "email": "E-mail"
       },
       "mailButton": "Trimite un anunț",
-      "excelButton": "Exportă lista de studenți ca .xlsx"
+      "excelButton": "Exportă lista de studenți ca .xlsx",
+      "success": "Anunțul a fost trimis cu succes",
+      "error": "A apărut o eroare la trimiterea anunțului"
     }
   }
 }

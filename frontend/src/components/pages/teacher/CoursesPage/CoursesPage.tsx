@@ -138,9 +138,9 @@ const OptionalCoursesList = () => {
           closeModal={() => {
             dispatch(revertSendAnnouncement());
           }}        
-        >  
+        > 
           <ModalApiStatus 
-            message={""} 
+            message={statusSendAnnouncement === ApiStatus.success ? t("teacher.courses.success") : t("teacher.courses.error")} 
             status={statusSendAnnouncement} 
           /> 
         </Modal>

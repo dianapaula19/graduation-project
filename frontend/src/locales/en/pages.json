@@ -216,7 +216,9 @@
         "email": "E-mail"
       },
       "mailButton": "Send an announcement",
-      "excelButton": "Export the list of students as .xlsx"
+      "excelButton": "Export the list of students as .xlsx",
+      "success": "The announcement was sent successfully!",
+      "error": "An error occured while sending the announcement!"
     }
   }
 }
