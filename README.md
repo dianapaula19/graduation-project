@@ -1,6 +1,6 @@
 # Graduation Project
 
-View a live demo of the application [here](http://fmi-graduation-project.s3-website.eu-central-1.amazonaws.com/). (Hosted using a S3 bucket for the frontend app and an EC2 instance for the backend app)
+View a demo of the project (here)[https://youtu.be/sEHrhPenFeI]
 
 ## Running the application locally
 
