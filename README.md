@@ -1,6 +1,6 @@
 # Graduation Project
 
-View a demo of the project (here)[https://youtu.be/sEHrhPenFeI]
+View a demo of the project [here](https://youtu.be/sEHrhPenFeI)
 
 ## Running the application locally
 
