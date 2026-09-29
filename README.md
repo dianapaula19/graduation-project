@@ -1,5 +1,7 @@
 # Elective course selection platform
 
+> **Original version:** this README and some fixes were added in 2026. To see the project exactly as it was first built, browse commit [`627b847`](https://github.com/dianapaula19/graduation-project/tree/627b847ff770012889b5d7933be09a8607c0e69f) (2023-12-10).
+
 Bachelor's graduation project (2022) at the Faculty of Mathematics and Computer Science,
 University of Bucharest, by [Diana Băcîrcea](https://github.com/dianapaula19).
 
