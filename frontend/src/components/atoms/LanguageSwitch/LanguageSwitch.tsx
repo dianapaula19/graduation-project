@@ -9,6 +9,8 @@ import {
   switchToRomanian
 } from "../../../features/LanguageSwitchSlice";
 import "./LanguageSwitch.scss";
+import roFlag from "flag-icons/flags/4x3/ro.svg";
+import gbFlag from "flag-icons/flags/4x3/gb.svg";
 
 const LanguageSwitch = () => {
 
@@ -27,7 +29,7 @@ const LanguageSwitch = () => {
           language === Language.ro && `${componentClassName}__img--selected`
         )}
         alt={t("ro")}
-        src="http://purecatamphetamine.github.io/country-flag-icons/3x2/RO.svg"
+        src={roFlag}
         onClick={() => {
           i18n.changeLanguage(Language.ro);
           dispatch(switchToRomanian());
@@ -39,7 +41,7 @@ const LanguageSwitch = () => {
           language === Language.en && `${componentClassName}__img--selected`
         )}
         alt={t("en")}
-        src="http://purecatamphetamine.github.io/country-flag-icons/3x2/GB.svg"
+        src={gbFlag}
         onClick={() => {
           i18n.changeLanguage(Language.en);
           dispatch(switchToEnglish())
