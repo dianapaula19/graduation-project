@@ -24,7 +24,9 @@ def students_courses_assignment():
         
         choices = StudentOptionChoice.objects.choices_sorted_by_order(student=student, options_list=options_list)
 
-        if len(choices) == 0:
+        # No choices, or every course the student ranked is already full:
+        # they get a leftover seat below instead of an IndexError.
+        if current_choice >= len(choices):
           no_choice_students.append(student)
           continue
         
@@ -36,6 +38,8 @@ def students_courses_assignment():
       
       current_choice += 1
     
+    # Leftover seats also go by grade.
+    no_choice_students.sort(key=students.index)
     for student in no_choice_students:
       for course in courses:
         if queues[course.id][1] > 0:

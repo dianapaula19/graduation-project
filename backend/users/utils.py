@@ -1,5 +1,5 @@
 from courses.models import Course, OptionsList, StudentOptionChoice
-from .models import Student, Domain, Degree, LearningMode, StudyProgram
+from .models import AppSetting, SelectionSessionSettingValue, Student, Domain, Degree, LearningMode, StudyProgram
 
 def get_max_years(domain, degree):
   if degree == Degree.BACHELOR:
@@ -82,7 +82,13 @@ def get_students_lists_fun():
   return lists
 
 
+SELECTION_SESSION_OPEN = 'SELECTION_SESSION_OPEN'
 
 
-
-
+def get_selection_session_setting():
+  """The SELECTION_SESSION_OPEN setting, created (closed) on first use."""
+  setting, _ = AppSetting.objects.get_or_create(
+    key=SELECTION_SESSION_OPEN,
+    defaults={'value': SelectionSessionSettingValue.FALSE.value}
+  )
+  return setting

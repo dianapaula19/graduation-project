@@ -1,56 +1,47 @@
-from email import message
 from rest_framework import permissions
 from rest_framework.authtoken.models import Token
-from users.models import Role, User
+from users.models import Role
+
+
+def get_token_user(request):
+    """Return the user of the request's ``Authorization: Token <key>`` header, or None.
+
+    A missing header, a malformed header or an unknown token all mean "not
+    logged in" instead of raising (which Django turned into a 500 error).
+    """
+    header = request.META.get('HTTP_AUTHORIZATION', '')
+    key = header.split(' ', 1)[1].strip() if ' ' in header else ''
+    if not key:
+        return None
+    token = Token.objects.select_related('user').filter(key=key).first()
+    return token.user if token else None
+
 
 class IsTokenAuthentificated(permissions.BasePermission):
     message = 'You are not logged in'
 
     def has_permission(self, request, view):
-        key = request.META.get('HTTP_AUTHORIZATION')[7:]
-        try:
-            token = Token.objects.get(key=key)
-            if token:
-                return True
-        except:
-            return False
-        return False
+        return get_token_user(request) is not None
 
-class IsStudent(permissions.BasePermission):
+
+class HasRole(permissions.BasePermission):
+    role = None
+
+    def has_permission(self, request, view):
+        user = get_token_user(request)
+        return user is not None and user.role == self.role
+
+
+class IsStudent(HasRole):
     message = 'Not a student'
+    role = Role.STUDENT
 
-    def has_permission(self, request, view):
-        key = request.META.get('HTTP_AUTHORIZATION')[7:]
-        token = Token.objects.get(key=key)
-        if token:
-            user = User.objects.get(email=token.user)
-            if user:
-                return user.role == Role.STUDENT
-            return False
-        return False
 
-class IsTeacher(permissions.BasePermission):
+class IsTeacher(HasRole):
     message = 'Not a teacher'
+    role = Role.TEACHER
 
-    def has_permission(self, request, view):
-        key = request.META.get('HTTP_AUTHORIZATION')[7:]
-        token = Token.objects.get(key=key)
-        if token:
-            user = User.objects.get(email=token.user)
-            if user:
-                return user.role == Role.TEACHER
-            return False
-        return False
 
-class IsAdmin(permissions.BasePermission):
+class IsAdmin(HasRole):
     message = 'Not an admin'
-
-    def has_permission(self, request, view):
-        key = request.META.get('HTTP_AUTHORIZATION')[7:]
-        token = Token.objects.get(key=key)
-        if token:
-            user = User.objects.get(email=token.user)
-            if user:
-                return user.role == Role.ADMIN
-            return False
-        return False
+    role = Role.ADMIN

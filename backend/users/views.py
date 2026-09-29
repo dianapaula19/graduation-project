@@ -11,7 +11,7 @@ from backend.permissions import IsAdmin, IsStudent, IsTeacher
 
 from courses.utils import students_courses_assignment
 
-from .utils import get_students_lists_fun, reset_data
+from .utils import SELECTION_SESSION_OPEN, get_selection_session_setting, get_students_lists_fun, reset_data
 
 from .serializers import StudentDataSerializer, StudentsListSerializer, TeacherDataSerializer, UserDataSerializer
 from .models import AppSetting, Grade, Role, SelectionSessionSettingValue, User, Student, Teacher
@@ -41,6 +41,7 @@ class ResponseCode(Enum):
   STUDENT_NOT_FOUND = 'STUDENT_NOT_FOUND'
   EMAIL_NOT_SENT = 'EMAIL_NOT_SENT'
   TEACHER_HAS_COURSE = 'TEACHER_HAS_COURSE'
+  ERROR = 'ERROR'
   SUCCESS = 'SUCCESS'
 
 @api_view(["POST"])
@@ -80,7 +81,7 @@ def login(request):
     )
 
   token, _ = Token.objects.get_or_create(user=user)
-  selection_session_open = AppSetting.objects.filter(key='SELECTION_SESSION_OPEN')[0]
+  selection_session_open = get_selection_session_setting()
   user_serializer = UserDataSerializer(user)
   
   return Response({
@@ -673,8 +674,9 @@ def update_selection_session_open(request):
     if value == SelectionSessionSettingValue.FALSE.value:
       students_courses_assignment()
 
-    AppSetting.objects.filter(key="SELECTION_SESSION_OPEN").update(
-      value=value
+    AppSetting.objects.update_or_create(
+      key=SELECTION_SESSION_OPEN,
+      defaults={'value': value}
     )
   except:
     return Response({

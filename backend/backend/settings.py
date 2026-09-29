@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 import os
 from pathlib import Path
+from urllib.parse import urlparse
 import environ
 
 env = environ.Env()
@@ -156,9 +157,11 @@ CORS_ORIGIN_WHITELIST = [
     env('CLIENT_APP_LINK')
 ]
 
+# CORS needs full origins (http://host:port), ALLOWED_HOSTS bare host names;
+# accept either form in the environment.
 ALLOWED_HOSTS = [
-    env('SERVER_APP_LINK'),
-    env('CLIENT_APP_LINK')
+    urlparse(link).hostname or link
+    for link in (env('SERVER_APP_LINK'), env('CLIENT_APP_LINK'))
 ]
 
 EMAIL_BACKEND = env('EMAIL_BACKEND')
